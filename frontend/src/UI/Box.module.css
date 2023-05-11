@@ -1,0 +1,11 @@
+.box{
+    padding-top:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background:white;
+    max-width: 900px;
+    border:transparent;
+    border-radius: 17px;
+    overflow: auto;
+    margin-bottom: 13px;
+}

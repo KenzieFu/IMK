@@ -1,0 +1,94 @@
+/* 
+
+.search-box{
+    position: relative;
+    transition: all 1s;
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid #F1F1F1;
+    padding: 5px;   
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-right: 10px;
+}
+
+
+.search-box input{
+    width: 100%;
+    border:none;
+    outline: none;
+    font-size: 20px;
+    margin:0 5px;
+    padding-left: 10px;
+    background-color: #F1F1F1;
+    transition: all 1s;
+}
+
+.main-button{
+    position: absolute;
+    color:#FF5959;
+    background-color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 1s;
+}
+
+/* .search-box:hover,
+.search-box:valid{
+    width: 30%;
+    background-color: white;
+    cursor: pointer;
+}
+
+.search-box:hover input,
+.search-box:valid input{
+    display: block;
+    background: white;
+
+}
+
+.search-box:hover .main-button,
+.search-box:valid .main-button{
+    background: #FF5959;
+    color: white;
+} */ 
+
+.search-box{
+    background:white;
+    width: 30%;
+    height: 25px;
+    padding: 8px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    margin-right: 45px;
+    margin-top: 5px;
+}
+
+.search-box input{
+    width: 100%;
+    border:none;
+    font-size: 18px;
+    outline: none;
+    margin:0 8px;
+}
+
+.search-box img{
+    margin:3px 10px;
+}
+
+.main-button{
+    background: none;
+    color:#FF5959;
+    border: none;
+    border-radius: 25px;
+    font-size: 20px;
+    margin:0 10px;
+    padding: 8px 4px;
+}

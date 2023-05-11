@@ -1,0 +1,136 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+
+.flexlogin{
+    display: flex;
+    height: 30rem;
+    width: 100%;
+}
+
+.classheader{
+    display: flex;
+    align-items: center;
+    margin-left: 0.74vw;
+    margin-top: 0.74vw;
+    margin-bottom: 0.37vw;
+}
+
+.loginlogo{
+    width: 3.7vw;
+    height: 3.7vw;
+    margin-top: 0.74vw;
+    align-items: center;
+    
+}
+
+.loginimg{
+    width: 40%;
+    object-fit: cover;
+    background-color: #ededed;
+    border-radius: 0.37vw;
+    transition: all 1s;
+}
+
+.loginimg:hover{
+    filter: brightness(70%);
+}
+
+.modallogin{
+    height: 50%;
+    position: relative;
+    margin-bottom: 2.96vw;
+}
+
+.login-header{
+    text-align: center;
+    margin-bottom: 4.44vw;
+    align-items: center;
+}
+
+.logo-h1{
+    margin:2px;
+    font-size: 1.48vw;
+    text-align: left;
+    margin-left: 0.59vw;
+    margin-top: 0.74vw;
+}
+.logo-p{
+    margin:0.3vw;
+    font-size: 1.11vw;
+    color: #7b7b7bc9;
+    text-align: left;
+    margin-left: 1.11vw;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 1.48vw;
+    margin-left: 1.48vw;
+    font-size: 1.33vw;
+    font-weight: 600;
+}
+
+.form input{
+    height: 1.85vw;
+    width: 95%;
+    padding-left:0.74vw;
+    padding-bottom: 0.74vw;
+    margin-bottom: 0.74vw;
+    font-size: 1.33vw;
+    border:  none; 
+    border-bottom:  solid 0.074vw rgba(0,0,0,.1);
+    transition:  all .3s linear; 
+    outline: none;
+}
+
+.form div{
+    display: flex;
+    flex-direction: column;
+    gap:6px;
+}
+
+.login-button{
+    width:  auto;
+    min-width:  100px;
+    border-radius:  20.3vw; 
+    text-align:  center; 
+    padding:  1.11vw 2.96vw;
+    margin-top:  0.37vw; 
+    background-color: #FF5959; 
+    color:  #fff; 
+    font-size:  1vw;
+    margin-left:  auto; 
+    font-weight:  500; 
+    box-shadow:  0px 2px 6px -1px rgba(0,0,0,.13); 
+    border:  none;
+    transition:  all .3s ease; 
+    outline: 0; 
+    margin-right: 1.11vw;
+    cursor: pointer;
+}
+  .login-button:hover{
+        transform:  translateY(-0.22vw);
+        box-shadow:  0 2px 6px -1px rgba($primary, .65);
+  }
+
+  .login-button:active{
+    transform:  scale(.99);
+  }
+
+.close-logo{
+    position: absolute;
+    font-size: 2.96vw;
+    color: #C4C4C4;
+    transform: rotate(45deg);
+    right: 0.74vw;
+    cursor: pointer;
+    top:0;
+}
+
+.errorp{
+    color: #FF5959;
+    font-size: 1vw;
+    margin-top: -0.22vw;
+    font-weight: 500;
+    margin-left: 0.3vw;
+}

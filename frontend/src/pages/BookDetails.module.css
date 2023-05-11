@@ -1,0 +1,101 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5px;
+    flex-flow: row wrap;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-right: 3px;
+    gap: 20px;
+    
+
+}
+
+.content {
+    display: flex;
+    margin-top: 20px;
+    display: flex;
+    gap: 25px;
+    background: "#F1F1F1";
+    width: 100%;
+}
+.cover {
+ 
+    padding: 12px 25px;
+    height: fit-content;
+    
+    
+    border-radius: 10px;
+  
+}
+.summary {
+    font-family: Inter;
+    padding: 50px 25px 12px 25px;
+    height: fit-content;
+    border-top: solid gray 2px;
+/*         background-color: #f7f7f7; */
+ /*    border-radius: 10px; */
+    margin: 10px 0 0 0;
+    font-size: 20px;
+   
+}
+
+.cover img {
+    height: 50%;
+}
+
+.book_info {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    float: left;
+    margin-left: 20px;
+    flex: 1 1 30%;
+    min-height: max-content;
+    padding:75px 100px ;
+   
+    
+
+    border-left: solid gray 2px;
+}
+
+.book_info table {
+    height: 50%;
+    width: 50%;
+
+}
+
+@media screen and (min-width: 600px)
+
+/* I picked 600px arbitrarily */
+    {
+    .cover {
+        width: 20em;
+        /* I picked 14em arbitrarily */
+    }
+
+    .book_info {
+        width: calc(100% - 14em);
+    }
+}
+
+.summary {
+    flex: 1 1 100%;
+
+}
+
+.summary h3 {
+    font-size: 50px;
+}
+
+.button-back{
+    padding: 7px;
+    border-radius: 7px;
+    margin-bottom: 25px;
+    background-color: rgba(56, 56, 193,0.2);
+    color: black;
+}

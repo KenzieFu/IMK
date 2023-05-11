@@ -1,0 +1,31 @@
+.sidebar{
+    display: flex;
+    
+ 
+    height: 84vh;
+    padding:10px 0;
+
+    width: 80px;
+    background: white;
+    border: transparent;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+   
+    
+}
+.side-nav{
+    padding: 15px 0;
+    width: 100%;
+}
+
+
+.side-nav ul{
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

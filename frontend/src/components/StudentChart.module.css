@@ -1,0 +1,68 @@
+
+
+.info{
+    color:#00278C;
+    font-family: Inter;
+}
+
+.chart{
+    
+    display: flex;
+    width: 100%;
+   
+    flex-wrap: wrap;
+    margin:30px 0;
+    
+}
+.history{
+    margin-right: 25px;
+    padding-bottom: 20px;
+}
+
+.highlight-line{
+    background: #D9D9D9;
+    margin-top: 5px;
+    height: 3px;
+}
+
+.history h2{
+    font-family: Inter;
+    color:#00278C;
+    margin: 20px 0 50px 0;
+}
+
+.history .navbar{
+    display: flex;
+    font-family: Inter;
+    color:#00278C;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    
+}
+
+.history .navbar ul{
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    
+}
+
+.currentBar{
+    display: flex;
+    flex-direction: column;
+    font-weight: bolder;
+    cursor: pointer;
+    
+    
+}
+
+.not{
+    font-weight: normal;
+    color:"#D9D9D9";
+}
+
+.notBar{
+    display: none;
+}

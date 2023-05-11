@@ -1,0 +1,42 @@
+.box{
+    display: flex;
+    width: 100%;
+    max-height: 250px;
+    margin: 10px 30px 10px 0;
+}
+
+.img{
+   
+   display: flex;
+    margin-right: 15px;
+    width: 40%;    
+}
+
+.info h2{
+    font-size: 25px;
+}
+
+.info{
+    font-family: Inter;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  
+    
+}
+
+.box p{
+    padding: 3px;
+    
+    font-size: 16px;
+}
+
+.info-button{
+    width: 150px;
+    color:white;
+    background: #FF5959;
+    border: none;
+    padding:10px 5px;
+    border-radius: 10px;
+    font-size: 16px;
+}

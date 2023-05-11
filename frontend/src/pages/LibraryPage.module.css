@@ -1,0 +1,23 @@
+.content{
+    margin-top:20px ;
+    display: flex;
+    gap:25px;
+    background:"#F1F1F1";
+    margin-bottom: 20px;
+    
+}
+
+.main{
+    width: 100%;
+    color: #00278C ;
+    font-family: Inter;
+  
+}
+
+
+
+.main h1{
+    margin-left:20px;
+}
+
+

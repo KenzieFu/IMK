@@ -1,0 +1,101 @@
+.nav-header{
+    font-family:'Inter';
+    width:100%;
+    margin:auto;
+    padding: 0;
+    background: white;
+    border: transparent;
+    position: sticky;
+    top:0;
+    z-index: 30;
+    animation: drop-in 1.5s ease 100ms backwards;
+    
+   
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-around;
+    margin :0;
+    background: transparent;
+    padding:0  15px;
+    z-index: 10;
+}
+                                                                                        
+.divide{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    margin: auto;
+    animation: drop-in 1.5s ease 200ms backwards;
+}
+
+.logo{
+    width: 4vw;
+    height: auto;
+}
+
+.navbar ul{
+    font-family:inherit;
+    width:35%;
+    font-size:1.18vw;
+    margin:0;
+    padding:10;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    gap:20px;
+    font-weight: 550;
+}
+
+.linav{
+    text-decoration: none;
+    cursor: pointer;
+    color: #2E55BA;
+    transition:  all .3s ease; 
+    animation: drop-in 1.5s ease 500ms backwards;
+}
+
+.linav:hover{
+    text-decoration: none;
+    cursor: pointer;
+    transform:  translateY(-0.3vw);
+}
+
+
+.linav2{
+    color: #2E55BA;
+    cursor: pointer;
+    text-decoration: none;
+    animation: drop-in 1.5s ease 500ms backwards;
+    transition:  all .3s ease; 
+}
+
+.linav3{
+    color: #2E55BA;
+    cursor: pointer;
+    text-decoration: none;
+    animation: drop-in 1.5s ease 500ms backwards;
+    transition:  all .3s ease; 
+}
+
+.linav2:hover{
+    transform:  translateY(-0.3vw);
+}
+
+.linav3:hover{
+    transform:  translateY(-0.3vw);
+    color: #8f2af4;
+}
+
+ @keyframes drop-in {
+    from {
+     opacity: 0;
+     transform: translateY(-100px);
+    }
+    to {
+     opacity: 1;
+     transform: translate(0px);
+    }
+}

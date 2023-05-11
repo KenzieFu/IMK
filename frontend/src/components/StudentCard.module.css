@@ -1,0 +1,41 @@
+.card-info{
+    
+    background-color: #2646B7;
+    padding:20px;
+    max-width: 900px;
+    border:transparent;
+    
+    border-top-right-radius: 17px;
+    border-top-left-radius: 17px;
+    overflow: auto;
+    margin-bottom: 0px;
+}
+
+.card-details{
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.card-footer{
+    background-color: #1039A3;
+    border-bottom-left-radius:17px ;
+    border-bottom-right-radius:17px ;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.card{
+    color: white;
+    font-family: Inter;
+}
+
+.circle
+{
+    width:50px;
+    height: 50px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+}

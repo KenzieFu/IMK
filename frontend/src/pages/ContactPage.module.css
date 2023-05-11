@@ -1,0 +1,189 @@
+.content {
+    display:flex;
+    margin-top: 20px;
+    gap: 25px;
+    background: "#F1F1F1";
+    width:100%;
+
+
+}
+
+.content h1{
+    color: #00278C;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    /* font-size: 45px;   */
+    /* 1534   */ 
+    font-size: 3.25em; 
+    line-height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.content p{
+    margin-bottom: 23px;
+}
+
+.content_inner {
+
+    margin-left: 20;
+    background-color: "#F1F1F1";
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+    width:fit-content;
+    margin-right: 3px;
+    font-family: Inter;
+
+}
+
+.emailholder{
+    color: black;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-areas: 'konten1  konten2'; */
+    gap: 0.652vw 1.304vw;
+}
+
+.grid_info{
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    gap: 0.652vw;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+    justify-content: space-around;
+    /* grid-template-areas: konten1; */
+    width: 100%;
+    flex-wrap: wrap;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: white;
+    font-family: Inter;
+    margin-bottom: 0.652vw;
+    padding: 1.304vw;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.01em;
+    line-height: 17px;
+    color: #686B6F;
+}
+
+.card_iframe{
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* grid-template-areas: konten2; */
+    margin-bottom: 10px;
+
+}
+.card_iframe iframe{
+    height: 100%;
+    padding: 0;
+    border-radius: 10px;
+}
+
+.block input, textarea{
+    display: block;
+    width: 95%;
+    border: 2px solid #CCC9C9;
+    border-radius: 5px;
+    padding: 2px;
+    font-family: 'Inter';
+    padding-left: 10px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+
+}
+.block input{
+    height: 25.5px;
+  
+}
+
+.block textarea{
+    height: 165x;
+}
+
+.info p{
+    font-family: Inter;
+    font-size: 0.913;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom:12;
+}
+
+.info h1{
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+
+}
+
+.kepsek{
+    display: block;
+    width: 25%;
+    margin: auto;
+}
+.kepsek img{
+
+    width: 299px;
+}
+.button{
+    background: #2646B7CC;
+    color:#FFFFFF;
+    border-radius: 10px;
+    padding: 10px;
+    width: 95%;
+    border: 0;
+}
+
+
+/* Mencoba untuk responsive */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid_info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (min-width: 551px) and (max-width: 768px) {
+    .grid {
+        grid-template-columns: auto;
+        }
+    .gri_info {
+        grid-template-columns: auto;
+        }
+    .kepsek{
+            display: none;
+        }
+}
+@media screen and (max-width: 550px) {
+    .grid {
+        grid-template-columns: auto;
+    }
+    .grid {
+        grid-template-columns: auto;
+    }
+    .kepsek{
+        display: none;
+    }
+    
+}

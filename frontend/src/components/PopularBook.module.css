@@ -1,0 +1,61 @@
+
+.popular{
+    font-family: Inter;
+    color:#00278C ;    
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+.popular ul{
+    display: grid ;
+    grid-template-columns: 175px 175px 175px 175px 175px 175px;
+    list-style-type: none;
+    grid-gap: 30px;
+    padding: 0;
+    height: 50%;
+    width: 50%;
+    margin-top: 0px;
+}
+
+.popular h1{
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.popular .book-detail{
+   display: flex;
+   flex-direction: column;
+   
+}
+
+.book-detail h2{
+    font-size: 15px;
+    color: black;
+    margin:3px 0;
+}
+
+.book-detail span{
+    color: #686B6F;
+    font-size: z;
+}
+
+.popular li img{
+    width: 190px;
+    height: 250px;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.popular li img:hover{
+    transform: translateY(-7px);
+}
+
+.wibulu{
+    display: flex;
+    align-items: center;
+}
+
+.wibulu img{
+    border-radius: 50%;
+    height:40px;
+    width: 40px;
+}

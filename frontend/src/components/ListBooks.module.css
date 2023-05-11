@@ -1,0 +1,44 @@
+.other{
+    font-family: Inter;
+    color:#00278C ;
+}
+
+.other ul{
+    padding:0;
+    list-style-type: none;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.other li{
+    width: 150px;
+}
+ .other img{
+    width: 95%;
+    height: 210px;
+}
+
+.other .book-detail{
+    
+    display: flex;
+    flex-direction: column;
+ }
+
+ .other h1{
+    margin-left: 10px;
+    font-size: 25px;
+ }
+ 
+ .book-detail h2{
+     font-size: 15px;
+     color: black;
+     margin:3px 0;
+ }
+ 
+ .book-detail span{
+     color: #686B6F;
+     font-size: 10px;
+ }
+
+ 

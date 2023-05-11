@@ -1,0 +1,57 @@
+.due-date{
+    color:white;
+    background: #FF5959 76%;
+    padding:7px 3px;
+    border: transparent;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 105px;
+    font-size: small;
+
+}
+
+.book-info{
+    width: 100%;
+    margin-left: 25px;
+    font-family: Inter;
+    color: #00278C;
+    
+    
+}
+
+.book-info_h1{
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.book-info_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    color:white;
+    text-decoration: none;
+    background: #FF5959;
+    border: none;
+    padding:10px 5px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.rating{
+    margin-top:20px ;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: #C4C4C4;
+}
+.stars{
+    display: flex;
+    gap: 6px;
+}
+
+.checked{
+    color:#FFBE33;
+}
