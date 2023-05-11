@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { EventSection } from '../components/EventSection'
 import { EventCalender } from '../components/EventCalender'
 import { Sidebar } from '../UI/Sidebar'
 import classes from "./EventPage.module.css"
+import { Await, defer, json, useRouteLoaderData } from 'react-router-dom'
 export const EventPage = () => {
+  const {events}=useRouteLoaderData("event-calender")
   const [clickedEvent,setClickedEvent]=useState([]);
   const [currentDate,setCurrentDate]=useState([]);
   const pickDateHandler=(events)=>{
@@ -19,7 +21,13 @@ export const EventPage = () => {
         <Sidebar/>
         <div style={{ width:"90%" }}>
             <EventSection currentDate={currentDate} selectedDate={clickedEvent}/>
-            <EventCalender pickCurrentDate={pickCurrentDate} pickDateHandler={pickDateHandler}/>
+            <Suspense>
+                <Await resolve={events}>
+               {loadedData=><EventCalender events={loadedData} pickCurrentDate={pickCurrentDate} pickDateHandler={pickDateHandler}/>} 
+                </Await>
+
+            </Suspense>
+           
         </div>
         
     </div>
@@ -29,9 +37,9 @@ export const EventPage = () => {
 }
 
 
-/* const loadBooks=async ()=>{
+const loadEvents=async ()=>{
  
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/buku-perpus")
+  const response = await fetch(" http://localhost:8080/admin-perpustakaan-methodist-cw/event")
   console.log(response);
   if(!response.ok)
   {
@@ -44,9 +52,14 @@ export const EventPage = () => {
   }
   else{
     const resData=await response.json();
-    return resData;
+  
+    return resData.data;
   }
-} */
+} 
 
+export const loader=()=>{
+  return defer ({
+    events:loadEvents()
+  })
+}
 
-/* http://localhost:8080/admin-perpustakaan-methodist-cw/event */

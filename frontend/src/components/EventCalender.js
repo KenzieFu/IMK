@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import { useRouteLoaderData } from 'react-router-dom';
 import { Badge, Popover, Whisper } from "rsuite"
 import Calendar from 'rsuite/Calendar';
 import 'rsuite/dist/rsuite.min.css';
 
-export const EventCalender = ({pickDateHandler,pickCurrentDate}) => {
-  
+export const EventCalender = ({pickDateHandler,pickCurrentDate,events}) => {
+ const userId= useSelector(state=>state.auth.user)
+ const studId=userId?userId?.id_akun:null;
+ console.log(studId);
   const clickHandler=(date)=>{
     const d=date.getDate();
     const m=date.getMonth();
@@ -19,10 +23,26 @@ export const EventCalender = ({pickDateHandler,pickCurrentDate}) => {
     pickCurrentDate(dates);
   }
 
+  const checkData=(date1,date2)=>{
+    const date=new Date(date1.tanggal_event);
+    
+    return (
+      ((date.getDate() === date2.getDate()) && (date.getMonth() === date2.getMonth()) && (date.getFullYear() === date2.getFullYear()))
+      &&
+      (
+        (date1.status ==="Publik" || (date1.status==="Privat" && (date1.id_akun!=null && date1.id_akun ===studId))) && date1.tipe ==="Siswa"
+      )
+
+    );
+  }
+
     function getTodoList(date) {
-        const day = date.getDate();
-        const month=date.getFullYear();
-        switch (day) {
+       /*  const day = date.getDate();
+        const year=date.getFullYear();
+        const month=date.getMonth(); */
+        let items=events.filter((event)=>checkData(event,date))
+        return items;
+       /*  switch (day) {
           case 10:
             return [
               { time: "12:10", title: 'Meeting' },
@@ -39,7 +59,7 @@ export const EventCalender = ({pickDateHandler,pickCurrentDate}) => {
             ];
           default:
             return [];
-        }
+        } */
       }
 
 

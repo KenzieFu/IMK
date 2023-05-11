@@ -31,7 +31,9 @@ import { loader as studentLoader } from "./pages/StudentPage";
 import { BookTablePage } from "./pages/Admin/BookTablePage";
 
 
-
+//Student Loader
+//Calender (Event)
+import { loader as userCalenderLoader } from "./pages/EventPage";
 
 //Admin loader
 
@@ -44,6 +46,8 @@ import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
 
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
+
+
 
 //Admin Action
 
@@ -124,7 +128,13 @@ const studentId=useSelector(state=>state.auth.user)
        {path:"contactUs", element:<Contact/>},
        {path:"regis", element:<Registrasi/>},
        {path:"logout"},
-       {path:"calender", element:<EventPage/>}
+       {path:"calender",
+        id:"event-calender",
+        loader:userCalenderLoader,
+        children:[
+          {index:true,
+           element:<EventPage/>}
+        ]}
       ]
     },
     {
