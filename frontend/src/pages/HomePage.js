@@ -149,10 +149,10 @@ export const HomePage = () => {
                 <div>Image</div>
             </div> */}
 
-            <div className={classes.pengumuman}>
+            {/* <div className={classes.pengumuman}>
                 <div className={classes["vids"]}>
                 </div>  
-    </div>
+    </div> */}
 
     <div className={classes["faq"]}>
         <div className={classes["faq-item"]}>
@@ -161,7 +161,8 @@ export const HomePage = () => {
             <div className={classes["faq-text"]}>
                 <span>Methodist Charles Wesley adalah sekolah kristen swasta khusus untuk murid SMP dan SMA.
                     Kami juga menyediakan pendidikan SMK bagi murid-murid yang berminat untuk mendalami keahlian musik. </span>
-                <span>Untuk informasi lebih lanjut, silahkan hubungi kami lewat Whatsapp <a href="">0878 6912 3707</a></span>
+                <span>Untuk informasi lebih lanjut, silahkan hubungi kami lewat Whatsapp 
+                    <br></br><a href="">0878 6912 3707</a></span>
             </div>
         </div>
 
@@ -205,10 +206,8 @@ export const HomePage = () => {
             <input className={classes["faq-input"]} type="checkbox" id="faq_4"></input>
             <label className={classes["faq-title"]} for="faq_4">Ujian Sekolah SMP IX</label>
             <div className={classes["faq-text"]}>
-            <h1>
                 <span>Ujian Sekolah SMP Swasta MCW</span>
                 <br></br>Tahun Pelajaran 2022/2023
-                </h1>
                 <span>Jadwal Ujian: 8 - 13 Mei 2023
                 <br></br>Ruangan Ujian: P1 - P3 | Lantai 2 
                 <br></br>Pengumuman Kelulusan: 8 Juni 2023</span>
