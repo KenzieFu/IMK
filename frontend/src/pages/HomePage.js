@@ -35,7 +35,7 @@ export const HomePage = () => {
    
   
   return (
-    <div>
+    <div className={classes.all}>
         <div className={classes.main}>
             <div className={classes['main-left']}>
                 <div className={classes.quote}>
@@ -129,7 +129,7 @@ export const HomePage = () => {
             </div>
             </div>
 
-            <div className={classes["pengumuman"]}>
+            {/* <div className={classes["pengumuman"]}>
                 <div>
                     <h1 className={classes["right-content_h2"]}>Pengumuman T.P. 2022/2023</h1>
                     <p className={classes["right-content_p"]}>Salam Sejahtera bagi kita semua.Ada beberapa hal yang perlu kami infokan sehubungan dengan 
@@ -147,7 +147,146 @@ export const HomePage = () => {
                     </p>
                 </div>
                 <div>Image</div>
+            </div> */}
+
+            <div className={classes.pengumuman}>
+                <div className={classes["vids"]}>
+                </div>  
+    </div>
+
+    <div className={classes["faq"]}>
+        <div className={classes["faq-item"]}>
+            <input className={classes["faq-input"]} type="checkbox" id="faq_1"></input>
+            <label className={classes["faq-title"]} for="faq_1">Pendaftaran tahun ajaran 2023</label>
+            <div className={classes["faq-text"]}>
+                <span>Methodist Charles Wesley adalah sekolah kristen swasta khusus untuk murid SMP dan SMA.
+                    Kami juga menyediakan pendidikan SMK bagi murid-murid yang berminat untuk mendalami keahlian musik. </span>
+                <span>Untuk informasi lebih lanjut, silahkan hubungi kami lewat Whatsapp <a href="">0878 6912 3707</a></span>
             </div>
+        </div>
+
+        <div className={classes["faq-item"]}>
+            <input className={classes["faq-input"]} type="checkbox" id="faq_2"></input>
+            <label className={classes["faq-title"]} for="faq_2">Pembelian Buku Pelajaran</label>
+            <div className={classes["faq-text"]}>
+                <span> Salam Sejahtera untuk kita semua,
+                <b> Berikut ini disampaikan Jadwal Pembelian Buku T.P. 2022/2023 </b>
+                </span>
+                <span>Jadwal Pembelian: <b>06 - 09 Juli 2022</b>
+                <br></br>Batas Pembayaran sampai <b>09 Juli 2022</b> melalui Virtual Account.</span>
+                <span>Pengambilan Buku Pelajaran akan diinformasikan di Grup kelas
+                <br></br> Untuk informasi lebih lanjut dapat menghubungi wali kelas atau whatsapp sekolah.
+                </span>
+            </div>
+        </div>
+
+        <div className={classes["faq-item"]}>
+            <input className={classes["faq-input"]} type="checkbox" id="faq_3"></input>
+            <label className={classes["faq-title"]} for="faq_3">Pengumuman T.P. 2022/2023</label>
+            <div className={classes["faq-text"]}>
+                <span>Salam Sejahtera bagi kita semua. </span>
+                <br></br> Ada beberapa hal yang perlu kami infokan sehubungan dengan kegiatan belajar mengajar.
+                <ol>
+                    <li>Kegiatan Belajar Mengajar Semester Ganjil T.P. 2022-2023 dimulai pada tanggal 14 Juli 2022.</li>
+                    <li>Pengambilan Buku Pelajaran 11-13 Juli 2022 di Lantai 1.</li>
+                    <li>Masa Pengenalan Lingkungan Sekolah (MPLS) tanggal 14 Juli 2022 pukul 07.50-10.00.</li>
+                    <li>Simulasi pembelajaran tanggal 15 Juli 2022 pukul 07.50-12.40.</li>
+                    <li>Pembelajaran dilaksanakan secara penuh dengan tatap muka di sekolah mulai tanggal 18 Juli 2022 pukul 07.50-14.00</li>
+                    <li>Untuk informasi lebih lanjut, kami informasikan melalui Group kelas.</li>
+                </ol>
+                <span>
+                    Terima Kasih atas pehatian dan kerjasamanya.
+                    <br></br> Methodist Charles Wesley
+                </span>
+            </div>
+        </div>
+  
+        <div className={classes["faq-item"]}>
+            <input className={classes["faq-input"]} type="checkbox" id="faq_4"></input>
+            <label className={classes["faq-title"]} for="faq_4">Ujian Sekolah SMP IX</label>
+            <div className={classes["faq-text"]}>
+            <h1>
+                <span>Ujian Sekolah SMP Swasta MCW</span>
+                <br></br>Tahun Pelajaran 2022/2023
+                </h1>
+                <span>Jadwal Ujian: 8 - 13 Mei 2023
+                <br></br>Ruangan Ujian: P1 - P3 | Lantai 2 
+                <br></br>Pengumuman Kelulusan: 8 Juni 2023</span>
+            </div>
+        </div>
+            
+                {/* <div className={classes["dropdown"]}>
+                    <ul className={classes["dropprimary"]}>
+                        <li>
+                        <a>Pendaftaran tahun ajaran 2023</a>
+                            <ul className={classes["dropsub"]}>
+                                <li>
+                                    <span>Methodist Charles Wesley adalah sekolah kristen swasta khusus untuk murid SMP dan SMA.
+                                        Kami juga menyediakan pendidikan SMK bagi murid-murid yang berminat untuk mendalami keahlian musik. </span>
+
+                                    <span>Untuk informasi lebih lanjut, silahkan hubungi kami lewat Whatsapp <a href="">0878 6912 3707</a></span>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                        <a>Ujian Sekolah SMP IX</a>
+                            <ul className={classes["dropsub"]}>
+                                <li>
+                                    <h1>
+                                    <span>Ujian Sekolah SMP Swasta MCW</span>
+                                    <br></nr>Tahun Pelajaran 2022/2023
+                                    </h1>
+                                    <span>Jadwal Ujian: 8 - 13 Mei 2023
+                                    <br></br>Ruangan Ujian: P1 - P3 | Lantai 2 
+                                    <br></br>Pengumuman Kelulusan: 8 Juni 2023</span>
+
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                        <a>Pembelian Buku Pelajaran</a>
+                            <ul className={classes["dropsub"]}>
+                                <li>
+                                    <span> Salam Sejahtera untuk kita semua,
+                                        <b> Berikut ini disampaikan Jadwal Pembelian Buku T.P. 2022/2023 </b>
+                                    </span>
+
+                                    <span>Jadwal Pembelian: <b>06 - 09 Juli 2022</b>
+                                    <br></br>Batas Pembayaran sampai <b>09 Juli 2022</b> melalui Virtual Account.</span>
+
+                                    <span>Pengambilan Buku Pelajaran akan diinformasikan di Grup kelas
+                                        <br></br> Untuk informasi lebih lanjut dapat menghubungi wali kelas atau whatsapp sekolah.
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                        <a>Pengumuman T.P. 2022/2023</a>
+                            <ul className={classes["dropsub"]}>
+                                <li>
+                                    <span>Salam Sejahtera bagi kita semua. </span>
+                                        <br></br> Ada beberapa hal yang perlu kami infokan sehubungan dengan kegiatan belajar mengajar.
+                                        <ol>
+                                            <li>Kegiatan Belajar Mengajar Semester Ganjil T.P. 2022-2023 dimulai pada tanggal 14 Juli 2022.</li>
+                                            <li>Pengambilan Buku Pelajaran 11-13 Juli 2022 di Lantai 1.</li>
+                                            <li>Masa Pengenalan Lingkungan Sekolah (MPLS) tanggal 14 Juli 2022 pukul 07.50-10.00.</li>
+                                            <li>Simulasi pembelajaran tanggal 15 Juli 2022 pukul 07.50-12.40.</li>
+                                            <li>Pembelajaran dilaksanakan secara penuh dengan tatap muka di sekolah mulai tanggal 18 Juli 2022 pukul 07.50-14.00</li>
+                                            <li>Untuk informasi lebih lanjut, kami informasikan melalui Group kelas.</li>
+                                        </ol>
+                                        <span>
+                                            Terima Kasih atas pehatian dan kerjasamanya.
+                                            <br></br> Methodist Charles Wesley
+                                        </span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div> */}
+
+            </div>
+
         </div>
 
         {/* <div className={classes.newcontent}>
