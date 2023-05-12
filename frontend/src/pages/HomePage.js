@@ -156,22 +156,26 @@ export const HomePage = () => {
 
     <div className={classes["faq"]}>
         <div className={classes["faq-item"]}>
+            <div className={classes["faq-anim"]}>
             <input className={classes["faq-input"]} type="checkbox" id="faq_1"></input>
             <label className={classes["faq-title"]} for="faq_1">Pendaftaran tahun ajaran 2023</label>
             <div className={classes["faq-text"]}>
-                <span>Methodist Charles Wesley adalah sekolah kristen swasta khusus untuk murid SMP dan SMA.
-                    Kami juga menyediakan pendidikan SMK bagi murid-murid yang berminat untuk mendalami keahlian musik. </span>
-                <span>Untuk informasi lebih lanjut, silahkan hubungi kami lewat Whatsapp 
-                    <br></br><a href="">0878 6912 3707</a></span>
+                    <hr></hr>
+                <span>Methodist Charles Wesley adalah sekolah kristen swasta khusus untuk murid SMP dan SMA. </span>
+                 <span> Kami juga menyediakan pendidikan SMK bagi murid-murid yang berminat untuk mendalami keahlian musik. </span>
+                <span>Untuk informasi lebih lanjut, silahkan hubungi kami lewat Whatsapp - <a href="https://wa.me/6287869123707"><b>0878 6912 3707</b></a>
+                </span>
             </div>
+        </div>
         </div>
 
         <div className={classes["faq-item"]}>
             <input className={classes["faq-input"]} type="checkbox" id="faq_2"></input>
             <label className={classes["faq-title"]} for="faq_2">Pembelian Buku Pelajaran</label>
             <div className={classes["faq-text"]}>
+            <hr></hr>
                 <span> Salam Sejahtera untuk kita semua,
-                <b> Berikut ini disampaikan Jadwal Pembelian Buku T.P. 2022/2023 </b>
+                Berikut ini disampaikan <b> Jadwal Pembelian Buku T.P. 2022/2023 </b>
                 </span>
                 <span>Jadwal Pembelian: <b>06 - 09 Juli 2022</b>
                 <br></br>Batas Pembayaran sampai <b>09 Juli 2022</b> melalui Virtual Account.</span>
@@ -185,14 +189,15 @@ export const HomePage = () => {
             <input className={classes["faq-input"]} type="checkbox" id="faq_3"></input>
             <label className={classes["faq-title"]} for="faq_3">Pengumuman T.P. 2022/2023</label>
             <div className={classes["faq-text"]}>
+            <hr></hr>
                 <span>Salam Sejahtera bagi kita semua. </span>
-                <br></br> Ada beberapa hal yang perlu kami infokan sehubungan dengan kegiatan belajar mengajar.
+                 Ada beberapa hal yang perlu kami infokan sehubungan dengan kegiatan belajar mengajar.
                 <ol>
-                    <li>Kegiatan Belajar Mengajar Semester Ganjil T.P. 2022-2023 dimulai pada tanggal 14 Juli 2022.</li>
-                    <li>Pengambilan Buku Pelajaran 11-13 Juli 2022 di Lantai 1.</li>
-                    <li>Masa Pengenalan Lingkungan Sekolah (MPLS) tanggal 14 Juli 2022 pukul 07.50-10.00.</li>
-                    <li>Simulasi pembelajaran tanggal 15 Juli 2022 pukul 07.50-12.40.</li>
-                    <li>Pembelajaran dilaksanakan secara penuh dengan tatap muka di sekolah mulai tanggal 18 Juli 2022 pukul 07.50-14.00</li>
+                    <li>Kegiatan Belajar Mengajar Semester Ganjil T.P. 2022-2023 dimulai pada tanggal <b>14 Juli 2022.</b></li>
+                    <li>Pengambilan Buku Pelajaran <b>11-13 Juli 2022</b> di Lantai 1.</li>
+                    <li>Masa Pengenalan Lingkungan Sekolah (MPLS) tanggal <b>14 Juli 2022</b> pukul 07.50-10.00.</li>
+                    <li>Simulasi pembelajaran tanggal <b>15 Juli 2022</b> pukul 07.50-12.40.</li>
+                    <li>Pembelajaran dilaksanakan secara penuh dengan tatap muka di sekolah mulai tanggal <b>18 Juli 2022</b> pukul 07.50-14.00</li>
                     <li>Untuk informasi lebih lanjut, kami informasikan melalui Group kelas.</li>
                 </ol>
                 <span>
@@ -206,11 +211,11 @@ export const HomePage = () => {
             <input className={classes["faq-input"]} type="checkbox" id="faq_4"></input>
             <label className={classes["faq-title"]} for="faq_4">Ujian Sekolah SMP IX</label>
             <div className={classes["faq-text"]}>
-                <span>Ujian Sekolah SMP Swasta MCW</span>
-                <br></br>Tahun Pelajaran 2022/2023
-                <span>Jadwal Ujian: 8 - 13 Mei 2023
-                <br></br>Ruangan Ujian: P1 - P3 | Lantai 2 
-                <br></br>Pengumuman Kelulusan: 8 Juni 2023</span>
+            <hr></hr>
+                <span>Ujian Sekolah SMP Swasta MCW T.P. 2022/2023</span>
+                <span>Jadwal Ujian: <b>8 - 13 Mei 2023 </b></span>
+                Ruangan Ujian: <b>P1 - P3 | Lantai 2</b>
+                <span>Pengumuman Kelulusan: <b>8 Juni 2023</b></span>
             </div>
         </div>
             
