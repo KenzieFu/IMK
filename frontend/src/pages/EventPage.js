@@ -8,11 +8,22 @@ export const EventPage = () => {
   const {events}=useRouteLoaderData("event-calender")
   const [clickedEvent,setClickedEvent]=useState([]);
   const [currentDate,setCurrentDate]=useState([]);
+  const [currentIndex,setCurrentIndex]=useState(0);
   const pickDateHandler=(events)=>{
     setClickedEvent(events)
   }
 
+  const reset=()=>{
+    setCurrentIndex(0);
+  }
+
+  const onPageHandler=(index)=>{
+    setCurrentIndex(index-1)
+  }
+ 
+
   const pickCurrentDate=(date)=>{
+
     setCurrentDate(date);
   }
   return (
@@ -20,10 +31,10 @@ export const EventPage = () => {
     <div className={classes.content}>
         <Sidebar/>
         <div style={{ width:"90%" }}>
-            <EventSection currentDate={currentDate} selectedDate={clickedEvent}/>
+            <EventSection onPageHandler={onPageHandler} currentDate={currentDate} currentIndex={currentIndex}  selectedDate={clickedEvent} />
             <Suspense>
                 <Await resolve={events}>
-               {loadedData=><EventCalender events={loadedData} pickCurrentDate={pickCurrentDate} pickDateHandler={pickDateHandler}/>} 
+               {loadedData=><EventCalender reset={reset} events={loadedData} pickCurrentDate={pickCurrentDate} pickDateHandler={pickDateHandler}/>} 
                 </Await>
 
             </Suspense>
