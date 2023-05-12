@@ -6,7 +6,7 @@ const sequelize = require("./util/database");
 const multer = require("multer");
 
 // const feedRoutes = require('./routes/feed');
-const authRoutes = require('./routes/auth');
+const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
 const adminRoutes = require("./routes/admin");
 
@@ -30,14 +30,33 @@ const fileFilter = (req, file, cb) => {
 };
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
-app.use(bodyParser.json()); // application/json
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
+// app.use(bodyParser.json()); // application/json
+app.use(bodyParser.json({ limit: "50mb" })); // set limit to 50mb
+
+// app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
+app.use(
+  multer({
+    storage: fileStorage,
+    limits: {
+      fileSize: 1024 * 1024 * 50, // set limit to 50mb
+    },
+    fileFilter: fileFilter,
+  }).single("image")
+);
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
+
+// Set CORS headers
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 

@@ -87,7 +87,7 @@ export const BookTablePage = () => {
                    title={
                     <div style={{ display:"flex",justifyContent:"space-between" }}>
                         <h2>Tabel Buku</h2>
-                        <button>Create</button>
+                        <Link to="create">Create</Link>
                     </div>
                    }
                    data={loadedData}

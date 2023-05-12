@@ -249,26 +249,32 @@
     margin: auto;
     margin-top: 4vw;
     background-color: none;
+    margin-bottom: 3vw;
 }
 
-.vids{
+/* .vids{
     width: 51%;
     height: 50vh;
     background-image: url(../../public/assets/photos/photo11.jpeg);
     background-size: cover;
     border-radius: 2.2vw;
-}
+} */
 
 .faq {
-    width: 49%;
+    width: 80vw;
     margin: auto;
+    padding-bottom: 2vw;
+    margin-top: 2vw;
+    height: 100%;
+    transition: all .5 ease;
+
 }
 
 .faq-item {
     margin-bottom: 5px;
     text-align: right;
     line-height: 1.8;
-    background-color: var(--red-light);
+    background-color: var(--white-light);
     border-radius: 1.5vw;
     transition:  all .5s ease; 
 }
@@ -277,10 +283,10 @@
     display: block;
     padding: 1vw;
     position: relative;
-    color: var(--white-light);
+    color: var(--red-light);
     font-weight: 700;
+    font-size: 1.2vw;
     cursor: pointer;
-    transition: all .3s ease-out;
     border-radius: 1.5vw;
     transition:  all .5s ease; 
 }
@@ -289,15 +295,15 @@
     content: "";
     display: block;
     border-style: solid;
-    border-color: #fff transparent transparent transparent;
     position: absolute;
     top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
+    left: 1.2vw;
+    transition:  all .5s ease; 
 }
 
 .faq-title:hover {
-    background-color: var(--red-light);
+    background-color: var(--white-light);
+    color: var(--red-light);
     border-radius: 1.5vw;
 }
 
@@ -311,13 +317,15 @@
 }
 
 .faq-input:checked ~ .faq-title {
-    background-color: var(--red-light);
+    transition:  all .5s ease; 
 }
 
 .faq-input:checked ~ .faq-title:after {
     border-style: solid;
     border-width: 0 5px 8px 5px;
     border-color: transparent transparent #fff transparent;
+    transition:  all .5s ease; 
+
 }
 
 .faq-input:checked ~ .faq-text {
