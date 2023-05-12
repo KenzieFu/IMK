@@ -3,6 +3,7 @@ import { Box } from '../../UI/Box'
 import { Await, useRouteLoaderData, useNavigate } from 'react-router-dom'
 import { json,defer } from 'react-router-dom'
 import { Suspense } from 'react'
+
 export const DetailBuku = () => {
     const { bookDetail }= useRouteLoaderData("admin-detail-buku");
     const navigate= useNavigate();
@@ -23,12 +24,42 @@ export const DetailBuku = () => {
                 <Box>
         
                 <div className='acc-info'>
-                    <h1>Detail Buku ({loadedData.id_buku})</h1>
+                    <h1 hidden>Detail Buku ({loadedData.id_buku})</h1>
                     <table>
                         <tr>
                             <td>Judul Buku</td>
                             <td>:</td>
                             <td>{loadedData.judul_buku}</td>
+                        </tr>
+                        <tr>
+                            <td>Pengarang</td>
+                            <td>:</td>
+                            <td>{loadedData.pengarang}</td>
+                        </tr>
+                        <tr>
+                            <td>Penerbit</td>
+                            <td>:</td>
+                            <td>{loadedData.penerbit}</td>
+                        </tr>
+                        <tr>
+                            <td>Tahun Terbit</td>
+                            <td>:</td>
+                            <td>{loadedData.tahun_terbit}</td>
+                        </tr>
+                        <tr>
+                            <td>ISBN</td>
+                            <td>:</td>
+                            <td>{loadedData.isbn}</td>
+                        </tr>
+                        <tr>
+                            <td>Sinopsis</td>
+                            <td>:</td>
+                            <td>{loadedData.sinopsis}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td> <img src="../assets/book.png" /></td>
                         </tr>
                        
                         
