@@ -48,7 +48,6 @@
     color: var(--blue);
 }
 
-
 .main-button{
     background: var(--white);
     color: var(--accentblack);
@@ -280,8 +279,10 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+
 .faq-title {
     display: block;
+    width: 90vw;
     padding: 1vw;
     position: relative;
     color: var(--red-light);
@@ -313,7 +314,7 @@
 }
 
 .faq-input:checked ~ .faq-text {
-    display: inline-block;
+    display: block;
 }
 
 .faq-text {
@@ -341,6 +342,21 @@
     height: 1px; 
 }
 
+.faq-down{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.faq-down span{
+    display: flex;
+    margin-right: 1vw;
+    color: var(--red-light);
+    font-size: 1.8vw;
+    width: 5vw;
+    align-items: center;
+    justify-content: center;
+}
 
 /* 
 .dropdown{

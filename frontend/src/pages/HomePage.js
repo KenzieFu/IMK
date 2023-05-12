@@ -45,7 +45,7 @@ export const HomePage = () => {
                 </div>
                 <div className={classes['overflow-hidden']}>
                 <div className={classes['drop-in']}>
-                <h1 style={{ display:"flex",flexWrap:"wrap",fontSize:"3vw", width:"80%"}}>
+                <h1 style={{ display:"flex",flexWrap:"wrap",fontSize:"3vw", width:"80%", lineHeight:"4.7vw"}}>
                    <span>Welcome to</span>
                    <span>Methodist Charles Wesley</span>
                 </h1>
@@ -73,7 +73,7 @@ export const HomePage = () => {
             Our mission is to strive and develop each student to their maximum potential: intellectually, physically, emotionally, morally, and socially. 
             </div>
             <div className={classes['buttons']}>
-                <button className={classes["main-button2"]}>Hubungi Kami <i class="fa fa-phone" aria-hidden="true"></i> </button>
+                <button className={classes["main-button2"]}> Hubungi Kami <i class="fa fa-phone" aria-hidden="true"></i> </button>
             <div className={classes['anotherbutton']}>
                 <button className={classes["main-button3"]}><i class="fa fa-play" aria-hidden="true"></i></button>
                 <h1 className={classes['ttgkami']}>
@@ -156,9 +156,11 @@ export const HomePage = () => {
 
     <div className={classes["faq"]}>
         <div className={classes["faq-item"]}>
-            <div className={classes["faq-anim"]}>
             <input className={classes["faq-input"]} type="checkbox" id="faq_1"></input>
-            <label className={classes["faq-title"]} for="faq_1">Pendaftaran tahun ajaran 2023</label>
+            <div className={classes["faq-down"]}>
+            <label className={classes["faq-title"]} for="faq_1">Pendaftaran tahun ajaran 2023 </label>
+            <span ><i class="fa fa-angle-double-down" aria-hidden="true"></i></span>
+            </div>
             <div className={classes["faq-text"]}>
                     <hr></hr>
                 <span>Methodist Charles Wesley adalah sekolah kristen swasta khusus untuk murid SMP dan SMA. </span>
@@ -167,11 +169,13 @@ export const HomePage = () => {
                 </span>
             </div>
         </div>
-        </div>
 
         <div className={classes["faq-item"]}>
             <input className={classes["faq-input"]} type="checkbox" id="faq_2"></input>
+            <div className={classes["faq-down"]}>
             <label className={classes["faq-title"]} for="faq_2">Pembelian Buku Pelajaran</label>
+            <span ><i class="fa fa-angle-double-down" aria-hidden="true"></i></span>
+            </div>
             <div className={classes["faq-text"]}>
             <hr></hr>
                 <span> Salam Sejahtera untuk kita semua,
@@ -187,7 +191,10 @@ export const HomePage = () => {
 
         <div className={classes["faq-item"]}>
             <input className={classes["faq-input"]} type="checkbox" id="faq_3"></input>
+            <div className={classes["faq-down"]}>
             <label className={classes["faq-title"]} for="faq_3">Pengumuman T.P. 2022/2023</label>
+            <span ><i class="fa fa-angle-double-down" aria-hidden="true"></i></span>
+            </div>
             <div className={classes["faq-text"]}>
             <hr></hr>
                 <span>Salam Sejahtera bagi kita semua. </span>
@@ -209,7 +216,10 @@ export const HomePage = () => {
   
         <div className={classes["faq-item"]}>
             <input className={classes["faq-input"]} type="checkbox" id="faq_4"></input>
+            <div className={classes["faq-down"]}>
             <label className={classes["faq-title"]} for="faq_4">Ujian Sekolah SMP IX</label>
+            <span ><i class="fa fa-angle-double-down" aria-hidden="true"></i></span>
+            </div>
             <div className={classes["faq-text"]}>
             <hr></hr>
                 <span>Ujian Sekolah SMP Swasta MCW T.P. 2022/2023</span>
