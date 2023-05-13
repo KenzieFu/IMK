@@ -4,7 +4,7 @@
 
 
 .content {
-        display:flex;
+        display: flex;
         margin-top: 20px;
         display: flex;
         gap: 25px;
@@ -13,27 +13,24 @@
 
 
 }
-.content h3{
+
+.content h3 {
         color: #00278C;
         font-family: Inter;
         font-size: large;
+
 }
 
 .content_inner {
-         margin-left: 20px;
+        margin-left: 20px;
         background-color: white;
         border-radius: 10px;
         padding: 20px;
         margin-bottom: 20px;
-        width:100%;
+        width: 100%;
         margin-right: 3px;
 }
 
-.grid{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px 20px;
-}
 
 .card {
 
@@ -51,14 +48,14 @@
         padding: 20px;
 }
 
-
-.error{
+.error {
         color: red;
         font-size: 15px;
         font-weight: 500;
         margin-left: 5px;
 }
-.error input{
+
+.error input {
         background-color: #ffa6a6;
         border-radius: 10px;
 
@@ -69,6 +66,7 @@
         margin-bottom: 5px;
         width: 390px;
 }
+
 .card input {
         background-color: white;
         border-radius: 10px;
@@ -80,6 +78,7 @@
         margin-top: 6px;
         margin-bottom: 5px;
 }
+
 .card input[type="date"] {
         background-color: aliceblue;
         color: red;
@@ -92,9 +91,10 @@
         width: 390px;
 } */
 
-.card input[type="checkbox"]{
+.card input[type="checkbox"] {
         margin-left: 10px;
 }
+
 .card textarea {
         background-color: white;
         border-radius: 10px;
@@ -108,10 +108,10 @@
         height: 100px;
 }
 
-.card Select{
 
-}
-.block input, textarea {
+
+.block input,
+textarea {
         display: block;
 }
 
@@ -119,14 +119,14 @@
         flex-direction: row;
 }
 
-.button{
+.button {
         display: flex;
-        display: table-row;
         text-align: center;
-
-
+        flex-direction: row;
+        justify-content: space-around;
 }
-.button button{
+
+.button button {
         border-radius: 10px;
         border: 0;
         padding: 8px;
@@ -136,7 +136,23 @@
         margin-right: 100px;
 }
 
-.button button:hover{
+.button_edit {
+        display: flex;
+        flex-direction: row;
+        float: right;
+}
+
+.button_edit button {
+        border-radius: 10px;
+        border: 0;
+        padding: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: 100px;
+        margin-right: 100px;
+}
+
+.button_edit button:hover {
         border-radius: 10px;
         border: 0;
         padding: 8px;
@@ -147,15 +163,62 @@
         color: aliceblue;
         background-color: darkblue;
 }
+
+.button button:hover {
+        border-radius: 10px;
+        border: 0;
+        padding: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: 100px;
+        margin-right: 100px;
+        color: aliceblue;
+        background-color: darkblue;
+}
+
+.button button:disabled {
+        border-radius: 10px;
+        border: 0;
+        padding: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: 100px;
+        margin-right: 100px;
+        color: white;
+        background-color: gray;
+}
+
 .submit {
         background-color: chartreuse;
         color: black;
 }
+
 .reset {
         background-color: #D9D9D9;
+        color: black;
+}
+.edit {
+        background-color: #edebeb;
         color: black;
 }
 .cancel {
         background-color: red;
         color: black;
 }
+
+.stepper {
+        display: flex;
+        padding: 24px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+}
+
+.stepper ol {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+}
+
