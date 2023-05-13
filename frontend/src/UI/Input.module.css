@@ -1,0 +1,8 @@
+.box{
+    display: flex;
+    flex-direction: column;
+}
+
+.box input{
+    width: 50%;
+}
