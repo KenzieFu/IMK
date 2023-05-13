@@ -1,20 +1,159 @@
-.content {
-    display:flex;
-    margin-top: 20px;
-    gap: 25px;
-    background: "#F1F1F1";
-    width:100%;
+:root{
+    --white:#ffffff;
+    --blue:#2e55ba; 
+    --accentblack:rgb(58, 58, 58);
+    --red:#FF5959;
+    --grey:#cac9d2;
+    --addgrey: #9f9f9f;
 
+    --white-light:#ffffff;
+    --blue-light:#2e55ba;
+    --accentblack-light:rgb(58, 58, 58);
+    --red-light:#FF5959;
+    --grey-light: #cac9d2;
+    --addgrey-light: #9f9f9f;
 
+    --white-dark:#ffffff;
+    --blue-dark:#2e55ba;
+    --accentblack-dark:rgb(58, 58, 58);
+    --red-dark:#FF5959;
+    --grey-dark: #cac9d2;
+    --addgrey-dark: #9f9f9f;
 }
 
-.content h1{
-    color: #00278C;
+@media(prefers-color-scheme: dark){
+    :root{
+        --white: var(--white-dark);
+        --blue: var(--blue-dark);
+        --accentblack: var(--accentblack-dark);
+        --red: var(--red-dark);
+        --grey: var(--grey-dark);
+        --addgrey: var(--addgrey-dark);
+    }
+}
+
+
+@keyframes drop-in {
+    from {
+     opacity: 0;
+     transform: translateY(-100px);
+    }
+    to {
+     opacity: 1;
+     transform: translate(0px);
+    }
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.content-form{
+    display: flex;
+    flex-direction: column;
+    width: 51%;
+    padding-top: 4vw;
+    padding-left: 8vw;
+    padding-right: 4vw;
+}
+
+.content-form h1{
+    color: var(--accentblack-light);
+    margin-bottom: 0.6vw;
+    font-weight: 600;
+}
+
+.content-form p{
+    color: var(--accentblack-light);
+    margin-bottom: 1vw;
+    font-size: 1.3vw;
+    font-weight: 500;
+}
+
+.maps{
+    width: 49%;
+    height: 100%;
+    animation: drop-in 1.5s ease 200ms backwards;
+}
+
+.maps iframe{
+    width: 100%;
+    height: 70vw;
+}
+
+.content-input{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1.2vw;
+    cursor: text;
+    animation: drop-in 1s ease 200ms backwards;
+}
+
+.content-input:focus, input, textarea{
+    outline: none;
+}
+
+.content-input label{
+    margin-bottom: 0.4vw;
+    font-weight: 600;
+    font-size: 1vw;
+}
+
+.content-input ::placeholder{
+    color: var(--addgrey-light);
+    font-weight: 500;
+}
+
+.content-input input, textarea{
+    width: 35vw;
+    color: var(--accentblack-light);
+    font-size: 1.11vw;
+    border-radius: 1vw;
+    border: 1px solid var(--grey-light);
+    padding: 0.8vw;
+}
+
+.kirimbutton{
+    width: 35vw;
+    margin-top: 2vw;
+    background-color: var(--red-light);
+    padding:0.8vw 2.2vw;
+    border-radius: 1vw;
+    color: var(--white);
+    font-size: 1.11vw;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    transition:  all .3s ease; 
+    animation: drop-in 1.5s ease 200ms backwards;
+    cursor: pointer;
+}
+
+.kirimbutton:hover{
+    background-color: var(--white-light);
+    color: var(--red-light);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transform:  translateY(-0.3vw);
+}
+
+.kirimbutton:active{
+    transform:  scale(.99);
+}
+
+
+.contactus{
+    text-align: left;
+    animation: drop-in 1.8s ease 200ms backwards;
+}
+
+/* .content h1{
+
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    /* font-size: 45px;   */
-    /* 1534   */ 
     font-size: 3.25em; 
     line-height: 40px;
     margin-top: 5px;
@@ -25,20 +164,6 @@
     margin-bottom: 23px;
 }
 
-.content_inner {
-
-    margin-left: 20;
-    background-color: "#F1F1F1";
-
-    border-radius: 10px;
-
-    margin-bottom: 20px;
-    width:fit-content;
-    margin-right: 3px;
-    font-family: Inter;
-
-}
-
 .emailholder{
     color: black;
 }
@@ -46,7 +171,6 @@
 .grid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* grid-template-areas: 'konten1  konten2'; */
     gap: 0.652vw 1.304vw;
 }
 
@@ -61,7 +185,6 @@
     flex-direction: column;
     flex: 50%;
     justify-content: space-around;
-    /* grid-template-areas: konten1; */
     width: 100%;
     flex-wrap: wrap;
     border-width: 3px;
@@ -84,7 +207,6 @@
     flex: 50%;
     justify-content: space-around;
     flex-wrap: wrap;
-    /* grid-template-areas: konten2; */
     margin-bottom: 10px;
 
 }
@@ -152,7 +274,7 @@
     padding: 10px;
     width: 95%;
     border: 0;
-}
+} */
 
 
 /* Mencoba untuk responsive */
@@ -185,5 +307,4 @@
     .kepsek{
         display: none;
     }
-    
 }
