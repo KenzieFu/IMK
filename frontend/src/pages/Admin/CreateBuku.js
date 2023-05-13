@@ -44,7 +44,7 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn);
 
-      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
         method: 'POST',
         body: formDataToSend
       });
@@ -174,7 +174,7 @@ export const CreateBuku = () => {
             onChange={handleInputChange}
           />
         </FormGroup>
- 
+
         <FormGroup>
           <Label for="sinopsis">Sinopsis</Label>
           <Input
