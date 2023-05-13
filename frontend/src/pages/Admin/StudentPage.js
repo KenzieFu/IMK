@@ -20,7 +20,7 @@ export const StudentPage = () => {
       const closeModalHandler=()=>{
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
-        
+
       }
 
 
@@ -29,9 +29,9 @@ export const StudentPage = () => {
             id:'id',
             name:"ID",
             selector:row=>row.id_siswa,
-            
+
             sortable:true,
-            
+
         },
         {
             id:"nisn",
@@ -58,16 +58,16 @@ export const StudentPage = () => {
             id:"button",
             name:"Action",
             width:"30%",
-          cell: (row) => 
+          cell: (row) =>
                 (
               <div style={{ margin:"0 0" }} >
             <Link to={`/admin/students/${row.id_siswa}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
             <span  onClick={()=>showModalHandler(row.id_siswa)} style={{ cursor:"pointer" }}>Delete</span>
-           
+
             </div>
           ),
-          
+
           ignoreRowClick: true,
           allowOverflow: true,
           selector:row=>row.button,
@@ -85,7 +85,7 @@ export const StudentPage = () => {
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
                     <h2>Tabel Siswa</h2>
-                    <Link to="create">Create</Link>
+                    <Link to="registrasi/data-pribadi">Create</Link>
                 </div>
                }
                data={loadedData}
@@ -94,7 +94,7 @@ export const StudentPage = () => {
                    />
             }
           </Await>
-        </Suspense> 
+        </Suspense>
         {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
         {location.state && <div>{location.state.message}</div>}
     </>
@@ -119,16 +119,16 @@ const loadStudents=async ()=>{
       return resData;
     }
   }
-  
-  
+
+
   export const loader=()=>{
     return defer({
       students:loadStudents()
     })
   }
-  
+
   export async function action({ params, request }) {
-    
+
     const method = request.method;
     const data = await request.formData();
     console.log(data);
@@ -138,7 +138,7 @@ const loadStudents=async ()=>{
         "Authorization":"Bearer"
       }
     });
-  
+
     if (!response.ok) {
       throw json(
         { message: 'Could not delete student.' },
@@ -146,12 +146,12 @@ const loadStudents=async ()=>{
           status: 500,
         }
       );
-    
+
     }
      return  redirect("/admin/students");
   }
-  
-  
-  
-  
-  
+
+
+
+
+

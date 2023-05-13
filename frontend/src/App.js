@@ -70,9 +70,6 @@ import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinja
 
 
 
-
-
-
 import { DetailBuku } from "./pages/Admin/DetailBuku";
 import { DetailStudentPage } from "./pages/Admin/DetailStudentPage";
 import { EditStudentPage } from "./pages/Admin/EditStudentPage";
@@ -135,16 +132,6 @@ const studentId=useSelector(state=>state.auth.user)
 
         ]},
        {path:"contactUs", element:<Contact/>},
-       { path: "/registrasi", element: <Registrasi />,
-       children: [
-         { path: "data-pribadi", element: <DataSiswa /> },
-         { path: "data-kesehatan", element: <DataKesehatan /> },
-         { path: "data-pendidikan", element: <DataPendidikan /> },
-         { path: "data-ayah", element: <DataAyah /> },
-         { path: "data-ibu", element: <DataIbu /> },
-         { path: "data-wali", element: <DataWali /> },
-         { path: "konfirmasi-data", element: <KonfirmasiData /> },
-       ] },
        {path:"logout"},
        {path:"calender",
         id:"event-calender",
@@ -185,7 +172,6 @@ const studentId=useSelector(state=>state.auth.user)
               path:"edit",
               action:editUserAction,
               element:<EditUser/>
-
 
             }
            ]}
@@ -231,10 +217,16 @@ const studentId=useSelector(state=>state.auth.user)
              loader:adminStudentLoader,
              action:adminDeleteStudentAction
              },
-             {
-              path:"create",
-              element:<CreateSiswa/>
-             },
+             { path: "registrasi", element: <Registrasi />,
+             children: [
+               { path: "data-pribadi", element: <DataSiswa /> },
+               { path: "data-kesehatan", element: <DataKesehatan /> },
+               { path: "data-pendidikan", element: <DataPendidikan /> },
+               { path: "data-ayah", element: <DataAyah /> },
+               { path: "data-ibu", element: <DataIbu /> },
+               { path: "data-wali", element: <DataWali /> },
+               { path: "konfirmasi-data", element: <KonfirmasiData /> },
+             ] },
              {
               path:":idSiswa",
               id:"detail-siswa",
@@ -248,7 +240,8 @@ const studentId=useSelector(state=>state.auth.user)
                   element:<EditStudentPage/>
                 }
               ]
-             }
+             },
+
           ]
          },
          {

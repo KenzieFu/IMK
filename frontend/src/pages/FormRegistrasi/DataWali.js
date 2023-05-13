@@ -206,7 +206,7 @@ export const DataWali = () => {
         }
         console.log(formValues)
         console.log(ada_wali)
-        navigate("/registrasi/konfirmasi-data")
+        navigate("../konfirmasi-data")
     }
 
     let pinInputRef = useRef(null);
@@ -247,7 +247,7 @@ export const DataWali = () => {
     return (
         <React.Fragment>
             <div className={classes.content}>
-                <Sidebar />
+
                 <div className={classes.content_inner}>
                     <form onSubmit={handleSubmit(formSubmitHandler)}>
                     <Stepper
@@ -356,7 +356,7 @@ export const DataWali = () => {
                             }
                         </div>
                         <div className={classes.button}>
-                        <Link to="/registrasi/data-ibu">
+                        <Link to="../data-ibu">
                             <button className={classes.cancel}>
                                     {"<"} Sebelumnya
                             </button>

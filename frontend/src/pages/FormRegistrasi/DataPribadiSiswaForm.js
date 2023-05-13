@@ -44,21 +44,21 @@ export const DataSiswa = () => {
     const schema = yup.object().shape({
         // validasi data siswa
 
-        nama_siswa: yup.string().required("Wajib diisi"),
+        // nama_siswa: yup.string().required("Wajib diisi"),
 
-        warga_negara: yup.string().required('Wajib diisi'),
+        // warga_negara: yup.string().required('Wajib diisi'),
 
-        nik_siswa: yup.string().required("Wajib diisi").matches(/^[0-9]+$/gi, "Input angka yang valid").min(16, "NIK tidak boleh kurang dari 16 digit").max(16, "NIK tidak boleh lebih dari 16 digit"),
-        no_akteLahir: yup.string().required("Wajib diisi").matches(Akteregex, "Input Akte Lahir dengan format yang telah dicontohkan"),
-        tptLahir: yup.string().required("Wajib diisi"),
-        tglLahir: yup.string().required("Wajib diisi"),
-        kelamin: yup.string().required("Wajib diisi"),
-        agama: yup.string().required("Wajib diisi"),
-        anak_ke: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
-        jmlh_saudara: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
-        alamat_rumah: yup.string().required("Wajib diisi"),
-        no_HP_siswa: yup.string().matches(noHPRegex, { message: "Harap input nomor HP yang valid", excludeEmptyString: true }),
-        email_siswa: yup.string().email("Harap input alamat email yang valid"),
+        // nik_siswa: yup.string().required("Wajib diisi").matches(/^[0-9]+$/gi, "Input angka yang valid").min(16, "NIK tidak boleh kurang dari 16 digit").max(16, "NIK tidak boleh lebih dari 16 digit"),
+        // no_akteLahir: yup.string().required("Wajib diisi").matches(Akteregex, "Input Akte Lahir dengan format yang telah dicontohkan"),
+        // tptLahir: yup.string().required("Wajib diisi"),
+        // tglLahir: yup.string().required("Wajib diisi"),
+        // kelamin: yup.string().required("Wajib diisi"),
+        // agama: yup.string().required("Wajib diisi"),
+        // anak_ke: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
+        // jmlh_saudara: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
+        // alamat_rumah: yup.string().required("Wajib diisi"),
+        // no_HP_siswa: yup.string().matches(noHPRegex, { message: "Harap input nomor HP yang valid", excludeEmptyString: true }),
+        // email_siswa: yup.string().email("Harap input alamat email yang valid"),
 
 
     })
@@ -104,7 +104,7 @@ export const DataSiswa = () => {
     const formSaveHandler = (formValues) => {
         setState({ ...state, ...formValues });
         console.log(formValues)
-        navigate("/registrasi/data-kesehatan")
+        navigate("../data-kesehatan")
     }
 
     let pinInputRef = useRef(null);
@@ -153,7 +153,7 @@ export const DataSiswa = () => {
         <React.Fragment>
 
             <div className={classes.content}>
-                <Sidebar />
+
                 <div className={classes.content_inner}>
                     <Stepper
                         steps={steps}
@@ -269,7 +269,7 @@ export const DataSiswa = () => {
                             </div>
                         </div>
                         <div className={classes.button}>
-                            <Link to="/">
+                            <Link to="../..">
                                 <button className={classes.cancel} type="button">
                                     {"<"} Batalkan
                                 </button>

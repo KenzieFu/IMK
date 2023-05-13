@@ -1,6 +1,11 @@
+.book_info h2{
+    color: #00278C;
+    font-size: 50px;
+}
+
 .card {
-    display: flex;
-    flex-direction: row;
+    display: block;
+    flex-direction: column;
     margin-left: 5px;
     flex-flow: row wrap;
     background-color: white;
@@ -10,41 +15,48 @@
     width: 100%;
     margin-right: 3px;
     gap: 20px;
-    
-
 }
 
 .content {
     display: flex;
     margin-top: 20px;
-    display: flex;
     gap: 25px;
     background: "#F1F1F1";
     width: 100%;
+    
 }
+
+td{
+    color: #686B6F;
+}
+
 .cover {
  
     padding: 12px 25px;
-    height: fit-content;
-    
-    
+    height: max-content;
     border-radius: 10px;
   
 }
+
 .summary {
     font-family: Inter;
-    padding: 50px 25px 12px 25px;
+    padding: 50px 25px 25px 0;
     height: fit-content;
-    border-top: solid gray 2px;
+    /* border-top: solid gray 2px; */
 /*         background-color: #f7f7f7; */
  /*    border-radius: 10px; */
-    margin: 10px 0 0 0;
+    /* margin: 10px 0 0 0; */
     font-size: 20px;
    
 }
 
 .cover img {
-    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 145px;
+    max-width: 250%;
+    /* width: fit-content; */
 }
 
 .book_info {
@@ -60,7 +72,7 @@
    
     
 
-    border-left: solid gray 2px;
+    /* border-left: solid gray 2px; */
 }
 
 .book_info table {
@@ -68,6 +80,19 @@
     width: 50%;
 
 }
+
+/* .hero{
+    float: right;
+    display: block;
+    height: auto;
+} */
+
+/* .hero{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 250%;
+} */
 
 @media screen and (min-width: 600px)
 
@@ -98,4 +123,12 @@
     margin-bottom: 25px;
     background-color: rgba(56, 56, 193,0.2);
     color: black;
+}
+
+.button-borrow{
+    padding: 7px;
+    border-radius: 7px;
+    margin-top: 25px;
+    background-color: #FF5959;
+    color: white;
 }
