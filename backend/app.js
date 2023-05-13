@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sequelize = require("./util/database");
 const multer = require("multer");
-
+const cors = require('cors');
 // const feedRoutes = require('./routes/feed');
 const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
@@ -45,20 +45,24 @@ app.use(
 );
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   next();
-// });
+ app.use((req, res, next) => {
+   res.setHeader("Access-Control-Allow-Origin", "*");
+   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
+   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+   next();
+ });
 
 // Set CORS headers
-app.use(function(req, res, next) {
+/* app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+
+app.use(cors({
+  origin:"http://localhost:3000"
+})) */
 
 // app.use('/feed', feedRoutes);
 app.use("/auth", authRoutes);

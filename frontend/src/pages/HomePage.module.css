@@ -1,21 +1,21 @@
 :root{
     --white:#ffffff;
     --blue:#2e55ba; 
-    --accentblack:rgb(38, 38, 38);
+    --accentblack:rgb(58, 58, 58);
     --red:#FF5959;
-    --grey:#f4f1f1;
+    --gray:#f4f1f1;
 
     --white-light:#ffffff;
     --blue-light:#2e55ba;
-    --accentblack-light:rgb(38, 38, 38);
+    --accentblack-light:rgb(58, 58, 58);
     --red-light:#FF5959;
-    --grey-light:#f4f1f1;
+    --gray-light:#f4f1f1;
 
     --white-dark:#ffffff;
     --blue-dark:#2e55ba;
-    --accentblack-dark:rgb(38, 38, 38);
+    --accentblack-dark:rgb(58, 58, 58);
     --red-dark:#FF5959;
-    --grey-dark:#f4f1f1;
+    --gray-dark:#f4f1f1;
 }
 
 @media(prefers-color-scheme: dark){
@@ -24,7 +24,7 @@
         --blue: var(--blue-dark);
         --accentblack: var(--accentblack-dark);
         --red: var(--red-dark);
-        --grey: var(--grey-dark);
+        --gray: var(--gray-dark);
     }
 }
 
@@ -47,7 +47,6 @@
     font-family: Inter;
     color: var(--blue);
 }
-
 
 .main-button{
     background: var(--white);
@@ -130,7 +129,7 @@
     padding-top: 6vw;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
-    background-color: var(--grey);
+    background-color: var(--gray);
     
 }
 
@@ -154,7 +153,7 @@
     justify-content: center;
     align-items: center;
     width: 95%;
-    height: 40vh;
+    height: 20vw;
     margin: auto;
 }
 
@@ -166,7 +165,7 @@
     padding: 1vw;
     text-align: left;
     background-color: transparent;
-    height: 80%;
+    height: 90%;
     width: 25vw;
     border-radius: 2.2vw;
     transition:  all .5s ease; 
@@ -210,7 +209,7 @@
     align-items: center;
     text-align: center;
     background-color: transparent;
-    height: 100%;
+    height: 90%;
     width: 15vw;
     border-radius: 2.2vw;
     transition:  all .5s ease; 
@@ -239,7 +238,6 @@
     font-weight: 700;
 }
 
-
 .pengumuman{
     display: flex;
     align-items: center;
@@ -267,20 +265,24 @@
     margin-top: 2vw;
     height: 100%;
     transition: all .5 ease;
-
 }
+
 
 .faq-item {
     margin-bottom: 5px;
-    text-align: right;
+    text-align: left;
+    padding-left: 0.5vw;
     line-height: 1.8;
     background-color: var(--white-light);
     border-radius: 1.5vw;
-    transition:  all .5s ease; 
+    transition:  all .5 ease; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
 
 .faq-title {
     display: block;
+    width: 90vw;
     padding: 1vw;
     position: relative;
     color: var(--red-light);
@@ -294,10 +296,7 @@
 .faq-title:after {
     content: "";
     display: block;
-    border-style: solid;
     position: absolute;
-    top: 50%;
-    left: 1.2vw;
     transition:  all .5s ease; 
 }
 
@@ -310,43 +309,54 @@
 .faq-input {
     width: 0;
     height: 0;
-    -webkit-appearance: none;
-    appearance: none;
     position: absolute;
-    transition:  all .5s ease; 
-}
-
-.faq-input:checked ~ .faq-title {
-    transition:  all .5s ease; 
-}
-
-.faq-input:checked ~ .faq-title:after {
-    border-style: solid;
-    border-width: 0 5px 8px 5px;
-    border-color: transparent transparent #fff transparent;
-    transition:  all .5s ease; 
-
+    transition: display 0.5s ease;
 }
 
 .faq-input:checked ~ .faq-text {
     display: block;
-    transition:  all .5s ease; 
 }
 
 .faq-text {
     display: none;
     background-color: var(--white-light);
     text-align: left;
+    width: 100%;
     font-size: 1.11vw;
-    margin-bottom: 1vw;
+    margin-top: 0;
+    margin-bottom: 0.5vw;
     border-bottom-right-radius: 1.5vw;
     border-bottom-left-radius: 1.5vw;
-    padding: 0.74vw 1.11vw;
+    padding: 0 1.11vw;
+    padding-bottom: 1vw;
     color: var(--accentblack-light);
-    transition:  all .5s ease; 
-    
+    transition: display 0.5s ease;
 }
 
+.faq-text span{
+    display: block;
+}
+
+.faq-text hr{
+    margin-top: 0 !important;
+    height: 1px; 
+}
+
+.faq-down{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.faq-down span{
+    display: flex;
+    margin-right: 1vw;
+    color: var(--red-light);
+    font-size: 1.8vw;
+    width: 5vw;
+    align-items: center;
+    justify-content: center;
+}
 
 /* 
 .dropdown{

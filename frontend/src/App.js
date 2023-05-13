@@ -9,7 +9,7 @@ import {StudentPage} from './pages/StudentPage'
 import { LibraryPage } from "./pages/LibraryPage";
 import  BookDetail, { loader } from './pages/BookDetails'
 import Contact from "./pages/ContactPage";
-import Registrasi from "./pages/FormRegistrasi/regristrationForm";
+
 
 import { lazy } from "react";
 import { UserPage, action } from "./pages/Admin/UserPage";
@@ -29,6 +29,15 @@ import { action as editUserAction } from "./components/admin/dashboard/UserForm"
 import { useSelector } from "react-redux";
 import { loader as studentLoader } from "./pages/StudentPage";
 import { BookTablePage } from "./pages/Admin/BookTablePage";
+
+import { Registrasi } from './pages/FormRegistrasi/Registrasi'
+import { DataSiswa } from './pages/FormRegistrasi/DataPribadiSiswaForm'
+import { DataKesehatan } from "./pages/FormRegistrasi/DataKesehatanSiswaForm";
+import { DataPendidikan } from "./pages/FormRegistrasi/DataPendidikanSiswa";
+import { DataAyah } from "./pages/FormRegistrasi/DataAyah";
+import { DataIbu } from "./pages/FormRegistrasi/DataIbu";
+import { DataWali } from "./pages/FormRegistrasi/DataWali";
+import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
 
 
 //Student Loader
@@ -98,7 +107,7 @@ const Breadcrumbs = lazy(() => import("./UI/admin/Breadcrumbs"));
 function App() {
 const studentId=useSelector(state=>state.auth.user)
   const studId=studentId?studentId?.user?.id_siswa:null;
-  
+
 
   const router=createBrowserRouter([
     { path: "/",
@@ -112,7 +121,7 @@ const studentId=useSelector(state=>state.auth.user)
         element:<StudentPage/>,
          loader:(s)=>studentLoader(studId)
       },
-       {path:"library", 
+       {path:"library",
         children:[
           {index:true,
             id:'books',
@@ -126,7 +135,16 @@ const studentId=useSelector(state=>state.auth.user)
 
         ]},
        {path:"contactUs", element:<Contact/>},
-       {path:"regis", element:<Registrasi/>},
+       { path: "/registrasi", element: <Registrasi />,
+       children: [
+         { path: "data-pribadi", element: <DataSiswa /> },
+         { path: "data-kesehatan", element: <DataKesehatan /> },
+         { path: "data-pendidikan", element: <DataPendidikan /> },
+         { path: "data-ayah", element: <DataAyah /> },
+         { path: "data-ibu", element: <DataIbu /> },
+         { path: "data-wali", element: <DataWali /> },
+         { path: "konfirmasi-data", element: <KonfirmasiData /> },
+       ] },
        {path:"logout"},
        {path:"calender",
         id:"event-calender",
@@ -147,12 +165,12 @@ const studentId=useSelector(state=>state.auth.user)
 
         {path:"user",
           children:[
-          {index:true, 
+          {index:true,
             id:"admin-akun",
             element:<UserPage/>,
             loader:usersLoader,
             action:deleteUserAction
-            
+
            },
            {path:":idAkun",
            id:"detail-akun",
@@ -161,14 +179,14 @@ const studentId=useSelector(state=>state.auth.user)
             {
               index:true,
               element:<DetailUser/>,
-              
+
             },
             {
               path:"edit",
               action:editUserAction,
               element:<EditUser/>
-              
-              
+
+
             }
            ]}
         ]
@@ -260,7 +278,7 @@ const studentId=useSelector(state=>state.auth.user)
                 }
               ]
              }
-            
+
           ]
          },
          /* {
@@ -269,7 +287,7 @@ const studentId=useSelector(state=>state.auth.user)
             {index:true,
              id:"admin-pengembalian",
              element:<DaftarPengembalianBukuPage/>,
-             
+
             },
             {
               path:":idPengembalian",
@@ -285,7 +303,7 @@ const studentId=useSelector(state=>state.auth.user)
                 }
               ]
              }
-            
+
           ]
          }, */
 
@@ -303,17 +321,17 @@ const studentId=useSelector(state=>state.auth.user)
       { path: "breadcrumbs", exact: true, element: <Breadcrumbs /> }, */
       ]
     }
-   
+
   ]);
-  
+
 
   return (
     <>
-    
+
     <RouterProvider  router={router}/>
-      
+
     </>
-  
+
   );
 }
 

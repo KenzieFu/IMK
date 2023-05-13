@@ -5,11 +5,12 @@ import { Badge, Popover, Whisper } from "rsuite"
 import Calendar from 'rsuite/Calendar';
 import 'rsuite/dist/rsuite.min.css';
 
-export const EventCalender = ({pickDateHandler,pickCurrentDate,events}) => {
+export const EventCalender = ({pickDateHandler,pickCurrentDate,events,reset}) => {
  const userId= useSelector(state=>state.auth.user)
  const studId=userId?userId?.id_akun:null;
  console.log(studId);
   const clickHandler=(date)=>{
+    reset();
     const d=date.getDate();
     const m=date.getMonth();
     const y=date.getFullYear();
@@ -19,6 +20,7 @@ export const EventCalender = ({pickDateHandler,pickCurrentDate,events}) => {
       month:m,
       year:y
     }
+  
     pickDateHandler(events);
     pickCurrentDate(dates);
   }
@@ -37,29 +39,8 @@ export const EventCalender = ({pickDateHandler,pickCurrentDate,events}) => {
   }
 
     function getTodoList(date) {
-       /*  const day = date.getDate();
-        const year=date.getFullYear();
-        const month=date.getMonth(); */
         let items=events.filter((event)=>checkData(event,date))
         return items;
-       /*  switch (day) {
-          case 10:
-            return [
-              { time: "12:10", title: 'Meeting' },
-              { time: '12:00 pm', title: 'Lunch' }
-            ];
-          case 15:
-            return [
-              { time: '09:30 pm', title: 'Products Introduction Meeting' },
-              { time: '12:30 pm', title: 'Client entertaining' },
-              { time: '02:00 pm', title: 'Product design discussion' },
-              { time: '05:00 pm', title: 'Product test and acceptance' },
-              { time: '06:30 pm', title: 'Reporting' },
-              { time: '10:00 pm', title: 'Going home to walk the dog' }
-            ];
-          default:
-            return [];
-        } */
       }
 
 
