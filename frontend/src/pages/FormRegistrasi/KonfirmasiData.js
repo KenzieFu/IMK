@@ -8,16 +8,17 @@ import Stepper from 'react-stepper-horizontal'
 import ConfirmModal from "./modal/confirm_submit";
 import { useState } from "react";
 import SubmittedModal from "./modal/submited_modal";
+import { useNavigate } from "react-router-dom";
 
 export const KonfirmasiData = () => {
 
     const {state} = useAppState();
     const { steps } = useAppState();
     const {ada_wali} = useAppState()
+    const navigate = useNavigate();
 
     const activeStep = 6
 
-    const { handleSubmit } = useForm({ defaultValues: state });
 
     const [showConfirm, setShowConfirm] = useState(false);
 
@@ -28,28 +29,73 @@ export const KonfirmasiData = () => {
   const showConfirmModal = () => {
     setShowConfirm(true);
   }
+
+  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/siswa';
+
  const [isSubmitted, setIsSubmitted] = useState(false)
 
-    const formSubmitHandler = (formValues) => {
+    const formSubmitHandler = async () => {
         setShowConfirm(false)
+        try {
+            // const formDataToSend = new FormData();
+            // nisn', state.nisn);
+            // nama_lengkap', state.nama_siswa);
+            // jenis_kelamin', state.kelamin);
+            // tanggal_lahir', state.tglLahir);
+            // tempat_lahir', state.tptLahir);
+            // kelas', state.diterima);
+            // agama', state.agama);
+            // alamat', state.alamat_rumah);
+            // nomor_telepon', state.no_HP_siswa);
+            // email', state.email_siswa);
+
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization":"Bearer"
+              },
+              body: JSON.stringify({
+                id_siswa: '999',
+                id_akun: "1232",
+                nisn: state.nisn,
+                nama_lengkap: state.nama_siswa,
+                jenis_kelamin: state.kelamin,
+                tanggal_lahir: state.tglLahir,
+                tempat_lahir: state.tptLahir,
+                kelas: state.diterima,
+                agama: state.agama,
+                alamat: state.alamat_rumah,
+                nomor_telepon: state.no_HP_siswa,
+                email: state.email_siswa,
+               })
+
+            });
+
+            const createdData = await response.json();
+            console.log('Data created:', createdData);
+
+          } catch (error) {
+            console.error('Error creating data:', error);
+          }
         setIsSubmitted(true)
-            console.log('tes')
+            console.log(state.nisn)
 
     }
 
     const closeSubmitModal = () => {
+        navigate('../..')
        setIsSubmitted(false);
       }
 
     return (
         <React.Fragment>
             <div className={classes.content}>
-                <Sidebar />
                 <div className={classes.content_inner}>
                 <Stepper
                     steps={steps}
                     activeStep={activeStep} />
-                    <form onSubmit={handleSubmit(formSubmitHandler)}>
+                    <form onSubmit={formSubmitHandler}>
                         <div>
                             <h3>Konfirmasi Data</h3>
                         </div>
@@ -105,7 +151,7 @@ export const KonfirmasiData = () => {
                                 <td>: {state.email_siswa}</td>
                             </tr>
                            </table>
-                           <legend > <Link to="/registrasi/data-pribadi">
+                           <legend > <Link to="../data-pribadi">
                             <div className={classes.button_edit}>
                             <button className={classes.edit} type="button">
                                    Edit
@@ -137,7 +183,7 @@ export const KonfirmasiData = () => {
                                 <td>: {state.cacat}</td>
                             </tr>
                            </table>
-                           <legend > <Link to="/registrasi/data-kesehatan">
+                           <legend > <Link to="../data-kesehatan">
                             <div className={classes.button_edit}>
                             <button className={classes.edit} type="button">
                                    Edit
@@ -169,7 +215,7 @@ export const KonfirmasiData = () => {
                                 <td>: {state.tgl_ijazah}</td>
                             </tr>
                            </table>
-                           <legend > <Link to="/registrasi/data-pendidikan">
+                           <legend > <Link to="../data-pendidikan">
                             <div className={classes.button_edit}>
                             <button className={classes.edit} type="button">
                                    Edit
@@ -231,7 +277,7 @@ export const KonfirmasiData = () => {
                                 <td>: {state.status_ayah}</td>
                             </tr>
                            </table>
-                           <legend > <Link to="/registrasi/data-ayah">
+                           <legend > <Link to="../data-ayah">
                             <div className={classes.button_edit}>
                             <button className={classes.edit} type="button">
                                    Edit
@@ -292,7 +338,7 @@ export const KonfirmasiData = () => {
                                 <td>: {state.status_ibu}</td>
                             </tr>
                            </table>
-                           <legend > <Link to="/registrasi/data-ibu">
+                           <legend > <Link to="../data-ibu">
                             <div className={classes.button_edit}>
                             <button className={classes.edit} type="button">
                                    Edit
@@ -357,7 +403,7 @@ export const KonfirmasiData = () => {
                            </>
                         }
                         {ada_wali && <h3>Tidak ada wali</h3>}
-                        <legend > <Link to="/registrasi/data-wali">
+                        <legend > <Link to="../data-wali">
                             <div className={classes.button_edit}>
                             <button className={classes.edit} type="button">
                                    Edit
@@ -367,7 +413,7 @@ export const KonfirmasiData = () => {
                         </fieldset>
 
                         <div className={classes.button} style={{marginTop:"20px"}}>
-                        <Link to="/registrasi/data-wali">
+                        <Link to="../data-wali">
                             <button className={classes.cancel} type="button">
                                     {"<"} Sebelumnya
                             </button>

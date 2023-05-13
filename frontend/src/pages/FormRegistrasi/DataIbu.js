@@ -83,19 +83,19 @@ export const DataIbu = () => {
 
 
     const schema = yup.object().shape({
-        nama_ibu: yup.string().required("Wajib diisi"),
-        nik_ibu: yup.string().required("Wajib diisi").matches(/^[0-9]+$/gi, "Input angka yang valid").min(16, "NIK tidak boleh kurang dari 16 digit").max(16, "NIK tidak boleh lebih dari 16 digit"),
-        tpt_lahir_ibu: yup.string().required("Wajib diisi"),
-        tgl_lahir_ibu: yup.string().required("Wajib diisi"),
-        agama_ibu: yup.string().required("Wajib diisi"),
-        warga_negara_ibu: yup.string().required("Wajib diisi"),
-        alamat_ibu: yup.string().required("Wajib diisi"),
-        no_HP_ibu: yup.string().required("Wajib diisi").matches(noHPRegex, { message: "Harap input nomor HP yang valid" }),
-        email_ibu: yup.string().email("Harap input alamat email yang valid"),
-        status_ibu: yup.string().required("Wajib diisi"),
-        pekerjaan_ibu: yup.string().required("Wajib diisi"),
-        pendidikan_ibu: yup.string().required("Wajib diisi"),
-        penghasilan_ibu: yup.string().required("Wajib diisi"),
+        // nama_ibu: yup.string().required("Wajib diisi"),
+        // nik_ibu: yup.string().required("Wajib diisi").matches(/^[0-9]+$/gi, "Input angka yang valid").min(16, "NIK tidak boleh kurang dari 16 digit").max(16, "NIK tidak boleh lebih dari 16 digit"),
+        // tpt_lahir_ibu: yup.string().required("Wajib diisi"),
+        // tgl_lahir_ibu: yup.string().required("Wajib diisi"),
+        // agama_ibu: yup.string().required("Wajib diisi"),
+        // warga_negara_ibu: yup.string().required("Wajib diisi"),
+        // alamat_ibu: yup.string().required("Wajib diisi"),
+        // no_HP_ibu: yup.string().required("Wajib diisi").matches(noHPRegex, { message: "Harap input nomor HP yang valid" }),
+        // email_ibu: yup.string().email("Harap input alamat email yang valid"),
+        // status_ibu: yup.string().required("Wajib diisi"),
+        // pekerjaan_ibu: yup.string().required("Wajib diisi"),
+        // pendidikan_ibu: yup.string().required("Wajib diisi"),
+        // penghasilan_ibu: yup.string().required("Wajib diisi"),
     })
 
     const { register, control, handleSubmit, reset, formState, setValue} = useForm({
@@ -144,7 +144,7 @@ export const DataIbu = () => {
             console.error(error);
         }
         console.log(formValues)
-        navigate("/registrasi/data-wali")
+        navigate("../data-wali")
     }
 
     let pinInputRef = useRef(null);
@@ -187,7 +187,7 @@ export const DataIbu = () => {
     return (
         <React.Fragment>
             <div className={classes.content}>
-                <Sidebar />
+
                 <div className={classes.content_inner}>
                 <Stepper
                     steps={steps}
@@ -297,7 +297,7 @@ export const DataIbu = () => {
                             </div>
                         </div>
                         <div className={classes.button}>
-                        <Link to="/registrasi/data-ayah">
+                        <Link to="../data-ayah">
                             <button className={classes.cancel}>
                                     {"<"} Sebelumnya
                             </button>
