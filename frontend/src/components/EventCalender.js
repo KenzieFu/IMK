@@ -6,7 +6,8 @@ import Calendar from 'rsuite/Calendar';
 import 'rsuite/dist/rsuite.min.css';
 
 export const EventCalender = ({pickDateHandler,pickCurrentDate,events,reset}) => {
- const userId= useSelector(state=>state.auth.user)
+ const userId= useSelector(state=>state.auth.user);
+ 
  const studId=userId?userId?.id_akun:null;
  console.log(studId);
   const clickHandler=(date)=>{

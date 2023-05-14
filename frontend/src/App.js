@@ -41,8 +41,12 @@ import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
 
 
 //Student Loader
+
 //Calender (Event)
 import { loader as userCalenderLoader } from "./pages/EventPage";
+
+//Student Action
+import { action as eventAction } from "./pages/EventPage";
 
 //Admin loader
 
@@ -138,7 +142,8 @@ const studentId=useSelector(state=>state.auth.user)
         loader:userCalenderLoader,
         children:[
           {index:true,
-           element:<EventPage/>}
+           element:<EventPage/>,
+           action:eventAction}
         ]}
       ]
     },
