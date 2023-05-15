@@ -35,9 +35,14 @@ const navigation = [
   },
   {
     title:"Events",
-    href:"/admin/events",
+    href:"/admin/calender",
     icon:"bi bi-calendar-event text-primary"
-  }
+  },
+  {
+    title:"HomePage",
+    href:"/",
+    icon:"bi bi-calendar-event text-primary"
+  },
   /* {
     title: "Alert",
     href: "/admin/alerts",

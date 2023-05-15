@@ -21,7 +21,7 @@ const authen=useSelector(state=>state.auth.isAuth);
                     <img src="/assets/logopng.png" className={classes['logo']} alt="" />
                 </div>
                 <ul>
-                    <li className={classes['linav2']}>Masuk Perpus</li>
+                    <li className={classes['linav2']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/admin">Masuk Admin</NavLink></li>
                   {!authen &&  <li className={classes['linav3']} onClick={props.onClick}>Login</li>}  
                 </ul>
             </nav>

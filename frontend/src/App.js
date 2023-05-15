@@ -60,6 +60,9 @@ import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
 
+//Calender
+import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
+
 
 
 //Admin Action
@@ -70,6 +73,8 @@ import { action as adminDeleteBookAction } from "./pages/Admin/BookTablePage";
 import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 //Buku Pinjam
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
+//Calender
+import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 
 
 
@@ -88,6 +93,7 @@ import { EditPengembalianBuku } from "./pages/Admin/EditPengembalianBuku";
 import { CreateBuku } from "./pages/Admin/CreateBuku";
 import { EditBuku } from "./pages/Admin/EditBuku";
 import { EventPage } from "./pages/EventPage";
+import { AdminEventPage } from "./pages/Admin/AdminEventPage";
 
 
 /****Layouts Admin*****/
@@ -304,6 +310,14 @@ const studentId=useSelector(state=>state.auth.user)
 
           ]
          }, */
+         {path:"calender",
+          id:"admin-calender",
+          loader:adminEventLoader,
+        children:[
+          {index:true,
+           element:<AdminEventPage/>,
+           action:adminEventAction}
+        ]}
 
 
 

@@ -64,7 +64,7 @@ export const StudentPage = () => {
             <Link to={`/admin/students/${row.id_siswa}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
             <span  onClick={()=>showModalHandler(row.id_siswa)} style={{ cursor:"pointer" }}>Delete</span>
-
+                  
             </div>
           ),
 
