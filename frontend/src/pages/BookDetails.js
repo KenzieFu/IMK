@@ -15,9 +15,9 @@ const BookDetail = () => {
             <div className={classes.content}>
                 <div className={classes.card}>
                 <Sidebar />
-                    <div className={classes.hero}>
+                   {/*  <div className={classes.hero}>
                         <img src="../assets/hero-details-books.jpg"></img>
-                    </div>
+                    </div> */}
                     <div className={classes.cover}>
                         <img src="../assets/book.png"></img>
                     </div>
