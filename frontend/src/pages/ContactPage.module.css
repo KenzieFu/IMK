@@ -149,6 +149,50 @@
     animation: drop-in 1.8s ease 200ms backwards;
 }
 
+.main2{
+    display: flex;
+    width: 100%;
+    height: 27vw;
+    background-color: rgb(245, 245, 245);
+    align-items: center;
+}
+
+.main2con{
+    display: block;
+    text-align: left;
+    width: 30vw;
+    padding: 1vw;
+    padding-left: 2vw;
+}
+
+.main2con span{
+    display: block;
+    margin: auto;
+    font-size: 1.11vw;
+    color: var(--addgrey-light);
+    font-weight: 600;
+}
+
+.main2con h1{
+    font-size: 2vw;
+    color: var(--accentblack-light);
+    font-weight: 600;
+}
+
+.main2con h2{
+    font-size: 1.5vw;
+    color: var(--accentblack-light);
+    font-weight: 600;
+}
+
+.minilogo{
+    width: 5vw;
+    height: 5vw;
+    background-color: red;
+    border-radius: 50%;
+    margin-top: 2vw;
+}
+
 /* .content h1{
 
     font-family: 'Inter';
