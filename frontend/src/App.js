@@ -94,6 +94,7 @@ import { CreateBuku } from "./pages/Admin/CreateBuku";
 import { EditBuku } from "./pages/Admin/EditBuku";
 import { EventPage } from "./pages/EventPage";
 import { AdminEventPage } from "./pages/Admin/AdminEventPage";
+import { StudentAuth } from "./components/auth/StudentAuth";
 
 
 /****Layouts Admin*****/
@@ -125,7 +126,7 @@ const studentId=useSelector(state=>state.auth.user)
        {index:true ,element:<HomePage/>},
        {path:"student",
        id:"pinjam-kembali-buku",
-        element:<StudentPage/>,
+        element:<StudentAuth><StudentPage/></StudentAuth>,
          loader:(s)=>studentLoader(studId)
       },
        {path:"library",
@@ -148,7 +149,7 @@ const studentId=useSelector(state=>state.auth.user)
         loader:userCalenderLoader,
         children:[
           {index:true,
-           element:<EventPage/>,
+           element:<StudentAuth><EventPage/></StudentAuth>,
            action:eventAction}
         ]}
       ]

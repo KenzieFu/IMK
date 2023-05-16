@@ -56,7 +56,8 @@ let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
           <button onClick={showEditHandler}>Edit</button>
      
       <Form method='Delete'>
-        <input type="text" name='id_event' value={selectedDate[currentIndex].id_event} />
+        <input
+         type="text" name='id_event' value={selectedDate[currentIndex].id_event} />
         <button type='submit' onClick={(e)=>deleteHandler(e)}>Delete</button>
       </Form>
     </div>}
