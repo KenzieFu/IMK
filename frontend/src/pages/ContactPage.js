@@ -13,10 +13,10 @@ const Contact = (props) => {
 const isAuth = useSelector((state)=>state.auth.isAuth);
     return (
         <Fragment>
-                {isAuth &&<Sidebar />}
-                {!isAuth && <div></div>}
 
                     <div className={classes.main}>
+                    {isAuth &&<Sidebar />}
+                {!isAuth && <div></div>}
                         <div className={classes['content-form']}>
                             <div className={classes['contactus']}>
                             <h1>Contact us</h1>
@@ -57,10 +57,9 @@ const isAuth = useSelector((state)=>state.auth.isAuth);
                         <span style={{fontSize:"1.25vw" }}> Lokasi Kami </span>
                         <h1> Kunjungi Sekolah Kami </h1>
                         <span> Jam kerja : 7:30 AM - 15:00 PM</span>
-                        <div className={classes['minilogo']}></div>
                         </div>
                         </div>
-                        <div className={classes['main2con']} style={{paddingLeft:"3vw"}}>
+                        <div className={classes['main2con2']} style={{paddingLeft:"3vw"}}>
                         <h2> Email </h2>
                         <span> info@methodistcw.sch.id</span>
                         <span> methodistcw@gmail.com</span>
@@ -73,8 +72,8 @@ const isAuth = useSelector((state)=>state.auth.isAuth);
                         <span> Komplek CBD. Polonia Blok CC No.108Jl. </span>
                         <span>Padang Golf (dalam) Medan – Sumatera Utara 20157</span>
                         </div>
-                        <div className={classes['main2con']}>
-
+                        <div className={classes['main2con2']}>
+                        <div className={classes['minilogo']}></div>
                         </div>
                     </div>
 

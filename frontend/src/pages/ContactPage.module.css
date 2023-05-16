@@ -44,6 +44,10 @@
     }
 }
 
+*{
+    font-family: 'Inter';
+}
+
 .main{
     display: flex;
     justify-content: center;
@@ -153,7 +157,7 @@
     display: flex;
     width: 100%;
     height: 27vw;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(248, 248, 248);
     align-items: center;
 }
 
@@ -165,32 +169,43 @@
     padding-left: 2vw;
 }
 
-.main2con span{
+.main2con2{
+    display:block;
+    text-align: left;
+    padding-left: 4vw;
+    margin-left: 5vw;
+}
+
+.main2 span{
     display: block;
     margin: auto;
     font-size: 1.11vw;
     color: var(--addgrey-light);
-    font-weight: 600;
 }
 
 .main2con h1{
     font-size: 2vw;
     color: var(--accentblack-light);
     font-weight: 600;
+    line-height: 5vw;
 }
 
-.main2con h2{
+.main2con2 h2{
     font-size: 1.5vw;
     color: var(--accentblack-light);
     font-weight: 600;
+    line-height: 3vw;
 }
 
 .minilogo{
-    width: 5vw;
-    height: 5vw;
+    width: 18vw;
+    height: 18vw;
     background-color: red;
     border-radius: 50%;
     margin-top: 2vw;
+    background-image: url(../../public/assets/anime-pat.gif);
+    background-size: cover;
+    background-position-x: center;
 }
 
 /* .content h1{
