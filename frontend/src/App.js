@@ -95,6 +95,7 @@ import { EditBuku } from "./pages/Admin/EditBuku";
 import { EventPage } from "./pages/EventPage";
 import { AdminEventPage } from "./pages/Admin/AdminEventPage";
 import { StudentAuth } from "./components/auth/StudentAuth";
+import { AdminAuth } from "./components/auth/AdminAuth";
 
 
 /****Layouts Admin*****/
@@ -157,7 +158,7 @@ const studentId=useSelector(state=>state.auth.user)
     {
       path:"/admin",
       id:"root-admin",
-      element:<FullLayout/>,
+      element:<AdminAuth><FullLayout/></AdminAuth>,
       errorElement:<ErrorAdminPage/>,
       children:[
         {index:true,element:<Starter/>},

@@ -2,7 +2,9 @@ import React from 'react'
 import { Box } from '../UI/Box'
 import classes from './StudentChart.module.css'
 import { BookBar } from '../UI/BookBar'
+import { useSelector } from 'react-redux'
 export const StudentChart = (props) => {
+    const student=useSelector((state)=>state.auth.user);
     let currentBarPinjamClassName= `${classes.currentBar}  ${!props.showPinjam?classes.not:""}`;
     let currentBarKembaliClassnName= `${classes.currentBar}  ${props.showPinjam?classes.not:""}`;
     let barPinjamClassName=`${classes["highlight-line"]} ${!props.showPinjam?classes.notBar:""}`;
@@ -13,7 +15,7 @@ export const StudentChart = (props) => {
         <Box>
             <div style={{ padding:"0 0 0 30px" }}>
             <div className={classes.info}>
-                <h1>Halo, Triffine!</h1>
+                <h1>Halo, {student.username}!</h1>
                 <span>Sudahkah kamu membaca buku hari ini?</span>
             </div>
             <div className={classes.chart}>
