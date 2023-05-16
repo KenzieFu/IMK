@@ -21,7 +21,7 @@
 
 .footer{
     background-color: var(--white-light);
-    font-family: Inter;
+    font-family: 'Inter';
     padding:1vw 4vw;
     margin-top: 3vw;
     position: relative;

@@ -45,14 +45,14 @@ export const HomePage = () => {
                 </div>
                 <div className={classes['overflow-hidden']}>
                 <div className={classes['drop-in']}>
-                <h1 style={{ display:"flex",flexWrap:"wrap",fontSize:"3vw", width:"80%", lineHeight:"4.7vw"}}>
+                <h1 style={{ display:"flex",flexWrap:"wrap",fontSize:"3vw", width:"80%", lineHeight:"4vw"}}>
                    <span>Welcome to</span>
                    <span>Methodist Charles Wesley</span>
                 </h1>
                 </div>
                 </div>
                 <div className={classes['overflow-hidden']}>
-                <div className={classes['drop-in-2']} style={{ display:"flex",fontSize:"1.11vw", flexDirection:"column", marginBottom:"4vw" }}>
+                <div className={classes['drop-in-2']} style={{ display:"flex",fontSize:"1.11vw", flexDirection:"column", marginBottom:"4vw", marginTop:"1vw" }}>
                     <span>Komplek CBD. Polonia Blok CC No.108Jl. Padang Golf (dalam)</span>
                     <span>Medan – Sumatera Utara 20157 Indonesia</span>
                 </div>
