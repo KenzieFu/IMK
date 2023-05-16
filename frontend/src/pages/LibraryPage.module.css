@@ -1,59 +1,3 @@
-:root{
-    --white:#ffffff;
-    --blue:#2e55ba; 
-    --accentblack:rgb(58, 58, 58);
-    --red:#FF5959;
-    --gray:#f4f1f1;
-
-    --white-light:#ffffff;
-    --blue-light:#2e55ba;
-    --accentblack-light:rgb(58, 58, 58);
-    --red-light:#FF5959;
-    --gray-light:#f4f1f1;
-
-    --white-dark:#ffffff;
-    --blue-dark:#2e55ba;
-    --accentblack-dark:rgb(58, 58, 58);
-    --red-dark:#FF5959;
-    --gray-dark:#f4f1f1;
-}
-
-@media(prefers-color-scheme: dark){
-    :root{
-        --white: var(--white-dark);
-        --blue: var(--blue-dark);
-        --accentblack: var(--accentblack-dark);
-        --red: var(--red-dark);
-        --gray: var(--gray-dark);
-    }
-}
-
-.topup{
-    display: flex;
-    justify-content: center;
-    background: no-repeat center center;
-    background-image: url(../../public/assets/booklibrary.jpg);
-    height: 30vw;
-    width: 97%;
-    border-radius: 2.2vw;
-    opacity: 1;
-    padding: 4.44vw;
-    margin: auto;
-}
-
-.topup:after{
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    filter: blur(10px); 
-    pointer-events: none; 
-}
-
-.uphead{
-
-}
-
 .content{
     margin-top:20px ;
     gap:25px;
@@ -68,7 +12,7 @@
 }
 
 .main h1{
-    margin-left:20px;
+
 }
 
 

@@ -3,6 +3,7 @@ import { Sidebar } from '../UI/Sidebar'
 import { StudentChart } from '../components/StudentChart'
 import classes from './LibraryPage.module.css'
 import { SearchBox } from '../UI/SearchBox'
+import { Recommendation } from '../UI/Recommendation'
 import { PopularBook } from '../components/PopularBook'
 import { ListBooks } from '../components/ListBooks'
 import { Suspense } from 'react'
@@ -27,10 +28,16 @@ export const LibraryPage = () => {
       {isAuth &&<Sidebar/>}
       {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
       <div className={classes.main}>
-
-      <div className={classes['topup']}>
-      <div className={classes['uphead']}></div>
+      <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
       </div>
+
+      {!check &&
+      <>
+      <Suspense fallback="">
+          <Await resolve={genres}>
+         {(loadedRecommendation)=><Recommendation recommendation={loadedRecommendation}/>} 
+          </Await>
+        </Suspense>
     
         <Suspense fallback="">
           <Await resolve={genres}>
@@ -38,8 +45,8 @@ export const LibraryPage = () => {
           </Await>
         </Suspense>
            
-         <div style={{display:'flex', justifyContent:'flex-end'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
-         </div>
+           </>
+        }
          
         {!check &&
         <>
