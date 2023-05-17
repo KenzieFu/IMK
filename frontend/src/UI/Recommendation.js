@@ -18,6 +18,9 @@ export const Recommendation = (props) => {
       <button className={classes['buttonup']}>Detail Buku</button>
         </div>
       </div>
+      <div className={classes['introtop']}>
+        <span> Selamat datang di Perpustakaan Methodist Charles Wesley</span>
+      </div>
       </div>
   )
 }

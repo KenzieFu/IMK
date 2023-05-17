@@ -44,12 +44,13 @@
     background-size: cover;
     background-position-y: -4vw;
     background-image: url(../../public/assets/BookCover.png);
-    height: 30vw;
+    height: 34vw;
     width: 97%;
     filter: brightness(60%);
     margin: auto;
     z-index: 1;
     border-radius: 2.22vw;
+    transition: all .5 ease;
 }
 
 .topup::after{
@@ -60,6 +61,11 @@
     backdrop-filter: blur(8px);
     pointer-events: none; 
     border-radius: 2.22vw;
+    transition: all .5 ease;
+}
+
+.topup:hover{
+    filter: brightness(50%);
 }
 
 .uphead{
@@ -70,7 +76,7 @@
     display: block;
     position: absolute;
     z-index: 10;
-    transform: translate(-50%, -72%);
+    transform: translate(-50%, -76%);
 }
 
 .uptext{
@@ -78,7 +84,7 @@
     position: absolute;
     z-index: 12;
     font-size: 1.2vw;
-    transform: translate(10vw, -24vw);
+    transform: translate(10vw, -27vw);
 }
 
 .upintext{
@@ -127,4 +133,9 @@
 
 .upimg:hover{
     transform:  translateY(-0.3vw);
+}
+
+.introtop{
+    margin-top: 1vw;
+    margin-left: 2vw;
 }
