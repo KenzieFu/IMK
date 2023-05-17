@@ -24,11 +24,14 @@ export const LibraryPage = () => {
   return (
     <>
     <div className={classes.content}>
-      
       {isAuth &&<Sidebar/>}
-      {!isAuth && <div style={{ marginLeft:"50px" }}></div>}
-      <div className={classes.main} >
-       
+      {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
+      <div className={classes.main}>
+
+      <div className={classes['topup']}>
+      <div className={classes['uphead']}></div>
+      </div>
+    
         <Suspense fallback="">
           <Await resolve={genres}>
          {(loadedGenres)=><ListGenre genres={loadedGenres}/>} 
@@ -37,6 +40,7 @@ export const LibraryPage = () => {
            
          <div style={{display:'flex', justifyContent:'flex-end'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
          </div>
+         
         {!check &&
         <>
         <Suspense fallback={<p style={{ textAlign:"center" }}>Loading.....</p>}>

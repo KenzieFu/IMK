@@ -28,6 +28,7 @@
     }
 }
 
+
 .all{
    background-color: var(--white);
 }
@@ -44,8 +45,6 @@
     padding: 4.44vw;
     height: 100%;
     align-items: center;
-    font-family: Inter;
-    color: var(--blue);
 }
 
 .main-button{
@@ -225,7 +224,7 @@
 
 .qrh1{
     font-size: 2.2vw;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .studentimg{
@@ -235,7 +234,7 @@
 
 .span1{
     font-size: 2vw;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .pengumuman{

@@ -16,11 +16,11 @@ export const StudentCard = () => {
         <div className={classes["card-details"]}>
             <div style={{ display:'flex',flexDirection:"column",gap:"7px" }}>
                 <span>Name</span>
-                <span>Triffine</span>
+                <span>{akun.user.nama_lengkap}</span>
             </div>
             <div style={{ display:'flex',flexDirection:"column",gap:"7px" }}>
                 <span>ID Anggota</span>
-                <span>2020330035</span>
+                <span>{akun.user.nisn}</span>
             </div>
         </div>
         

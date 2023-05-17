@@ -29,23 +29,9 @@ export const EventCalender = ({pickDateHandler,pickCurrentDate,events,reset}) =>
   const checkData=(date1,date2)=>{
     const date=new Date(date1.tanggal_event);
     
-    return userId.hak_akses==="Siswa"?(
+    return (
       ((date.getDate() === date2.getDate()) && (date.getMonth() === date2.getMonth()) && (date.getFullYear() === date2.getFullYear()))
-      &&
-      (
-        (date1.status ==="Publik" || (date1.status==="Privat" && (date1.id_akun!=null && date1.id_akun ===studId))) && date1.tipe ==="Siswa"
-      )
-
-    ):userId.hak_akses === "Guru"?(
-      ((date.getDate() === date2.getDate()) && (date.getMonth() === date2.getMonth()) && (date.getFullYear() === date2.getFullYear()))
-      &&
-      (
-        (date1.status ==="Publik" || (date1.status==="Privat" && (date1.id_akun!=null && date1.id_akun ===studId))) && date1.tipe ==="Guru"
-      )
-
-    )
-    :((date.getDate() === date2.getDate()) && (date.getMonth() === date2.getMonth()) && (date.getFullYear() === date2.getFullYear()));
-
+    );
   }
 
     function getTodoList(date) {

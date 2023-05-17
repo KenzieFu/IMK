@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom'
 
 export const Book = ({book}) => {
   const currentDate=new Date().getDate();
-  const remaining=currentDate - new Date(book.tanggal_kembali).getDate()
+  const remaining=currentDate - new Date(book.tanggal_kembali).getDate();
+  let checker= remaining<0?`Telat ${remaining*-1} hari lagi.`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
   return (
     <Box>
         <div style={{ marginLeft:"50px", display:"flex",padding:'35px' }}>
             <img sty width="150px" height="210" src="./assets/book.png" alt="" />
             <div className={classes["book-info"]} id='book-info'>
-                <span className={classes["due-date"]}>{remaining} hari lagi</span>
+                <span className={classes["due-date"]}>{checker}</span>
                 <div style={{ display:"flex",justifyContent:"space-between", alignItems:"center",marginBottom:"0",paddingBottom:"0" }}>
                   <div>
                   <h1 className={classes["book-info_h1"]}>{book.buku.Judul_Buku}</h1>

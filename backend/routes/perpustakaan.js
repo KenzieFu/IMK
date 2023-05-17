@@ -6,7 +6,7 @@ const guruController = require("../controllers/guru");
 const kategoriController = require("../controllers/kategori");
 const peminjamanController = require("../controllers/peminjaman");
 const pengembalianController = require("../controllers/pengembalian");
-
+const eventController = require("../controllers/event");
 // isAuth middleware untuk memastikan user sudah login sebelum mengakses halaman ini
 const isAuth = require("../middleware/isAuth"); //implementasinya nanti di route yang membutuhkan !!!!!
 
@@ -147,6 +147,24 @@ router.delete("/pengembalian/:pengembalianId", pengembalianController.deletePeng
 // http://localhost:8080/perpustakaan-methodist-cw/pengembalian
 router.get("/pengembalian", pengembalianController.getPengembalian);
 
+
+// ROUTES FOR EVENTS
+
+// route untuk menambahkan event
+// http://localhost:8080/perpustakaan-methodist-cw/event
+router.post("/event", eventController.createEvent);
+
+// route untuk mengupdate event
+// http://localhost:8080/perpustakaan-methodist-cw/event/1
+router.put("/event/:eventId", eventController.updateEvent);
+
+// route untuk menghapus event
+// http://localhost:8080/perpustakaan-methodist-cw/event/1
+router.delete("/event/:eventId", eventController.deleteEvent);
+
+// route untuk menampilkan daftar event
+// http://localhost:8080/perpustakaan-methodist-cw/event
+router.get("/event", eventController.getAllEvent);
 
 
 module.exports = router;

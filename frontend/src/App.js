@@ -41,8 +41,12 @@ import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
 
 
 //Student Loader
+
 //Calender (Event)
 import { loader as userCalenderLoader } from "./pages/EventPage";
+
+//Student Action
+import { action as eventAction } from "./pages/EventPage";
 
 //Admin loader
 
@@ -56,6 +60,9 @@ import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
 
+//Calender
+import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
+
 
 
 //Admin Action
@@ -66,9 +73,8 @@ import { action as adminDeleteBookAction } from "./pages/Admin/BookTablePage";
 import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 //Buku Pinjam
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
-
-
-
+//Calender
+import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 
 
 
@@ -87,6 +93,9 @@ import { EditPengembalianBuku } from "./pages/Admin/EditPengembalianBuku";
 import { CreateBuku } from "./pages/Admin/CreateBuku";
 import { EditBuku } from "./pages/Admin/EditBuku";
 import { EventPage } from "./pages/EventPage";
+import { AdminEventPage } from "./pages/Admin/AdminEventPage";
+import { StudentAuth } from "./components/auth/StudentAuth";
+import { AdminAuth } from "./components/auth/AdminAuth";
 
 
 /****Layouts Admin*****/
@@ -118,7 +127,7 @@ const studentId=useSelector(state=>state.auth.user)
        {index:true ,element:<HomePage/>},
        {path:"student",
        id:"pinjam-kembali-buku",
-        element:<StudentPage/>,
+        element:<StudentAuth><StudentPage/></StudentAuth>,
          loader:(s)=>studentLoader(studId)
       },
        {path:"library",
@@ -135,30 +144,21 @@ const studentId=useSelector(state=>state.auth.user)
 
         ]},
        {path:"contactUs", element:<Contact/>},
-       { path: "/registrasi", element: <Registrasi />,
-       children: [
-         { path: "data-pribadi", element: <DataSiswa /> },
-         { path: "data-kesehatan", element: <DataKesehatan /> },
-         { path: "data-pendidikan", element: <DataPendidikan /> },
-         { path: "data-ayah", element: <DataAyah /> },
-         { path: "data-ibu", element: <DataIbu /> },
-         { path: "data-wali", element: <DataWali /> },
-         { path: "konfirmasi-data", element: <KonfirmasiData /> },
-       ] },
        {path:"logout"},
        {path:"calender",
         id:"event-calender",
         loader:userCalenderLoader,
         children:[
           {index:true,
-           element:<EventPage/>}
+           element:<StudentAuth><EventPage/></StudentAuth>,
+           action:eventAction}
         ]}
       ]
     },
     {
       path:"/admin",
       id:"root-admin",
-      element:<FullLayout/>,
+      element:<AdminAuth><FullLayout/></AdminAuth>,
       errorElement:<ErrorAdminPage/>,
       children:[
         {index:true,element:<Starter/>},
@@ -185,7 +185,6 @@ const studentId=useSelector(state=>state.auth.user)
               path:"edit",
               action:editUserAction,
               element:<EditUser/>
-
 
             }
            ]}
@@ -231,10 +230,16 @@ const studentId=useSelector(state=>state.auth.user)
              loader:adminStudentLoader,
              action:adminDeleteStudentAction
              },
-             {
-              path:"create",
-              element:<CreateSiswa/>
-             },
+             { path: "registrasi", element: <Registrasi />,
+             children: [
+               { path: "data-pribadi", element: <DataSiswa /> },
+               { path: "data-kesehatan", element: <DataKesehatan /> },
+               { path: "data-pendidikan", element: <DataPendidikan /> },
+               { path: "data-ayah", element: <DataAyah /> },
+               { path: "data-ibu", element: <DataIbu /> },
+               { path: "data-wali", element: <DataWali /> },
+               { path: "konfirmasi-data", element: <KonfirmasiData /> },
+             ] },
              {
               path:":idSiswa",
               id:"detail-siswa",
@@ -248,7 +253,8 @@ const studentId=useSelector(state=>state.auth.user)
                   element:<EditStudentPage/>
                 }
               ]
-             }
+             },
+
           ]
          },
          {
@@ -306,6 +312,14 @@ const studentId=useSelector(state=>state.auth.user)
 
           ]
          }, */
+         {path:"calender",
+          id:"admin-calender",
+          loader:adminEventLoader,
+        children:[
+          {index:true,
+           element:<AdminEventPage/>,
+           action:adminEventAction}
+        ]}
 
 
 

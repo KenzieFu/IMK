@@ -2,11 +2,12 @@ import React from 'react'
 
 import classes from './LatestBook.module.css'
 export const LatestBook = ({latest}) => {
- 
+ console.log(latest)
   return (
     <>
         {latest.length !=0 &&
             <>
+            
         <div className={classes.box} style={{ maxWidth:"400px" }}>
             
                 <h1>Baru Dipinjam</h1>

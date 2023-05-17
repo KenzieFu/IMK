@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import classes from './HomePage.module.css'
 import { Info } from '../components/Info'
-import { redirect, useLoaderData, useLocation } from 'react-router-dom'
+import { Navigate, redirect, useLoaderData, useLocation } from 'react-router-dom'
 import { Await } from 'react-router-dom'
 import { Dam } from './Dam'
 import { useNavigate } from 'react-router-dom'
@@ -23,14 +23,14 @@ export const HomePage = () => {
     
    /*  const location = useLocation();
     console.log(location);*/
-    const  authenticate=useSelector(state=>state.auth.isAuth)
-    useEffect(()=>{
-        if(authenticate)
-        {
-            navigate("/student")
-        }
-            
-    },[authenticate])
+    const  authenticate=useSelector(state=>state.auth)
+    if(authenticate.isAuth && authenticate.user.hak_akses==="Siswa")
+        return <Navigate to="/student"  />
+    else
+    {
+        if(authenticate.user.hak_akses==="Admin" && authenticate.isAuth)
+        return <Navigate to="/admin"/>
+    }
 
    
   
@@ -45,14 +45,14 @@ export const HomePage = () => {
                 </div>
                 <div className={classes['overflow-hidden']}>
                 <div className={classes['drop-in']}>
-                <h1 style={{ display:"flex",flexWrap:"wrap",fontSize:"3vw", width:"80%", lineHeight:"4.7vw"}}>
+                <h1 style={{ display:"flex",flexWrap:"wrap",fontSize:"3vw", width:"80%", lineHeight:"4vw"}}>
                    <span>Welcome to</span>
                    <span>Methodist Charles Wesley</span>
                 </h1>
                 </div>
                 </div>
                 <div className={classes['overflow-hidden']}>
-                <div className={classes['drop-in-2']} style={{ display:"flex",fontSize:"1.11vw", flexDirection:"column", marginBottom:"4vw" }}>
+                <div className={classes['drop-in-2']} style={{ display:"flex",fontSize:"1.11vw", flexDirection:"column", marginBottom:"4vw", marginTop:"1vw" }}>
                     <span>Komplek CBD. Polonia Blok CC No.108Jl. Padang Golf (dalam)</span>
                     <span>Medan – Sumatera Utara 20157 Indonesia</span>
                 </div>

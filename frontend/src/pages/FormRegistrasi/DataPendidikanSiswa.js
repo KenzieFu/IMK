@@ -68,7 +68,7 @@ export const DataPendidikan = () => {
         } catch (error) {
             console.error(error);
         }
-        navigate("/registrasi/data-ayah")
+        navigate("../data-ayah")
     }
 
     const resetFormHandler = () => {
@@ -92,7 +92,7 @@ export const DataPendidikan = () => {
     return (
         <React.Fragment>
             <div className={classes.content}>
-                <Sidebar />
+
                 <div className={classes.content_inner}>
                     <Stepper
                         steps={steps}
@@ -137,7 +137,7 @@ export const DataPendidikan = () => {
                             </div>
                         </div>
                         <div className={classes.button}>
-                            <Link to="/registrasi/data-kesehatan">
+                            <Link to="../data-kesehatan">
                                 <button className={classes.cancel} type='button'>
                                     {"<"} Sebelumnya
                                 </button>
