@@ -28,6 +28,11 @@ export const LibraryPage = () => {
       {isAuth &&<Sidebar/>}
       {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
       <div className={classes.main}>
+      {check && 
+          <h1>
+            Hasil Pencarian untuk : {enteredKey}
+          </h1>
+        }
         <div className={classes.maintop}>
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
       </div>
@@ -78,11 +83,6 @@ export const LibraryPage = () => {
         
             </>
 
-        }
-        {check && 
-          <h1>
-            Hasil Pencarian untuk : {enteredKey}
-          </h1>
         }
         </div>
       </div>

@@ -19,7 +19,10 @@ export const Recommendation = (props) => {
         </div>
       </div>
       <div className={classes['introtop']}>
-        <span> Selamat datang di Perpustakaan Methodist Charles Wesley</span>
+        <span> 
+        Selamat datang di Perpustakaan Methodist Charles Wesley! Kami adalah tempat di mana pengetahuan dan imajinasi bersatu untuk menginspirasi.
+        Perpustakaan Methodist Charles Wesley didirikan dengan tujuan utama untuk mendorong minat dan cinta terhadap membaca serta pembelajaran seumur hidup. Dalam lingkungan yang ramah dan nyaman, kami menawarkan koleksi buku yang luas dan beragam, yang mencakup berbagai genre, mulai dari fiksi dan non-fiksi hingga sastra klasik dan kontemporer.
+        </span>
       </div>
       </div>
   )

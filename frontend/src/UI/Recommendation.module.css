@@ -30,13 +30,13 @@
 
 *{
     font-family: 'Inter';
-    font-size: 1.2vw;
 }
 
 .uparent{
     position: relative;
     height: 100%;
     display: inline;
+    font-size: 1.1vw;
 }
 
 .topup{
@@ -127,7 +127,7 @@
 .upimg{
     display: inline-block;
     border: 1vw solid #fff;
-    box-shadow: 0 30px 30px rgba(0,0,0,.2);
+    box-shadow: 0 2vw 2vw rgba(0,0,0,.2);
     transition: all .3s ease;
 }
 
@@ -136,6 +136,10 @@
 }
 
 .introtop{
-    margin-top: 1vw;
-    margin-left: 2vw;
+    text-align: justify;
+    width: 96%;
+    margin: auto;
+    margin-top: 1.5vw;
+    color: white;
+    
 }

@@ -3,19 +3,25 @@
     --blue:#2e55ba; 
     --accentblack:rgb(58, 58, 58);
     --red:#FF5959;
-    --gray:#f4f1f1;
+    --gray:#F9F6F7;
+    --orange:#FF971D;
+    --lightorange: #FFE8D6;
 
     --white-light:#ffffff;
     --blue-light:#2e55ba;
     --accentblack-light:rgb(58, 58, 58);
     --red-light:#FF5959;
-    --gray-light:#f4f1f1;
+    --gray-light:#F9F6F7;
+    --orange-light:#FF971D;
+    --lightorange-light: #FFE8D6;
 
     --white-dark:#ffffff;
     --blue-dark:#2e55ba;
     --accentblack-dark:rgb(58, 58, 58);
     --red-dark:#FF5959;
-    --gray-dark:#f4f1f1;
+    --gray-dark:#F9F6F7;
+    --orange-dark:#FF971D;
+    --lightorange-dark: #FFE8D6;
 }
 
 @media(prefers-color-scheme: dark){
