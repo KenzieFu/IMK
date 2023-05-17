@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2023 at 03:44 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: May 17, 2023 at 07:31 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,14 +18,14 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_perpustakaan1`
+-- Database: `db_tubes_imk`
 --
 
 DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_peminjaman` (`in_id_buku` INT, `in_id_siswa` INT, `in_tanggal_pinjam` DATE, `in_tanggal_kembali` DATE)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_peminjaman` (`in_id_buku` INT, `in_id_siswa` INT, `in_tanggal_pinjam` DATE, `in_tanggal_kembali` DATE)  BEGIN
   INSERT INTO peminjaman (id_buku, id_siswa, tanggal_pinjam, tanggal_kembali)
   VALUES (in_id_buku, in_id_siswa, in_tanggal_pinjam, in_tanggal_kembali);
   
@@ -37,7 +37,7 @@ END$$
 --
 -- Functions
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_jumlah_buku_dipinjam` (`in_id_siswa` INT) RETURNS INT(11)  BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_jumlah_buku_dipinjam` (`in_id_siswa` INT) RETURNS INT(11) BEGIN
   DECLARE jumlah_buku INT;
   
   SELECT COUNT(*) INTO jumlah_buku
@@ -152,6 +152,14 @@ INSERT INTO `buku_perpus` (`id_buku`, `stok`) VALUES
 (1, 10),
 (2, 45),
 (3, 90),
+(4, 55),
+(1, 10),
+(2, 45),
+(3, 90),
+(4, 55),
+(1, 10),
+(2, 45),
+(3, 90),
 (4, 55);
 
 --
@@ -200,6 +208,16 @@ INSERT INTO `buku_tahun_ajaran_baru` (`id_buku`, `stok`, `harga`) VALUES
 (2, 45, 65000),
 (3, 90, 100000),
 (4, 55, 75000),
+(5, 56, 89000),
+(1, 23, 50000),
+(2, 45, 65000),
+(3, 90, 100000),
+(4, 55, 75000),
+(5, 56, 89000),
+(1, 23, 50000),
+(2, 45, 65000),
+(3, 90, 100000),
+(4, 55, 75000),
 (5, 56, 89000);
 
 --
@@ -238,8 +256,27 @@ CREATE TABLE `events` (
   `title_event` longtext NOT NULL,
   `content_event` longtext NOT NULL,
   `tanggal_event` date NOT NULL,
-  `id_akun` int(11) NOT NULL
+  `id_akun` int(11) DEFAULT NULL,
+  `status` enum('Publik','Privat') NOT NULL,
+  `tipe` enum('Siswa','Guru') NOT NULL,
+  `editable` enum('Yes','No') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id_event`, `title_event`, `content_event`, `tanggal_event`, `id_akun`, `status`, `tipe`, `editable`) VALUES
+(1, 'Acara Olahraga', 'Ini adalah acara olahraga yang diadakan oleh sekolah', '2023-06-01', 6, 'Publik', 'Siswa', NULL),
+(2, 'Seminar Bahasa', 'Seminar ini membahas tentang penggunaan bahasa dalam kehidupan sehari-hari', '2023-06-02', 4, 'Publik', 'Guru', NULL),
+(3, 'Lomba Menulis', 'Lomba menulis ini diadakan untuk menumbuhkan minat siswa terhadap kegiatan menulis', '2023-06-03', 7, 'Publik', 'Siswa', NULL),
+(4, 'Bakti Sosial', 'Kegiatan bakti sosial ini diadakan untuk membantu masyarakat yang membutuhkan', '2023-06-04', 3, 'Publik', 'Guru', NULL),
+(5, 'Workshop Musik', 'Workshop ini membahas tentang teknik-teknik bermain musik yang baik', '2023-06-05', 5, 'Publik', 'Siswa', NULL),
+(6, 'Pelatihan Kewirausahaan', 'Pelatihan ini diadakan untuk membantu siswa yang ingin mengembangkan usaha mereka sendiri', '2023-06-06', 987, 'Privat', 'Guru', NULL),
+(7, 'Acara Budaya', 'Acara budaya ini menampilkan berbagai macam tarian dan musik tradisional', '2023-06-07', 654, 'Publik', 'Siswa', NULL),
+(8, 'Diskusi Sastra', 'Diskusi sastra ini membahas tentang karya sastra terbaru dan teknik menulis yang baik', '2023-06-08', 123, 'Publik', 'Guru', NULL),
+(9, 'Pelatihan Olahraga', 'Pelatihan ini diadakan untuk meningkatkan kemampuan siswa dalam bermain olahraga', '2023-06-09', 456, 'Privat', 'Siswa', NULL),
+(10, 'Pertunjukan Teater', 'Pertunjukan teater ini menampilkan kisah-kisah yang menarik dan inspiratif', '2023-06-10', 789, 'Publik', 'Guru', NULL);
 
 -- --------------------------------------------------------
 
@@ -317,6 +354,33 @@ INSERT INTO `log_buku` (`id_buku`, `riwayat`, `timestamp`) VALUES
 (4, 'Admin memasukkan Buku berjudulBiologi Xdengan pengarang bernama labxe', '2023-04-21 22:42:18'),
 (5, 'Admin memasukkan Buku berjudulBiologi XIdengan pengarang bernama labxe', '2023-04-21 22:42:18'),
 (6, 'Admin memasukkan Buku berjudul fisika dengan pengarang bernama test', '2023-04-24 21:19:55'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama Penerbit A', '2023-04-29 12:28:53'),
+(1234567890, 'Admin mengubah Buku berjudulBuku A dengan pengarang John Doe dengan penerbit Penerbit A dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis Sinopsis buku A dengan ISBN 1234567890 menjadi berjudul Buku A telah diedit dengan pengarang John Doe dengan penerbit Penerbit A dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis Sinopsis buku A dengan ISBN 1234567890', '2023-04-29 12:32:41'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A telah diedit dengan pengarang John Doe dengan penerbit Penerbit A dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis Sinopsis buku A dengan ISBN 1234567890', '2023-04-29 12:35:05'),
+(1, 'Admin mengubah Buku berjudulFisika XI dengan pengarang pengarang1 dengan penerbit gramedia dengan tahun terbit 2003 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-5 menjadi berjudul Fisika XI dengan pengarang pengarang1 dengan penerbit gramedia dengan tahun terbit 2003 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-5', '2023-05-03 22:12:50'),
+(2, 'Admin mengubah Buku berjudulFisika XII dengan pengarang pengarang2 dengan penerbit usu dengan tahun terbit 2021 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-6 menjadi berjudul Fisika XII dengan pengarang pengarang2 dengan penerbit usu dengan tahun terbit 2021 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-6', '2023-05-03 22:12:55'),
+(3, 'Admin mengubah Buku berjudulKimia XII dengan pengarang pengarang3 dengan penerbit gramedia dengan tahun terbit 2002 dengan kategori_id 1dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-7 menjadi berjudul Kimia XII dengan pengarang pengarang3 dengan penerbit gramedia dengan tahun terbit 2002 dengan kategori_id 1dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-7', '2023-05-03 22:13:02'),
+(4, 'Admin mengubah Buku berjudulBiologi X dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2012 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-8 menjadi berjudul Biologi X dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2012 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-8', '2023-05-03 22:13:11'),
+(5, 'Admin mengubah Buku berjudulBiologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9 menjadi berjudul Biologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9', '2023-05-03 22:13:20'),
+(6, 'Admin mengubah Buku berjudulfisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test menjadi berjudul fisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test', '2023-05-03 22:13:25'),
+(1, 'Admin memasukkan Buku berjudulFisika XIdengan pengarang bernama gramedia', '2023-04-21 22:42:18'),
+(2, 'Admin memasukkan Buku berjudulFisika XIIdengan pengarang bernama usu', '2023-04-21 22:42:18'),
+(3, 'Admin memasukkan Buku berjudulKimia XIIdengan pengarang bernama gramedia', '2023-04-21 22:42:18'),
+(4, 'Admin memasukkan Buku berjudulBiologi Xdengan pengarang bernama labxe', '2023-04-21 22:42:18'),
+(5, 'Admin memasukkan Buku berjudulBiologi XIdengan pengarang bernama labxe', '2023-04-21 22:42:18'),
+(6, 'Admin memasukkan Buku berjudul fisika dengan pengarang bernama test', '2023-04-24 21:19:55'),
+(1, 'Admin mengubah Buku berjudulFisika XI dengan pengarang pengarang1 dengan penerbit gramedia dengan tahun terbit 2003 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-5 menjadi berjudul Fisika XI dengan pengarang pengarang1 dengan penerbit gramedia dengan tahun terbit 2003 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-5', '2023-05-03 22:12:50'),
+(2, 'Admin mengubah Buku berjudulFisika XII dengan pengarang pengarang2 dengan penerbit usu dengan tahun terbit 2021 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-6 menjadi berjudul Fisika XII dengan pengarang pengarang2 dengan penerbit usu dengan tahun terbit 2021 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-6', '2023-05-03 22:12:55'),
+(3, 'Admin mengubah Buku berjudulKimia XII dengan pengarang pengarang3 dengan penerbit gramedia dengan tahun terbit 2002 dengan kategori_id 1dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-7 menjadi berjudul Kimia XII dengan pengarang pengarang3 dengan penerbit gramedia dengan tahun terbit 2002 dengan kategori_id 1dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-7', '2023-05-03 22:13:02'),
+(4, 'Admin mengubah Buku berjudulBiologi X dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2012 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-8 menjadi berjudul Biologi X dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2012 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-8', '2023-05-03 22:13:11'),
+(5, 'Admin mengubah Buku berjudulBiologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9 menjadi berjudul Biologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9', '2023-05-03 22:13:20'),
+(6, 'Admin mengubah Buku berjudulfisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test menjadi berjudul fisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test', '2023-05-03 22:13:25'),
+(1, 'Admin memasukkan Buku berjudulFisika XIdengan pengarang bernama gramedia', '2023-04-21 22:42:18'),
+(2, 'Admin memasukkan Buku berjudulFisika XIIdengan pengarang bernama usu', '2023-04-21 22:42:18'),
+(3, 'Admin memasukkan Buku berjudulKimia XIIdengan pengarang bernama gramedia', '2023-04-21 22:42:18'),
+(4, 'Admin memasukkan Buku berjudulBiologi Xdengan pengarang bernama labxe', '2023-04-21 22:42:18'),
+(5, 'Admin memasukkan Buku berjudulBiologi XIdengan pengarang bernama labxe', '2023-04-21 22:42:18'),
+(6, 'Admin memasukkan Buku berjudul fisika dengan pengarang bernama test', '2023-04-24 21:19:55'),
 (1, 'Admin mengubah Buku berjudulFisika XI dengan pengarang pengarang1 dengan penerbit gramedia dengan tahun terbit 2003 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-5 menjadi berjudul Fisika XI dengan pengarang pengarang1 dengan penerbit gramedia dengan tahun terbit 2003 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-5', '2023-05-03 22:12:50'),
 (2, 'Admin mengubah Buku berjudulFisika XII dengan pengarang pengarang2 dengan penerbit usu dengan tahun terbit 2021 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-6 menjadi berjudul Fisika XII dengan pengarang pengarang2 dengan penerbit usu dengan tahun terbit 2021 dengan kategori_id 2dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-6', '2023-05-03 22:12:55'),
 (3, 'Admin mengubah Buku berjudulKimia XII dengan pengarang pengarang3 dengan penerbit gramedia dengan tahun terbit 2002 dengan kategori_id 1dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-7 menjadi berjudul Kimia XII dengan pengarang pengarang3 dengan penerbit gramedia dengan tahun terbit 2002 dengan kategori_id 1dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-7', '2023-05-03 22:13:02'),
@@ -349,6 +413,32 @@ INSERT INTO `log_buku_perpus` (`id_buku`, `riwayat`, `timestamp`) VALUES
 (5, 'Admin menambahkan stok buku ber-ID 5 menjadi 10', '2023-04-29 13:30:13'),
 (1, 'Stok buku ber-ID 1berubah dari 23 menjadi 10', '2023-04-29 13:33:45'),
 (5, 'Admin menghapus stok buku ber-ID 5', '2023-04-29 13:35:35'),
+(5, 'Admin menghapus stok buku ber-ID 5', '2023-04-29 13:35:35'),
+(1, 'Admin menambahkan stok buku ber-ID 1 menjadi 10', '2023-05-09 09:26:47'),
+(2, 'Admin menambahkan stok buku ber-ID 2 menjadi 45', '2023-05-09 09:26:47'),
+(3, 'Admin menambahkan stok buku ber-ID 3 menjadi 90', '2023-05-09 09:26:47'),
+(4, 'Admin menambahkan stok buku ber-ID 4 menjadi 55', '2023-05-09 09:26:47'),
+(1, 'Admin menambahkan stok buku ber-ID 1 menjadi 23', '2023-04-21 22:43:53'),
+(2, 'Admin menambahkan stok buku ber-ID 2 menjadi 45', '2023-04-21 22:43:53'),
+(3, 'Admin menambahkan stok buku ber-ID 3 menjadi 90', '2023-04-21 22:43:53'),
+(4, 'Admin menambahkan stok buku ber-ID 4 menjadi 55', '2023-04-21 22:43:53'),
+(5, 'Admin menambahkan stok buku ber-ID 5 menjadi 56', '2023-04-21 22:43:53'),
+(5, 'Admin menambahkan stok buku ber-ID 5 menjadi 10', '2023-04-29 13:30:13'),
+(1, 'Stok buku ber-ID 1berubah dari 23 menjadi 10', '2023-04-29 13:33:45'),
+(5, 'Admin menghapus stok buku ber-ID 5', '2023-04-29 13:35:35'),
+(5, 'Admin menghapus stok buku ber-ID 5', '2023-04-29 13:35:35'),
+(1, 'Admin menambahkan stok buku ber-ID 1 menjadi 10', '2023-05-09 09:27:02'),
+(2, 'Admin menambahkan stok buku ber-ID 2 menjadi 45', '2023-05-09 09:27:02'),
+(3, 'Admin menambahkan stok buku ber-ID 3 menjadi 90', '2023-05-09 09:27:02'),
+(4, 'Admin menambahkan stok buku ber-ID 4 menjadi 55', '2023-05-09 09:27:02'),
+(1, 'Admin menambahkan stok buku ber-ID 1 menjadi 23', '2023-04-21 22:43:53'),
+(2, 'Admin menambahkan stok buku ber-ID 2 menjadi 45', '2023-04-21 22:43:53'),
+(3, 'Admin menambahkan stok buku ber-ID 3 menjadi 90', '2023-04-21 22:43:53'),
+(4, 'Admin menambahkan stok buku ber-ID 4 menjadi 55', '2023-04-21 22:43:53'),
+(5, 'Admin menambahkan stok buku ber-ID 5 menjadi 56', '2023-04-21 22:43:53'),
+(5, 'Admin menambahkan stok buku ber-ID 5 menjadi 10', '2023-04-29 13:30:13'),
+(1, 'Stok buku ber-ID 1berubah dari 23 menjadi 10', '2023-04-29 13:33:45'),
+(5, 'Admin menghapus stok buku ber-ID 5', '2023-04-29 13:35:35'),
 (5, 'Admin menghapus stok buku ber-ID 5', '2023-04-29 13:35:35');
 
 -- --------------------------------------------------------
@@ -368,6 +458,29 @@ CREATE TABLE `log_buku_thn_ajaran_baru` (
 --
 
 INSERT INTO `log_buku_thn_ajaran_baru` (`id_buku`, `riwayat`, `timestamp`) VALUES
+(1, 'Admin menambahkan buku ber-ID 1 dengan stok 23 dengan harga 50000', '2023-04-21 22:45:16'),
+(2, 'Admin menambahkan buku ber-ID 2 dengan stok 45 dengan harga 65000', '2023-04-21 22:45:16'),
+(3, 'Admin menambahkan buku ber-ID 3 dengan stok 90 dengan harga 100000', '2023-04-21 22:45:16'),
+(4, 'Admin menambahkan buku ber-ID 4 dengan stok 55 dengan harga 75000', '2023-04-21 22:45:16'),
+(5, 'Admin menambahkan buku ber-ID 5 dengan stok 56 dengan harga 89000', '2023-04-21 22:45:16'),
+(10, 'Admin menambahkan buku ber-ID 10 dengan stok 10 dengan harga 10000', '2023-04-29 13:42:54'),
+(10, 'Admin mengubah buku ber-ID 10 dengan stok 10 dengan harga 10000 menjadi buku ber-ID 10 dengan stok 50 dengan harga 10000', '2023-04-29 13:44:45'),
+(10, 'Admin menghapus buku ber-ID 10 dengan stok 50 dengan harga 10000', '2023-04-29 13:46:14'),
+(1, 'Admin menambahkan buku ber-ID 1 dengan stok 23 dengan harga 50000', '2023-05-09 09:26:47'),
+(2, 'Admin menambahkan buku ber-ID 2 dengan stok 45 dengan harga 65000', '2023-05-09 09:26:47'),
+(3, 'Admin menambahkan buku ber-ID 3 dengan stok 90 dengan harga 100000', '2023-05-09 09:26:47'),
+(4, 'Admin menambahkan buku ber-ID 4 dengan stok 55 dengan harga 75000', '2023-05-09 09:26:47'),
+(5, 'Admin menambahkan buku ber-ID 5 dengan stok 56 dengan harga 89000', '2023-05-09 09:26:47'),
+(1, 'Admin menambahkan buku ber-ID 1 dengan stok 23 dengan harga 50000', '2023-04-21 22:45:16'),
+(2, 'Admin menambahkan buku ber-ID 2 dengan stok 45 dengan harga 65000', '2023-04-21 22:45:16'),
+(3, 'Admin menambahkan buku ber-ID 3 dengan stok 90 dengan harga 100000', '2023-04-21 22:45:16'),
+(4, 'Admin menambahkan buku ber-ID 4 dengan stok 55 dengan harga 75000', '2023-04-21 22:45:16'),
+(5, 'Admin menambahkan buku ber-ID 5 dengan stok 56 dengan harga 89000', '2023-04-21 22:45:16'),
+(1, 'Admin menambahkan buku ber-ID 1 dengan stok 23 dengan harga 50000', '2023-05-09 09:27:02'),
+(2, 'Admin menambahkan buku ber-ID 2 dengan stok 45 dengan harga 65000', '2023-05-09 09:27:02'),
+(3, 'Admin menambahkan buku ber-ID 3 dengan stok 90 dengan harga 100000', '2023-05-09 09:27:02'),
+(4, 'Admin menambahkan buku ber-ID 4 dengan stok 55 dengan harga 75000', '2023-05-09 09:27:02'),
+(5, 'Admin menambahkan buku ber-ID 5 dengan stok 56 dengan harga 89000', '2023-05-09 09:27:02'),
 (1, 'Admin menambahkan buku ber-ID 1 dengan stok 23 dengan harga 50000', '2023-04-21 22:45:16'),
 (2, 'Admin menambahkan buku ber-ID 2 dengan stok 45 dengan harga 65000', '2023-04-21 22:45:16'),
 (3, 'Admin menambahkan buku ber-ID 3 dengan stok 90 dengan harga 100000', '2023-04-21 22:45:16'),
@@ -409,19 +522,20 @@ CREATE TABLE `peminjaman` (
   `id_buku` int(11) DEFAULT NULL,
   `id_siswa` int(11) DEFAULT NULL,
   `tanggal_pinjam` date DEFAULT NULL,
-  `tanggal_kembali` date DEFAULT NULL
+  `tanggal_kembali` date DEFAULT NULL,
+  `status` enum('Selesai','Belum Selesai') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `peminjaman`
 --
 
-INSERT INTO `peminjaman` (`id_peminjaman`, `id_buku`, `id_siswa`, `tanggal_pinjam`, `tanggal_kembali`) VALUES
-(1, 3, 2, '2023-04-01', '2023-04-29'),
-(2, 3, 1, '2023-04-02', '2023-04-24'),
-(3, 5, 5, '2023-04-23', '2023-05-04'),
-(4, 1, 1, '2023-03-31', '2023-04-15'),
-(5, 4, 2, '2023-04-01', '2023-04-29');
+INSERT INTO `peminjaman` (`id_peminjaman`, `id_buku`, `id_siswa`, `tanggal_pinjam`, `tanggal_kembali`, `status`) VALUES
+(1, 3, 2, '2023-04-01', '2023-04-29', 'Selesai'),
+(2, 3, 5, '2023-04-02', '2023-04-24', 'Selesai'),
+(3, 5, 5, '2023-04-23', '2023-05-04', 'Selesai'),
+(4, 1, 1, '2023-03-31', '2023-04-15', 'Selesai'),
+(5, 4, 2, '2023-04-01', '2023-04-29', 'Selesai');
 
 --
 -- Triggers `peminjaman`
@@ -456,7 +570,8 @@ CREATE TABLE `pengembalian` (
 
 INSERT INTO `pengembalian` (`id_pengembalian`, `id_peminjaman`, `tanggal_pengembalian`, `status`) VALUES
 (1, 1, '2023-04-28', 'Tepat Waktu'),
-(2, 2, '2023-04-28', 'Terlambat');
+(2, 2, '2023-04-28', 'Terlambat'),
+(3, 3, '2023-05-09', 'Terlambat');
 
 --
 -- Triggers `pengembalian`
@@ -474,6 +589,32 @@ CREATE TRIGGER `status_pengembalian_buku` BEFORE INSERT ON `pengembalian` FOR EA
 END
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pesan_masuk`
+--
+
+CREATE TABLE `pesan_masuk` (
+  `id_pesan_masuk` int(11) NOT NULL,
+  `nama_lengkap` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `subjek` varchar(255) DEFAULT NULL,
+  `pesan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pesan_masuk`
+--
+
+INSERT INTO `pesan_masuk` (`id_pesan_masuk`, `nama_lengkap`, `email`, `no_hp`, `subjek`, `pesan`) VALUES
+(1, 'John Doe', 'johndoe@gmail.com', '08123456789', 'Pertanyaan tentang produk', 'Halo, saya tertarik dengan produk yang Anda tawarkan. Bisa jelaskan lebih detail mengenai fitur-fiturnya?'),
+(2, 'Jane Smith', 'janesmith@yahoo.com', '08567890123', 'Pembelian produk', 'Halo, saya ingin membeli produk Anda. Bagaimana caranya?'),
+(3, 'Mike Johnson', 'mikejohnson@gmail.com', '08234567890', 'Keluhan terhadap layanan', 'Saya sangat kecewa dengan layanan Anda yang buruk. Saya berharap bisa segera mendapatkan solusi atas masalah ini.'),
+(4, 'Sarah Lee', 'sarahlee@hotmail.com', '08765432109', 'Saran untuk produk', 'Saya ingin memberikan saran untuk produk Anda. Saya berharap Anda bisa menambahkan fitur X dan Y untuk meningkatkan kualitas produk.'),
+(5, 'David Kim', 'davidkim@gmail.com', '08111111111', 'Permintaan informasi', 'Saya membutuhkan informasi mengenai produk Anda. Apakah Anda bisa memberikan informasi yang lebih detail?');
 
 -- --------------------------------------------------------
 
@@ -528,7 +669,113 @@ INSERT INTO `transaksi_pembelian_buku` (`no_faktur`, `id_buku`, `jumlah_buku`) V
 (2, 2, 1),
 (3, 1, 5),
 (4, 5, 7),
+(5, 2, 1),
+(1, 3, 2),
+(2, 2, 1),
+(3, 1, 5),
+(4, 5, 7),
+(5, 2, 1),
+(1, 3, 2),
+(2, 2, 1),
+(3, 1, 5),
+(4, 5, 7),
 (5, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_jumlah_pinjam`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_jumlah_pinjam` (
+`id_buku` int(11)
+,`judul_buku` varchar(255)
+,`jumlah_pinjam` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_peminjaman_belum_selesai`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_peminjaman_belum_selesai` (
+`id_peminjaman` int(11)
+,`id_buku` int(11)
+,`id_siswa` int(11)
+,`tanggal_pinjam` date
+,`tanggal_kembali` date
+,`status` enum('Selesai','Belum Selesai')
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_peminjaman_selesai`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_peminjaman_selesai` (
+`id_peminjaman` int(11)
+,`id_buku` int(11)
+,`id_pengembalian` int(11)
+,`status_kembali` enum('Tepat Waktu','Terlambat')
+,`tanggal_pengembalian` date
+,`id_siswa` int(11)
+,`tanggal_pinjam` date
+,`tanggal_kembali` date
+,`status` enum('Selesai','Belum Selesai')
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_pengembalian_lengkap`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_pengembalian_lengkap` (
+`id_pengembalian` int(11)
+,`id_peminjaman` int(11)
+,`tanggal_pengembalian` date
+,`status` enum('Tepat Waktu','Terlambat')
+,`judul_buku` varchar(255)
+,`nama_lengkap` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_jumlah_pinjam`
+--
+DROP TABLE IF EXISTS `view_jumlah_pinjam`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jumlah_pinjam`  AS SELECT `b`.`id_buku` AS `id_buku`, `b`.`judul_buku` AS `judul_buku`, count(`b`.`id_buku`) AS `jumlah_pinjam` FROM (`buku` `b` join `peminjaman` `p` on(`b`.`id_buku` = `p`.`id_buku`)) GROUP BY `b`.`id_buku`, `b`.`judul_buku` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_peminjaman_belum_selesai`
+--
+DROP TABLE IF EXISTS `view_peminjaman_belum_selesai`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_peminjaman_belum_selesai`  AS SELECT `p`.`id_peminjaman` AS `id_peminjaman`, `p`.`id_buku` AS `id_buku`, `p`.`id_siswa` AS `id_siswa`, `p`.`tanggal_pinjam` AS `tanggal_pinjam`, `p`.`tanggal_kembali` AS `tanggal_kembali`, `p`.`status` AS `status` FROM (`peminjaman` `p` left join `pengembalian` `pe` on(`p`.`id_peminjaman` = `pe`.`id_peminjaman`)) WHERE `pe`.`id_pengembalian` is null OR `p`.`status` = 'Belum Selesai' ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_peminjaman_selesai`
+--
+DROP TABLE IF EXISTS `view_peminjaman_selesai`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_peminjaman_selesai`  AS SELECT `p`.`id_peminjaman` AS `id_peminjaman`, `p`.`id_buku` AS `id_buku`, `pe`.`id_pengembalian` AS `id_pengembalian`, `pe`.`status` AS `status_kembali`, `pe`.`tanggal_pengembalian` AS `tanggal_pengembalian`, `p`.`id_siswa` AS `id_siswa`, `p`.`tanggal_pinjam` AS `tanggal_pinjam`, `p`.`tanggal_kembali` AS `tanggal_kembali`, `p`.`status` AS `status` FROM (`peminjaman` `p` join `pengembalian` `pe` on(`p`.`id_peminjaman` = `pe`.`id_peminjaman`)) WHERE `p`.`status` = 'Selesai' ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_pengembalian_lengkap`
+--
+DROP TABLE IF EXISTS `view_pengembalian_lengkap`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_pengembalian_lengkap`  AS SELECT `pe`.`id_pengembalian` AS `id_pengembalian`, `pe`.`id_peminjaman` AS `id_peminjaman`, `pe`.`tanggal_pengembalian` AS `tanggal_pengembalian`, `pe`.`status` AS `status`, `b`.`judul_buku` AS `judul_buku`, `s`.`nama_lengkap` AS `nama_lengkap` FROM (((`pengembalian` `pe` join `peminjaman` `p` on(`pe`.`id_peminjaman` = `p`.`id_peminjaman`)) join `buku` `b` on(`p`.`id_buku` = `b`.`id_buku`)) join `siswa` `s` on(`p`.`id_siswa` = `s`.`id_siswa`)) ;
 
 --
 -- Indexes for dumped tables
@@ -563,8 +810,7 @@ ALTER TABLE `buku_tahun_ajaran_baru`
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
-  ADD PRIMARY KEY (`id_event`),
-  ADD KEY `id_akun` (`id_akun`);
+  ADD PRIMARY KEY (`id_event`);
 
 --
 -- Indexes for table `guru`
@@ -620,6 +866,12 @@ ALTER TABLE `pengembalian`
   ADD KEY `id_peminjaman` (`id_peminjaman`);
 
 --
+-- Indexes for table `pesan_masuk`
+--
+ALTER TABLE `pesan_masuk`
+  ADD PRIMARY KEY (`id_pesan_masuk`);
+
+--
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
@@ -653,7 +905,7 @@ ALTER TABLE `buku`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `guru`
@@ -662,14 +914,14 @@ ALTER TABLE `guru`
   MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234567892;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `pesan_masuk`
 --
+ALTER TABLE `pesan_masuk`
+  MODIFY `id_pesan_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for table `buku`
+-- Constraints for dumped tables
 --
-ALTER TABLE `buku`
-  ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `buku_perpus`
@@ -678,66 +930,10 @@ ALTER TABLE `buku_perpus`
   ADD CONSTRAINT `buku_perpus_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`);
 
 --
--- Constraints for table `buku_tahun_ajaran_baru`
---
-ALTER TABLE `buku_tahun_ajaran_baru`
-  ADD CONSTRAINT `buku_tahun_ajaran_baru_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `events`
---
-ALTER TABLE `events`
-  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`id_akun`) REFERENCES `akun` (`id_akun`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `log_buku`
---
-ALTER TABLE `log_buku`
-  ADD CONSTRAINT `log_buku_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `log_buku_perpus`
---
-ALTER TABLE `log_buku_perpus`
-  ADD CONSTRAINT `log_buku_perpus_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `log_buku_thn_ajaran_baru`
---
-ALTER TABLE `log_buku_thn_ajaran_baru`
-  ADD CONSTRAINT `log_buku_thn_ajaran_baru_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `nota_pembelian_buku`
---
-ALTER TABLE `nota_pembelian_buku`
-  ADD CONSTRAINT `nota_pembelian_buku_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `peminjaman`
---
-ALTER TABLE `peminjaman`
-  ADD CONSTRAINT `peminjaman_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `peminjaman_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `pengembalian`
---
-ALTER TABLE `pengembalian`
-  ADD CONSTRAINT `pengembalian_ibfk_1` FOREIGN KEY (`id_peminjaman`) REFERENCES `peminjaman` (`id_peminjaman`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `siswa`
 --
 ALTER TABLE `siswa`
   ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`id_akun`) REFERENCES `akun` (`id_akun`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `transaksi_pembelian_buku`
---
-ALTER TABLE `transaksi_pembelian_buku`
-  ADD CONSTRAINT `transaksi_pembelian_buku_ibfk_1` FOREIGN KEY (`no_faktur`) REFERENCES `nota_pembelian_buku` (`no_faktur`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `transaksi_pembelian_buku_ibfk_2` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
