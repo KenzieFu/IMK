@@ -66,6 +66,13 @@ router.get("/buku/kategori/:kategoriId", bukuController.getBookByKategori);
 // http://localhost:8080/perpustakaan-methodist-cw/profil/1
 router.get("/profil/:siswaId", siswaController.getProfil);
 
+// route untuk menampilkan daftar jumlah peminjaman buku
+// http://localhost:8080/perpustakaan-methodist-cw/jumlah-dipinjam
+router.get("/jumlah-dipinjam", bukuController.getJumlahDipinjam);
+
+// route untuk menampilkan daftar jumlah peminjaman buku berdasarkan id_buku
+// http://localhost:8080/perpustakaan-methodist-cw/jumlah-dipinjam/1
+router.get("/jumlah-dipinjam/:bukuId", bukuController.getJumlahDipinjamById);
 
 // GET /perpustakaan/siswa/profil
 // http://localhost:8080/perpustakaan/siswa/profil/1
@@ -113,6 +120,14 @@ router.get("/peminjaman/:peminjamanId", peminjamanController.getPeminjaman);
 // route untuk menampilkan daftar peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman
 router.get("/peminjaman", peminjamanController.getAllPeminjaman);
+
+// route untuk menampilkan daftar peminjaman berdasarkan user
+// http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa
+router.get("/peminjaman-siswa", peminjamanController.getPeminjamanByUser);
+
+// route untuk menampilkan histori peminjaman berdasarkan user
+// http://localhost:8080/perpustakaan-methodist-cw/histori-peminjaman-siswa
+router.get("/histori-peminjaman-siswa", peminjamanController.getHistoriPeminjaman);
 
 // ROUTES FOR PENGEMBALIAN
 

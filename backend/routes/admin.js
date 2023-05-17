@@ -213,6 +213,15 @@ router.put("/pengembalian/:pengembalianId", pengembalianController.updatePengemb
 // http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian/1
 router.delete("/pengembalian/:pengembalianId", pengembalianController.deletePengembalian);
 
+// route untuk menampilkan satu pengembalian
+// http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian/1
+router.get("/pengembalian/:pengembalianId", pengembalianController.getPengembalianAdmin);
+
+// route untuk menampilkan daftar pengembalian
+// http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian
+router.get("/pengembalian", pengembalianController.getAllPengembalianAdmin);
+
+
 
 // ROUTES FOR EVENTS
 
