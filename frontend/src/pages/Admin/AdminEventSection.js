@@ -4,6 +4,8 @@ import classes from "./AdminEventSection.module.css"
 import { useSelector } from 'react-redux'
 import { Form, useSubmit } from 'react-router-dom'
 import { EventForm } from '../../components/Event/EventForm'
+import { date } from 'yup'
+import { format } from 'date-fns';
 export const AdminEventSection = ({selectedDate,currentDate,onPageHandler,currentIndex,updateListHandler}) => {
   const submit=useSubmit();
   
@@ -64,9 +66,10 @@ let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
   </div>
 
   <div>
-    <div>{item.tipe} -- {item.title_event}</div>
+    <div className= {classes.title_item}>{item.tipe} -- {item.title_event}</div>
+    <div className= {classes.details}>Details</div>
     <div>{item.content_event}</div>
-    <div>{item.tanggal_event}</div>
+    <div><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {item.tanggal_event}</div>
     <div>{item.status}</div>
   </div>
 </>
