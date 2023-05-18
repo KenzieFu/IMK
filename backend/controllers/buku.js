@@ -3,6 +3,27 @@ const Kategori = require("../models/kategori");
 const BukuPerpus = require("../models/bukuPerpus");
 const BukuTahunAjaranBaru = require("../models/bukuTahunAjaranBaru");
 const { Op } = require("sequelize");
+const ViewJumlahDipinjamin = require("../models/viewJumlahDipinjam");
+
+// Function untuk menampilkan daftar banyak buku dipinjam
+exports.getJumlahDipinjam = async function (req, res, next) {
+  try {
+    const jumlahDipinjam = await ViewJumlahDipinjamin.findAll();
+    res.json(jumlahDipinjam);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Function untuk
+exports.getJumlahDipinjamById = async function (req, res, next) {
+  try {
+    const jumlahDipinjam = await ViewJumlahDipinjamin.findByPk(req.params.bukuId);
+    res.json(jumlahDipinjam);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // Function untuk menampilkan detail buku khusus buku perpus
 exports.getPerpusBook = async function (req, res, next) {
@@ -410,7 +431,6 @@ exports.searchTahunAjaranBaruBook = async function (req, res, next) {
     const bukuTahunAjaranBaru = await BukuTahunAjaranBaru.findAll({
       attributes: ["id_buku"],
     });
-
 
     // ambil semua data buku yang id_bukunya ada di tabel buku perpus
     const books = await Buku.findAll({

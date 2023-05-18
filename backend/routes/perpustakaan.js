@@ -6,7 +6,7 @@ const guruController = require("../controllers/guru");
 const kategoriController = require("../controllers/kategori");
 const peminjamanController = require("../controllers/peminjaman");
 const pengembalianController = require("../controllers/pengembalian");
-
+const eventController = require("../controllers/event");
 // isAuth middleware untuk memastikan user sudah login sebelum mengakses halaman ini
 const isAuth = require("../middleware/isAuth"); //implementasinya nanti di route yang membutuhkan !!!!!
 
@@ -66,6 +66,13 @@ router.get("/buku/kategori/:kategoriId", bukuController.getBookByKategori);
 // http://localhost:8080/perpustakaan-methodist-cw/profil/1
 router.get("/profil/:siswaId", siswaController.getProfil);
 
+// route untuk menampilkan daftar jumlah peminjaman buku
+// http://localhost:8080/perpustakaan-methodist-cw/jumlah-dipinjam
+router.get("/jumlah-dipinjam", bukuController.getJumlahDipinjam);
+
+// route untuk menampilkan daftar jumlah peminjaman buku berdasarkan id_buku
+// http://localhost:8080/perpustakaan-methodist-cw/jumlah-dipinjam/1
+router.get("/jumlah-dipinjam/:bukuId", bukuController.getJumlahDipinjamById);
 
 // GET /perpustakaan/siswa/profil
 // http://localhost:8080/perpustakaan/siswa/profil/1
@@ -114,6 +121,14 @@ router.get("/peminjaman/:peminjamanId", peminjamanController.getPeminjaman);
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman
 router.get("/peminjaman", peminjamanController.getAllPeminjaman);
 
+// route untuk menampilkan daftar peminjaman berdasarkan user
+// http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa
+router.get("/peminjaman-siswa", peminjamanController.getPeminjamanByUser);
+
+// route untuk menampilkan histori peminjaman berdasarkan user
+// http://localhost:8080/perpustakaan-methodist-cw/histori-peminjaman-siswa
+router.get("/histori-peminjaman-siswa", peminjamanController.getHistoriPeminjaman);
+
 // ROUTES FOR PENGEMBALIAN
 
 // route untuk menambahkan pengembalian
@@ -132,6 +147,24 @@ router.delete("/pengembalian/:pengembalianId", pengembalianController.deletePeng
 // http://localhost:8080/perpustakaan-methodist-cw/pengembalian
 router.get("/pengembalian", pengembalianController.getPengembalian);
 
+
+// ROUTES FOR EVENTS
+
+// route untuk menambahkan event
+// http://localhost:8080/perpustakaan-methodist-cw/event
+router.post("/event", eventController.createEvent);
+
+// route untuk mengupdate event
+// http://localhost:8080/perpustakaan-methodist-cw/event/1
+router.put("/event/:eventId", eventController.updateEvent);
+
+// route untuk menghapus event
+// http://localhost:8080/perpustakaan-methodist-cw/event/1
+router.delete("/event/:eventId", eventController.deleteEvent);
+
+// route untuk menampilkan daftar event
+// http://localhost:8080/perpustakaan-methodist-cw/event
+router.get("/event", eventController.getAllEvent);
 
 
 module.exports = router;

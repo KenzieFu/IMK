@@ -3,9 +3,11 @@ import { Sidebar } from "../UI/Sidebar";
 import classes from "./BookDetails.module.css"
 import { useEffect, useState } from "react";
 import { defer, json, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const BookDetail = () => {
     const navigate=useNavigate();
+    const isAuth = useSelector((state)=>state.auth.isAuth);
     const {book}=useLoaderData('book-detail');
     const backHandler=()=>{
         navigate("..");
@@ -14,10 +16,10 @@ const BookDetail = () => {
         <>
             <div className={classes.content}>
                 <div className={classes.card}>
-                <Sidebar />
-                    <div className={classes.hero}>
+               {isAuth && <Sidebar />}
+                   {/*  <div className={classes.hero}>
                         <img src="../assets/hero-details-books.jpg"></img>
-                    </div>
+                    </div> */}
                     <div className={classes.cover}>
                         <img src="../assets/book.png"></img>
                     </div>

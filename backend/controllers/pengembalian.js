@@ -2,6 +2,8 @@ const Pengembalian = require("../models/pengembalian");
 const Peminjaman = require("../models/peminjaman");
 const { Op } = require("sequelize");
 const Buku = require("../models/buku");
+const Siswa = require("../models/siswa");
+const ViewPeminjamanSelesai = require("../models/viewPeminjamanSelesai");
 
 // Function untuk menambahkan pengembalian
 exports.createPengembalian = async function (req, res, next) {
@@ -69,7 +71,6 @@ exports.getPengembalian = async function (req, res, next) {
         id_siswa: 5,
       },
     });
-    
 
     // // Ambil semua id_peminjaman dari peminjaman yang ditemukan
     const id_peminjaman = peminjaman.map((p) => p.id_peminjaman);
@@ -102,3 +103,46 @@ exports.getPengembalian = async function (req, res, next) {
   }
 };
 
+// Function untuk menampilkan satu data pengembalian join dengan tabel peminjaman dan siswa dan buku
+exports.getPengembalianAdmin = async function (req, res, next) {
+  try {
+    const pengembalian = await ViewPeminjamanSelesai.findOne({
+      where: {
+        id_pengembalian: req.params.pengembalianId,
+      },
+      include: [
+        {
+          model: Buku,
+        },
+
+        {
+          model: Siswa,
+        },
+      ],
+    });
+    res.json(pengembalian);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Function untuk menampilkan semua data pengembalian join dengan tabel peminjaman dan siswa dan buku
+exports.getAllPengembalianAdmin = async function (req, res, next) {
+  try {
+    const pengembalian = await ViewPeminjamanSelesai.findAll({
+      attributes: { include: ["tanggal_pengembalian", "status_kembali"] },
+      include: [
+        {
+          model: Buku,
+        },
+
+        {
+          model: Siswa,
+        },
+      ],
+    });
+    res.json(pengembalian);
+  } catch (error) {
+    next(error);
+  }
+};

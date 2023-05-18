@@ -40,9 +40,9 @@ export const DataKesehatan = (props) => {
     const navigate = useNavigate();
 
     const schema = yup.object().shape({
-        goldar: yup.string().required("Wajib diisi"),
-        berat_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
-        tinggi_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
+        // goldar: yup.string().required("Wajib diisi"),
+        // berat_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
+        // tinggi_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
     })
 
     const { register, control, handleSubmit, reset, formState, } = useForm({
@@ -95,7 +95,7 @@ export const DataKesehatan = (props) => {
             console.error(error);
         }
 
-        navigate("/registrasi/data-pendidikan")
+        navigate("../data-pendidikan")
     }
 
 
@@ -105,7 +105,7 @@ export const DataKesehatan = (props) => {
         <React.Fragment>
 
             <div className={classes.content}>
-                <Sidebar />
+
                 <div className={classes.content_inner}>
                 <Stepper
                     steps={steps}
@@ -151,7 +151,7 @@ export const DataKesehatan = (props) => {
                             }
                         </div>
                         <div className={classes.button}>
-                            <Link to="/registrasi/data-pribadi">
+                            <Link to="../data-pribadi">
 
                                 <button className={classes.cancel} type="button" >
                                     {"<"} Sebelumnya

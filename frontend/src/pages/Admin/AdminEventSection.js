@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
-import { Paginate } from './Paginate/Paginate'
-import classes from "./EventSection.module.css"
+import { Paginate } from '../../components/Paginate/Paginate'
+import classes from "./AdminEventSection.module.css"
 import { useSelector } from 'react-redux'
-import { EventForm } from './Event/EventForm'
 import { Form, useSubmit } from 'react-router-dom'
-export const EventSection = ({selectedDate,currentDate,onPageHandler,currentIndex,updateListHandler}) => {
+import { EventForm } from '../../components/Event/EventForm'
+export const AdminEventSection = ({selectedDate,currentDate,onPageHandler,currentIndex,updateListHandler}) => {
   const submit=useSubmit();
   
 const user=useSelector(state=>state.auth)
@@ -51,16 +51,15 @@ let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
 <>
   <div style={{ display:"flex", justifyContent:"space-between" }}>
     <div></div>
-    {user.isAuth &&<div>
-      {user.user?.id_akun ===item.id_akun &&
+    {user.isAuth && user.user?.hak_akses ==="Admin" &&<div>
+     
           <button onClick={showEditHandler}>Edit</button>
-      }
-      {user.user?.id_akun ===item.id_akun && 
+     
       <Form method='Delete'>
-        <input type="text" name='id_event' value={selectedDate[currentIndex].id_event} />
+        <input
+         type="text" name='id_event' value={selectedDate[currentIndex].id_event} />
         <button type='submit' onClick={(e)=>deleteHandler(e)}>Delete</button>
       </Form>
-      }
     </div>}
   </div>
 
