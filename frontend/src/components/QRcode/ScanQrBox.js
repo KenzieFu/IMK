@@ -8,10 +8,21 @@ export const ScanQrBox = (props) => {
   const showHandler=()=>{
     setShowCamera(prev=>!prev);
   }
+  const scanHandler=(result,error)=>{
+    if (!!result) {
+      console.log("halo")
+      setData(result?.text);
+    }
+
+    if (!!error) {
+      console.info("Bursss");
+    }
+  }
   return (
     <>
     <div style={{ width:"500px",textAlign:"center",margin:"auto" }}> 
     {showCamera && <QrReader 
+        scanDelay={1000}
         onResult={(result, error) => {
           if (!!result) {
             console.log("halo")
@@ -31,3 +42,5 @@ export const ScanQrBox = (props) => {
     </>
   );
 };
+
+export const action=()
