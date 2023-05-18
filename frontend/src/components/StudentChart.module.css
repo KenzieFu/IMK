@@ -5,6 +5,14 @@
     font-family: Inter;
 }
 
+.info h1, .history h2{
+    font-size: 2vw;
+}
+
+.info span, .navbar li, .navbar span{
+    font-size: 1vw;
+}
+
 .chart{
     
     display: flex;

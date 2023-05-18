@@ -4,3 +4,15 @@
     border-radius: 20px;
     margin:10px 5px;
 }
+
+.title_item{
+    color: #00278C;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.details{
+    color: #00278C;
+    font-size: 1.3vw;
+    font-weight: 600;
+}

@@ -4,8 +4,8 @@
 }
 
 .card {
-    display: block;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     margin-left: 5px;
     flex-flow: row wrap;
     background-color: white;
@@ -127,6 +127,7 @@ td{
 
 .button-borrow{
     padding: 7px;
+    margin-left: 25px;
     border-radius: 7px;
     margin-top: 25px;
     background-color: #FF5959;

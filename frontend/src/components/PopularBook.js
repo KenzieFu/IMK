@@ -22,12 +22,11 @@ export const PopularBook = (props) => {
     <>
     <div className={classes.popular}>
     <div className={classes.wibulu}> 
-      {/* <img src="./assets/anime-pat.gif" alt="" /> */}
-      <h1>Daily Picks</h1>
+      <h1>Pilihan Harian</h1>
+      <img src="./assets/anime-jump.gif" alt="" />
       </div>
     <ul>
         {daily}
-        
     </ul>
     </div>
     

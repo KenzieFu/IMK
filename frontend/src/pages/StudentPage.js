@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
+import {  QRCodeBox } from '../components/QRcode/QRCodeBox';
 export const StudentPage = () => {
   const [showPinjam,setShowPinjam]=useState(true);
   const pinjamHandler=()=>{
@@ -40,7 +41,8 @@ export const StudentPage = () => {
             </div>
           </div>
            <div>
-            <StudentCard/>
+          {/*   <StudentCard/> */}
+          <QRCodeBox/>
             <Suspense fallback={<p>Loading...</p>}>
               <Await resolve={pinjam}>
               {loadedData=><LatestBook latest={loadedData.filter((book,i,{length})=>i===length -1)}/>}
