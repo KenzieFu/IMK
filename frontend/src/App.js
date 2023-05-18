@@ -38,6 +38,7 @@ import { DataAyah } from "./pages/FormRegistrasi/DataAyah";
 import { DataIbu } from "./pages/FormRegistrasi/DataIbu";
 import { DataWali } from "./pages/FormRegistrasi/DataWali";
 import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
+import { PetugasPage } from "./pages/PetugasPage";
 
 
 //Student Loader
@@ -96,6 +97,7 @@ import { EventPage } from "./pages/EventPage";
 import { AdminEventPage } from "./pages/Admin/AdminEventPage";
 import { StudentAuth } from "./components/auth/StudentAuth";
 import { AdminAuth } from "./components/auth/AdminAuth";
+import { PetugasRoot } from "./layouts/PetugasRoot";
 
 
 /****Layouts Admin*****/
@@ -333,6 +335,13 @@ const studentId=useSelector(state=>state.auth.user)
       { path: "table", exact: true, element: <Tables /> },
       { path: "forms", exact: true, element: <Forms /> },
       { path: "breadcrumbs", exact: true, element: <Breadcrumbs /> }, */
+      ]
+    },
+    {
+      path:"/petugas",
+      element:<PetugasRoot/>,
+      children:[
+        {index:true,element:<PetugasPage/>}
       ]
     }
 
