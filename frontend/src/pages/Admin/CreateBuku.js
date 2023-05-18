@@ -165,7 +165,7 @@ export const CreateBuku = () => {
       formDataToSend.append('isbn', formData.isbn);
 
 
-      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
         body: formDataToSend
         // headers: {
