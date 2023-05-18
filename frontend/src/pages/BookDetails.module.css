@@ -4,8 +4,8 @@
 }
 
 .card {
-    display: block;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     margin-left: 5px;
     flex-flow: row wrap;
     background-color: white;
