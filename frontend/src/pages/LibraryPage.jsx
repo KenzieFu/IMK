@@ -25,8 +25,6 @@ export const LibraryPage = () => {
   return (
     <>
     <div className={classes.content}>
-      {isAuth &&<Sidebar/>}
-      {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
       <div className={classes.main}>
       {check && 
           <h1>
@@ -36,7 +34,8 @@ export const LibraryPage = () => {
         <div className={classes.maintop}>
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
       </div>
-
+      {isAuth &&<Sidebar/>}
+      {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
       {!check &&
       <>
       <Suspense fallback="">
@@ -48,6 +47,7 @@ export const LibraryPage = () => {
         </>
       }
 
+
       {!check &&
         <>
         <Suspense fallback={<p style={{ textAlign:"center" }}>Loading.....</p>}>
@@ -58,6 +58,9 @@ export const LibraryPage = () => {
 
         </>
         }
+
+      </div>
+      <div className={classes['mainmid']}>
 
       {!check &&
           <>
