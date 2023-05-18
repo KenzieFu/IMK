@@ -6,10 +6,10 @@ import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'r
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-export const DaftarBukuPinjamPage = () => {
+export const DaftarPengembalianBukuPage = () => {
     const [currentId,setCurrentId]=useState(null);
     const [showDeleteModal,setDeleteModal]=useState(false)
-    const { daftarPinjam }=useLoaderData('admin-pengembalian');
+    const { daftarPengembalian }=useLoaderData('admin-pengembalian');
     const location = useLocation();
     console.log(currentId);
 
@@ -20,7 +20,7 @@ export const DaftarBukuPinjamPage = () => {
       const closeModalHandler=()=>{
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
-        
+
       }
 
 
@@ -29,9 +29,9 @@ export const DaftarBukuPinjamPage = () => {
             id:'id',
             name:"ID",
             selector:row=>row.id_pengembalian,
-            
+
             sortable:true,
-            
+
         },
         {
             id:"id_peminjaman",
@@ -58,16 +58,16 @@ export const DaftarBukuPinjamPage = () => {
             id:"button",
             name:"Action",
             width:"30%",
-          cell: (row) => 
+          cell: (row) =>
                 (
               <div style={{ margin:"0 0" }} >
             <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
             <span  onClick={()=>showModalHandler(row.id_peminjaman)} style={{ cursor:"pointer" }}>Delete</span>
-           
+
             </div>
           ),
-          
+
           ignoreRowClick: true,
           allowOverflow: true,
           selector:row=>row.button,
@@ -79,7 +79,7 @@ export const DaftarBukuPinjamPage = () => {
   return (
     <>
         <Suspense fallback="">
-          <Await resolve={daftarPinjam} >
+          <Await resolve={daftarPengembalian} >
             {(loadedData)=>
                <DataTable
                title="Tabel User"
@@ -89,7 +89,7 @@ export const DaftarBukuPinjamPage = () => {
                    />
             }
           </Await>
-        </Suspense> 
+        </Suspense>
         {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
         {location.state && <div>{location.state.message}</div>}
     </>
@@ -97,8 +97,8 @@ export const DaftarBukuPinjamPage = () => {
 }
 
 
-const loadPinjams=async ()=>{
-    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman")
+const loadKembali=async ()=>{
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian")
     console.log(response);
     if(!response.ok)
     {
@@ -114,26 +114,26 @@ const loadPinjams=async ()=>{
       return resData;
     }
   }
-  
-  
+
+
   export const loader=()=>{
     return defer({
-      daftarPengembalian:loadPinjams()
+      daftarPengembalian:loadKembali()
     })
   }
-  
+
   export async function action({ params, request }) {
-    
+
     const method = request.method;
     const data = await request.formData();
     console.log(data);
-    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
+    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian/' + data.get('id'), {
       method: method,
       headers:{
         "Authorization":"Bearer"
       }
     });
-  
+
     if (!response.ok) {
       throw json(
         { message: 'Could not delete this row.' },
@@ -141,12 +141,12 @@ const loadPinjams=async ()=>{
           status: 500,
         }
       );
-    
+
     }
      return  redirect("/admin/returned-books");
   }
-  
-  
-  
-  
-  
+
+
+
+
+

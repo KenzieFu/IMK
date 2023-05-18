@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Sidebar } from '../../UI/Sidebar';
 import { useForm, useController, useWatch } from 'react-hook-form';
 import classes from './regristrationForm.module.css'
 import Select from 'react-select';

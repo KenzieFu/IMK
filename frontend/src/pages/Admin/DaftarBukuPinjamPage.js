@@ -20,8 +20,11 @@ export const DaftarBukuPinjamPage = () => {
       const closeModalHandler=()=>{
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
-        
+
       }
+
+      const [searchTerm, setSearchTerm] = React.useState('');
+      const [searchBased, setSearchBased] = React.useState('');
 
 
       const columns = [
@@ -29,9 +32,9 @@ export const DaftarBukuPinjamPage = () => {
             id:'id',
             name:"ID",
             selector:row=>row.id_peminjaman,
-            
+
             sortable:true,
-            
+
         },
         {
             id:"id_buku",
@@ -65,16 +68,16 @@ export const DaftarBukuPinjamPage = () => {
             id:"button",
             name:"Action",
             width:"30%",
-          cell: (row) => 
+          cell: (row) =>
                 (
               <div style={{ margin:"0 0" }} >
             <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
             <span  onClick={()=>showModalHandler(row.id_peminjaman)} style={{ cursor:"pointer" }}>Delete</span>
-           
+
             </div>
           ),
-          
+
           ignoreRowClick: true,
           allowOverflow: true,
           selector:row=>row.button,
@@ -85,6 +88,18 @@ export const DaftarBukuPinjamPage = () => {
 
   return (
     <>
+     <select onChange={(e) => setSearchBased(e.target.value)}>
+        <option>Cari berdasarkan:</option>
+        <option value="tgl_pengembalian">Tanggal Pengembalian</option>
+        <option value="id_siswa">id_siswa</option>
+      </select>
+    <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
         <Suspense fallback="">
           <Await resolve={daftarPinjam} >
             {(loadedData)=>
@@ -95,13 +110,40 @@ export const DaftarBukuPinjamPage = () => {
                     <Link to="create">Create</Link>
                 </div>
                }
-               data={loadedData}
+               data={loadedData.filter((item) => {
+                if (searchTerm === "") {
+                  return item;
+                } else if (
+                  searchBased === "tgl_pengembalian" &&
+                  item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                ) {
+                  return item;
+                }
+                 else if (
+                  searchBased === "id_siswa" &&
+                  item.id_siswa.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                ) {
+                  return item;
+                }
+                // else if (
+
+                //   item.tanggal_pinjam.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                // ) {
+                //   return item;
+                // } else if (
+
+                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                // ) {
+                //   return item;
+                // }
+
+              })}
                columns={columns}
                pagination
                    />
             }
           </Await>
-        </Suspense> 
+        </Suspense>
         {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
         {location.state && <div>{location.state.message}</div>}
     </>
@@ -126,16 +168,16 @@ const loadPinjams=async ()=>{
       return resData;
     }
   }
-  
-  
+
+
   export const loader=()=>{
     return defer({
       daftarPinjam:loadPinjams()
     })
   }
-  
+
   export async function action({ params, request }) {
-    
+
     const method = request.method;
     const data = await request.formData();
     console.log(data);
@@ -145,7 +187,7 @@ const loadPinjams=async ()=>{
         "Authorization":"Bearer"
       }
     });
-  
+
     if (!response.ok) {
       throw json(
         { message: 'Could not delete this row.' },
@@ -153,12 +195,12 @@ const loadPinjams=async ()=>{
           status: 500,
         }
       );
-    
+
     }
      return  redirect("/admin/borrowed-books");
   }
-  
-  
-  
-  
-  
+
+
+
+
+

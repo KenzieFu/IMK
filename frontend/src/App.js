@@ -56,7 +56,12 @@ import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
 
+//Buku Pinjam
+import { loader as adminPengembalianLoader } from "./pages/Admin/DaftarPengembalianBukuPage";
 
+//create pinjam
+
+import {loader as adminCreatePinjam} from "./pages/Admin/CreatePinjam"
 
 //Admin Action
 
@@ -65,6 +70,7 @@ import { action as adminDeleteBookAction } from "./pages/Admin/BookTablePage";
 //Siswa
 import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 //Buku Pinjam
+//Delete
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
 
 
@@ -255,7 +261,9 @@ const studentId=useSelector(state=>state.auth.user)
             },
             {
               path:"create",
-              element:<CreatePinjam/>
+              element:<CreatePinjam/>,
+              loader:adminCreatePinjam,
+
             },
             {
               path:":idPinjam",
@@ -271,15 +279,15 @@ const studentId=useSelector(state=>state.auth.user)
                 }
               ]
              }
-
           ]
          },
-         /* {
+          {
           path:"returned-books",
           children:[
             {index:true,
              id:"admin-pengembalian",
              element:<DaftarPengembalianBukuPage/>,
+             loader:adminPengembalianLoader,
 
             },
             {
@@ -298,7 +306,7 @@ const studentId=useSelector(state=>state.auth.user)
              }
 
           ]
-         }, */
+         },
 
 
 
