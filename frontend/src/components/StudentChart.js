@@ -25,7 +25,7 @@ export const StudentChart = (props) => {
                 <BookBar image="./assets/chartVector.png" label="Peringkat Membaca" color="#1388CD" />
             </div>
            <div className={classes.history} >
-            <h2>Riwayat Peminjaman Buku</h2>
+            <h2>Riwayat Peminjaman Buku</h2> 
                 <nav className={classes.navbar} >
                     <ul style={{ display:"flex",gap:"25px" }}>
                         <li onClick={props.showPinjamHandler} className={currentBarPinjamClassName}>

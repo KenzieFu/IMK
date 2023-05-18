@@ -32,3 +32,11 @@
 .book-info_h1{
     margin: 0;
 }
+
+.box h1, .box h2{
+    font-size: 2vw;
+}
+
+.book-info span, .sinopsis p{
+    font-size: 1vw;
+} 
