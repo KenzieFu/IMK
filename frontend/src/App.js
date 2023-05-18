@@ -98,6 +98,7 @@ import { AdminEventPage } from "./pages/Admin/AdminEventPage";
 import { StudentAuth } from "./components/auth/StudentAuth";
 import { AdminAuth } from "./components/auth/AdminAuth";
 import { PetugasRoot } from "./layouts/PetugasRoot";
+import { ScanPage } from "./pages/Petugas/ScanPage";
 
 
 /****Layouts Admin*****/
@@ -341,7 +342,8 @@ const studentId=useSelector(state=>state.auth.user)
       path:"/petugas",
       element:<PetugasRoot/>,
       children:[
-        {index:true,element:<PetugasPage/>}
+        {index:true,element:<PetugasPage/>},
+        {path:"scan",element:<ScanPage/>}
       ]
     }
 
