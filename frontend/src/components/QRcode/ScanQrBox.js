@@ -18,7 +18,7 @@ const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
 );
 
-export const ScanQrBox = () => {
+export const ScanQrBox = (props) => {
   const formRef =useRef();
   const submit=useSubmit();
   const [data, setData] = useState('No result');
@@ -31,32 +31,39 @@ export const ScanQrBox = () => {
   
 
   const scanHandler=(result,error)=>{
-    if (!!result) {
-      console.log("halo")
-      setScan(true);
-      setData(result?.text);
-      const form=new FormData(formRef.current);
-      const parsedResult=JSON.parse(result?.text)
-      form.append("data",result?.text);
-      setData(parsedResult);
-  
-      submit(form,{method:"POST"});
+   
+      if (!!result && !props.showInfo) {
+        props.showHandler();
       
-    }
-
-    if (!!error) {
-      setScan(false);
-      console.info("Bursss");
-    }
+        console.log("halo")
+        setScan(true);
+        setData(result?.text);
+        const form=new FormData(formRef.current);
+        const parsedResult=JSON.parse(result?.text)
+        form.append("data",result?.text);
+        setData(parsedResult);
+    
+        submit(form,{method:"POST"});
+       
+        
+      }
+  
+      if (!!error && !props.showInfo) {
+        setScan(false);
+        console.info("Bursss");
+      }
+    
+    
   };
   return (
     <>
     <div style={{ display:"flex",alignContent:"center", textAlign:"center", flexDirection:"column"}} >
  
     <div style={{ textAlign:"center" ,margin:"auto" }} >
-    {showCamera &&   <Form ref={formRef} method='POST'>
-     <QrReader 
-        scanDelay={1000}
+    {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
+     <QrReader
+         
+        scanDelay={false}
         onResult={scanHandler}
        containerStyle={{ width:"500px" ,height:'600px' }}
        videoContainerStyle={{ width:'500px', height:"550px" }}

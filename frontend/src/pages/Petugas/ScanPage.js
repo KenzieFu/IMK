@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {ScanQrBox} from "../../components/QRcode/ScanQrBox";
 import { json, redirect } from 'react-router-dom';
+import { InfoAbsensiModal } from '../../components/admin/modals/InfoAbsesiModal';
 export const ScanPage = () => {
+  const [showInfo,setShowInfo]=useState(false);
+  const showHandler=()=>{
+    setShowInfo(prev=>!prev);
+  }
+
   return (
    <>
-    <ScanQrBox/>
+    <ScanQrBox showInfo={showInfo} showHandler={showHandler}/>
+    {showInfo && <InfoAbsensiModal onClose={showHandler}/>}
    </>
   )
 }
