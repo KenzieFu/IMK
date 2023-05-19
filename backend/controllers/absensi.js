@@ -54,7 +54,7 @@ exports.getAbsensi = async function (req, res, next) {
   try {
     const absensi = await Absensi.findByPk(req.params.absensiId);
     const siswa = await Siswa.findOne({ where: { nisn: absensi.nisn } });
-    res.json({ absensi, siswa });
+    res.json({ absensi:absensi, siswa:siswa });
   } catch (error) {
     next(error);
   }
