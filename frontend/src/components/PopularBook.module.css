@@ -51,7 +51,7 @@
 }
 .popular ul{
     display: grid ;
-    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: 14vw 14vw 14vw;
     list-style-type: none;
     grid-gap: 30px;
     padding: 0;
