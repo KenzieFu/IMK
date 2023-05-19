@@ -48,7 +48,7 @@ export const ScanQrBox = () => {
       setScan(false);
       console.info("Bursss");
     }
-  }
+  };
   return (
     <>
     <div style={{ display:"flex",alignContent:"center", textAlign:"center", flexDirection:"column"}} >
