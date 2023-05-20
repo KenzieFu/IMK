@@ -58,25 +58,7 @@ export const AbsensiPage = () => {
             accessor:"waktu_keluar",
             sortable: true,
         },
-        {
-            id:"button",
-            name:"Action",
-            width:"30%",
-          cell: (row) =>
-                (
-              <div style={{ margin:"0 0" }} >
-            <Link to='#' style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
-            <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_absensi)} style={{ cursor:"pointer" }}>Delete</span>
-                  
-            </div>
-          ),
-
-          ignoreRowClick: true,
-          allowOverflow: true,
-          selector:row=>row.button,
-          button: true,
-        },
+        
     ];
 
 
