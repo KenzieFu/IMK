@@ -7,17 +7,56 @@ import { useSelector } from "react-redux";
 import LoginModal from "../components/auth/Login";
 import { BookingModals } from "../components/BookingModal";
 import { CartProvider, useCart } from "react-use-cart";
+import Modal from "../UI/Modal";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 const BookDetail = () => {
 
+    const notify = () => toast.success('Buku berhasil ditambahkan ke booking list!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+
     const [isAdded, setIsAdded] = useState(false);
+    const { addItem, items } = useCart();
 
     const navigate = useNavigate();
     const isAuth = useSelector((state) => state.auth.isAuth);
-    const { book } = useLoaderData('book-detail');
+    const { book  } = useLoaderData('book-detail');
     const backHandler = () => {
         navigate("..");
     }
+
+    const handleAddToCart = () => {
+        const existingItem = items.find((item) => item.id === book.id_buku);
+        if (existingItem) {
+          return(
+            <Modal>
+                <p>Buku sudah masuk list booking</p>
+            </Modal>
+          )
+        } else {
+
+          addItem({
+            id: book.id_buku,
+            name: book.judul_buku,
+            price: "--",
+            penerbit: book.penerbit,
+            pengarang: book.pengarang,
+            sinopsis: book.sinopsis,
+          });
+          notify()
+
+        }
+      };
 
     const [showBookingModal, setBookingModal] = useState(false)
     const [showLogin, setShowLogin] = useState(false);
@@ -29,14 +68,14 @@ const BookDetail = () => {
     const closeLoginModal = () => {
         setShowLogin(false);
     }
-    const showBookingModalHandler = (id) => {
-        setBookingModal(true);
+    // const showBookingModalHandler = (id) => {
+    //     setBookingModal(true);
 
-    }
-    const closeBookingModalHandler = (id) => {
-        setBookingModal(false);
+    // }
+    // const closeBookingModalHandler = (id) => {
+    //     setBookingModal(false);
 
-    }
+    // }
     return (
         <>
             <div className={classes.content}>
@@ -86,15 +125,15 @@ const BookDetail = () => {
                         <button className={classes["button-back"]} onClick={backHandler}>Back</button>
                         {/* button ini belum jalan seperti semestinya */}
                         {showLogin && <LoginModal onClose={closeLoginModal} />}
-                        {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>}
-                        <button className={classes["button-borrow"]} onClick={() => {
+                        {/* {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>} */}
+                        <button className={classes["button-borrow"]}  onClick={() => {
                             if (!isAuth) {
                                 showLoginModal();
                             } else {
-                                showBookingModalHandler(book.id_buku);
+                                handleAddToCart();
                             }
                         }}
-                        >  {!isAdded ? "Pinjam" : "✔ ADDED"}</button>
+                        >  {!isAdded ? "Pinjam Buku" : "✔ Telah Dibooking"}</button>
                     </div>
                 </div>
 
