@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2023 at 09:30 AM
+-- Generation Time: May 20, 2023 at 07:08 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -70,7 +70,10 @@ CREATE TABLE `absensi` (
 INSERT INTO `absensi` (`id_absensi`, `nisn`, `waktu_masuk`, `tanggal`, `waktu_keluar`) VALUES
 (1, '0044798474', '00:00:24', '2023-05-19', '00:00:29'),
 (2, '320301', '00:00:27', '2023-05-18', '13:44:16'),
-(3, '110802', '00:03:05', '2023-05-18', NULL);
+(3, '110802', '00:03:05', '2023-05-18', NULL),
+(5, '0118741444', '07:00:00', '2023-05-18', NULL),
+(7, '0118741444', '07:00:00', '2023-05-18', NULL),
+(8, '0118741444', '07:00:00', '2023-05-18', NULL);
 
 -- --------------------------------------------------------
 
@@ -371,7 +374,10 @@ INSERT INTO `events` (`id_event`, `title_event`, `content_event`, `tanggal_event
 (7, 'Acara Budaya', 'Acara budaya ini menampilkan berbagai macam tarian dan musik tradisional', '2023-06-07', 654, 'Publik', 'Siswa', NULL),
 (8, 'Diskusi Sastra', 'Diskusi sastra ini membahas tentang karya sastra terbaru dan teknik menulis yang baik', '2023-06-08', 123, 'Publik', 'Guru', NULL),
 (9, 'Pelatihan Olahraga', 'Pelatihan ini diadakan untuk meningkatkan kemampuan siswa dalam bermain olahraga', '2023-06-09', 456, 'Privat', 'Siswa', NULL),
-(10, 'Pertunjukan Teater', 'Pertunjukan teater ini menampilkan kisah-kisah yang menarik dan inspiratif', '2023-06-10', 789, 'Publik', 'Guru', NULL);
+(10, 'Pertunjukan Teater', 'Pertunjukan teater ini menampilkan kisah-kisah yang menarik dan inspiratif', '2023-06-10', 789, 'Publik', 'Guru', NULL),
+(12, 'Deadline Peminjaman Buku Fisika XI', 'Buku yang dipinjam adalah Fisika XI. Dipinjam dari tanggal 2023-05-20 hingga tanggal 2023-06-03', '2023-06-03', 6, 'Publik', 'Siswa', NULL),
+(13, 'Deadline Peminjaman Buku Fisika XI', 'Buku yang dipinjam adalah Fisika XI. Dipinjam dari tanggal 2023-05-21 hingga tanggal 2023-06-04', '2023-06-04', 6, 'Publik', 'Siswa', NULL),
+(14, 'Deadline Peminjaman Buku Fisika XI', 'Buku yang dipinjam adalah Fisika XI. Dipinjam dari tanggal 2023-05-21 hingga tanggal 2023-06-04', '2023-06-04', 6, 'Publik', 'Siswa', NULL);
 
 -- --------------------------------------------------------
 
@@ -984,20 +990,19 @@ CREATE TABLE `peminjaman` (
   `id_buku` int(11) DEFAULT NULL,
   `id_siswa` int(11) DEFAULT NULL,
   `tanggal_pinjam` date DEFAULT NULL,
-  `tanggal_kembali` date DEFAULT NULL,
-  `status` enum('Selesai','Belum Selesai') NOT NULL
+  `tanggal_kembali` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `peminjaman`
 --
 
-INSERT INTO `peminjaman` (`id_peminjaman`, `id_buku`, `id_siswa`, `tanggal_pinjam`, `tanggal_kembali`, `status`) VALUES
-(1, 3, 2, '2023-04-01', '2023-04-29', 'Selesai'),
-(2, 3, 5, '2023-04-02', '2023-04-24', 'Selesai'),
-(3, 2, 5, '2023-04-23', '2023-05-04', 'Selesai'),
-(4, 1, 1, '2023-03-31', '2023-04-15', 'Selesai'),
-(5, 4, 2, '2023-04-01', '2023-04-29', 'Selesai');
+INSERT INTO `peminjaman` (`id_peminjaman`, `id_buku`, `id_siswa`, `tanggal_pinjam`, `tanggal_kembali`) VALUES
+(1, 3, 2, '2023-04-01', '2023-04-29'),
+(2, 3, 5, '2023-04-02', '2023-04-24'),
+(3, 2, 5, '2023-04-23', '2023-05-04'),
+(4, 1, 1, '2023-03-31', '2023-04-15'),
+(5, 4, 2, '2023-04-01', '2023-04-29');
 
 --
 -- Triggers `peminjaman`
@@ -1031,6 +1036,7 @@ CREATE TABLE `pengembalian` (
 --
 
 INSERT INTO `pengembalian` (`id_pengembalian`, `id_peminjaman`, `tanggal_pengembalian`, `status`) VALUES
+(0, 8, '2023-05-21', 'Tepat Waktu'),
 (1, 1, '2023-04-28', 'Tepat Waktu'),
 (2, 2, '2023-04-28', 'Terlambat'),
 (3, 3, '2023-05-09', 'Terlambat');
@@ -1162,12 +1168,6 @@ CREATE TABLE `view_jumlah_pinjam` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_peminjaman_belum_selesai` (
-`id_peminjaman` int(11)
-,`id_buku` int(11)
-,`id_siswa` int(11)
-,`tanggal_pinjam` date
-,`tanggal_kembali` date
-,`status` enum('Selesai','Belum Selesai')
 );
 
 -- --------------------------------------------------------
@@ -1177,15 +1177,6 @@ CREATE TABLE `view_peminjaman_belum_selesai` (
 -- (See below for the actual view)
 --
 CREATE TABLE `view_peminjaman_selesai` (
-`id_peminjaman` int(11)
-,`id_buku` int(11)
-,`id_pengembalian` int(11)
-,`status_kembali` enum('Tepat Waktu','Terlambat')
-,`tanggal_pengembalian` date
-,`id_siswa` int(11)
-,`tanggal_pinjam` date
-,`tanggal_kembali` date
-,`status` enum('Selesai','Belum Selesai')
 );
 
 -- --------------------------------------------------------
@@ -1397,7 +1388,7 @@ ALTER TABLE `transaksi_pembelian_buku`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `akun`
@@ -1415,7 +1406,7 @@ ALTER TABLE `buku`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `guru`
@@ -1434,6 +1425,12 @@ ALTER TABLE `log_pemesanan_buku`
 --
 ALTER TABLE `pemesanan_buku`
   MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `peminjaman`
+--
+ALTER TABLE `peminjaman`
+  MODIFY `id_peminjaman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pesan_masuk`
@@ -1469,6 +1466,14 @@ ALTER TABLE `pemesanan_buku`
 --
 ALTER TABLE `siswa`
   ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`id_akun`) REFERENCES `akun` (`id_akun`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `hapus_pemesanan` ON SCHEDULE EVERY 1 DAY STARTS '2023-05-18 16:00:00' ENDS '2024-05-18 16:00:00' ON COMPLETION PRESERVE ENABLE DO DELETE FROM pemesanan_buku$$$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
