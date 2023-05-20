@@ -8,15 +8,21 @@ const ViewPeminjamanBelumSelesai = require("../models/viewPeminjamanBelumSelesai
 // Function untuk menambahkan peminjaman
 exports.createPeminjaman = async function (req, res, next) {
   // contoh data yang dikirimkan dalam json
-  // {
+  const { id_buku, id_siswa } = req.body;
   //   "id_peminjaman": "1234567890",
   //   "id_buku": "1234567890",
   //   "id_siswa": "1234567890",
   //   "tanggal_pinjam": "2020-12-10",
   //   "tanggal_kembali": "2020-12-12"
   // }
+  // tanggal kembali dibuat otomatist 14 hari setelah tanggal pinjam
   try {
-    const peminjaman = await Peminjaman.create(req.body);
+    const peminjaman = await Peminjaman.create({
+      id_buku: id_buku,
+      id_siswa: id_siswa,
+      tanggal_pinjam: new Date(),
+      tanggal_kembali: new Date().setDate(new Date().getDate() + 14),
+    });
     res.json(peminjaman);
   } catch (error) {
     next(error);
@@ -45,7 +51,20 @@ exports.deletePeminjaman = async function (req, res, next) {
         id_peminjaman: req.params.peminjamanId,
       },
     });
-    res.json(peminjaman);
+
+    // tentukan status pengembalian jika lebih dari tangga_kembali maka 'Terlambat' jika tidak 'Tepat Waktu'
+    let status = "";
+    if (new Date() > peminjaman.tanggal_kembali) {
+      status = "Terlambat";
+    }
+    status = "Tepat Waktu";
+
+    const pengembalian = await Pengembalian.create({
+      id_peminjaman: req.params.peminjamanId,
+      tanggal_pengembalian: new Date(),
+      status: status,
+    });
+    res.json({message: "Peminjaman berhasil dihapus", pengembalian: pengembalian});
     // tambahkan ke tabel pengembalian
     // pengembalianController.createPengembalian(req, res, next);
   } catch (error) {
