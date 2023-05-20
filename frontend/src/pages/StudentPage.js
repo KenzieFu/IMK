@@ -17,7 +17,7 @@ export const StudentPage = () => {
   const kembaliHandler=()=>{
     setShowPinjam(false);
   }
-  const {pinjam}=useLoaderData("pinjam-kembali-buku")
+  const {pinjam,kembali}=useLoaderData("pinjam-kembali-buku")
   return (
     <div className={classes.content}>
       
@@ -25,11 +25,17 @@ export const StudentPage = () => {
           <div>
             <StudentChart showPinjam={showPinjam} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler}/>
               <div className={classes["list-books"]}>
-                <Suspense fallback={<p>Loading...</p>}>
+               { showPinjam && <Suspense fallback={<p>Loading...</p>}>
                   <Await resolve={pinjam}>
                       {loadedData=><PeminjamanBuku  books={loadedData} />}  
                   </Await>
-                </Suspense>
+                </Suspense>}
+                {!showPinjam && <Suspense fallback={<p>Loading...</p>}>
+                  <Await resolve={kembali}>
+                      {loadedData=><PeminjamanBuku  books={loadedData} />}  
+                  </Await>
+                </Suspense>}
+          
            
             </div>
           </div>
@@ -37,7 +43,7 @@ export const StudentPage = () => {
             <StudentCard/>
             <Suspense fallback={<p>Loading...</p>}>
               <Await resolve={pinjam}>
-              {loadedData=><LatestBook latest={loadedData.filter((book,i,{length})=>i!=length -1)}/>}
+              {loadedData=><LatestBook latest={loadedData.filter((book,i,{length})=>i===length -1)}/>}
               </Await>
             </Suspense>
             

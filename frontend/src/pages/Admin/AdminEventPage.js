@@ -1,11 +1,11 @@
 import React, { Suspense, useState } from 'react'
-import { EventSection } from '../components/EventSection'
-import { EventCalender } from '../components/EventCalender'
-import { Sidebar } from '../UI/Sidebar'
-import classes from "./EventPage.module.css"
+
 import { Await, defer, json, redirect, useRouteLoaderData } from 'react-router-dom'
-export const EventPage = () => {
-  const {events}=useRouteLoaderData("event-calender")
+import { Calendar } from 'rsuite';
+import { EventCalender } from '../../components/EventCalender';
+import { AdminEventSection } from './AdminEventSection';
+export const AdminEventPage = () => {
+  const {events}=useRouteLoaderData('admin-calender')
   const [clickedEvent,setClickedEvent]=useState([]);
   const [currentDate,setCurrentDate]=useState([]);
   const [currentIndex,setCurrentIndex]=useState(0);
@@ -29,22 +29,16 @@ export const EventPage = () => {
   }
   return (
     <>
-    <div className={classes.content}>
-        <Sidebar/>
-        <Suspense>
-        <div style={{ width:"90%" }}>
-            <EventSection onPageHandler={onPageHandler} updateListHandler={pickDateHandler} currentDate={currentDate} currentIndex={currentIndex}  selectedDate={clickedEvent} />
-         
+   
+        <div>
+            <Suspense>
+                <AdminEventSection onPageHandler={onPageHandler} updateListHandler={pickDateHandler} currentDate={currentDate} currentIndex={currentIndex} selectedDate={clickedEvent}/>
                 <Await resolve={events}>
-               {loadedData=><EventCalender reset={reset} events={loadedData} pickCurrentDate={pickCurrentDate} pickDateHandler={pickDateHandler}/>} 
+                    {loadedData=><EventCalender reset={reset} events={loadedData} pickCurrentDate={pickCurrentDate} pickDateHandler={pickDateHandler}/>}
                 </Await>
-
-           
-           
+            </Suspense>
+          
         </div>
-        </Suspense>
-        
-    </div>
        
     </>
   )
@@ -99,10 +93,10 @@ const selectedEvent=event
   
   let url="";
   let errorMessage="";
-  if(type==="create"){url="http://localhost:8080/perpustakaan-methodist-cw/event";errorMessage="Event gagal dibuat.";console.log("Create")}
+  if(type==="create"){url="http://localhost:8080/admin-perpustakaan-methodist-cw/event";errorMessage="Event gagal dibuat.";console.log("Create")}
   else if(method === "DELETE"){url="http://localhost:8080/admin-perpustakaan-methodist-cw/event/"+data.get("id_event");
   errorMessage="Event Gagal Terhapus.";console.log("Delete")}
-  else if(method === "PUT"){url="http://localhost:8080/perpustakaan-methodist-cw/event/"+data.get("id_event");
+  else if(method === "PUT"){url="http://localhost:8080/admin-perpustakaan-methodist-cw/event/"+data.get("id_event");
   errorMessage="Event Gagal Teredit.";console.log("Update");}
   console.log("My Data")
   console.log(data);
@@ -125,7 +119,7 @@ const selectedEvent=event
     );
   
   }
-   return  redirect("/calender");
+   return  redirect("/admin/calender");
 }
 
 

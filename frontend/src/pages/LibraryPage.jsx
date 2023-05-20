@@ -3,6 +3,7 @@ import { Sidebar } from '../UI/Sidebar'
 import { StudentChart } from '../components/StudentChart'
 import classes from './LibraryPage.module.css'
 import { SearchBox } from '../UI/SearchBox'
+import { Recommendation } from '../UI/Recommendation'
 import { PopularBook } from '../components/PopularBook'
 import { ListBooks } from '../components/ListBooks'
 import { Suspense } from 'react'
@@ -24,29 +25,56 @@ export const LibraryPage = () => {
   return (
     <>
     <div className={classes.content}>
-      
       {isAuth &&<Sidebar/>}
-      {!isAuth && <div style={{ marginLeft:"50px" }}></div>}
-      <div className={classes.main} >
-       
+      {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
+      <div className={classes.main}>
+      {check && 
+          <h1>
+            Hasil Pencarian untuk : {enteredKey}
+          </h1>
+        }
+        <div className={classes.maintop}>
+      <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
+      </div>
+
+      {!check &&
+      <>
+      <Suspense fallback="">
+          <Await resolve={genres}>
+         {(loadedRecommendation)=><Recommendation recommendation={loadedRecommendation}/>} 
+          </Await>
+        </Suspense>
+
+        </>
+      }
+
+      {!check &&
+        <>
+        <Suspense fallback={<p style={{ textAlign:"center" }}>Loading.....</p>}>
+          <Await resolve={books}>
+            {(loadedBooks)=><PopularBook books={loadedBooks}/>}
+        </Await>
+        </Suspense>
+
+        </>
+        }
+
+      {!check &&
+          <>
         <Suspense fallback="">
           <Await resolve={genres}>
          {(loadedGenres)=><ListGenre genres={loadedGenres}/>} 
           </Await>
         </Suspense>
            
-         <div style={{display:'flex', justifyContent:'flex-end'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
-         </div>
+           </>
+        }
+        </div>
+        
+
+        <div className={classes['mainbot']}>
         {!check &&
         <>
-        <Suspense fallback={<p style={{ textAlign:"center" }}>Loading.....</p>}>
-          <Await resolve={books}>
-            {(loadedBooks)=><PopularBook books={loadedBooks}/>}
-        
-        </Await>
-        </Suspense>
-
-
         <Suspense fallback ={<p style={{ textAlign:"center" }}>Loading.....</p>}>
           <Await resolve={books}>
           {(loadedBooks)=><ListBooks books={loadedBooks}/>}
@@ -56,11 +84,7 @@ export const LibraryPage = () => {
             </>
 
         }
-        {check && 
-          <h1>
-            Hasil Pencarian untuk : {enteredKey}
-          </h1>
-        }
+        </div>
       </div>
 
 

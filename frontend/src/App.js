@@ -41,8 +41,12 @@ import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
 
 
 //Student Loader
+
 //Calender (Event)
 import { loader as userCalenderLoader } from "./pages/EventPage";
+
+//Student Action
+import { action as eventAction } from "./pages/EventPage";
 
 //Admin loader
 
@@ -55,9 +59,13 @@ import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
 
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
+import { loader as adminPinjamDetailLoader } from "./pages/Admin/DetailPinjam";
 
 //Buku Pinjam
 import { loader as adminPengembalianLoader } from "./pages/Admin/DaftarPengembalianBukuPage";
+//Calender
+import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
+
 
 //create pinjam
 
@@ -72,6 +80,8 @@ import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 //Buku Pinjam
 //Delete
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
+//Calender
+import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 
 
 
@@ -90,6 +100,9 @@ import { EditPengembalianBuku } from "./pages/Admin/EditPengembalianBuku";
 import { CreateBuku } from "./pages/Admin/CreateBuku";
 import { EditBuku } from "./pages/Admin/EditBuku";
 import { EventPage } from "./pages/EventPage";
+import { AdminEventPage } from "./pages/Admin/AdminEventPage";
+import { StudentAuth } from "./components/auth/StudentAuth";
+import { AdminAuth } from "./components/auth/AdminAuth";
 
 
 /****Layouts Admin*****/
@@ -121,7 +134,7 @@ const studentId=useSelector(state=>state.auth.user)
        {index:true ,element:<HomePage/>},
        {path:"student",
        id:"pinjam-kembali-buku",
-        element:<StudentPage/>,
+        element:<StudentAuth><StudentPage/></StudentAuth>,
          loader:(s)=>studentLoader(studId)
       },
        {path:"library",
@@ -144,14 +157,15 @@ const studentId=useSelector(state=>state.auth.user)
         loader:userCalenderLoader,
         children:[
           {index:true,
-           element:<EventPage/>}
+           element:<StudentAuth><EventPage/></StudentAuth>,
+           action:eventAction}
         ]}
       ]
     },
     {
       path:"/admin",
       id:"root-admin",
-      element:<FullLayout/>,
+      element:<AdminAuth><FullLayout/></AdminAuth>,
       errorElement:<ErrorAdminPage/>,
       children:[
         {index:true,element:<Starter/>},
@@ -266,12 +280,14 @@ const studentId=useSelector(state=>state.auth.user)
 
             },
             {
-              path:":idPinjam",
-              id:"detail-pinjam",
+              path:":pinjamId",
+              id:"admin-detail-pinjam",
+              loader:adminPinjamDetailLoader,
               children:[
                 {
                   index:true,
-                  element:<DetailPinjam/>
+                  element:<DetailPinjam/>,
+
                 },
                 {
                   path:"edit",
@@ -288,6 +304,7 @@ const studentId=useSelector(state=>state.auth.user)
              id:"admin-pengembalian",
              element:<DaftarPengembalianBukuPage/>,
              loader:adminPengembalianLoader,
+
 
             },
             {
@@ -307,6 +324,14 @@ const studentId=useSelector(state=>state.auth.user)
 
           ]
          },
+         {path:"calender",
+          id:"admin-calender",
+          loader:adminEventLoader,
+        children:[
+          {index:true,
+           element:<AdminEventPage/>,
+           action:adminEventAction}
+        ]}
 
 
 

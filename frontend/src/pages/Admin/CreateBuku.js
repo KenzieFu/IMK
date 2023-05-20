@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
+
 export const CreateBuku = () => {
   const [formData, setFormData] = useState({
     judul_buku: '',
@@ -13,40 +14,112 @@ export const CreateBuku = () => {
     isbn: ''
   })
 
+
   const handleInputChange = (event) => {
-    if (event.target.name === 'gambar_buku') {
-      setFormData({
-        ...formData,
-        gambar_buku: event.target.files[0]
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [event.target.judul_buku]: event.target.value,
-        [event.target.pengarang]: event.target.value,
-        [event.target.penerbit]: event.target.value,
-        [event.target.gambar]: event.target.value,
-        [event.target.tahun_terbit]: event.target.value,
-        [event.target.sinposis]: event.target.value,
-        [event.target.isbn]: event.target.value
-      });
-    }
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
+
+  const handleFileChange = (event) => {
+    const gambar_buku = event.target.files[0];
+    setFormData({ ...formData, gambar_buku });
+  };
+
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const formDataToSend = new FormData();
+  //     formDataToSend.append('judul_buku', formData.judul_buku);
+  //     formDataToSend.append('pengarang', formData.pengarang);
+  //     formDataToSend.append('penerbit', formData.penerbit);
+  //     formDataToSend.append('tahun_terbit', formData.tahun_terbit);
+  //     formDataToSend.append('gamabr_buku', formData.gambar_buku)
+  //     formDataToSend.append('sinopsis', formData.sinopsis);
+  //     formDataToSend.append('isbn', formData.isbn);
+
+  //     const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
+  //       method: 'POST',
+  //       body: formDataToSend,
+  //     });
+
+  //     if (response.ok) {
+  //       // Data successfully created
+  //       // Perform any necessary actions after successful creation
+  //     } else {
+  //       // Handle error response
+  //       console.log('Error creating data');
+  //     }
+  //   } catch (error) {
+  //     // Handle network or other errors
+  //     console.log('Error:', error.message);
+  //   }
+  // };
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+  //     if (response.ok) {
+  //       // Data successfully created
+  //       // Perform any necessary actions after successful creation
+  //     } else {
+  //       // Handle error response
+  //       console.log('Error creating data');
+  //     }
+  //   } catch (error) {
+  //     // Handle network or other errors
+  //     console.log('Error:', error.message);
+  //   }
+  // };
+
+  //   const handleInputChange = (event) => {
+  //   setFormData({
+  //     ...formData,
+  //     [event.target.name]:[event.target.value]
+  //   });
+  // };
+
+  // const handleInputChange = (event) => {
+  //   if (event.target.name === 'gambar_buku') {
+  //     setFormData({
+  //       ...formData,
+  //       gambar_buku: event.target.files[0]
+  //     });
+  //   } else {
+  //     setFormData({
+  //       ...formData,
+  //       [event.target.judul_buku]: event.target.value,
+  //       [event.target.pengarang]: event.target.value,
+  //       [event.target.penerbit]: event.target.value,
+  //       [event.target.gambar]: event.target.value,
+  //       [event.target.tahun_terbit]: event.target.value,
+  //       [event.target.sinposis]: event.target.value,
+  //       [event.target.isbn]: event.target.value
+  //     });
+  //   }
+  // };
 
   const handleCreate = async () => {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('judul_buku', formData.judul_buku);
       formDataToSend.append('pengarang', formData.pengarang);
-      formDataToSend.append('gambar_buku', formData.gambar_buku);
       formDataToSend.append('penerbit', formData.penerbit);
+      formDataToSend.append('gambar_buku', formData.gambar_buku);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn);
 
       const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
         method: 'POST',
-        body: formDataToSend
+        body: JSON.stringify(FormData)
       });
 
       const createdData = await response.json();
@@ -134,7 +207,7 @@ export const CreateBuku = () => {
   return (
     <>
       <h2>Create Buku</h2>
-        <Form>
+        <Form onSubmit={handleCreate}>
         <FormGroup>
           <Label for="exampleBook">judul Buku</Label>
           <Input
@@ -171,7 +244,7 @@ export const CreateBuku = () => {
             id="examplegambar"
             name="gambar_buku"
             type="file"
-            onChange={handleInputChange}
+            onChange={handleFileChange}
           />
         </FormGroup>
 
@@ -198,7 +271,7 @@ export const CreateBuku = () => {
           />
         </FormGroup>
           <Button onClick={backHandler}>Cancel</Button>
-          <Button style={{ background:"green" }} onClick={handleCreate}>Save</Button>
+          <Button style={{ background:"green" }} type='submit'>Save</Button>
       </Form>
     </>
   )

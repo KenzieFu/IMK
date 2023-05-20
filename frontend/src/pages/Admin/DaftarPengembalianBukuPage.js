@@ -20,26 +20,38 @@ export const DaftarPengembalianBukuPage = () => {
       const closeModalHandler=()=>{
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
-
       }
 
-
       const columns = [
-        {
-            id:'id',
-            name:"ID",
-            selector:row=>row.id_pengembalian,
 
-            sortable:true,
-
-        },
         {
-            id:"id_peminjaman",
-            name: 'Id Peminjaman',
-            selector: row => row.id_peminjaman,
-            accessor:"id_peminjaman",
+          id:"nama_siswa",
+          name: 'Nama Siswa',
+          selector: row => row.siswa.nama_lengkap,
+          accessor:"nama_siswa",
+          sortable: true,
+      },
+        {
+            id:"judul_buku",
+            name: 'Judul Buku',
+            selector: row => row.buku.judul_buku,
+            accessor:"judul_buku",
             sortable: true,
         },
+        {
+          id:"tanggal_pinjam",
+          name: 'Tanggal Pinjam',
+          selector: row => row.tanggal_pinjam,
+          accessor:"tanggal_pinjam",
+          sortable: true,
+      },
+      {
+        id:"tanggal_kembali",
+        name: 'Tanggal Dikembalikan',
+        selector: row => row.tanggal_kembali,
+        accessor:"tanggal_kembali",
+        sortable: true,
+    },
         {
             id:"tanggal_pengembalian",
             name: 'Tanggal Pengembalian',
@@ -48,11 +60,12 @@ export const DaftarPengembalianBukuPage = () => {
             sortable: true,
         },
         {
-            id:"status",
+            id:"status_kembali",
             name: 'Status',
-            selector: row => row.status,
-            accessor:"status",
+            selector: row => row.status_kembali,
+            accessor:"status_kembali",
             sortable: true,
+            color: (row => row.status_kembali === "Tepat Waktu") ? "Green" : "Red"
         },
         {
             id:"button",
@@ -67,7 +80,6 @@ export const DaftarPengembalianBukuPage = () => {
 
             </div>
           ),
-
           ignoreRowClick: true,
           allowOverflow: true,
           selector:row=>row.button,
@@ -75,14 +87,13 @@ export const DaftarPengembalianBukuPage = () => {
         },
     ];
 
-
   return (
     <>
         <Suspense fallback="">
           <Await resolve={daftarPengembalian} >
             {(loadedData)=>
                <DataTable
-               title="Tabel User"
+               title="Tabel Pengembalian"
                data={loadedData}
                columns={columns}
                pagination
@@ -98,7 +109,7 @@ export const DaftarPengembalianBukuPage = () => {
 
 
 const loadKembali=async ()=>{
-    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian")
+    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian")
     console.log(response);
     if(!response.ok)
     {
@@ -114,7 +125,6 @@ const loadKembali=async ()=>{
       return resData;
     }
   }
-
 
   export const loader=()=>{
     return defer({

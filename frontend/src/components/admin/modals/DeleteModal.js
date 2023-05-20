@@ -12,7 +12,6 @@ export const DeleteModal = (props) => {
 
 const startDeleteHandler=async(e)=>{
 
-
   submit(e.currentTarget,{method:"delete"});
   props.onClose();
 
