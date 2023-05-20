@@ -31,7 +31,7 @@ export const ScanQrBox = (props) => {
   
 
   const scanHandler=(result,error)=>{
-   
+      let method=props.label ==="keluar perpustakaan"?"PUT":"POST"
       if (!!result && !props.showInfo) {
         props.showHandler();
       
@@ -42,8 +42,8 @@ export const ScanQrBox = (props) => {
         const parsedResult=JSON.parse(result?.text)
         form.append("data",result?.text);
         setData(parsedResult);
-    
-        submit(form,{method:"POST"});
+        
+        submit(form,{method:method});
        
         
       }
@@ -63,7 +63,7 @@ export const ScanQrBox = (props) => {
     {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
      <QrReader
          
-        scanDelay={false}
+        scanDelay={500}
         onResult={scanHandler}
        containerStyle={{ width:"500px" ,height:'600px' }}
        videoContainerStyle={{ width:'500px', height:"550px" }}
@@ -73,7 +73,7 @@ export const ScanQrBox = (props) => {
       
       <div style={{ display:"block" }}>
       <button onClick={showHandler}>{!showCamera?"Open Camera":"Close Camera"}</button>
-      <p>{data.nama_lengkap } mengunjungi perpustakaan</p>
+      <p>{data.nama_lengkap } {props.label}</p>
       </div>
       
     </div>

@@ -89,7 +89,12 @@ import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinja
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 
 //Petugas Action
+//Scan Masuk
 import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPage";
+//Scan Keluar
+import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKeluarPage";
+
+
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
 import { DetailStudentPage } from "./pages/Admin/DetailStudentPage";
@@ -111,6 +116,7 @@ import { AdminAuth } from "./components/auth/AdminAuth";
 import { PetugasRoot } from "./layouts/PetugasRoot";
 import { ScanPage } from "./pages/Petugas/ScanPage";
 import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
+import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
 
 
 /****Layouts Admin*****/
@@ -363,6 +369,9 @@ const studentId=useSelector(state=>state.auth.user)
         {path:"scan",
         element:<ScanPage/>,
         action:petugascreateAttendanceAction},
+        {path:"scan-keluar",
+        element:<ScanKeluarPage/>,
+        action:petugasKeluarAttendanceAction},
         {path:"absensi",
          id:"petugas-absensi",
 

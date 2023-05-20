@@ -14,7 +14,7 @@ exports.setWaktuKeluar = async function (req, res, next) {
         where: {
           nisn: req.params.nisn,
           // tanggal: dayjs().format("YYYY-MM-DD"),
-          waktu_keluar: null,
+          waktu_keluar: "00:00:00",
         },
       }
     );
