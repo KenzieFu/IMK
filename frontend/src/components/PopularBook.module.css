@@ -1,46 +1,95 @@
+:root{
+    --white:#ffffff;
+    --blue:#2e55ba; 
+    --accentblack:rgb(58, 58, 58);
+    --red:#FF5959;
+    --addgray:#DBD0C0;
+    --gray:#FAEEE0;
+    --beige:#F9CF93;
+    --lbeige:#FAEEE0;
+
+    --white-light:#ffffff;
+    --blue-light:#2e55ba;
+    --accentblack-light:rgb(58, 58, 58);
+    --red-light:#FF5959;
+    --gray-light:#f4f1f1;
+    --addgray-light:#e3e3e3;
+    --beige-light:#F9CF93;
+    --beige2-light:#fedaa7;
+    --beige3-light:#f9c492;
+    --lbeige-light:#FAEEE0;
+
+    --white-dark:#ffffff;
+    --blue-dark:#2e55ba;
+    --accentblack-dark:rgb(58, 58, 58);
+    --red-dark:#FF5959;
+    --gray-dark:#f4f1f1;
+    --addgray-dark:#e3e3e3;
+    --beige-light:#F9CF93;
+    --lbeige-light:#FAEEE0;
+}
+
+@media(prefers-color-scheme: dark){
+    :root{
+        --white: var(--white-dark);
+        --blue: var(--blue-dark);
+        --accentblack: var(--accentblack-dark);
+        --red: var(--red-dark);
+        --gray: var(--gray-dark);
+    }
+}
 
 .popular{
-    font-family: Inter;
-    color:#00278C ;    
-    margin-top: 70px;
-    margin-bottom: 70px;
+    font-family: 'Inter';
+    background-color: var(--addgray-light);
+    color:var(--accentblack-light) ;
+    width: 100%;   
+    padding-bottom: 1.5vw;  
+    margin: auto;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
 }
 .popular ul{
     display: grid ;
-    grid-template-columns: 175px 175px 175px 175px 175px 175px;
+    grid-template-columns: 14vw 14vw 14vw;
     list-style-type: none;
     grid-gap: 30px;
     padding: 0;
     height: 50%;
-    width: 50%;
+    width: 97%;
+    margin: auto;
     margin-top: 0px;
+    overflow-x: auto;
 }
 
 .popular h1{
-    margin-left: 10px;
-    font-size: 25px;
+    margin-left: 2vw;
+    font-size: 2vw;
+    font-weight: 600;
+    margin-top: 1vw;
 }
 
 .popular .book-detail{
    display: flex;
    flex-direction: column;
-   
 }
 
 .book-detail h2{
-    font-size: 15px;
-    color: black;
-    margin:3px 0;
+    font-size: 1.2vw;
+    font-weight: 600;
+    margin-top: 0.8vw;
+    line-height: 2vw;
+    color: var(--accentblack-light);
 }
 
 .book-detail span{
-    color: #686B6F;
-    font-size: z;
+    font-size: 1vw;
+    color: var(--accentblack-light);
 }
 
 .popular li img{
-    width: 190px;
-    height: 250px;
+    width: 200px;
+    height: 300px;
     transition: all .3s;
     cursor: pointer;
 }
@@ -51,11 +100,19 @@
 
 .wibulu{
     display: flex;
+    width: 97%;
+    justify-content: space-between;
     align-items: center;
 }
 
 .wibulu img{
     border-radius: 50%;
-    height:40px;
-    width: 40px;
+    height:4vw;
+    width: 4vw;
+}
+
+::-webkit-scrollbar {           
+  border: 0vw solid var(--gray-light);
+  height: 0vw;
+  width: 0vw;
 }

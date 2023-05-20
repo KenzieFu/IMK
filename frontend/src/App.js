@@ -38,6 +38,7 @@ import { DataAyah } from "./pages/FormRegistrasi/DataAyah";
 import { DataIbu } from "./pages/FormRegistrasi/DataIbu";
 import { DataWali } from "./pages/FormRegistrasi/DataWali";
 import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
+import { PetugasPage } from "./pages/PetugasPage";
 
 
 //Student Loader
@@ -70,6 +71,10 @@ import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
 //create pinjam
 
 import {loader as adminCreatePinjam} from "./pages/Admin/CreatePinjam"
+//Petugas Loader
+//Absensi
+import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
+
 
 //Admin Action
 
@@ -83,8 +88,8 @@ import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinja
 //Calender
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 
-
-
+//Petugas Action
+import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPage";
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
 import { DetailStudentPage } from "./pages/Admin/DetailStudentPage";
@@ -103,6 +108,9 @@ import { EventPage } from "./pages/EventPage";
 import { AdminEventPage } from "./pages/Admin/AdminEventPage";
 import { StudentAuth } from "./components/auth/StudentAuth";
 import { AdminAuth } from "./components/auth/AdminAuth";
+import { PetugasRoot } from "./layouts/PetugasRoot";
+import { ScanPage } from "./pages/Petugas/ScanPage";
+import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 
 
 /****Layouts Admin*****/
@@ -345,6 +353,25 @@ const studentId=useSelector(state=>state.auth.user)
       { path: "table", exact: true, element: <Tables /> },
       { path: "forms", exact: true, element: <Forms /> },
       { path: "breadcrumbs", exact: true, element: <Breadcrumbs /> }, */
+      ]
+    },
+    {
+      path:"/petugas",
+      element:<PetugasRoot/>,
+      children:[
+        {index:true,element:<PetugasPage/>},
+        {path:"scan",
+        element:<ScanPage/>,
+        action:petugascreateAttendanceAction},
+        {path:"absensi",
+         id:"petugas-absensi",
+
+        children:[
+          {index:"true",
+          element:<AbsensiPage/>,
+          loader:petugasAbsensiLoader,
+          }
+        ]}
       ]
     }
 

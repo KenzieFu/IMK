@@ -25,7 +25,6 @@ const BookDetail = () => {
                     </div>
                     
                     <div className={classes.book_info}>
-                    <button className={classes["button-back"]} onClick={backHandler}>Back</button>
                         <h2>{book.judul_buku}</h2>
                             <div className={classes.summary}>
                             {/* <h3>Sinopsis</h3> */}
@@ -58,6 +57,7 @@ const BookDetail = () => {
                                 <td style={{ color: "#000000", fontWeight: "bold"}}>{book.kategori.nama_kategori}</td>
                             </tr>
                         </table>
+                        <button className={classes["button-back"]} onClick={backHandler}>Back</button>
                         {/* button ini belum jalan seperti semestinya */}
                     <button className={classes["button-borrow"]} onClick={backHandler}>Pinjam Buku</button>
                     </div>

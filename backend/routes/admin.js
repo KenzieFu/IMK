@@ -9,6 +9,7 @@ const peminjamanController = require("../controllers/peminjaman");
 const pengembalianController = require("../controllers/pengembalian");
 const eventController = require("../controllers/event");
 const pesanMasukController = require("../controllers/pesanMasuk");
+const absensiController = require("../controllers/absensi");
 
 // isAuth middleware untuk memastikan user sudah login sebelum mengakses halaman ini
 const isAuth = require("../middleware/isAuth"); //implementasinya nanti di route yang membutuhkan !!!!!
@@ -267,5 +268,35 @@ router.get("/pesan-masuk/:pesanMasukId", pesanMasukController.getPesanMasuk);
 // route untuk menampilkan daftar pesan masuk
 // http://localhost:8080/admin-perpustakaan-methodist-cw/pesan-masuk
 router.get("/pesan-masuk", pesanMasukController.getAllPesanMasuk);
+
+// ROUTES FOR ABSENSI
+
+// route untuk menambahkan absensi
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi
+router.post("/absensi", absensiController.createAbsensi);
+
+// route untuk mengupdate absensi
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi/1
+router.put("/absensi/:absensiId", absensiController.updateAbsensi);
+
+// route untuk menghapus absensi
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi/1
+router.delete("/absensi/:absensiId", absensiController.deleteAbsensi);
+
+// route untuk menampilkan satu absensi
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi/1
+router.get("/absensi/:absensiId", absensiController.getAbsensi);
+
+// route untuk menampilkan daftar absensi di tanggal hari ini
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-today
+router.get("/absensi-today", absensiController.getAbsensiToday);
+
+// route untuk menampilkan daftar absensi
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi
+router.get("/absensi", absensiController.getAllAbsensi);
+
+// route untuk menampilkan banyak pengunjung per hari
+// http://localhost:8080/admin-perpustakaan-methodist-cw/pengunjung-harian
+router.get("/pengunjung-harian", absensiController.getPengunjungHarian);
 
 module.exports = router;

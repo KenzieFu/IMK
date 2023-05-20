@@ -38,7 +38,7 @@
     justify-content: center;
     align-items: center;
     width: 105px;
-    font-size: small;
+    font-size: 1vw;
 }
 
 .book-info{
@@ -48,23 +48,29 @@
     color: #00278C;
 }
 
+.book-info p{
+    font-size: 1vw;
+}
+
 .book-info_h1{
     font-weight: bold;
     margin-bottom: 0;
+    font-size: 2vw;
 }
+
 
 .book-info_button{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
+    width: 10vw;
     color:white;
     text-decoration: none;
     background: #FF5959;
     border: none;
-    padding:10px 5px;
-    border-radius: 10px;
-    font-size: 16px;
+    padding:0.8vw 0.4vw;
+    border-radius: 2vw;
+    font-size: 1vw;
 }
 
 .rating{
