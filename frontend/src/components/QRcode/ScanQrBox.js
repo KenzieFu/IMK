@@ -1,21 +1,8 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import { QrReader } from "react-qr-reader";
-
-export const ScanQrBox = (props) => {
-  const [data, setData] = useState("No resulasdadt");
-  const [showCamera, setShowCamera] = useState(false);
-
-  const showHandler = () => {
-    setShowCamera((prev) => !prev);
-  };
-  const scanHandler = (result, error) => {
-    if (!!result) {
-      console.log("halo");
-=======
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import classes from "./ScanQrBox.module.css"
+import { Form, useSubmit } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 const QrOverlay = (scan) => {
   return (
     <svg className={classes.scanOverlay} viewBox='0 0 100 100'>
@@ -27,8 +14,13 @@ const QrOverlay = (scan) => {
   )
 }
 
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 
-export const ScanQrBox = () => {
+export const ScanQrBox = (props) => {
+  const formRef =useRef();
+  const submit=useSubmit();
   const [data, setData] = useState('No result');
   const [showCamera,setShowCamera]=useState(false);
   const [scan,setScan]=useState(false);
@@ -36,82 +28,57 @@ export const ScanQrBox = () => {
     console.log("hioiafi")
     setShowCamera(prev=>!prev);
   }
-
   
 
   const scanHandler=(result,error)=>{
-    if (!!result) {
-      console.log("halo")
-      setScan(true);
->>>>>>> 13ebc4d4b19c27a00142736a61b21fe2d4ff23b8
-      setData(result?.text);
-    }
-
-    if (!!error) {
-      setScan(false);
-      console.info("Bursss");
-    }
+   
+      if (!!result && !props.showInfo) {
+        props.showHandler();
+      
+        console.log("halo")
+        setScan(true);
+        setData(result?.text);
+        const form=new FormData(formRef.current);
+        const parsedResult=JSON.parse(result?.text)
+        form.append("data",result?.text);
+        setData(parsedResult);
+    
+        submit(form,{method:"POST"});
+       
+        
+      }
+  
+      if (!!error && !props.showInfo) {
+        setScan(false);
+        console.info("Bursss");
+      }
+    
+    
   };
   return (
     <>
-<<<<<<< HEAD
-      <div style={{ width: "500px", textAlign: "center", margin: "auto" }}>
-        {showCamera && (
-          <QrReader
-            scanDelay={1000}
-            onResult={(result, error) => {
-              if (!!result) {
-                console.log("halo");
-                setData(result?.text);
-              }
-
-              if (!!error) {
-                console.info("Bursss");
-              }
-            }}
-            style={{ width: "20", width: "20", borderRadius: "20" }}
-          />
-        )}
-        <button onClick={showHandler}>{!showCamera ? "Open Camera" : "Close Camera"}</button>
-        <p>{data}</p>
-      </div>
-    </>
-  );
-};
-=======
     <div style={{ display:"flex",alignContent:"center", textAlign:"center", flexDirection:"column"}} >
-
+ 
     <div style={{ textAlign:"center" ,margin:"auto" }} >
-    {showCamera && <QrReader 
-        scanDelay={1000}
-        onResult={(result, error) => {
-          if (!!result) {
-            console.log("halo");
-            setScan(true)
-            const parsedResult=JSON.parse(result?.text)
-            setData(parsedResult);
-          }
-
-          if (!!error) {
-            console.info("Bursss");
-  
-          }
-        }} 
+    {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
+     <QrReader
+         
+        scanDelay={false}
+        onResult={scanHandler}
        containerStyle={{ width:"500px" ,height:'600px' }}
        videoContainerStyle={{ width:'500px', height:"550px" }}
         ViewFinder={()=>QrOverlay(scan)}
-      />}
+      /></Form>}
       </div>
       
       <div style={{ display:"block" }}>
       <button onClick={showHandler}>{!showCamera?"Open Camera":"Close Camera"}</button>
       <p>{data.nama_lengkap } mengunjungi perpustakaan</p>
       </div>
-       
+      
     </div>
       
     </>
   );
 };
 
->>>>>>> 13ebc4d4b19c27a00142736a61b21fe2d4ff23b8

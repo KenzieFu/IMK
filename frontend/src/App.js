@@ -65,6 +65,10 @@ import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage"
 import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
 
 
+//Petugas Loader
+//Absensi
+import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
+
 
 //Admin Action
 
@@ -77,7 +81,8 @@ import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinja
 //Calender
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 
-
+//Petugas Action
+import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPage";
 
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
@@ -99,6 +104,7 @@ import { StudentAuth } from "./components/auth/StudentAuth";
 import { AdminAuth } from "./components/auth/AdminAuth";
 import { PetugasRoot } from "./layouts/PetugasRoot";
 import { ScanPage } from "./pages/Petugas/ScanPage";
+import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 
 
 /****Layouts Admin*****/
@@ -343,7 +349,18 @@ const studentId=useSelector(state=>state.auth.user)
       element:<PetugasRoot/>,
       children:[
         {index:true,element:<PetugasPage/>},
-        {path:"scan",element:<ScanPage/>}
+        {path:"scan",
+        element:<ScanPage/>,
+        action:petugascreateAttendanceAction},
+        {path:"absensi",
+         id:"petugas-absensi",
+       
+        children:[
+          {index:"true",
+          element:<AbsensiPage/>,
+          loader:petugasAbsensiLoader,
+          }
+        ]}
       ]
     }
 

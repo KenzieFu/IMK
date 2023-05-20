@@ -20,15 +20,15 @@ const Absensi = sequelize.define(
     },
     waktu_masuk: {
       type: DataTypes.TIME,
-      allowNull: false,
+      allowNull: true,
     },
     tanggal: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     waktu_keluar: {
       type: DataTypes.TIME,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
