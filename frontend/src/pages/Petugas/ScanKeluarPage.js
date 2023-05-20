@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {ScanQrBox} from "../../components/QRcode/ScanQrBox";
 import { json, redirect } from 'react-router-dom';
 import { InfoAbsensiModal } from '../../components/admin/modals/InfoAbsesiModal';
-export const ScanPage = () => {
+export const ScanKeluarPage = () => {
   const [showInfo,setShowInfo]=useState(false);
   const showHandler=()=>{
     setShowInfo(prev=>!prev);
@@ -10,7 +10,7 @@ export const ScanPage = () => {
 
   return (
    <>
-    <ScanQrBox label={"masuk perpustakaan"} showInfo={showInfo} showHandler={showHandler}/>
+    <ScanQrBox label={"keluar perpustakaan"} showInfo={showInfo} showHandler={showHandler}/>
     {showInfo && <InfoAbsensiModal onClose={showHandler}/>}
    </>
   )
@@ -18,37 +18,31 @@ export const ScanPage = () => {
 
 
 export async function action({ params, request }) {
-  
+  console.log("joejfpow")
   const method = request.method;
   const data = await request.formData();
   const myData=JSON.parse(data.get("data"));
-  const currentDate=new Date().toDateString();
   const time=new Date().toTimeString()
-  console.log(currentDate);
-  console.log(time);
   console.log(myData.nisn);
-  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi', {
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar/'+myData.nisn, {
     method: method,
     headers:{
       "Content-Type":"application/json",
       "Authorization":"Bearer"
     },
     body:JSON.stringify({
-      nisn:myData.nisn,
-      tanggal:currentDate,
-      waktu_masuk:time,
+      waktu_keluar:time
     })
   });
 
   if (!response.ok) {
     throw json(
-      { message: 'Could not create attendance.' },
+      { message: 'Could not update attendance.' },
       {
         status: 500,
       }
     );
   
   }
-   return  redirect("/petugas/scan");
+   return  redirect("/petugas/scan-keluar");
 }
-

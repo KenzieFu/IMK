@@ -8,7 +8,8 @@ export const PetugasRoot = () => {
             <nav>
                 <ul>
                     <NavLink to="/petugas">Home</NavLink>
-                    <NavLink to="/petugas/scan">Scan</NavLink>
+                    <NavLink to="/petugas/scan">Scan Masuk</NavLink>
+                    <NavLink to="/petugas/scan-keluar">Scan Keluar</NavLink>
                     <NavLink to="/petugas/absensi">Absensi</NavLink>
                 </ul>
             </nav>

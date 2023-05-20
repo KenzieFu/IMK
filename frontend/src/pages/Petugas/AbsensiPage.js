@@ -1,18 +1,15 @@
-import React, { Suspense, useEffect, useState } from 'react'
-import DataTable, { memoize } from 'react-data-table-component'
+import React, { Suspense, useState } from 'react'
+import DataTable from 'react-data-table-component'
 import { DeleteModal } from '../../components/admin/modals/DeleteModal';
-import { memo } from 'react';
-import { json,defer, Await, useLoaderData, redirect, useLocation, Link, useRouteLoaderData } from 'react-router-dom';
-import { set } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+
+import { json,defer, Await, useLoaderData, useLocation, Link } from 'react-router-dom';
+
 
 export const AbsensiPage = () => {
     const [currentId,setCurrentId]=useState(null);
     const [showDeleteModal,setDeleteModal]=useState(false)
     const { absensi }=useLoaderData('petugas-absensi');
     const location = useLocation();
-  console.log(absensi)
-
     const showModalHandler=(id)=>{
         setDeleteModal(true);
         setCurrentId(id);
