@@ -1,18 +1,15 @@
-import React, { Suspense, useEffect, useState } from 'react'
-import DataTable, { memoize } from 'react-data-table-component'
+import React, { Suspense, useState } from 'react'
+import DataTable from 'react-data-table-component'
 import { DeleteModal } from '../../components/admin/modals/DeleteModal';
-import { memo } from 'react';
-import { json,defer, Await, useLoaderData, redirect, useLocation, Link, useRouteLoaderData } from 'react-router-dom';
-import { set } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+
+import { json,defer, Await, useLoaderData, useLocation, Link } from 'react-router-dom';
+
 
 export const AbsensiPage = () => {
     const [currentId,setCurrentId]=useState(null);
     const [showDeleteModal,setDeleteModal]=useState(false)
     const { absensi }=useLoaderData('petugas-absensi');
     const location = useLocation();
-  console.log(absensi)
-
     const showModalHandler=(id)=>{
         setDeleteModal(true);
         setCurrentId(id);
@@ -61,25 +58,7 @@ export const AbsensiPage = () => {
             accessor:"waktu_keluar",
             sortable: true,
         },
-        {
-            id:"button",
-            name:"Action",
-            width:"30%",
-          cell: (row) =>
-                (
-              <div style={{ margin:"0 0" }} >
-            <Link to='#' style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
-            <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_absensi)} style={{ cursor:"pointer" }}>Delete</span>
-                  
-            </div>
-          ),
-
-          ignoreRowClick: true,
-          allowOverflow: true,
-          selector:row=>row.button,
-          button: true,
-        },
+        
     ];
 
 
