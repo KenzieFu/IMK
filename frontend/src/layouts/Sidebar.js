@@ -1,4 +1,4 @@
-import { Button, Nav, NavItem } from "reactstrap";
+import { Button, Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import Logo from "./Logo";
 import { Link, useLocation } from "react-router-dom";
 
@@ -42,6 +42,20 @@ const navigation = [
     title:"HomePage",
     href:"/",
     icon:"bi bi-calendar-event text-primary"
+  },
+  {
+    title: "History",
+    icon: "bi bi-journals",
+    dropdown: [
+      {
+        title: "Books History",
+        href: "/admin/history/page1",
+      },
+      {
+        title: "Page 2",
+        href: "/admin/history/page2",
+      },
+    ],
   },
   /* {
     title: "Alert",
@@ -108,23 +122,47 @@ const Sidebar = () => {
         ></Button>
       </div>
       <div className="pt-4 mt-2">
-        <Nav vertical className="sidebarNav">
+      <Nav vertical className="sidebarNav">
           {navigation.map((navi, index) => (
             <NavItem key={index} className="sidenav-bg">
-              <Link
-                to={navi.href}
-                className={
-                  location.pathname === navi.href
-                    ? "text-primary nav-link py-3"
-                    : "nav-link text-secondary py-3"
-                }
-              >
-                <i className={navi.icon}></i>
-                <span className="ms-3 d-inline-block">{navi.title}</span>
-              </Link>
+              {navi.dropdown ? (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    <i className={navi.icon}></i>
+                    <span className="ms-3 d-inline-block">{navi.title}</span>
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {navi.dropdown.map((dropdownItem, dropdownIndex) => (
+                      <DropdownItem
+                        key={dropdownIndex}
+                        tag={Link}
+                        to={dropdownItem.href}
+                        className={
+                          location.pathname === dropdownItem.href
+                            ? "text-primary"
+                            : "text-secondary"
+                        }
+                      >
+                        {dropdownItem.title}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              ) : (
+                <Link
+                  to={navi.href}
+                  className={
+                    location.pathname === navi.href
+                      ? "text-primary nav-link py-3"
+                      : "nav-link text-secondary py-3"
+                  }
+                >
+                  <i className={navi.icon}></i>
+                  <span className="ms-3 d-inline-block">{navi.title}</span>
+                </Link>
+              )}
             </NavItem>
           ))}
-     
         </Nav>
       </div>
     </div>

@@ -70,7 +70,7 @@ import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
 
 //create pinjam
 
-import {loader as adminCreatePinjam} from "./pages/Admin/CreatePinjam"
+import {loader as adminCreatePinjam} from "./components/admin/dashboard/CreatePinjam"
 //Petugas Loader
 //Absensi
 import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
@@ -99,7 +99,7 @@ import { DaftarBukuPinjamPage } from "./pages/Admin/DaftarBukuPinjamPage";
 import { DetailPinjam } from "./pages/Admin/DetailPinjam";
 import { EditPinjam } from "./pages/Admin/EditPinjam";
 import { DaftarPengembalianBukuPage } from "./pages/Admin/DaftarPengembalianBukuPage";
-import { CreatePinjam } from "./pages/Admin/CreatePinjam";
+import { CreatePinjam } from "./components/admin/dashboard/CreatePinjam";
 import { DetailPengembalianBuku } from "./pages/Admin/DetailPengembalianBuku";
 import { EditPengembalianBuku } from "./pages/Admin/EditPengembalianBuku";
 import { CreateBuku } from "./pages/Admin/CreateBuku";

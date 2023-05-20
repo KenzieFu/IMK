@@ -74,12 +74,12 @@ router.post("/buku", bukuController.createBook);
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku/1
 router.put("/buku/:bukuId", bukuController.updateBook);
 
-// route untuk menghapus buku   
+// route untuk menghapus buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku/1
 router.delete("/buku/:bukuId", bukuController.deleteBook);
 
 // route untuk menambahkan buku ke perpus
-// http://localhost:8080/admin-perpustakaan-methodist-cw/buku-perpus  
+// http://localhost:8080/admin-perpustakaan-methodist-cw/buku-perpus
 router.post("/buku-perpus", bukuController.createPerpusBook);
 
 // route untuk mengupdate buku perpus
@@ -298,9 +298,5 @@ router.get("/absensi", absensiController.getAllAbsensi);
 // route untuk menampilkan banyak pengunjung per hari
 // http://localhost:8080/admin-perpustakaan-methodist-cw/pengunjung-harian
 router.get("/pengunjung-harian", absensiController.getPengunjungHarian);
-
-// route untuk set waktu_keluar saat absensi berdasarkan nisn
-// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar/1
-router.put("/absensi-keluar/:nisn", absensiController.setWaktuKeluar);
 
 module.exports = router;

@@ -177,7 +177,7 @@ export const DaftarBukuPinjamPage = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "" & startDate === null && endDate === null) {
+                if (searchBased === "" && startDate === null && endDate === null) {
                   return item;
                 } else if (
                   searchBased === "nama_siswa" &&
