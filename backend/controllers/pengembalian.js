@@ -61,52 +61,41 @@ exports.deletePengembalian = async function (req, res, next) {
 // id_akun diambil dari jwt user : "id_akun"
 exports.getPengembalian = async function (req, res, next) {
   try {
-    // Ambil id_akun dari JWT user
-    // const { id_akun } = req.user;
+    const id_siswa = 5;
 
-    // Cari peminjaman yang dilakukan oleh siswa dengan id_akun tersebut
+    const siswa = await Siswa.findOne({
+      where: {
+        id_siswa: id_siswa,
+      },
+    });
+
     const peminjaman = await Peminjaman.findAll({
       where: {
-        // id_siswa: id_akun,
-        id_siswa: 5,
+        id_siswa: id_siswa,
       },
-    });
-
-    // // Ambil semua id_peminjaman dari peminjaman yang ditemukan
-    const id_peminjaman = peminjaman.map((p) => p.id_peminjaman);
-
-    // // Cari data pengembalian yang memiliki id_peminjaman yang sama
-    const pengembalian = await Pengembalian.findAll({
-      where: {
-        id_peminjaman: {
-          [Op.in]: id_peminjaman,
+      include: [
+        {
+          model: Pengembalian,
+          attributes: ["id_pengembalian", "tanggal_pengembalian", "status"],
         },
-      },
-    });
-
-    // ambil semua id_peminjaman lihat ke tabel peminjaman dan ambil id_buku
-    const id_buku = peminjaman.map((p) => p.id_buku);
-
-    // ambil semua data buku yang dipinjam dan sudah dikembalikan
-    const buku = await Buku.findAll({
-      where: {
-        id_buku: {
-          [Op.in]: id_buku,
+        {
+          model: Buku
         },
-      },
+      ],
     });
 
-    // // Kirim data pengembalian sebagai respons
-    res.json(buku);
+    res.json({ siswa, peminjaman });
   } catch (error) {
     next(error);
   }
 };
 
+
 // Function untuk menampilkan satu data pengembalian join dengan tabel peminjaman dan siswa dan buku
 exports.getPengembalianAdmin = async function (req, res, next) {
   try {
     const pengembalian = await ViewPeminjamanSelesai.findOne({
+      attributes: { include: ["tanggal_pengembalian", "status_kembali"] },
       where: {
         id_pengembalian: req.params.pengembalianId,
       },
