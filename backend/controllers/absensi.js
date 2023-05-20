@@ -4,6 +4,27 @@ const dayjs = require("dayjs");
 const { literal } = require("sequelize");
 const ViewPengunjungHarian = require("../models/viewPengunjungHarian");
 
+// Function untuk set waktu_keluar sebagai current time di INDONESIA pada absensi berdasarkan nisn siswa
+exports.setWaktuKeluar = async function (req, res, next) {
+  try {
+    // const siswa = await Siswa.findOne({ where: { nisn: req.body.nisn } });
+    const absensi = await Absensi.update(
+      { waktu_keluar: dayjs().format("HH:mm:ss") },
+      {
+        where: {
+          nisn: req.params.nisn,
+          // tanggal: dayjs().format("YYYY-MM-DD"),
+          waktu_keluar: null,
+        },
+      }
+    );
+    res.json(absensi);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 // Function untuk menambahkan absensi
 exports.createAbsensi = async function (req, res, next) {
   // contoh data yang dikirimkan dalam json

@@ -299,4 +299,8 @@ router.get("/absensi", absensiController.getAllAbsensi);
 // http://localhost:8080/admin-perpustakaan-methodist-cw/pengunjung-harian
 router.get("/pengunjung-harian", absensiController.getPengunjungHarian);
 
+// route untuk set waktu_keluar saat absensi berdasarkan nisn
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar/1
+router.put("/absensi-keluar/:nisn", absensiController.setWaktuKeluar);
+
 module.exports = router;
