@@ -40,9 +40,12 @@ exports.createAbsensi = async function (req, res, next) {
     });
 
     if (absensi) {
-      const error = new Error("Gagal scan masuk, Anda belum scan keluar perpustakaan!");
+      const error = new Error("Gagal masuk, Anda belum  keluar perpustakaan!");
       error.statusCode = 400;
-      throw error;
+      return res.status(400).json({
+        message: "Gagal masuk, Anda belum  keluar perpustakaan!",
+        data: {nisn, waktu_masuk, tanggal, waktu_keluar},
+      })
     }
 
     const absensiBaru = await Absensi.create({
@@ -52,7 +55,10 @@ exports.createAbsensi = async function (req, res, next) {
       waktu_keluar: waktu_keluar,
     });
 
-    res.json(absensiBaru);
+    res.status(200).json(
+      {message:`${nisn} Berhasil masuk Ke Perpustakaan`,
+       absensiBaru:absensiBaru}
+        );
   } catch (error) {
     next(error);
   }

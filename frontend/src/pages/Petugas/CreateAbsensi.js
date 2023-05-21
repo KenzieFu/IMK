@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormAbsensi } from '../../components/Absensi/FormAbsensi'
-import { defer, json, useLoaderData } from 'react-router-dom'
+import { defer, json, redirect, useActionData, useLoaderData } from 'react-router-dom'
 import { Suspense } from 'react'
 import { Await } from 'react-router-dom'
+import { ErrorModal } from '../../components/modals/ErrorModal'
 
 export const CreateAbsensi = () => {
     const {students}=useLoaderData('create-absensi');
+    const[error,setError]=useState(false);
+
+    const showHandler=()=>{
+      setError(prev=>!prev);
+    }
+
+    const data=useActionData();
+
+    useEffect(()=>{
+      
+      showHandler()
+       
+    },[data])
   return (
     <>
         <Suspense>
@@ -13,10 +27,12 @@ export const CreateAbsensi = () => {
             {loadedData=><FormAbsensi method={"POST"} students={loadedData}/>}
             </Await>
         </Suspense>
+        {data && data.message && !error && <ErrorModal message={data} onClose={showHandler}/>}
         
     </>
   )
 }
+
 
 
 const loadStudents=async ()=>{
@@ -44,35 +60,43 @@ const loadStudents=async ()=>{
   }
 
 
-  /* export async function action({ params, request }) {
-    console.log("joejfpow")
+  export async function action({ params, request }) {
+  
     const method = request.method;
     const data = await request.formData();
-    const myData=JSON.parse(data.get("data"));
+    const currentDate=new Date().toDateString();
     const time=new Date().toTimeString()
-    console.log(myData.nisn);
-    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar/'+myData.nisn, {
+    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi', {
       method: method,
       headers:{
         "Content-Type":"application/json",
         "Authorization":"Bearer"
       },
       body:JSON.stringify({
-        waktu_keluar:time
+        nisn:data.get("nisn"),
+        tanggal:currentDate,
+        waktu_masuk:time,
       })
     });
-  
+    console.log(response.message)
+    if(response.status === 400 || response.status === 401)
+    {
+       return response
+    }
     if (!response.ok) {
       throw json(
-        { message: 'Could not update attendance.' },
+        { message: 'Could not create attendance.' },
         {
           status: 500,
         }
       );
     
+        
+    
     }
-     return  redirect("/petugas/scan-keluar");
+
+    return response
+     
   }
-   */
 
 
