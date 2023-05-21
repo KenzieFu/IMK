@@ -7,6 +7,7 @@ const kategoriController = require("../controllers/kategori");
 const peminjamanController = require("../controllers/peminjaman");
 const pengembalianController = require("../controllers/pengembalian");
 const eventController = require("../controllers/event");
+const pemesananarController = require("../controllers/pemesananBuku");
 // isAuth middleware untuk memastikan user sudah login sebelum mengakses halaman ini
 const isAuth = require("../middleware/isAuth"); //implementasinya nanti di route yang membutuhkan !!!!!
 
@@ -16,27 +17,27 @@ const router = express.Router();
 
 // route untuk mengambil daftar buku yang tersedia
 // http://localhost:8080/perpustakaan-methodist-cw/buku
-router.get('/buku', bukuController.getBooks);
+router.get("/buku", bukuController.getBooks);
 
 // route untuk mengambil daftar buku perpus
 // http://localhost:8080/perpustakaan-methodist-cw/buku-perpus
-router.get('/buku-perpus', bukuController.getPerpusBooks);
+router.get("/buku-perpus", bukuController.getPerpusBooks);
 
 // route untuk mengambil daftar buku tahun ajaran baru
 // http://localhost:8080/perpustakaan-methodist-cw/buku-tahun-ajaran-baru
-router.get('/buku-tahun-ajaran-baru', bukuController.getTahunAjaranBaruBooks);
+router.get("/buku-tahun-ajaran-baru", bukuController.getTahunAjaranBaruBooks);
 
 // route untuk menampilkan single book
 // http://localhost:8080/perpustakaan-methodist-cw/buku/1
-router.get('/buku/:bukuId', bukuController.getBook);
+router.get("/buku/:bukuId", bukuController.getBook);
 
 // route untuk menampilkan single book khusus detail buku perpus
 // http://localhost:8080/perpustakaan-methodist-cw/buku-perpus/1
-router.get('/buku-perpus/:bukuId', bukuController.getPerpusBook);
+router.get("/buku-perpus/:bukuId", bukuController.getPerpusBook);
 
 // route untuk menampilkan single book khusus detail buku tahun ajaran baru
 // http://localhost:8080/perpustakaan-methodist-cw/buku-tahun-ajaran-baru/1
-router.get('/buku-tahun-ajaran-baru/:bukuId', bukuController.getTahunAjaranBaruBook);
+router.get("/buku-tahun-ajaran-baru/:bukuId", bukuController.getTahunAjaranBaruBook);
 
 // route untuk search buku
 // http://localhost:8080/perpustakaan-methodist-cw/search?keyword=fisika
@@ -92,11 +93,11 @@ router.get("/jumlah-dipinjam/:bukuId", bukuController.getJumlahDipinjamById);
 
 // // GET /perpustakaan/siswa/buku/histori-peminjaman/:siswaId
 // // http://localhost:8080/perpustakaan-methodist-cw/siswa/buku/histori-peminjaman/1
- router.get("/siswa/buku/histori-peminjaman/:siswaId", siswaController.getHistoriPeminjaman);
+router.get("/siswa/buku/histori-peminjaman/:siswaId", siswaController.getHistoriPeminjaman);
 
 // // GET /perpustakaan/siswa/buku/histori-pengembalian/:siswaId
 // // http://localhost:8080/perpustakaan/siswa/buku/histori-pengembalian/1
- router.get("/siswa/buku/histori-pengembalian/:siswaId", siswaController.getHistoriPengembalian);
+router.get("/siswa/buku/histori-pengembalian/:siswaId", siswaController.getHistoriPengembalian);
 
 // ROUTES FOR PEMINJAMAN
 
@@ -111,7 +112,6 @@ router.put("/peminjaman/:peminjamanId", peminjamanController.updatePeminjaman);
 // route untuk menghapus peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
 router.delete("/peminjaman/:peminjamanId", peminjamanController.deletePeminjaman);
-
 
 // route untuk menampilkan satu peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
@@ -147,7 +147,6 @@ router.delete("/pengembalian/:pengembalianId", pengembalianController.deletePeng
 // http://localhost:8080/perpustakaan-methodist-cw/pengembalian
 router.get("/pengembalian", pengembalianController.getPengembalian);
 
-
 // ROUTES FOR EVENTS
 
 // route untuk menambahkan event
@@ -166,5 +165,30 @@ router.delete("/event/:eventId", eventController.deleteEvent);
 // http://localhost:8080/perpustakaan-methodist-cw/event
 router.get("/event", eventController.getAllEvent);
 
+// ROUTES FOR PEMESANAN BUKU
+
+// route untuk menambahkan pemesanan buku
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku
+router.post("/pemesanan-buku", pemesananarController.createPemesananBuku);
+
+// route untuk mengupdate pemesanan buku
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/1
+router.put("/pemesanan-buku/:pemesananBukuId", pemesananarController.updatePemesananBuku);
+
+// route untuk menghapus pemesanan buku
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/39
+router.delete("/pemesanan-buku/:pemesananBukuId", pemesananarController.deletePemesananBuku);
+
+// route untuk menampilkan daftar pemesanan buku
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku
+router.get("/pemesanan-buku", pemesananarController.getAllPemesananBuku);
+
+// route untuk menampilkan daftar pemesanan buku berdasarkan id_pemesanan
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/1
+router.get("/pemesanan-buku/:pemesananBukuId", pemesananarController.getPemesananBuku);
+
+// route untuk membatalkan pemesanan buku
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-batal/1
+router.delete("/pemesanan-batal/:pemesananBukuId", pemesananarController.batalPemesananBuku);
 
 module.exports = router;

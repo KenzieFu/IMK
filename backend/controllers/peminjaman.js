@@ -2,6 +2,7 @@ const Peminjaman = require("../models/peminjaman");
 const Siswa = require("../models/siswa");
 const Buku = require("../models/buku");
 const Pengembalian = require("../models/pengembalian");
+const BukuPerpus = require("../models/bukuPerpus");
 const { Op } = require("sequelize");
 const ViewPeminjamanSelesai = require("../models/viewPeminjamanSelesai");
 const ViewPeminjamanBelumSelesai = require("../models/viewPeminjamanBelumSelesai");
@@ -17,12 +18,24 @@ exports.createPeminjaman = async function (req, res, next) {
   // }
   // tanggal kembali dibuat otomatist 14 hari setelah tanggal pinjam
   try {
+    // cek stok buku di tabel buku_perpus dengan id_buku
+    const buku = await BukuPerpus.findByPk(id_buku);
+    console.log(buku);
+    if (buku === null) {
+      return res.status(400).json({ message: "Buku tidak ditemukan" });
+    } else if (buku.stok === 0) {
+      return res.status(400).json({ message: "Stok buku kosong" });
+    }
     const peminjaman = await Peminjaman.create({
       id_buku: id_buku,
       id_siswa: id_siswa,
       tanggal_pinjam: new Date(),
       tanggal_kembali: new Date().setDate(new Date().getDate() + 14),
     });
+    // kurangi stok buku di tabel buku_perpus dengan id_buku
+    buku.stok = buku.stok - 1;
+    await buku.save();
+
     res.json(peminjaman);
   } catch (error) {
     next(error);
@@ -64,7 +77,7 @@ exports.deletePeminjaman = async function (req, res, next) {
       tanggal_pengembalian: new Date(),
       status: status,
     });
-    res.json({message: "Peminjaman berhasil dihapus", pengembalian: pengembalian});
+    res.json({ message: "Peminjaman berhasil dihapus", pengembalian: pengembalian });
     // tambahkan ke tabel pengembalian
     // pengembalianController.createPengembalian(req, res, next);
   } catch (error) {
