@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { CartProvider } from 'react-use-cart'
 import Cart from '../components/BookCart'
 export const RootLayout = () => {
-  const authen=useSelector(state=>state.auth.isAuth);
+
   const [showLogin,setShowLogin]=useState(false);
   const [showCart,setShowCart]=useState(false);
 

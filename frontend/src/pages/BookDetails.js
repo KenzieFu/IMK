@@ -25,6 +25,17 @@ const BookDetail = () => {
         theme: "colored",
         });
 
+    const gagal = () => toast.warning('Buku sudah ada di booking list!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+
     const [isAdded, setIsAdded] = useState(false);
     const { addItem, items } = useCart();
 
@@ -38,11 +49,7 @@ const BookDetail = () => {
     const handleAddToCart = () => {
         const existingItem = items.find((item) => item.id === book.id_buku);
         if (existingItem) {
-          return(
-            <Modal>
-                <p>Buku sudah masuk list booking</p>
-            </Modal>
-          )
+         gagal()
         } else {
 
           addItem({

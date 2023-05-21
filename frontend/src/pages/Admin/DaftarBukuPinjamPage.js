@@ -5,7 +5,7 @@ import { memo } from 'react';
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import Buttons from '../../UI/admin/Buttons';
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,6 +17,15 @@ export const DaftarBukuPinjamPage = () => {
   const location = useLocation();
   console.log(currentId);
 
+  const mapKategoriToOptions = (bukuData) => {
+    const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
+
+    return uniqueKategori.map((kategori) => (
+    <DropdownItem onClick={() => setSearchBased(kategori)}>
+      {kategori}
+    </DropdownItem>
+  ));
+  };
   const showModalHandler = (id) => {
     setDeleteModal(true);
     setCurrentId(id);
@@ -33,8 +42,11 @@ export const DaftarBukuPinjamPage = () => {
   const [searchBasedDate, setSearchBasedDate] = React.useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
   const columns = [
     {
       id: 'id',
@@ -109,62 +121,80 @@ export const DaftarBukuPinjamPage = () => {
 
   return (
     <>
-      <button onClick={() => setAdvanceSearch(!advanceSearch)}>
+      <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
         Pencarian Lebih Lanjut
-      </button>
+      </Button>
       {
         advanceSearch &&
-        <div>
-          <select onChange={(e) => {
-            setSearchBased(e.target.value)
-            if(e.target.value === ""){
-            setSearchTerm("")
-            }
-            }}>
-            <option disabled >Cari berdasarkan:</option>
-            <option value="">Tampilkan semua data</option>
-            <option value="nama_siswa">Nama Siswa</option>
-            <option value="judul_buku">Judul Buku</option>
-          </select>
-          <input
-            disabled={searchBased === "" ? true : false}
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <div>
-            <select onChange={(e) => {
-            setSearchBasedDate(e.target.value)
-            if(e.target.value === ''){
-              setStartDate(null)
-              setEndDate(null)
-            }
-            }}>
-              <option disabled >Tampilkan data dalam range tanggal :</option>
-              <option value="">Data dalam seluruh rentang tanggal</option>
-              <option value="tgl_pinjam">Data dalam rentang tanggal pinjam tertentu</option>
-              <option value="tgl_kembali">Data dalam rentang tanggal kembali tertentu</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="start-date">Start Date:</label>
-            <DatePicker
-              disabled={searchBasedDate === ""}
-              id="start-date"
-              selected={startDate}
-              dateFormat="dd/MM/yyyy"
-              onChange={(date) => setStartDate(date)}
-            />
-            <DatePicker
-              disabled={searchBasedDate === ""}
-              id="end-date"
-              selected={endDate}
-              dateFormat="dd/MM/yyyy"
-              onChange={(date) => setEndDate(date)}
-            />
-          </div>
-        </div>
+        <>
+        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+          <DropdownToggle caret>
+          Tampilkan data dalam range tanggal
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={() => setSearchBasedDate('')}>
+            Data dalam seluruh rentang tanggal
+            </DropdownItem>
+            <DropdownItem  onClick={() => setSearchBasedDate('admin')}>
+            Data dalam rentang tanggal pinjam tertentu
+        </DropdownItem>
+        <DropdownItem  onClick={() => setSearchBasedDate('petugas')}>
+        Data dalam rentang tanggal pengembalian tertentu
+        </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </>
+        // <div>
+        //   <select onChange={(e) => {
+        //     setSearchBased(e.target.value)
+        //     if(e.target.value === ""){
+        //     setSearchTerm("")
+        //     }
+        //     }}>
+        //     <option disabled >Cari berdasarkan:</option>
+        //     <option value="">Tampilkan semua data</option>
+        //     <option value="nama_siswa">Nama Siswa</option>
+        //     <option value="judul_buku">Judul Buku</option>
+        //   </select>
+        //   <input
+        //     disabled={searchBased === "" ? true : false}
+        //     type="text"
+        //     placeholder="Search"
+        //     value={searchTerm}
+        //     onChange={(e) => setSearchTerm(e.target.value)}
+        //   />
+        //   <div>
+        //     <select onChange={(e) => {
+        //     setSearchBasedDate(e.target.value)
+        //     if(e.target.value === ''){
+        //       setStartDate(null)
+        //       setEndDate(null)
+        //     }
+        //     }}>
+        //       <option disabled >Tampilkan data dalam range tanggal :</option>
+        //       <option value="">Data dalam seluruh rentang tanggal</option>
+        //       <option value="tgl_pinjam">Data dalam rentang tanggal pinjam tertentu</option>
+        //       <option value="tgl_kembali">Data dalam rentang tanggal kembali tertentu</option>
+        //     </select>
+        //   </div>
+        //   <div>
+        //     <label htmlFor="start-date">Start Date:</label>
+        //     <DatePicker
+        //       disabled={searchBasedDate === ""}
+        //       id="start-date"
+        //       selected={startDate}
+        //       dateFormat="dd/MM/yyyy"
+        //       onChange={(date) => setStartDate(date)}
+        //     />
+        //     <DatePicker
+        //       disabled={searchBasedDate === ""}
+        //       id="end-date"
+        //       selected={endDate}
+        //       dateFormat="dd/MM/yyyy"
+        //       onChange={(date) => setEndDate(date)}
+        //     />
+        //   </div>
+        // </div>
       }
       <Suspense fallback="">
         <Await resolve={daftarPinjam} >

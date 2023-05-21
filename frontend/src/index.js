@@ -6,23 +6,25 @@ import App from './App';
 import { Provider } from 'react-redux';
 import Loader from './layouts/loader/Loader';
 import store from './features/store';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-   
+
     <Provider store={store}>
         <Suspense fallback={<Loader/>}>
             <App />
+            <ToastContainer />
         </Suspense>
     </Provider>
-     
-   
 
- 
+
+
+
 );
 
 
