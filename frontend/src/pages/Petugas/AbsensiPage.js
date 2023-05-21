@@ -1,15 +1,15 @@
 import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { DeleteModal } from '../../components/admin/modals/DeleteModal';
 
-import { json,defer, Await, useLoaderData, useLocation, Link } from 'react-router-dom';
+
+import { json,defer, Await, useLoaderData, useLocation, Link, Form } from 'react-router-dom';
 
 
 export const AbsensiPage = () => {
-    const [currentId,setCurrentId]=useState(null);
-    const [showDeleteModal,setDeleteModal]=useState(false)
+/*     const [currentId,setCurrentId]=useState(null);
+    const [showDeleteModal,setDeleteModal]=useState(false) */
     const { absensi }=useLoaderData('petugas-absensi');
-    const location = useLocation();
+/*     const location = useLocation();
     const showModalHandler=(id)=>{
         setDeleteModal(true);
         setCurrentId(id);
@@ -18,7 +18,7 @@ export const AbsensiPage = () => {
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
 
-      }
+      } */
 
 
       const columns = [
@@ -58,20 +58,64 @@ export const AbsensiPage = () => {
             accessor:"waktu_keluar",
             sortable: true,
         },
+        {
+          id:"button",
+          name:"Action",
+          width:"30%",
+        cell: (row) => 
+              (
+           <>
+               <div>
+                {row.absensi.waktu_keluar !=null?<span>Selesai</span>:
+                <Form>
+                  <input type="hidden"  />
+                  <button>Belum Selesai</button>
+                </Form>
+                
+                }
+    
+               </div>
+           </>
+        ),
+        
+        ignoreRowClick: true,
+        allowOverflow: true,
+        selector:row=>row.button,
+        button: true,
+      },
         
     ];
 
 
   return (
     <>
+    <Suspense fallback="">
+          <Await resolve={absensi} >
+            {(loadedData)=>
+               <DataTable
+               title={
+                <div style={{ display:"flex",justifyContent:"space-between" }}>
+                    <h2>Absensi (Belum Selesai)</h2>
+                    <Link to="/petugas/absensi/create">Create</Link>
+                </div>
+               }
+               data={loadedData.filter((item)=>item.absensi.waktu_keluar ===null?true:false)}
+               columns={columns}
+              pagination={loadedData.lenght}
+                   />
+            }
+          </Await>
+        </Suspense>
+
+
         <Suspense fallback="">
           <Await resolve={absensi} >
             {(loadedData)=>
                <DataTable
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2>Tabel Siswa</h2>
-                    <Link to="registrasi/data-pribadi">Create</Link>
+                    <h2>Absensi</h2>
+                  
                 </div>
                }
                data={loadedData}
@@ -81,8 +125,7 @@ export const AbsensiPage = () => {
             }
           </Await>
         </Suspense>
-        {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
-        {location.state && <div>{location.state.message}</div>}
+        
     </>
   )
 }

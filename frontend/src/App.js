@@ -68,6 +68,7 @@ import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
 //Petugas Loader
 //Absensi
 import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
+import { loader as petugasCreateAbsensiLoader } from "./pages/Petugas/CreateAbsensi";
 
 
 //Admin Action
@@ -111,6 +112,7 @@ import { PetugasRoot } from "./layouts/PetugasRoot";
 import { ScanPage } from "./pages/Petugas/ScanPage";
 import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
+import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
 
 
 /****Layouts Admin*****/
@@ -368,6 +370,11 @@ const studentId=useSelector(state=>state.auth.user)
           {index:"true",
           element:<AbsensiPage/>,
           loader:petugasAbsensiLoader,
+          },{
+            path:"create",
+            id:"create-absensi",
+            loader:petugasCreateAbsensiLoader,
+            element:<CreateAbsensi/>
           }
         ]}
       ]
