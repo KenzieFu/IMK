@@ -15,10 +15,40 @@ exports.setWaktuKeluar = async function (req, res, next) {
         where: {
           nisn: req.params.nisn,
           // tanggal: dayjs().format("YYYY-MM-DD"),
-          waktu_keluar: "00:00:00",
+          waktu_keluar: null,
         },
       }
     );
+    if (absensi[0] === 0) {
+      const error = new Error("Gagal scan keluar, Anda belum scan masuk perpustakaan!");
+      error.statusCode = 400;
+      throw error;
+    }
+    res.json(absensi);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Function untuk set waktu_keluar manual sebagai current time di INDONESIA pada absensi berdasarkan nisn siswa
+exports.setWaktuKeluarManual = async function (req, res, next) {
+  try {
+    // const siswa = await Siswa.findOne({ where: { nisn: req.body.nisn } });
+    const absensi = await Absensi.update(
+      { waktu_keluar: dayjs().format("HH:mm:ss") },
+      {
+        where: {
+          id_absensi: req.params.absensiId,
+          // tanggal: dayjs().format("YYYY-MM-DD"),
+          waktu_keluar: null,
+        },
+      }
+    );
+    if (absensi[0] === 0) {
+      const error = new Error("Gagal scan keluar, Anda belum scan masuk perpustakaan!");
+      error.statusCode = 400;
+      throw error;
+    }
     res.json(absensi);
   } catch (error) {
     next(error);
@@ -28,7 +58,7 @@ exports.setWaktuKeluar = async function (req, res, next) {
 // Function untuk menambahkan absensi
 exports.createAbsensi = async function (req, res, next) {
   try {
-    const { nisn, waktu_masuk, tanggal, waktu_keluar } = req.body;
+    const { nisn } = req.body;
 
     // Cek jika siswa sudah absen hari ini dan waktu keluar sudah diisi, maka munculkan error "Anda sudah absen hari ini"
     const absensi = await Absensi.findOne({
@@ -47,9 +77,9 @@ exports.createAbsensi = async function (req, res, next) {
 
     const absensiBaru = await Absensi.create({
       nisn: nisn,
-      waktu_masuk: waktu_masuk,
-      tanggal: tanggal,
-      waktu_keluar: waktu_keluar,
+      waktu_masuk: dayjs().format("HH:mm:ss"),
+      tanggal: dayjs().format("YYYY-MM-DD"),
+      waktu_keluar: null,
     });
 
     res.json(absensiBaru);

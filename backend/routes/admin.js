@@ -50,11 +50,11 @@ router.get("/buku/:bukuId", bukuController.getBook);
 
 // route untuk mengambil daftar buku perpus
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku-perpus
-router.get('/buku-perpus', bukuController.getPerpusBooks);
+router.get("/buku-perpus", bukuController.getPerpusBooks);
 
 // route untuk mengambil daftar buku tahun ajaran baru
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku-tahun-ajaran-baru
-router.get('/buku-tahun-ajaran-baru', bukuController.getTahunAjaranBaruBooks);
+router.get("/buku-tahun-ajaran-baru", bukuController.getTahunAjaranBaruBooks);
 
 // route untuk search buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/search?keyword=fisika
@@ -74,12 +74,12 @@ router.post("/buku", bukuController.createBook);
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku/1
 router.put("/buku/:bukuId", bukuController.updateBook);
 
-// route untuk menghapus buku   
+// route untuk menghapus buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku/1
 router.delete("/buku/:bukuId", bukuController.deleteBook);
 
 // route untuk menambahkan buku ke perpus
-// http://localhost:8080/admin-perpustakaan-methodist-cw/buku-perpus  
+// http://localhost:8080/admin-perpustakaan-methodist-cw/buku-perpus
 router.post("/buku-perpus", bukuController.createPerpusBook);
 
 // route untuk mengupdate buku perpus
@@ -102,7 +102,6 @@ router.put("/buku-tahun-ajaran-baru/:bukuId", bukuController.updateTahunAjaranBa
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku-tahun-ajaran-baru/1
 router.delete("/buku-tahun-ajaran-baru/:bukuId", bukuController.deleteTahunAjaranBaruBook);
 
-
 // ROUTES FOR KATEGORI
 
 // route untuk mengambil single kategori
@@ -112,8 +111,6 @@ router.get("/kategori/:kategoriId", kategoriController.getKategoriById);
 // route untuk mengambil daftar kategori
 // http://localhost:8080/admin-perpustakaan-methodist-cw/kategori
 router.get("/kategori", kategoriController.getAllKategori);
-
-
 
 // LANJUTKAN CRUD KATEGORI DLL (UPDATE, DELETE, CREATE, ETC)
 
@@ -128,7 +125,6 @@ router.put("/kategori/:kategoriId", kategoriController.updateKategori);
 // route untuk menghapus kategori
 // http://localhost:8080/admin-perpustakaan-methodist-cw/kategori/1
 router.delete("/kategori/:kategoriId", kategoriController.deleteKategori);
-
 
 // ROUTES FOR PEMINJAMAN
 
@@ -176,7 +172,6 @@ router.get("/akun/:akunId", akunController.getAkun);
 // http://localhost:8080/admin-perpustakaan-methodist-cw/akun
 router.get("/akun", akunController.getAllAkun);
 
-
 // ROUTES FOR PEMINJAMAN
 
 // route untuk menambahkan peminjaman
@@ -190,7 +185,6 @@ router.put("/peminjaman/:peminjamanId", peminjamanController.updatePeminjaman);
 // route untuk menghapus peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
 router.delete("/peminjaman/:peminjamanId", peminjamanController.deletePeminjaman);
-
 
 // route untuk menampilkan satu peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
@@ -222,8 +216,6 @@ router.get("/pengembalian/:pengembalianId", pengembalianController.getPengembali
 // http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian
 router.get("/pengembalian", pengembalianController.getAllPengembalianAdmin);
 
-
-
 // ROUTES FOR EVENTS
 
 // route untuk menambahkan event
@@ -245,7 +237,6 @@ router.get("/event/:eventId", eventController.getEvent);
 // route untuk menampilkan daftar event
 // http://localhost:8080/admin-perpustakaan-methodist-cw/event
 router.get("/event", eventController.getAllEvent);
-
 
 // ROUTES FOR PESAN MASUK
 
@@ -302,5 +293,9 @@ router.get("/pengunjung-harian", absensiController.getPengunjungHarian);
 // route untuk set waktu_keluar saat absensi berdasarkan nisn
 // http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar/1
 router.put("/absensi-keluar/:nisn", absensiController.setWaktuKeluar);
+
+// route untuk set waktu_keluar saat absensi berdasarkan id_absensi
+// http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar-manual/1
+router.put("/absensi-keluar-manual/:absensiId", absensiController.setWaktuKeluarManual);
 
 module.exports = router;
