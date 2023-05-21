@@ -10,13 +10,15 @@ const { where } = require("sequelize");
 exports.createPemesananBuku = async function (req, res, next) {
   try {
     // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
-    const buku = await BukuPerpus.findByPk(req.body.id_buku);
+    for(const item in req.body)
+    {
+      const buku = await BukuPerpus.findByPk(req.body.id_buku);
     if (buku === null) {
       return res.status(400).json({ message: "Buku tidak ditemukan" });
     } else if (buku.stok === 0) {
       return res.status(400).json({ message: "Stok buku kosong" });
     }
-    const pemesananBuku = await PemesananBuku.create({
+    let pemesananBuku = await PemesananBuku.create({
       id_buku: req.body.id_buku,
       id_siswa: req.body.id_siswa,
       waktu: dayjs().format("HH:mm:ss"),
@@ -29,6 +31,8 @@ exports.createPemesananBuku = async function (req, res, next) {
     // await buku.save();
 
     res.json(pemesananBuku);
+    }
+    
   } catch (error) {
     next(error);
   }

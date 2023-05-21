@@ -14,9 +14,7 @@ const QrOverlay = (scan) => {
   )
 }
 
-const delay = ms => new Promise(
-  resolve => setTimeout(resolve, ms)
-);
+
 
 export const ScanQrBox = (props) => {
   const formRef =useRef();

@@ -30,7 +30,7 @@ exports.setWaktuKeluar = async function (req, res, next) {
   }
 };
 
-// Function untuk set waktu_keluar manual sebagai current time di INDONESIA pada absensi berdasarkan nisn siswa
+// Function untuk set waktu_keluar manual sebagai current time di INDONESIA pada absensi berdasarkan id_absensi 
 exports.setWaktuKeluarManual = async function (req, res, next) {
   try {
     // const siswa = await Siswa.findOne({ where: { nisn: req.body.nisn } });
@@ -58,7 +58,7 @@ exports.setWaktuKeluarManual = async function (req, res, next) {
 // Function untuk menambahkan absensi
 exports.createAbsensi = async function (req, res, next) {
   try {
-    const { nisn } = req.body;
+    const { nisn,waktu_masuk,tanggal,waktu_keluar } = req.body;
 
     // Cek jika siswa sudah absen hari ini dan waktu keluar sudah diisi, maka munculkan error "Anda sudah absen hari ini"
     const absensi = await Absensi.findOne({
@@ -70,9 +70,9 @@ exports.createAbsensi = async function (req, res, next) {
     });
 
     if (absensi) {
-      const error = new Error("Gagal masuk, Anda belum  keluar perpustakaan!");
-      error.statusCode = 400;
-      return res.status(400).json({
+      /* const error = new Error("Gagal masuk, Anda belum  keluar perpustakaan!");
+      error.statusCode = 400; */
+      return res.status(200).json({
         message: "Gagal masuk, Anda belum  keluar perpustakaan!",
         data: {nisn, waktu_masuk, tanggal, waktu_keluar},
       })
