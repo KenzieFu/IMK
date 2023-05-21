@@ -2,8 +2,8 @@ import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 
-import { json,defer, Await, useLoaderData, useLocation, Link, Form } from 'react-router-dom';
-import { action } from './CreateAbsensi';
+import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect } from 'react-router-dom';
+
 
 
 export const AbsensiPage = () => {
@@ -68,9 +68,9 @@ export const AbsensiPage = () => {
            <>
                <div>
                 {row.absensi.waktu_keluar !=null?<span>Selesai</span>:
-                <Form>
-                  <input type="number" value={row.absensi.id_absensi}  />
-                  <button>Belum Selesai</button>
+                <Form method="PUT">
+                  <input type="number" name='id_absensi' value={row.absensi.id_absensi}  />
+                  <button type='submit'>Belum Selesai</button>
                 </Form>
                 
                 }
@@ -163,10 +163,10 @@ export async function action({ params, request }) {
 
   const method = request.method;
   const data = await request.formData();
-  const myData=JSON.parse(data.get("data"));
+ 
   const time=new Date().toTimeString()
-  console.log(myData.nisn);
-  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar/'+myData.nisn, {
+
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar-manual/'+data.get("id_absensi"), {
     method: method,
     headers:{
       "Content-Type":"application/json",
@@ -186,7 +186,7 @@ export async function action({ params, request }) {
     );
   
   }
-   return  redirect("/petugas/scan-keluar");
+   return  response;
 }
 
 
