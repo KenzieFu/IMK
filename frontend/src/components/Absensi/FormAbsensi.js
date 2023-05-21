@@ -1,25 +1,23 @@
 import React, { useState } from 'react'
 import { Form, Link, useSubmit } from 'react-router-dom'
 import Select from 'react-select'
-export const FormAbsensi = ({students}) => {
+export const FormAbsensi = ({students,method}) => {
   const [currentStudent,setCurrentStudent]=useState(0)
   const submit =useSubmit();
   const changeStudent=(index)=>{
     setCurrentStudent(index);
   }
-  console.log(currentStudent)
+
   let current=students.find(x=>x.nisn === currentStudent.value);
   let value=students.map(item=>{
     return{value:item.nisn, label:`${item.nisn} --- ${item.nama_lengkap}`}
   })
 
-  const submitHandler=(e)=>{
-    submit(null,{method:"POST"})
-  }
+
   
   return (
     <>
-        <Form>
+        <Form method={method}>
 
             <div style={{ display:"flex"}}>
               <div>
@@ -38,7 +36,7 @@ export const FormAbsensi = ({students}) => {
 
             <div>
               <Link to="..">Back</Link>
-              <button>Create</button></div>
+              <button type="submit">Create</button></div>
             
         </Form>
     </>

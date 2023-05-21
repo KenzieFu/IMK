@@ -94,6 +94,8 @@ import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPage";
 //Scan Keluar
 import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKeluarPage";
+//Input Masuk
+import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
 
 
 
@@ -397,8 +399,10 @@ const studentId=useSelector(state=>state.auth.user)
         {index:true,element:<PetugasPage/>},
         {path:"scan",
         element:<ScanPage/>,
+        id:"scan-masuk",
         action:petugascreateAttendanceAction},
         {path:"scan-keluar",
+        id:"scan-keluar",
         element:<ScanKeluarPage/>,
         action:petugasKeluarAttendanceAction},
         {path:"absensi",
@@ -411,8 +415,10 @@ const studentId=useSelector(state=>state.auth.user)
           },{
             path:"create",
             id:"create-absensi",
+            element:<CreateAbsensi/>,
             loader:petugasCreateAbsensiLoader,
-            element:<CreateAbsensi/>
+            action:enterPetugasAction,
+            
           }
         ]}
       ]
