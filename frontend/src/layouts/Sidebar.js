@@ -39,6 +39,11 @@ const navigation = [
     icon:"bi bi-calendar-event text-primary"
   },
   {
+    title:"Booking",
+    href:"/admin/booking",
+    icon:"bi bi-calendar-event text-primary"
+  },
+  {
     title:"HomePage",
     href:"/",
     icon:"bi bi-calendar-event text-primary"

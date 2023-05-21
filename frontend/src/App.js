@@ -340,6 +340,33 @@ const studentId=useSelector(state=>state.auth.user)
 
           ]
          },
+         {
+          path:"booking",
+          children:[
+            {index:true,
+             id:"admin-booking",
+            //  element:<DaftarBookingBuku/>,
+            //  loader:adminPengembalianLoader,
+
+
+            },
+            // {
+            //   path:":idPengembalian",
+            //   id:"detail-pengembalian",
+            //   children:[
+            //     {
+            //       index:true,
+            //       element:<DetailPengembalianBuku/>
+            //     },
+            //     {
+            //       path:"edit",
+            //       element:<EditPengembalianBuku/>
+            //     }
+            //   ]
+            //  }
+
+          ]
+         },
          {path:"calender",
           id:"admin-calender",
           loader:adminEventLoader,

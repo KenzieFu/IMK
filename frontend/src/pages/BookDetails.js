@@ -41,8 +41,8 @@ const BookDetail = () => {
     const { addItem, items, inCart } = useCart();
     // console.log(items)
     console.log(akun)
-    const userItems = items.filter((item) => item.id_akun === akun.user.id_siswa);
-    console.log(userItems)
+
+    // console.log(userItems)
     const navigate = useNavigate();
 
 
@@ -52,8 +52,9 @@ const BookDetail = () => {
     }
 
     const handleAddToCart = () => {
-        const existingItem = userItems.find((item) => item.id === book.id_buku && item.id_akun === akun.user.id_siswa);
-        console.log(existingItem)
+        const userItems = items.filter((item) => item.id_akun === akun.user.id_siswa);
+        const existingItem =  inCart(book.id_buku)
+        console.log(existingItem )
 
         if (existingItem) {
             gagal()
