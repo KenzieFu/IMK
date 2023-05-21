@@ -1,7 +1,7 @@
 import React from "react";
 import { Sidebar } from "../UI/Sidebar";
 import classes from "./BookDetails.module.css"
-import {  useState } from "react";
+import { useState } from "react";
 import { defer, json, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoginModal from "../components/auth/Login";
@@ -9,7 +9,7 @@ import { BookingModals } from "../components/BookingModal";
 import { CartProvider, useCart } from "react-use-cart";
 import Modal from "../UI/Modal";
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const BookDetail = () => {
@@ -23,7 +23,7 @@ const BookDetail = () => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-        });
+    });
 
     const gagal = () => toast.warning('Buku sudah ada di booking list!', {
         position: "top-center",
@@ -34,36 +34,44 @@ const BookDetail = () => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-        });
-
-    const [isAdded, setIsAdded] = useState(false);
-    const { addItem, items } = useCart();
-
-    const navigate = useNavigate();
+    });
     const isAuth = useSelector((state) => state.auth.isAuth);
-    const { book  } = useLoaderData('book-detail');
+    const akun = useSelector((state) => state.auth.user);
+    const [isAdded, setIsAdded] = useState(false);
+    const { addItem, items, inCart } = useCart();
+    // console.log(items)
+    console.log(akun)
+    const userItems = items.filter((item) => item.id_akun === akun.user.id_siswa);
+    console.log(userItems)
+    const navigate = useNavigate();
+
+
+    const { book } = useLoaderData('book-detail');
     const backHandler = () => {
         navigate("..");
     }
 
     const handleAddToCart = () => {
-        const existingItem = items.find((item) => item.id === book.id_buku);
+        const existingItem = userItems.find((item) => item.id === book.id_buku && item.id_akun === akun.user.id_siswa);
+        console.log(existingItem)
+
         if (existingItem) {
-         gagal()
+            gagal()
         } else {
 
-          addItem({
-            id: book.id_buku,
-            name: book.judul_buku,
-            price: "--",
-            penerbit: book.penerbit,
-            pengarang: book.pengarang,
-            sinopsis: book.sinopsis,
-          });
-          notify()
+            addItem({
+                id: book.id_buku,
+                name: book.judul_buku,
+                price: "--",
+                penerbit: book.penerbit,
+                pengarang: book.pengarang,
+                sinopsis: book.sinopsis,
+                id_akun: akun.user.id_siswa
+            });
+            notify()
 
         }
-      };
+    };
 
     const [showBookingModal, setBookingModal] = useState(false)
     const [showLogin, setShowLogin] = useState(false);
@@ -133,7 +141,7 @@ const BookDetail = () => {
                         {/* button ini belum jalan seperti semestinya */}
                         {showLogin && <LoginModal onClose={closeLoginModal} />}
                         {/* {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>} */}
-                        <button className={classes["button-borrow"]}  onClick={() => {
+                        <button className={classes["button-borrow"]} onClick={() => {
                             if (!isAuth) {
                                 showLoginModal();
                             } else {

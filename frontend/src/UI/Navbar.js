@@ -3,7 +3,7 @@ import classes from "./Navbar.module.css"
 
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useCart } from 'react-use-cart';
+import { useCart,useEffect } from 'react-use-cart';
 
 export const Navbar = (props) => {
 const authen=useSelector(state=>state.auth.isAuth);
@@ -24,7 +24,7 @@ const { totalUniqueItems } = useCart()
                 <ul>
                     <li className={classes['linav2']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/admin">Masuk Admin</NavLink></li>
                   {!authen &&  <li className={classes['linav3']} onClick={props.onClick}>Login</li>}
-                  {authen && <li className={classes['linav3']} onClick={props.onClickCart}>Booking List {"("}{totalUniqueItems}{")"}</li>}
+                  {authen && <li className={classes['linav3']} onClick={props.onClickCart}>Booking List </li>}
                 </ul>
             </nav>
         </header>

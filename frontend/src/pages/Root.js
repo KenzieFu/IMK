@@ -11,6 +11,9 @@ export const RootLayout = () => {
 
   const [showLogin,setShowLogin]=useState(false);
   const [showCart,setShowCart]=useState(false);
+const authen=useSelector(state=>state.auth.isAuth);
+
+
 
 
   const showLoginModal=()=>{
