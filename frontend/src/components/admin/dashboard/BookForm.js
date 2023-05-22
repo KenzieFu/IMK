@@ -11,7 +11,7 @@ function BookForm({method,book}) {
     navigate("..");
   }
 
-  
+
   return (
     <>
       <Form method={method}>
@@ -97,7 +97,7 @@ function BookForm({method,book}) {
               </FormGroup>
 
               <Button onClick={backHandler}>Cancel</Button>
-              <Button style={{ background:"green" }}>Save</Button>
+              <Button type='submit' style={{ background:"green" }}>Save</Button>
 
             </Form>
     </>

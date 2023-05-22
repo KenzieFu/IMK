@@ -24,7 +24,10 @@ exports.setWaktuKeluar = async function (req, res, next) {
       error.statusCode = 200;
       throw error;
     }
-    res.json(absensi);
+    res.status(200).json(
+      {message:`${req.params.nisn} Berhasil keluar dari Perpustakaan`,
+       absensi:absensi}
+        );
   } catch (error) {
     next(error);
   }
