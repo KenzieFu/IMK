@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './PopularBook.module.css'
+
 import { Link } from 'react-router-dom';
 export const SearchResult = (props) => {
   
@@ -22,11 +23,10 @@ export const SearchResult = (props) => {
   return (
     <>
     <div className={classes.popular}>
-    <div className={classes.wibulu}> 
-      <h1>List</h1>
-      <img src="./assets/anime-jump.gif" alt="" />
+
+      <div className={classes.notfound}>
+        {daily?.length === 0? <h1>Buku tidak ditemukan <i class="fa fa-frown-o" aria-hidden="true"></i></h1>:<ul>{daily}</ul>}
       </div>
-        {daily?.length === 0? <h2>Tidak Ditemukan</h2>:<ul>{daily}</ul>}
     </div>
     
     </>

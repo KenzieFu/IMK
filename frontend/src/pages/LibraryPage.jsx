@@ -36,12 +36,16 @@ export const LibraryPage = () => {
 {isAuth &&<Sidebar/>}
 
       <div className={classes.main}>
+
+        <div className={classes.maintop}>
+        <div className={classes['searchsugg']}>
       {check &&
           <h1>
-            Hasil Pencarian untuk : {enteredKey}
+            <span> Hasil Pencarian untuk : </span>
+            <span style={{color:'#3a3a3a', marginLeft:'0.4vw', fontWeight:'600'}}>{enteredKey}</span>
           </h1>
         }
-        <div className={classes.maintop}>
+        </div>
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
       </div>
       {check &&

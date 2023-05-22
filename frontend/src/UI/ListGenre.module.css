@@ -42,7 +42,7 @@
 .genre{
     width: 97%;
     margin: auto;
-    margin-top: 4vw;
+    margin-top: 6vw;
     font-family: Inter;
 }
 
@@ -76,6 +76,7 @@
     width: 100%;
     padding: 0.5vw 1vw ;
     border-radius: 1vw;
+    transition: all .5s ease;
 }
 
 .genretab2li{
@@ -105,5 +106,5 @@
 }
 
 li .currentColor{
-    background-color:"#fedaa7" ;
+    background-color:var(--beige-light) ;
 }

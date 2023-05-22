@@ -115,27 +115,27 @@ const BookDetail = () => {
                             <tr>
                                 <td>Penulis</td>
                                 <td>:</td>
-                                <td style={{ color: "#000000", fontWeight: "bold" }}>{book.pengarang}</td>
+                                <td>{book.pengarang}</td>
                             </tr>
                             <tr>
                                 <td>Penerbit</td>
                                 <td>:</td>
-                                <td style={{ color: "#000000", fontWeight: "bold" }}>{book.penerbit}</td>
+                                <td>{book.penerbit}</td>
                             </tr>
                             <tr>
                                 <td>Tahun</td>
                                 <td>:</td>
-                                <td style={{ color: "#000000", fontWeight: "bold" }}>{book.tahun_terbit}</td>
+                                <td>{book.tahun_terbit}</td>
                             </tr>
                             <tr>
                                 <td>ISBN</td>
                                 <td>:</td>
-                                <td style={{ color: "#000000", fontWeight: "bold" }}>{book.isbn}</td>
+                                <td>{book.isbn}</td>
                             </tr>
                             <tr>
                                 <td>Genre</td>
                                 <td>:</td>
-                                <td style={{ color: "#000000", fontWeight: "bold" }}>{book.kategori.nama_kategori}</td>
+                                <td>{book.kategori.nama_kategori}</td>
                             </tr>
                         </table>
                         <button className={classes["button-back"]} onClick={backHandler}>Back</button>
