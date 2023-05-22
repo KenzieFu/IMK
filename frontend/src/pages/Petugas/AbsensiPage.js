@@ -2,11 +2,7 @@ import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 
-<<<<<<< HEAD
-import { redirect, json,defer, Await, useLoaderData, useLocation, Link, Form } from 'react-router-dom';
-=======
 import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect } from 'react-router-dom';
->>>>>>> 2529f2894d26f3d0706a173ad5d247b8b5634f99
 
 
 
@@ -167,7 +163,7 @@ export async function action({ params, request }) {
 
   const method = request.method;
   const data = await request.formData();
- 
+
   const time=new Date().toTimeString()
 
   const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar-manual/'+data.get("id_absensi"), {
