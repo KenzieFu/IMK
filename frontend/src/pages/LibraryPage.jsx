@@ -24,9 +24,13 @@ export const LibraryPage = () => {
   }
   return (
     <>
+
     <div className={classes.content}>
+<div>
+{isAuth &&<Sidebar/>}
+
       <div className={classes.main}>
-      {check && 
+      {check &&
           <h1>
             Hasil Pencarian untuk : {enteredKey}
           </h1>
@@ -34,19 +38,18 @@ export const LibraryPage = () => {
         <div className={classes.maintop}>
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
       </div>
-      {isAuth &&<Sidebar/>}
+
       {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
       {!check &&
       <>
       <Suspense fallback="">
           <Await resolve={genres}>
-         {(loadedRecommendation)=><Recommendation recommendation={loadedRecommendation}/>} 
+         {(loadedRecommendation)=><Recommendation recommendation={loadedRecommendation}/>}
           </Await>
         </Suspense>
 
         </>
       }
-
 
       {!check &&
         <>
@@ -66,14 +69,14 @@ export const LibraryPage = () => {
           <>
         <Suspense fallback="">
           <Await resolve={genres}>
-         {(loadedGenres)=><ListGenre genres={loadedGenres}/>} 
+         {(loadedGenres)=><ListGenre genres={loadedGenres}/>}
           </Await>
         </Suspense>
-           
+
            </>
         }
         </div>
-        
+
 
         <div className={classes['mainbot']}>
         {!check &&
@@ -83,7 +86,7 @@ export const LibraryPage = () => {
           {(loadedBooks)=><ListBooks books={loadedBooks}/>}
           </Await>
         </Suspense>
-        
+
             </>
 
         }
@@ -91,14 +94,14 @@ export const LibraryPage = () => {
       </div>
 
 
-      
+      </div>
     </div>
     </>
   )
 }
 
 const loadBooks=async ()=>{
- 
+
   const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/buku-perpus")
   console.log(response);
   if(!response.ok)

@@ -171,6 +171,10 @@ router.get("/event", eventController.getAllEvent);
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku
 router.post("/pemesanan-buku", pemesananarController.createPemesananBuku);
 
+// route untuk menambahkan pemesanan buku multiple
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku-multiple
+router.post("/pemesanan-buku-multiple", pemesananarController.createPemesananBukuMultiple);
+
 // route untuk mengupdate pemesanan buku
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/1
 router.put("/pemesanan-buku/:pemesananBukuId", pemesananarController.updatePemesananBuku);

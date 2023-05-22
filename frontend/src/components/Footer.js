@@ -14,7 +14,6 @@ return (
     <div className={classes.img}>
       <img className={classes.logo} src="./assets/logopng.png" alt="" />
     </div>
-
     <div className={classes["right-footer"]}>
       <h2>Kontak kami</h2>
       <table>
