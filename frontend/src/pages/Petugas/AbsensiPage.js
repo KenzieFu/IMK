@@ -1,15 +1,16 @@
 import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { DeleteModal } from '../../components/admin/modals/DeleteModal';
 
-import { json,defer, Await, useLoaderData, useLocation, Link } from 'react-router-dom';
+
+import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect } from 'react-router-dom';
+
 
 
 export const AbsensiPage = () => {
-    const [currentId,setCurrentId]=useState(null);
-    const [showDeleteModal,setDeleteModal]=useState(false)
+/*     const [currentId,setCurrentId]=useState(null);
+    const [showDeleteModal,setDeleteModal]=useState(false) */
     const { absensi }=useLoaderData('petugas-absensi');
-    const location = useLocation();
+/*     const location = useLocation();
     const showModalHandler=(id)=>{
         setDeleteModal(true);
         setCurrentId(id);
@@ -18,7 +19,7 @@ export const AbsensiPage = () => {
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
 
-      }
+      } */
 
 
       const columns = [
@@ -59,48 +60,73 @@ export const AbsensiPage = () => {
             sortable: true,
         },
         {
-            id:"button",
-            name:"Action",
-            width:"30%",
-          cell: (row) =>
-                (
-              <div style={{ margin:"0 0" }} >
-            <Link to='#' style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
-            <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_absensi)} style={{ cursor:"pointer" }}>Delete</span>
-                  
-            </div>
-          ),
-
-          ignoreRowClick: true,
-          allowOverflow: true,
-          selector:row=>row.button,
-          button: true,
-        },
+          id:"button",
+          name:"Action",
+          width:"30%",
+        cell: (row) => 
+              (
+           <>
+               <div>
+                {row.absensi.waktu_keluar !=null?<span>Selesai</span>:
+                <Form method="PUT">
+                  <input type="number" name='id_absensi' value={row.absensi.id_absensi}  />
+                  <button type='submit'>Belum Selesai</button>
+                </Form>
+                
+                }
+    
+               </div>
+           </>
+        ),
+        
+        ignoreRowClick: true,
+        allowOverflow: true,
+        selector:row=>row.button,
+        button: true,
+      },
+        
     ];
 
 
   return (
     <>
+    <Suspense fallback="">
+          <Await resolve={absensi} >
+            {(loadedData)=>
+               <DataTable
+               title={
+                <div style={{ display:"flex",justifyContent:"space-between" }}>
+                    <h2>Absensi (Belum Selesai)</h2>
+                    <Link to="/petugas/absensi/create">Create</Link>
+                </div>
+               }
+               data={loadedData.filter((item)=>item.absensi.waktu_keluar ===null?true:false)}
+               columns={columns}
+              pagination={loadedData.lenght!=0?true:false}
+                   />
+            }
+          </Await>
+        </Suspense>
+
+
         <Suspense fallback="">
           <Await resolve={absensi} >
             {(loadedData)=>
                <DataTable
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2>Tabel Siswa</h2>
-                    <Link to="registrasi/data-pribadi">Create</Link>
+                    <h2>Absensi</h2>
+                  
                 </div>
                }
                data={loadedData}
                columns={columns}
-              pagination={loadedData.lenght}
+              pagination={loadedData.lenght !=0?true:false}
                    />
             }
           </Await>
         </Suspense>
-        {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
-        {location.state && <div>{location.state.message}</div>}
+        
     </>
   )
 }
@@ -131,6 +157,36 @@ export const loader=()=>{
     return defer({
         absensi:loaderAbsensi()
     })
+}
+
+export async function action({ params, request }) {
+
+  const method = request.method;
+  const data = await request.formData();
+ 
+  const time=new Date().toTimeString()
+
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar-manual/'+data.get("id_absensi"), {
+    method: method,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer"
+    },
+    body:JSON.stringify({
+      waktu_keluar:time
+    })
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not update attendance.' },
+      {
+        status: 500,
+      }
+    );
+  
+  }
+   return  response;
 }
 
 

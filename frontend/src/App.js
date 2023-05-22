@@ -68,6 +68,7 @@ import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
 //Petugas Loader
 //Absensi
 import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
+import { loader as petugasCreateAbsensiLoader } from "./pages/Petugas/CreateAbsensi";
 
 
 //Admin Action
@@ -86,6 +87,11 @@ import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPage";
 //Scan Keluar
 import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKeluarPage";
+//Input Masuk
+import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
+
+//Keluar Manual
+import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
 
 
 
@@ -111,6 +117,7 @@ import { PetugasRoot } from "./layouts/PetugasRoot";
 import { ScanPage } from "./pages/Petugas/ScanPage";
 import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
+import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
 
 
 /****Layouts Admin*****/
@@ -357,8 +364,10 @@ const studentId=useSelector(state=>state.auth.user)
         {index:true,element:<PetugasPage/>},
         {path:"scan",
         element:<ScanPage/>,
+        id:"scan-masuk",
         action:petugascreateAttendanceAction},
         {path:"scan-keluar",
+        id:"scan-keluar",
         element:<ScanKeluarPage/>,
         action:petugasKeluarAttendanceAction},
         {path:"absensi",
@@ -368,6 +377,14 @@ const studentId=useSelector(state=>state.auth.user)
           {index:"true",
           element:<AbsensiPage/>,
           loader:petugasAbsensiLoader,
+          action:enterManualPetugasAction,
+          },{
+            path:"create",
+            id:"create-absensi",
+            element:<CreateAbsensi/>,
+            loader:petugasCreateAbsensiLoader,
+            action:enterPetugasAction,
+            
           }
         ]}
       ]

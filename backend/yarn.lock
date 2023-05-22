@@ -3,47 +3,28 @@
 
 
 "@types/bson@*", "@types/bson@1.x || 4.0.x":
-<<<<<<< HEAD
   "integrity" "sha512-vVLwMUqhYJSQ/WKcE60eFqcyuWse5fGH+NMAXHuKrUAPoryq3ATxk5o4bgYNtg5aOM4APVg7Hnb3ASqUYG0PKg=="
   "resolved" "https://registry.npmjs.org/@types/bson/-/bson-4.0.5.tgz"
   "version" "4.0.5"
-=======
-  version "4.0.5"
-  resolved "https://registry.npmjs.org/@types/bson/-/bson-4.0.5.tgz"
-  integrity sha512-vVLwMUqhYJSQ/WKcE60eFqcyuWse5fGH+NMAXHuKrUAPoryq3ATxk5o4bgYNtg5aOM4APVg7Hnb3ASqUYG0PKg==
->>>>>>> b742134cbeb93eb1920549bc6e6e7aab5ec214cf
   dependencies:
     "@types/node" "*"
 
 "@types/debug@^4.1.7":
-<<<<<<< HEAD
   "integrity" "sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg=="
   "resolved" "https://registry.npmjs.org/@types/debug/-/debug-4.1.7.tgz"
   "version" "4.1.7"
-=======
-  version "4.1.7"
-  resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.7.tgz"
-  integrity sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==
->>>>>>> b742134cbeb93eb1920549bc6e6e7aab5ec214cf
   dependencies:
     "@types/ms" "*"
 
 "@types/mongodb@^3.5.27":
-<<<<<<< HEAD
   "integrity" "sha512-WcdpPJCakFzcWWD9juKoZbRtQxKIMYF/JIAM4JrNHrMcnJL6/a2NWjXxW7fo9hxboxxkg+icff8d7+WIEvKgYQ=="
   "resolved" "https://registry.npmjs.org/@types/mongodb/-/mongodb-3.6.20.tgz"
   "version" "3.6.20"
-=======
-  version "3.6.20"
-  resolved "https://registry.npmjs.org/@types/mongodb/-/mongodb-3.6.20.tgz"
-  integrity sha512-WcdpPJCakFzcWWD9juKoZbRtQxKIMYF/JIAM4JrNHrMcnJL6/a2NWjXxW7fo9hxboxxkg+icff8d7+WIEvKgYQ==
->>>>>>> b742134cbeb93eb1920549bc6e6e7aab5ec214cf
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
 
 "@types/ms@*":
-<<<<<<< HEAD
   "integrity" "sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA=="
   "resolved" "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz"
   "version" "0.7.31"
@@ -67,51 +48,18 @@
   "integrity" "sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw=="
   "resolved" "https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz"
   "version" "1.3.8"
-=======
-  version "0.7.31"
-  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz"
-  integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
-
-"@types/node@*":
-  version "18.15.13"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.15.13.tgz"
-  integrity sha512-N+0kuo9KgrUQ1Sn/ifDXsvg0TTleP7rIy4zOBGECxAljqvqfqpTfzx0Q1NUedOixRMBfe2Whhb056a42cWs26Q==
-
-"@types/validator@^13.7.1":
-  version "13.7.15"
-  resolved "https://registry.npmjs.org/@types/validator/-/validator-13.7.15.tgz"
-  integrity sha512-yeinDVQunb03AEP8luErFcyf/7Lf7AzKCD0NXfgVoGCCQDNpZET8Jgq74oBgqKld3hafLbfzt/3inUdQvaFeXQ==
-
-abbrev@1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz"
-  integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
-
-accepts@~1.3.8:
-  version "1.3.8"
-  resolved "https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz"
-  integrity sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==
->>>>>>> b742134cbeb93eb1920549bc6e6e7aab5ec214cf
   dependencies:
-    mime-types "~2.1.34"
-    negotiator "0.6.3"
+    "mime-types" "~2.1.34"
+    "negotiator" "0.6.3"
 
-<<<<<<< HEAD
 "anymatch@~3.1.2":
   "integrity" "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw=="
   "resolved" "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz"
   "version" "3.1.3"
-=======
-anymatch@~3.1.2:
-  version "3.1.3"
-  resolved "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz"
-  integrity sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==
->>>>>>> b742134cbeb93eb1920549bc6e6e7aab5ec214cf
   dependencies:
-    normalize-path "^3.0.0"
-    picomatch "^2.0.4"
+    "normalize-path" "^3.0.0"
+    "picomatch" "^2.0.4"
 
-<<<<<<< HEAD
 "append-field@^1.0.0":
   "integrity" "sha512-klpgFSWLW1ZEs8svjfb7g4qWY0YS5imI82dTg+QahUvJ8YqAY0P10Uk8tTyh9ZGuYEZEMaeJYCF5BFuX552hsw=="
   "resolved" "https://registry.npmjs.org/append-field/-/append-field-1.0.0.tgz"
@@ -744,7 +692,7 @@ anymatch@~3.1.2:
   "resolved" "https://registry.npmjs.org/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz"
   "version" "1.0.2"
 
-"mongoose@^5.3.2":
+"mongoose@*", "mongoose@^5.3.2":
   "integrity" "sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA=="
   "resolved" "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
   "version" "5.13.17"

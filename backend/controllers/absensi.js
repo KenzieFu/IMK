@@ -2,6 +2,7 @@ const Absensi = require("../models/absensi");
 const Siswa = require("../models/siswa");
 const dayjs = require("dayjs");
 const { literal } = require("sequelize");
+const { Op } = require("sequelize");
 const ViewPengunjungHarian = require("../models/viewPengunjungHarian");
 
 // Function untuk set waktu_keluar sebagai current time di INDONESIA pada absensi berdasarkan nisn siswa
@@ -14,29 +15,80 @@ exports.setWaktuKeluar = async function (req, res, next) {
         where: {
           nisn: req.params.nisn,
           // tanggal: dayjs().format("YYYY-MM-DD"),
-          waktu_keluar: "00:00:00",
+          waktu_keluar: null,
         },
       }
     );
+    if (absensi[0] === 0) {
+      const error = new Error("Gagal scan keluar, Anda belum scan masuk perpustakaan!");
+      error.statusCode = 400;
+      throw error;
+    }
     res.json(absensi);
   } catch (error) {
     next(error);
   }
 };
 
+// Function untuk set waktu_keluar manual sebagai current time di INDONESIA pada absensi berdasarkan id_absensi 
+exports.setWaktuKeluarManual = async function (req, res, next) {
+  try {
+    // const siswa = await Siswa.findOne({ where: { nisn: req.body.nisn } });
+    const absensi = await Absensi.update(
+      { waktu_keluar: dayjs().format("HH:mm:ss") },
+      {
+        where: {
+          id_absensi: req.params.absensiId,
+          // tanggal: dayjs().format("YYYY-MM-DD"),
+          waktu_keluar: null,
+        },
+      }
+    );
+    if (absensi[0] === 0) {
+      const error = new Error("Gagal scan keluar, Anda belum scan masuk perpustakaan!");
+      error.statusCode = 400;
+      throw error;
+    }
+    res.json(absensi);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // Function untuk menambahkan absensi
 exports.createAbsensi = async function (req, res, next) {
-  // contoh data yang dikirimkan dalam json
-  //   {
-  //     "nisn": "0118741444",
-  //     "waktu_masuk": "07:00:00",
-  //     "tanggal": "2023-05-18",
-  //     "waktu_keluar": "14:00:00"
-  //   }
   try {
-    const absensi = await Absensi.create(req.body);
-    res.json(absensi);
+    const { nisn,waktu_masuk,tanggal,waktu_keluar } = req.body;
+
+    // Cek jika siswa sudah absen hari ini dan waktu keluar sudah diisi, maka munculkan error "Anda sudah absen hari ini"
+    const absensi = await Absensi.findOne({
+      where: {
+        nisn: nisn,
+        // waktu_masuk is not null
+        waktu_keluar: null,
+      },
+    });
+
+    if (absensi) {
+      /* const error = new Error("Gagal masuk, Anda belum  keluar perpustakaan!");
+      error.statusCode = 400; */
+      return res.status(200).json({
+        message: "Gagal masuk, Anda belum  keluar perpustakaan!",
+        data: {nisn, waktu_masuk, tanggal, waktu_keluar},
+      })
+    }
+
+    const absensiBaru = await Absensi.create({
+      nisn: nisn,
+      waktu_masuk: dayjs().format("HH:mm:ss"),
+      tanggal: dayjs().format("YYYY-MM-DD"),
+      waktu_keluar: null,
+    });
+
+    res.status(200).json(
+      {message:`${nisn} Berhasil masuk Ke Perpustakaan`,
+       absensiBaru:absensiBaru}
+        );
   } catch (error) {
     next(error);
   }
@@ -75,7 +127,7 @@ exports.getAbsensi = async function (req, res, next) {
   try {
     const absensi = await Absensi.findByPk(req.params.absensiId);
     const siswa = await Siswa.findOne({ where: { nisn: absensi.nisn } });
-    res.json({ absensi:absensi, siswa:siswa });
+    res.json({ absensi: absensi, siswa: siswa });
   } catch (error) {
     next(error);
   }
@@ -134,15 +186,14 @@ exports.getAbsensiToday = async function (req, res, next) {
 
 // Function untuk menampilkan view pengunjung harian
 exports.getPengunjungHarian = async function (req, res, next) {
-    // id tidak perlu ditampilkan
+  // id tidak perlu ditampilkan
 
-    try {
-        const pengunjungHarian = await ViewPengunjungHarian.findAll({
-            attributes: ["tanggal", "jumlah_pengunjung"],
-        });
-        res.json(pengunjungHarian);
-    }
-    catch (error) {
-        next(error);
-    }
+  try {
+    const pengunjungHarian = await ViewPengunjungHarian.findAll({
+      attributes: ["tanggal", "jumlah_pengunjung"],
+    });
+    res.json(pengunjungHarian);
+  } catch (error) {
+    next(error);
+  }
 };
