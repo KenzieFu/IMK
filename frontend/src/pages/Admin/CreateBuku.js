@@ -99,17 +99,18 @@ export const CreateBuku = () => {
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
-      formDataToSend.append('gamabr_buku', formData.gambar_buku)
+      formDataToSend.append('gambar_buku', formData.gambar_buku)
       formDataToSend.append('id_kategori', formData.id_kategori)
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn);
 
-
-      await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
+      
+     const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: formDataToSend,
 
       }); // Replace with your API endpoint
+      console.log(response);
       alert('Form submitted successfully!');
       setFormData({
             id_buku: '',
