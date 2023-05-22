@@ -39,25 +39,42 @@ export const UserPage = () => {
   const columns = [
     {
       id: "id",
-      name: "ID",
-      selector: (row) => row.id_akun,
+      name: <div className="data-row">ID Akun</div>,
+      // tambahkan div untuk style tulisan
+      selector: (row) => <div className="data-row">{row.id_akun}</div>,
+      // selector: (row) => row.id_akun,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
     },
     {
       id: "username",
-      name: "Username",
-      selector: (row) => row.username,
+      name: <div className="data-row">Username</div>,
+      selector: (row) => <div className="data-row">{row.username}</div>,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "tipe",
-      name: "Hak Akses",
-      selector: (row) => row.hak_akses,
+      name: <div className="data-row">Hak Akses</div>,
+      selector: (row) => <div className="data-row"> {row.hak_akses}</div>,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
     },
     {
       id: "button",
-      name: "Action",
+      name: <div className="data-row">Aksi</div>,
       width: "30%",
       cell: (row) => (
         <div className="action-buttons">
@@ -69,6 +86,12 @@ export const UserPage = () => {
           </span>
         </div>
       ),
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+      },
       ignoreRowClick: true,
       allowOverflow: true,
     },
@@ -132,33 +155,49 @@ export const UserPage = () => {
     } */
   return (
     <>
-      <Input type="text" placeholder="Cari Username..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
-      <Button onClick={() => setAdvanceSearch(!advanceSearch)}>Pencarian Lebih Lanjut</Button>
+      <div className="search-button">
+        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
+        <div>
+          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+            {" "}
+            Pencarian Lebih Lanjut
+          </Button>
+        </div>
+      </div>
+      {/* <div className="dropdown-content"> */}
       {advanceSearch && (
         <>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className="dropdown-toggle">
-              Tampilkan data berdasarkan:
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Tampilkan Akun Berdasarkan Hak Akses
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem header>Hak Akses</DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("siswa")}>Siswa</DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("admin")}>Admin</DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("petugas")}>Petugas</DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("kasir")}>Kasir</DropdownItem>
+              {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
+              {/* <DropdownItem divider /> */}
+              {/* <DropdownItem header>Hak Akses</DropdownItem> */}
+              <DropdownItem onClick={() => setSearchBased("siswa")} className="box-menu">
+                Siswa
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("admin")} className="box-menu">
+                Admin
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("petugas")} className="box-menu">
+                Petugas
+              </DropdownItem>
+              {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
+                Kasir
+              </DropdownItem> */}
             </DropdownMenu>
           </Dropdown>
-          <div className="additional-content"></div>
+          {/* <div className="additional-content"></div> */}
         </>
       )}
-
+      {/* </div> */}
       <Suspense fallback="">
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
-              title="Tabel User"
+              title={<div className="data-table-header">Akun</div>}
               data={loadedData.filter((item) => {
                 if (searchBased === "") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
@@ -179,6 +218,7 @@ export const UserPage = () => {
           )}
         </Await>
       </Suspense>
+
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
     </>
