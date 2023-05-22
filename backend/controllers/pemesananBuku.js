@@ -12,8 +12,8 @@ exports.createPemesananBuku = async function (req, res, next) {
     // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
     for(const item in req.body)
     {
-      const buku = await BukuPerpus.findByPk(item.id_buku);
-    if (buku === null) {
+      let buku = await BukuPerpus.findByPk(item.id_buku);
+    if (buku) {
       return res.status(400).json({ message: "Buku tidak ditemukan" });
     } else if (buku.stok === 0) {
       return res.status(400).json({ message: "Stok buku kosong" });
