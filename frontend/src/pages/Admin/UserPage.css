@@ -1,0 +1,141 @@
+/* styles.css */
+
+.search-input {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #6c63ff;
+}
+
+.dropdown-toggle {
+  background-color: #6c63ff;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-toggle:hover {
+  background-color: #524dff;
+}
+
+.additional-content {
+  margin-top: 16px;
+}
+
+/* styles.css */
+
+.data-table {
+  margin-top: 16px;
+  font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  background-color: #6c63ff;
+  color: #fff;
+  padding: 8px;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 8px;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+.data-table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-buttons a {
+  cursor: pointer;
+  text-decoration: none;
+  color: gray;
+}
+
+.action-buttons span {
+  cursor: pointer;
+  color: gray;
+}
+
+.action-buttons input[type="hidden"] {
+  display: none;
+}
+
+
+
+.action-buttons .action-delete {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 4px;
+  background-color: #ff4d4f;
+  border: 1px solid #ff4d4f; 
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.action-buttons .action-delete::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("https://img.icons8.com/material-rounded/24/000000/delete-forever.png") no-repeat left top;
+  background-size: cover;
+  margin-right: 4px;
+}
+
+.action-buttons .action-delete:hover {
+  background-color: #ff7875;
+  border-color: #ff7875; 
+  color: #ffffff; 
+}
+
+.action-buttons .action-detail {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 4px;
+  background-color: #1890ff;
+  border: 1px solid #1890ff; 
+  border-radius: 4px; 
+  color: #ffffff; 
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.action-buttons .action-detail::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("https://img.icons8.com/material-rounded/24/000000/visible--v2.png") no-repeat left top;
+  background-size: cover;
+  margin-right: 4px;
+}
+
+.action-buttons .action-detail:hover {
+  background-color: #40a9ff;
+  border-color: #40a9ff; 
+}
+

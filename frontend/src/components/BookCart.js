@@ -66,28 +66,25 @@ export default function Cart(props) {
 const [hidden, setHidden] = React.useState(false)
 
 const bookingHandler = async () => {
-  let url = 'http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku';
+  let url = 'http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku-multiple';
 
   try {
 
     if(totalUniqueItems === 0){
         cartKosong()
     } else {
-        let tes = []
+        let bukuId = []
 
      for (const item of items) {
-        const currentTime = new Date().toLocaleTimeString();
-        const currentDate = new Date().toLocaleDateString();
-
-        const gass = {
-          id_siswa: akun.user.id_siswa,
-          id_buku: item.id,
-          waktu: currentTime,
-          tanggal: currentDate
-        };
-        tes.push(gass)
+        bukuId.push(item.id)
     }
-    console.log(tes)
+
+    const tes = {
+        id_siswa: akun.user.id_siswa,
+        id_buku: bukuId
+    }
+    console.log(bukuId)
+    console.log(akun.user.id_siswa)
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -95,8 +92,9 @@ const bookingHandler = async () => {
           "Authorization":"Bearer"
         },
         body: JSON.stringify(tes)
-
       });
+
+      console.log(tes)
       const createdData = await response.json();
 
       console.log('Data created:', createdData);

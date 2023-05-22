@@ -15,7 +15,7 @@ export const LibraryPage = () => {
   const isAuth=useSelector(state=>state.auth.isAuth);
   const {books,genres}=useLoaderData('books');
 
-  console.log(genres)
+  console.log("Haihai")
   const [enteredKey,setKey]=useState('');
   let check = enteredKey.trim() !=="";
 

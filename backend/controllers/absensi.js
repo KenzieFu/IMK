@@ -21,10 +21,13 @@ exports.setWaktuKeluar = async function (req, res, next) {
     );
     if (absensi[0] === 0) {
       const error = new Error("Gagal scan keluar, Anda belum scan masuk perpustakaan!");
-      error.statusCode = 400;
+      error.statusCode = 200;
       throw error;
     }
-    res.json(absensi);
+    res.status(200).json(
+      {message:`${req.params.nisn} Berhasil keluar dari Perpustakaan`,
+       absensi:absensi}
+        );
   } catch (error) {
     next(error);
   }

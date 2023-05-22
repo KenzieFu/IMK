@@ -13,6 +13,7 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
   //   "id_siswa": 2,
   //   "id_buku": [2, 3]
   // }
+  console.log(req.body)
   const { id_siswa, id_buku } = req.body;
   // cek dulu id_siswa kalau ada 3 data di tabel peminjaman buku dengan id_siswa yang sama maka tidak bisa melakukan pemesanan
   const peminjamanBukuData = await Peminjaman.findAll({ where: { id_siswa: id_siswa } });
@@ -21,11 +22,11 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
     // tambilkan banyak sisa buku yang dapat dipesan
     return res.status(400).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
   }
-  if (sisaBukuDapatDipesan >= 1 && sisaBukuDapatDipesan <= 3) {
-    // tambilkan banyak sisa buku yang dapat dipesan
-    return res.status(400).json({ message: `Anda hanya dapat meminjam buku ${sisaBukuDapatDipesan} eksemplar lagi` });
-    // return res.status(400).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
-  }
+  // if (sisaBukuDapatDipesan >= 1 && sisaBukuDapatDipesan <= 3) {
+  //   // tambilkan banyak sisa buku yang dapat dipesan
+  //   return res.status(400).json({ message: `Anda hanya dapat meminjam buku ${sisaBukuDapatDipesan} eksemplar lagi` });
+  //   // return res.status(400).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
+  // }
   try {
     if (id_buku.length === 0) {
       return res.status(400).json({ message: "Buku tidak ditemukan" });
@@ -45,8 +46,11 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
         waktu: dayjs().format("HH:mm:ss"),
         tanggal: dayjs().format("YYYY-MM-DD"),
       });
+      res.json({
+        message: "Pemesanan buku berhasil",
+        pemesananBuku: pemesananBuku});
     }
-    res.json({ message: "Pemesanan buku berhasil" });
+
   } catch (error) {
     next(error);
   }
