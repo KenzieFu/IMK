@@ -6,11 +6,6 @@ import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 function BookForm({method,book}) {
 
-<<<<<<< HEAD
-
-  
-=======
->>>>>>> 9b2331c983d5d539b02d2d468063314947a4e9c7
   const navigate=useNavigate();
   const backHandler=()=>{
     navigate("..");
@@ -102,7 +97,7 @@ function BookForm({method,book}) {
               </FormGroup>
 
               <Button onClick={backHandler}>Cancel</Button>
-              <Button style={{ background:"green" }}>Save</Button>
+              <Button type='submit' style={{ background:"green" }}>Save</Button>
 
             </Form>
     </>

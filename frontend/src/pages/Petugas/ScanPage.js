@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import {ScanQrBox} from "../../components/QRcode/ScanQrBox";
-import { json, redirect } from 'react-router-dom';
+import { json, redirect, useActionData } from 'react-router-dom';
 import { InfoAbsensiModal } from '../../components/admin/modals/InfoAbsesiModal';
+import { ErrorModal } from '../../components/modals/ErrorModal';
 export const ScanPage = () => {
   const [showInfo,setShowInfo]=useState(false);
+  const data=useActionData();
   const showHandler=()=>{
     setShowInfo(prev=>!prev);
   }
@@ -11,7 +13,7 @@ export const ScanPage = () => {
   return (
    <>
     <ScanQrBox label={"masuk perpustakaan"} showInfo={showInfo} showHandler={showHandler}/>
-    {showInfo && <InfoAbsensiModal onClose={showHandler}/>}
+    {showInfo && <ErrorModal message={data}  onClose={showHandler}/>}
    </>
   )
 }
@@ -49,6 +51,6 @@ export async function action({ params, request }) {
     );
   
   }
-   return  redirect("/petugas/scan");
+   return  response
 }
 
