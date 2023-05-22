@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 export const StudentCard = () => {
     const akun=useSelector(state=>state.auth.user)
-    
+    console.log(akun.user.nama_lengkap)
   return (
     <>
 <div className={classes.card}>
@@ -23,7 +23,6 @@ export const StudentCard = () => {
                 <span>{akun.user.nisn}</span>
             </div>
         </div>
-        
     </div>
     <div className={classes["card-footer"]}>
         <div style={{ display:'flex',flexDirection:"column",gap:"7px" }}>
@@ -32,7 +31,7 @@ export const StudentCard = () => {
             </div>
             <div className={classes.circle}></div>
         </div>
-        
+
 </div>
     </>
   )

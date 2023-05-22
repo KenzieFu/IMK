@@ -21,23 +21,23 @@ export const StudentPage = () => {
   const {pinjam,kembali}=useLoaderData("pinjam-kembali-buku")
   return (
     <div className={classes.content}>
-      
+
           <Sidebar/>
           <div>
             <StudentChart showPinjam={showPinjam} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler}/>
               <div className={classes["list-books"]}>
                { showPinjam && <Suspense fallback={<p>Loading...</p>}>
                   <Await resolve={pinjam}>
-                      {loadedData=><PeminjamanBuku  books={loadedData} />}  
+                      {loadedData=><PeminjamanBuku  books={loadedData} />}
                   </Await>
                 </Suspense>}
                 {!showPinjam && <Suspense fallback={<p>Loading...</p>}>
                   <Await resolve={kembali}>
-                      {loadedData=><PeminjamanBuku  books={loadedData} />}  
+                      {loadedData=><PeminjamanBuku  books={loadedData} />}
                   </Await>
                 </Suspense>}
-          
-           
+
+
             </div>
           </div>
            <div>
@@ -48,22 +48,22 @@ export const StudentPage = () => {
               {loadedData=><LatestBook latest={loadedData.filter((book,i,{length})=>i===length -1)}/>}
               </Await>
             </Suspense>
-            
+
            </div>
-           
-          
-        
-        
+
+
+
+
         </div>
 
-   
-  ) 
+
+  )
 }
 
 
 
 const loadReturned=async (id)=>{
- 
+
   const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/siswa/buku/histori-pengembalian/" + id)
   console.log(response);
   if(!response.ok)
