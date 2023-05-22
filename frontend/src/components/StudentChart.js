@@ -5,11 +5,12 @@ import { BookBar } from '../UI/BookBar'
 import { useSelector } from 'react-redux'
 export const StudentChart = (props) => {
     const student=useSelector((state)=>state.auth.user);
+    console.log(student)
     let currentBarPinjamClassName= `${classes.currentBar}  ${!props.showPinjam?classes.not:""}`;
     let currentBarKembaliClassnName= `${classes.currentBar}  ${props.showPinjam?classes.not:""}`;
     let barPinjamClassName=`${classes["highlight-line"]} ${!props.showPinjam?classes.notBar:""}`;
     let barKembaliClassName=`${classes["highlight-line"]} ${props.showPinjam?classes.notBar:""}`;
-    
+
   return (
     <>
         <Box>
@@ -25,7 +26,7 @@ export const StudentChart = (props) => {
                 <BookBar image="./assets/chartVector.png" label="Peringkat Membaca" color="#1388CD" />
             </div>
            <div className={classes.history} >
-            <h2>Riwayat Peminjaman Buku</h2> 
+            <h2>Riwayat Peminjaman Buku</h2>
                 <nav className={classes.navbar} >
                     <ul style={{ display:"flex",gap:"25px" }}>
                         <li onClick={props.showPinjamHandler} className={currentBarPinjamClassName}>

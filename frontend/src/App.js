@@ -60,11 +60,18 @@ import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
 
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
+import { loader as adminPinjamDetailLoader } from "./pages/Admin/DetailPinjam";
 
+//Buku Pinjam
+import { loader as adminPengembalianLoader } from "./pages/Admin/DaftarPengembalianBukuPage";
 //Calender
 import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
+//booking
+import { loader as adminBookingLoader } from './pages/Admin/DaftarBookingBuku'
 
+//create pinjam
 
+import {loader as adminCreatePinjam} from "./components/admin/dashboard/CreatePinjam"
 //Petugas Loader
 //Absensi
 import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
@@ -78,6 +85,7 @@ import { action as adminDeleteBookAction } from "./pages/Admin/BookTablePage";
 //Siswa
 import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 //Buku Pinjam
+//Delete
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
 //Calender
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
@@ -87,7 +95,11 @@ import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPage";
 //Scan Keluar
 import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKeluarPage";
+//Input Masuk
+import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
 
+//Keluar Manual
+import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
 
 
 
@@ -99,7 +111,7 @@ import { DaftarBukuPinjamPage } from "./pages/Admin/DaftarBukuPinjamPage";
 import { DetailPinjam } from "./pages/Admin/DetailPinjam";
 import { EditPinjam } from "./pages/Admin/EditPinjam";
 import { DaftarPengembalianBukuPage } from "./pages/Admin/DaftarPengembalianBukuPage";
-import { CreatePinjam } from "./pages/Admin/CreatePinjam";
+import { CreatePinjam } from "./components/admin/dashboard/CreatePinjam";
 import { DetailPengembalianBuku } from "./pages/Admin/DetailPengembalianBuku";
 import { EditPengembalianBuku } from "./pages/Admin/EditPengembalianBuku";
 import { CreateBuku } from "./pages/Admin/CreateBuku";
@@ -113,7 +125,7 @@ import { ScanPage } from "./pages/Petugas/ScanPage";
 import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
 import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
-
+import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -285,15 +297,19 @@ const studentId=useSelector(state=>state.auth.user)
             },
             {
               path:"create",
-              element:<CreatePinjam/>
+              element:<CreatePinjam/>,
+              loader:adminCreatePinjam,
+
             },
             {
-              path:":idPinjam",
-              id:"detail-pinjam",
+              path:":pinjamId",
+              id:"admin-detail-pinjam",
+              loader:adminPinjamDetailLoader,
               children:[
                 {
                   index:true,
-                  element:<DetailPinjam/>
+                  element:<DetailPinjam/>,
+
                 },
                 {
                   path:"edit",
@@ -301,15 +317,16 @@ const studentId=useSelector(state=>state.auth.user)
                 }
               ]
              }
-
           ]
          },
-         /* {
+          {
           path:"returned-books",
           children:[
             {index:true,
              id:"admin-pengembalian",
              element:<DaftarPengembalianBukuPage/>,
+             loader:adminPengembalianLoader,
+
 
             },
             {
@@ -328,7 +345,32 @@ const studentId=useSelector(state=>state.auth.user)
              }
 
           ]
-         }, */
+         },
+         {
+          path:"booking",
+          children:[
+            {index:true,
+             id:"admin-booking",
+             element:<DaftarBookingBuku/>,
+             loader:adminBookingLoader,
+            },
+            // {
+            //   path:":idPengembalian",
+            //   id:"detail-pengembalian",
+            //   children:[
+            //     {
+            //       index:true,
+            //       element:<DetailPengembalianBuku/>
+            //     },
+            //     {
+            //       path:"edit",
+            //       element:<EditPengembalianBuku/>
+            //     }
+            //   ]
+            //  }
+
+          ]
+         },
          {path:"calender",
           id:"admin-calender",
           loader:adminEventLoader,
@@ -359,22 +401,27 @@ const studentId=useSelector(state=>state.auth.user)
         {index:true,element:<PetugasPage/>},
         {path:"scan",
         element:<ScanPage/>,
+        id:"scan-masuk",
         action:petugascreateAttendanceAction},
         {path:"scan-keluar",
+        id:"scan-keluar",
         element:<ScanKeluarPage/>,
         action:petugasKeluarAttendanceAction},
         {path:"absensi",
          id:"petugas-absensi",
-       
+
         children:[
           {index:"true",
           element:<AbsensiPage/>,
           loader:petugasAbsensiLoader,
+          action:enterManualPetugasAction,
           },{
             path:"create",
             id:"create-absensi",
+            element:<CreateAbsensi/>,
             loader:petugasCreateAbsensiLoader,
-            element:<CreateAbsensi/>
+            action:enterPetugasAction,
+
           }
         ]}
       ]

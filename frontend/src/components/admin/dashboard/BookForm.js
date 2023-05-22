@@ -5,7 +5,7 @@ import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 
 function BookForm({method,book}) {
-  
+
   const navigate=useNavigate();
   const backHandler=()=>{
     navigate("..");
@@ -84,10 +84,10 @@ function BookForm({method,book}) {
                   type="text"
                 />
               </FormGroup>
-      
+
               <Button onClick={backHandler}>Cancel</Button>
               <Button style={{ background:"green" }}>Save</Button>
-              
+
             </Form>
     </>
   );
@@ -99,7 +99,7 @@ export default BookForm;
 export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
-  
+
   const bukuData = {
     id_buku: data.get('id_buku'),
     judul_buku: data.get('judul_buku'),
@@ -116,7 +116,7 @@ export async function action({ request, params }) {
     const id = params.bookId;
     url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id;
   }
-  
+
 
   const response = await fetch(url, {
     method: method,

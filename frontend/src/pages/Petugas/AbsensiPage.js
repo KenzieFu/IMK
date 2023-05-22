@@ -2,7 +2,8 @@ import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 
-import { json,defer, Await, useLoaderData, useLocation, Link, Form } from 'react-router-dom';
+import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect } from 'react-router-dom';
+
 
 
 export const AbsensiPage = () => {
@@ -62,28 +63,28 @@ export const AbsensiPage = () => {
           id:"button",
           name:"Action",
           width:"30%",
-        cell: (row) => 
+        cell: (row) =>
               (
            <>
                <div>
                 {row.absensi.waktu_keluar !=null?<span>Selesai</span>:
-                <Form>
-                  <input type="hidden"  />
-                  <button>Belum Selesai</button>
+                <Form method="PUT">
+                  <input type="number" name='id_absensi' value={row.absensi.id_absensi}  />
+                  <button type='submit'>Belum Selesai</button>
                 </Form>
-                
+
                 }
-    
+
                </div>
            </>
         ),
-        
+
         ignoreRowClick: true,
         allowOverflow: true,
         selector:row=>row.button,
         button: true,
       },
-        
+
     ];
 
 
@@ -101,7 +102,7 @@ export const AbsensiPage = () => {
                }
                data={loadedData.filter((item)=>item.absensi.waktu_keluar ===null?true:false)}
                columns={columns}
-              pagination={loadedData.lenght}
+              pagination={loadedData.lenght!=0?true:false}
                    />
             }
           </Await>
@@ -115,17 +116,17 @@ export const AbsensiPage = () => {
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
                     <h2>Absensi</h2>
-                  
+
                 </div>
                }
                data={loadedData}
                columns={columns}
-              pagination={loadedData.lenght}
+              pagination={loadedData.lenght !=0?true:false}
                    />
             }
           </Await>
         </Suspense>
-        
+
     </>
   )
 }
@@ -136,7 +137,7 @@ const loaderAbsensi=async()=>{
     console.log(response);
     if(!response.ok)
     {
-      
+
       throw json(
         { message: 'Could not fetch absensi.' },
         {
@@ -144,18 +145,48 @@ const loaderAbsensi=async()=>{
         }
       );
     }
-    
-     
+
+
       const resData=await response.json();
     console.log(resData)
       return resData
-  
+
 }
 
 export const loader=()=>{
     return defer({
         absensi:loaderAbsensi()
     })
+}
+
+export async function action({ params, request }) {
+
+  const method = request.method;
+  const data = await request.formData();
+
+  const time=new Date().toTimeString()
+
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/absensi-keluar-manual/'+data.get("id_absensi"), {
+    method: method,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer"
+    },
+    body:JSON.stringify({
+      waktu_keluar:time
+    })
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not update attendance.' },
+      {
+        status: 500,
+      }
+    );
+
+  }
+   return  response;
 }
 
 
