@@ -34,38 +34,38 @@ export const DaftarPengembalianBukuPage = () => {
         {
             id:"judul_buku",
             name: 'Judul Buku',
-            selector: row => row.buku.judul_buku,
+            selector: row => row.peminjaman.buku.judul_buku,
             accessor:"judul_buku",
             sortable: true,
         },
         {
           id:"tanggal_pinjam",
           name: 'Tanggal Pinjam',
-          selector: row => row.tanggal_pinjam,
+          selector: row => row.peminjaman.tanggal_pinjam,
           accessor:"tanggal_pinjam",
           sortable: true,
       },
       {
         id:"tanggal_kembali",
         name: 'Tanggal Dikembalikan',
-        selector: row => row.tanggal_kembali,
+        selector: row => row.peminjaman.tanggal_kembali,
         accessor:"tanggal_kembali",
         sortable: true,
     },
         {
             id:"tanggal_pengembalian",
             name: 'Tanggal Pengembalian',
-            selector: row => row.tanggal_pengembalian,
+            selector: row => row.peminjaman.pengembalian.tanggal_pengembalian,
             accessor:"tanggal_pengembalian",
             sortable: true,
         },
         {
             id:"status_kembali",
             name: 'Status',
-            selector: row => row.status_kembali,
+            selector: row => row.peminjaman.pengembalian.status,
             accessor:"status_kembali",
             sortable: true,
-            color: (row => row.status_kembali === "Tepat Waktu") ? "Green" : "Red"
+            color: (row => row.peminjaman.pengembalian.status === "Tepat Waktu") ? "Green" : "Red"
         },
         {
             id:"button",
@@ -74,9 +74,9 @@ export const DaftarPengembalianBukuPage = () => {
           cell: (row) =>
                 (
               <div style={{ margin:"0 0" }} >
-            <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
+            <Link to={`/admin/borrowed-books/${row.peminjaman.id_peminjaman}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_peminjaman)} style={{ cursor:"pointer" }}>Delete</span>
+            <span  onClick={()=>showModalHandler(row.peminjaman.id_peminjaman)} style={{ cursor:"pointer" }}>Delete</span>
 
             </div>
           ),
@@ -96,7 +96,7 @@ export const DaftarPengembalianBukuPage = () => {
                title="Tabel Pengembalian"
                data={loadedData}
                columns={columns}
-               pagination
+               pagination={loadedData.pengembalian.lenght!==0?true:false}
                    />
             }
           </Await>
@@ -122,6 +122,7 @@ const loadKembali=async ()=>{
     }
     else{
       const resData=await response.json();
+      console.log(response)
       return resData;
     }
   }

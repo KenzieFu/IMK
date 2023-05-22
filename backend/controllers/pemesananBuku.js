@@ -40,22 +40,17 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
       } else if (buku.stok === 0) {
         return res.status(400).json({ message: "Stok buku kosong" });
       }
-      const peminjamanBukuBaru = await Peminjaman.create({
+      const pemesananBuku = await PemesananBuku.create({
         id_buku: id_buku[i],
         id_siswa: id_siswa,
-        tanggal_pinjam: new Date(),
-        tanggal_kembali: new Date().setDate(new Date().getDate() + 14),
+        waktu: dayjs().format("HH:mm:ss"),
+        tanggal: dayjs().format("YYYY-MM-DD"),
       });
-<<<<<<< HEAD
-      res.json({ message: "Pemesanan buku berhasil", pemesananBuku: peminjamanBukuBaru });
-    }
-=======
       res.json({
         message: "Pemesanan buku berhasil",
         pemesananBuku: pemesananBuku});
     }
 
->>>>>>> 5ece3b91d91006c5035d1ff05fec60c0a9219bd3
   } catch (error) {
     next(error);
   }
@@ -66,22 +61,6 @@ exports.createPemesananBuku = async function (req, res, next) {
   // create pemesanan mengambil array 0bject dan looping untuk membuat pemesanan buku
   try {
     // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
-<<<<<<< HEAD
-    for (const item in req.body) {
-      const buku = await BukuPerpus.findByPk(item.id_buku);
-      if (!buku?.id_buku) {
-        return res.status(200).json({ message: "Buku tidak ditemukan" });
-      } else if (buku.stok === 0) {
-        return res.status(400).json({ message: "Stok buku kosong" });
-      }
-      let pemesananBuku = await PemesananBuku.create({
-        id_buku: req.body.id_buku,
-        id_siswa: req.body.id_siswa,
-        waktu: dayjs().format("HH:mm:ss"),
-        tanggal: dayjs().format("YYYY-MM-DD"),
-      });
-      res.json(pemesananBuku);
-=======
     for(const item in req.body)
     {
       const buku = await BukuPerpus.findByPk(item.id_buku);
@@ -89,8 +68,16 @@ exports.createPemesananBuku = async function (req, res, next) {
       return res.status(200).json({ message: "Buku tidak ditemukan" });
     } else if (buku.stok === 0) {
       return res.status(400).json({ message: "Stok buku kosong" });
->>>>>>> 5ece3b91d91006c5035d1ff05fec60c0a9219bd3
     }
+    let pemesananBuku = await PemesananBuku.create({
+      id_buku: req.body.id_buku,
+      id_siswa: req.body.id_siswa,
+      waktu: dayjs().format("HH:mm:ss"),
+      tanggal: dayjs().format("YYYY-MM-DD"),
+    });
+    res.json(pemesananBuku);
+    }
+
   } catch (error) {
     next(error);
   }
