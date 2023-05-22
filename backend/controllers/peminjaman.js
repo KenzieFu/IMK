@@ -133,6 +133,7 @@ exports.getPeminjaman = async function (req, res, next) {
 // Function untuk mendapatkan data peminjaman berdasarkan user dan belum selesai di pinjam
 exports.getPeminjamanByUser = async function (req, res, next) {
   try {
+    // eror perbaiki lagi
     const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
       where: {
         id_siswa: 2,
@@ -157,6 +158,7 @@ exports.getPeminjamanByUser = async function (req, res, next) {
 // Function untuk mendapatkan histori peminjaman berdasarkan user
 exports.getHistoriPeminjaman = async function (req, res, next) {
   try {
+    // perbaiki lagi
     const peminjaman = await ViewPeminjamanSelesai.findAll({
       where: {
         id_siswa: 5,
