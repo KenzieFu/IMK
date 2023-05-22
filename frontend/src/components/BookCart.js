@@ -98,6 +98,7 @@ const bookingHandler = async () => {
       const createdData = await response.json();
 
       console.log('Data created:', createdData);
+      emptyCart()
       sukses()
 
     }
