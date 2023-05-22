@@ -136,6 +136,8 @@ exports.getAbsensi = async function (req, res, next) {
   }
 };
 
+
+
 // Function untuk menampilkan semua data absensi (nisn join ke tabel siswa)
 exports.getAllAbsensi = async function (req, res, next) {
   try {
@@ -158,6 +160,8 @@ exports.getAllAbsensi = async function (req, res, next) {
     next(error);
   }
 };
+
+
 
 // Function untuk menampilkan semua data absensi (nisn join ke tabel siswa) berdasarkan tanggal hari ini
 exports.getAbsensiToday = async function (req, res, next) {
@@ -186,6 +190,7 @@ exports.getAbsensiToday = async function (req, res, next) {
     next(error);
   }
 };
+
 
 // Function untuk menampilkan view pengunjung harian
 exports.getPengunjungHarian = async function (req, res, next) {
