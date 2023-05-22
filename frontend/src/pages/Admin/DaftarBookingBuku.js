@@ -17,7 +17,6 @@ export const DaftarBookingBuku = () => {
   const location = useLocation();
   console.log(currentId);
 
-
   const showModalHandler = (id) => {
     setDeleteModal(true);
     setCurrentId(id);

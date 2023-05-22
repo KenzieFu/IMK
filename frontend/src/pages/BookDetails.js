@@ -35,10 +35,20 @@ const BookDetail = () => {
         progress: undefined,
         theme: "colored",
     });
+    const cartPenuh = () => toast.warning('Cart kamu sudah penuh! Ingat, buku yang dibooking maksimal 3!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
     const isAuth = useSelector((state) => state.auth.isAuth);
     const akun = useSelector((state) => state.auth.user);
     const [isAdded, setIsAdded] = useState(false);
-    const { addItem, items, inCart } = useCart();
+    const { addItem, items, inCart, totalUniqueItems } = useCart();
     // console.log(items)
     console.log(akun)
 
@@ -58,8 +68,10 @@ const BookDetail = () => {
 
         if (existingItem) {
             gagal()
-        } else {
-
+        } else if(totalUniqueItems === 3)
+        {
+            cartPenuh()
+        }else {
             addItem({
                 id: book.id_buku,
                 name: book.judul_buku,
