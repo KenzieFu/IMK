@@ -1,29 +1,74 @@
 import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 
+
+
+
 export const CreateBuku = () => {
+  
+  const schema = yup.object().shape({
+    judul_buku: yup.string().required('Title is required'),
+    pengarang: yup.string().required('Author is required'),
+    penerbit: yup.string().required('Author is required'),
+    tahun_terbit: yup.string().required('Author is required'),
+    gambar_buku: yup.string().required('Author is required'),
+    isbn: yup.string().required('ISBN is required'),
+    sinopsis: yup.string().required('Description is required'),
+  });
+
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
+  
+    // const initialValues = {
+    //   judul_buku: " ",
+    //   pengarang: " ",
+    //   penerbit: " ",
+    //   tahun_terbit: " ",
+    //   sinopsis: " ",
+    //   gambar_buku: null,
+    //   isbn: " ",
+    // }
+
+
+
+  
+
   const [formData, setFormData] = useState({
+    id_buku: '7',
     judul_buku: '',
     pengarang: '',
     penerbit: '',
-    gambar_buku: null,
     tahun_terbit: '',
-    sinposis: '',
+    id_kategori: '1',
+    sinopsis: '',
+    gambar_buku: null,
     isbn: ''
   })
 
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (event) => {
+    if (event.target.type === 'file') {
+      setFormData({ ...formData, [event.target.name]: event.target.files[0] });
+    } else {
+      setFormData({ ...formData, [event.target.name]: event.target.value });
+    }
   };
 
-  const handleFileChange = (event) => {
-    const gambar_buku = event.target.files[0];
-    setFormData({ ...formData, gambar_buku });
-  };
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+  // const handleFileChange = (event) => {
+  //   const gambar_buku = event.target.files[0];
+  //   setFormData({ ...formData, gambar_buku });
+  // };
 
 
   // const handleSubmit = async (event) => {
@@ -56,8 +101,9 @@ export const CreateBuku = () => {
   //   }
   // };
 
+
   // const handleSubmit = async (event) => {
-  //   event.preventDefault();
+  //  event.preventDefault();
   //   try {
   //     const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
   //       method: 'POST',
@@ -106,7 +152,8 @@ export const CreateBuku = () => {
   //   }
   // };
 
-  const handleCreate = async () => {
+  const handleCreate = async (event) => {
+    event.preventDefault();
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('judul_buku', formData.judul_buku);
@@ -117,27 +164,45 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn);
 
-      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
+
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-        body: JSON.stringify(FormData)
+        body: formDataToSend
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // },
+        //body: JSON.stringify(FormData)
       });
 
-      const createdData = await response.json();
-      console.log('Data created:', createdData);
-
-      // Reset the form after successful creation
-      setFormData({
-        judul_buku: '',
-        pengarang: '',
-        penerbit: '',
-        gambar_buku: null,
-        tahun_terbit: '',
-        sinposis: '',
-        isbn: ''
-      });
+      if (response.ok) {
+        // Handle success
+        console.log('Form submitted successfully!');
+      } else {
+        // Handle error
+        console.error('Form submission failed.');
+      }
     } catch (error) {
-      console.error('Error creating data:', error);
+      console.error('An error occurred during form submission:', error);
     }
+
+    //   const createdData = await response.json();
+    //   console.log('Data created:', createdData);
+
+    //   // Reset the form after successful creation
+    //   setFormData({
+    //     id_buku: '',
+    //     judul_buku: '',
+    //     pengarang: '',
+    //     penerbit: '',
+    //     tahun_terbit: '',
+    //     id_kategori: '',
+    //     sinopsis: '',
+    //     gambar_buku: '',
+    //     isbn: ''
+    //   });
+    // } catch (error) {
+    //   console.error('Error creating data:', error);
+    // }
   };
 
 
@@ -207,7 +272,7 @@ export const CreateBuku = () => {
   return (
     <>
       <h2>Create Buku</h2>
-        <Form onSubmit={handleCreate}>
+        <Form onSubmit={handleSubmit(handleCreate)}>
         <FormGroup>
           <Label for="exampleBook">judul Buku</Label>
           <Input
@@ -215,8 +280,10 @@ export const CreateBuku = () => {
             name="judul_buku"
             placeholder="Masukkan judul Buku"
             type="text"
-            onChange={handleInputChange}
+            onChange={handleChange}
+            {...register('judul_buku')}
           />
+          {/* {errors.judul_buku && <span>{errors.judul_buku.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label for="examplePengarang">Pengarang</Label>
@@ -225,8 +292,10 @@ export const CreateBuku = () => {
             name="pengarang"
             placeholder="Masukkan Nama Pengarang"
             type="text"
-            onChange={handleInputChange}
+            onChange={handleChange}
+            {...register('pengarang')}
           />
+          {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label for="examplePenerbit">Penerbit</Label>
@@ -235,8 +304,22 @@ export const CreateBuku = () => {
             name="penerbit"
             placeholder="Masukkan Nama Penerbit"
             type="text"
-            onChange={handleInputChange}
+            onChange={handleChange}
+            {...register('penerbit')}
           />
+          {/* {errors.penerbit && <span>{errors.penerbit.message}</span>} */}
+        </FormGroup>
+        <FormGroup>
+          <Label for="tahun_terbit">Tahun Terbit</Label>
+          <Input
+            id="tahun_terbit"
+            name="tahun_terbit"
+            placeholder="Tahun tebrit"
+            type="text"
+            onChange={handleChange}
+            {...register('tahun_terbit')}
+          />
+          {/* {errors.tahun_terbit && <span>{errors.tahun_terbit.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label for="examplegambar">Gambar</Label>
@@ -244,8 +327,10 @@ export const CreateBuku = () => {
             id="examplegambar"
             name="gambar_buku"
             type="file"
-            onChange={handleFileChange}
+            onChange={handleChange}
+            {...register('gambar_buku')}
           />
+          {/* {errors.gambar_buku && <span>{errors.gambar_buku.message}</span>} */}
         </FormGroup>
 
         <FormGroup>
@@ -257,8 +342,10 @@ export const CreateBuku = () => {
             type="textarea"
             rows={10}
             cols={10}
-            onChange={handleInputChange}
+            onChange={handleChange}
+            {...register('sinopsis')}
           />
+          {/* {errors.sinopsis && <span>{errors.sinopsis.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label for="exampleIsbn">ISBN</Label>
@@ -267,11 +354,13 @@ export const CreateBuku = () => {
             name="isbn"
             placeholder="ISBN Buku"
             type="text"
-            onChange={handleInputChange}
+            onChange={handleChange}
+            {...register('isbn')}
           />
+          {/* {errors.isbn && <span>{errors.isbn.message}</span>} */}
         </FormGroup>
           <Button onClick={backHandler}>Cancel</Button>
-          <Button style={{ background:"green" }} type='submit'>Save</Button>
+          <Button style={{ background:"green" }} type='submit' >Save</Button>
       </Form>
     </>
   )

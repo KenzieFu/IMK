@@ -1,24 +1,77 @@
+:root{
+    --white:#ffffff;
+    --blue:#2e55ba; 
+    --accentblack:rgb(58, 58, 58);
+    --red:#FF5959;
+    --addgray:#DBD0C0;
+    --gray:#FAEEE0;
+    --beige:#F9CF93;
+    --beige2-light:#fedaa7;
+    --lbeige:#FAEEE0;
+
+    --white-light:#ffffff;
+    --blue-light:#2e55ba;
+    --accentblack-light:rgb(58, 58, 58);
+    --red-light:#FF5959;
+    --gray-light:#f4f1f1;
+    --addgray-light:#e3e3e3;
+    --beige-light:#F9CF93;
+    --lbeige-light:#FAEEE0;
+
+    --white-dark:#ffffff;
+    --blue-dark:#2e55ba;
+    --accentblack-dark:rgb(58, 58, 58);
+    --red-dark:#FF5959;
+    --gray-dark:#f4f1f1;
+    --addgray-dark:#e3e3e3;
+    --beige-light:#F9CF93;
+    --lbeige-light:#FAEEE0;
+}
+
+@media(prefers-color-scheme: dark){
+    :root{
+        --white: var(--white-dark);
+        --blue: var(--blue-dark);
+        --accentblack: var(--accentblack-dark);
+        --red: var(--red-dark);
+        --gray: var(--gray-dark);
+    }
+}
+
+
 .genre{
-    margin:20px 20px;
+    width: 97%;
+    margin: auto;
+    margin-top: 4vw;
+    font-family: Inter;
+}
+
+.genretab{
+    font-size: 1.2vw;
+    color: var(--accentblack-light);
 }
 
 .genre ul{
     display: flex;
     justify-content: flex-start;
-    font-family: Inter;
-    color: #686B6F;
-    gap: 30px;
     align-items: center;
+    gap: 0.5vw;
     padding: 0;
     list-style: none;
 }
 
 .genre li{
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    background-color: var(--gray-light);
+    width: 100%;
+    padding: 0.5vw 1vw ;
+    border-radius: 1vw;
+}
+
+.genretab2li{
+    background-color: var(--beige-light);
 }
 
 .allbooklogo{
