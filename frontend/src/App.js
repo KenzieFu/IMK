@@ -98,6 +98,9 @@ import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKel
 //Input Masuk
 import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
 
+//Keluar Manual
+import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
+
 
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
@@ -411,6 +414,7 @@ const studentId=useSelector(state=>state.auth.user)
           {index:"true",
           element:<AbsensiPage/>,
           loader:petugasAbsensiLoader,
+          action:enterManualPetugasAction,
           },{
             path:"create",
             id:"create-absensi",
