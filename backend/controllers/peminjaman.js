@@ -134,22 +134,22 @@ exports.getPeminjaman = async function (req, res, next) {
 exports.getPeminjamanByUser = async function (req, res, next) {
   try {
     // eror perbaiki lagi
-    const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
-      where: {
-        id_siswa: 2,
-      },
-      include: [
-        {
-          model: Buku,
-          as: "buku",
-        },
-        {
-          model: Siswa,
-          as: "siswa",
-        },
-      ],
-    });
-    res.json(peminjaman);
+    // const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
+    //   where: {
+    //     id_siswa: 2,
+    //   },
+    //   include: [
+    //     {
+    //       model: Buku,
+    //       as: "buku",
+    //     },
+    //     {
+    //       model: Siswa,
+    //       as: "siswa",
+    //     },
+    //   ],
+    // });
+    // res.json(peminjaman);
   } catch (error) {
     next(error);
   }
