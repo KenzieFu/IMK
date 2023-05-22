@@ -49,6 +49,14 @@
 .genretab{
     font-size: 1.2vw;
     color: var(--accentblack-light);
+    
+}
+
+.genretab-button{
+    font-size: 1.2vw;
+    color: var(--accentblack-light);
+    cursor: pointer;
+    display: inline-block;
 }
 
 .genre ul{
@@ -94,4 +102,8 @@
 
 .allbooklogo:hover{
     transform: translateY(-7px);
+}
+
+li .currentColor{
+    background-color:"#fedaa7" ;
 }
