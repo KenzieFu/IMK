@@ -104,11 +104,10 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn);
 
-      console.log(formData);
 
       await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
         method: 'POST',
-        body: formDataToSend,
+        body: JSON.stringify(formData),
 
       }); // Replace with your API endpoint
       alert('Form submitted successfully!');

@@ -6,11 +6,6 @@ import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 function BookForm({method,book}) {
 
-<<<<<<< HEAD
-
-  
-=======
->>>>>>> 9b2331c983d5d539b02d2d468063314947a4e9c7
   const navigate=useNavigate();
   const backHandler=()=>{
     navigate("..");
