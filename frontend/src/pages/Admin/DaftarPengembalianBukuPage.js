@@ -6,10 +6,10 @@ import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'r
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-export const DaftarBukuPinjamPage = () => {
+export const DaftarPengembalianBukuPage = () => {
     const [currentId,setCurrentId]=useState(null);
     const [showDeleteModal,setDeleteModal]=useState(false)
-    const { daftarPinjam }=useLoaderData('admin-pengembalian');
+    const { daftarPengembalian }=useLoaderData('admin-pengembalian');
     const location = useLocation();
     console.log(currentId);
 
@@ -20,26 +20,38 @@ export const DaftarBukuPinjamPage = () => {
       const closeModalHandler=()=>{
         setDeleteModal(false);
         setCurrentId((prev)=>prev);
-        
       }
 
-
       const columns = [
+
         {
-            id:'id',
-            name:"ID",
-            selector:row=>row.id_pengembalian,
-            
-            sortable:true,
-            
-        },
+          id:"nama_siswa",
+          name: 'Nama Siswa',
+          selector: row => row.siswa.nama_lengkap,
+          accessor:"nama_siswa",
+          sortable: true,
+      },
         {
-            id:"id_peminjaman",
-            name: 'Id Peminjaman',
-            selector: row => row.id_peminjaman,
-            accessor:"id_peminjaman",
+            id:"judul_buku",
+            name: 'Judul Buku',
+            selector: row => row.buku.judul_buku,
+            accessor:"judul_buku",
             sortable: true,
         },
+        {
+          id:"tanggal_pinjam",
+          name: 'Tanggal Pinjam',
+          selector: row => row.tanggal_pinjam,
+          accessor:"tanggal_pinjam",
+          sortable: true,
+      },
+      {
+        id:"tanggal_kembali",
+        name: 'Tanggal Dikembalikan',
+        selector: row => row.tanggal_kembali,
+        accessor:"tanggal_kembali",
+        sortable: true,
+    },
         {
             id:"tanggal_pengembalian",
             name: 'Tanggal Pengembalian',
@@ -48,26 +60,26 @@ export const DaftarBukuPinjamPage = () => {
             sortable: true,
         },
         {
-            id:"status",
+            id:"status_kembali",
             name: 'Status',
-            selector: row => row.status,
-            accessor:"status",
+            selector: row => row.status_kembali,
+            accessor:"status_kembali",
             sortable: true,
+            color: (row => row.status_kembali === "Tepat Waktu") ? "Green" : "Red"
         },
         {
             id:"button",
             name:"Action",
             width:"30%",
-          cell: (row) => 
+          cell: (row) =>
                 (
               <div style={{ margin:"0 0" }} >
             <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
             <span  onClick={()=>showModalHandler(row.id_peminjaman)} style={{ cursor:"pointer" }}>Delete</span>
-           
+
             </div>
           ),
-          
           ignoreRowClick: true,
           allowOverflow: true,
           selector:row=>row.button,
@@ -75,21 +87,20 @@ export const DaftarBukuPinjamPage = () => {
         },
     ];
 
-
   return (
     <>
         <Suspense fallback="">
-          <Await resolve={daftarPinjam} >
+          <Await resolve={daftarPengembalian} >
             {(loadedData)=>
                <DataTable
-               title="Tabel User"
+               title="Tabel Pengembalian"
                data={loadedData}
                columns={columns}
                pagination
                    />
             }
           </Await>
-        </Suspense> 
+        </Suspense>
         {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
         {location.state && <div>{location.state.message}</div>}
     </>
@@ -97,8 +108,8 @@ export const DaftarBukuPinjamPage = () => {
 }
 
 
-const loadPinjams=async ()=>{
-    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman")
+const loadKembali=async ()=>{
+    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian")
     console.log(response);
     if(!response.ok)
     {
@@ -114,26 +125,25 @@ const loadPinjams=async ()=>{
       return resData;
     }
   }
-  
-  
+
   export const loader=()=>{
     return defer({
-      daftarPengembalian:loadPinjams()
+      daftarPengembalian:loadKembali()
     })
   }
-  
+
   export async function action({ params, request }) {
-    
+
     const method = request.method;
     const data = await request.formData();
     console.log(data);
-    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
+    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/pengembalian/' + data.get('id'), {
       method: method,
       headers:{
         "Authorization":"Bearer"
       }
     });
-  
+
     if (!response.ok) {
       throw json(
         { message: 'Could not delete this row.' },
@@ -141,12 +151,12 @@ const loadPinjams=async ()=>{
           status: 500,
         }
       );
-    
+
     }
      return  redirect("/admin/returned-books");
   }
-  
-  
-  
-  
-  
+
+
+
+
+

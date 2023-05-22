@@ -10,22 +10,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-export const DaftarBukuPinjamPage = () => {
+export const DaftarBookingBuku = () => {
   const [currentId, setCurrentId] = useState(null);
   const [showDeleteModal, setDeleteModal] = useState(false)
-  const { daftarPinjam } = useLoaderData('admin-peminjaman');
+  const { daftarBooking } = useLoaderData('admin-booking');
   const location = useLocation();
   console.log(currentId);
 
-  const mapKategoriToOptions = (bukuData) => {
-    const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
 
-    return uniqueKategori.map((kategori) => (
-    <DropdownItem onClick={() => setSearchBased(kategori)}>
-      {kategori}
-    </DropdownItem>
-  ));
-  };
   const showModalHandler = (id) => {
     setDeleteModal(true);
     setCurrentId(id);
@@ -51,7 +43,7 @@ export const DaftarBukuPinjamPage = () => {
     {
       id: 'id',
       name: "ID",
-      selector: row => row.id_peminjaman,
+      selector: row => row.id_pemesanan,
       sortable: true,
     },
     {
@@ -64,10 +56,24 @@ export const DaftarBukuPinjamPage = () => {
     {
       id: "nama_siswa",
       name: 'Nama Siswa',
-      selector: row => row.siswa.nama_lengkap,
+      selector: row => row.id_buku,
       accessor: "nama_siswa",
       sortable: true,
     },
+    {
+        id: "nama_siswa",
+        name: 'Nama Siswa',
+        selector: row => row.waktu,
+        accessor: "nama_siswa",
+        sortable: true,
+      },
+      {
+        id: "nama_siswa",
+        name: 'Nama Siswa',
+        selector: row => row.tanggal,
+        accessor: "nama_siswa",
+        sortable: true,
+      },
 
     // {
     //   id: "judul_buku",
@@ -77,26 +83,7 @@ export const DaftarBukuPinjamPage = () => {
     //   sortable: true,
     // },
 
-    {
-      id: "tanggal_pinjam",
-      name: 'Tanggal Pinjam',
-      selector: row => {
-        const tanggalPinjam = new Date(row.tanggal_pinjam);
-        return tanggalPinjam.toLocaleDateString("en-GB");
-      },
-      accessor: "tanggal_pinjam",
-      sortable: true,
-    },
-    {
-      id: "tanggal_kembali",
-      name: 'Tanggal Kembali',
-      selector: row => {
-        const tanggalKembali = new Date(row.tanggal_kembali);
-        return tanggalKembali.toLocaleDateString("en-GB");
-      },
-      accessor: "tanggal_kembali",
-      sortable: true,
-    },
+
     {
       id: "button",
       name: "Action",
@@ -197,64 +184,16 @@ export const DaftarBukuPinjamPage = () => {
         // </div>
       }
       <Suspense fallback="">
-        <Await resolve={daftarPinjam} >
+        <Await resolve={daftarBooking} >
           {(loadedData) =>
             <DataTable
               title={
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2>Tabel Peminjaman</h2>
+                  <h2>Tabel Booking</h2>
                   <Link to="create">Create</Link>
                 </div>
               }
-              data={loadedData.filter((item) => {
-                if (searchBased === "" && startDate === null && endDate === null) {
-                  return item;
-                } else if (
-                  searchBased === "nama_siswa" &&
-                  item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                } else if (
-                  searchBased === "judul_buku" &&
-                  item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                } else if (
-                  searchBasedDate === "tgl_kembali" &&
-                  startDate !== '' &&
-                  endDate !== '' &&
-                  item.tanggal_kembali >= startDate &&
-                  item.tanggal_kembali <= endDate
-                ) {
-                  return item;
-                } else if (
-                  searchBasedDate === "tgl_kembali" &&
-                  startDate !== null &&
-                  endDate !== null &&
-                  item.tanggal_kembali >= startDate &&
-                  item.tanggal_kembali <= endDate
-                ) {
-                  return item;
-                }
-                // else if (
-                //   searchBased === "tgl_pengembalian" &&
-                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // } else if (
-                //   searchBased === "tgl_pinjam" &&
-                //   item.tanggal_pinjam.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // }
-                //else if (
-
-                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // }
-
-              })}
+              data={loadedData}
               columns={columns}
               pagination
             />
@@ -268,8 +207,8 @@ export const DaftarBukuPinjamPage = () => {
 }
 
 
-const loadPinjams = async () => {
-  const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman")
+const loadBooking = async () => {
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku")
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -288,33 +227,33 @@ const loadPinjams = async () => {
 
 export const loader = () => {
   return defer({
-    daftarPinjam: loadPinjams()
+    daftarBooking: loadBooking()
   })
 }
 
-export async function action({ params, request }) {
+// export async function action({ params, request }) {
 
-  const method = request.method;
-  const data = await request.formData();
-  console.log(data);
-  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
-    method: method,
-    headers: {
-      "Authorization": "Bearer"
-    }
-  });
+//   const method = request.method;
+//   const data = await request.formData();
+//   console.log(data);
+//   const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
+//     method: method,
+//     headers: {
+//       "Authorization": "Bearer"
+//     }
+//   });
 
-  if (!response.ok) {
-    throw json(
-      { message: 'Could not delete this row.' },
-      {
-        status: 500,
-      }
-    );
+//   if (!response.ok) {
+//     throw json(
+//       { message: 'Could not delete this row.' },
+//       {
+//         status: 500,
+//       }
+//     );
 
-  }
-  return redirect("/admin/borrowed-books");
-}
+//   }
+//   return redirect("/admin/borrowed-books");
+// }
 
 
 

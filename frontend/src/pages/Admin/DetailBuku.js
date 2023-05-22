@@ -7,7 +7,7 @@ import { Suspense } from 'react'
 export const DetailBuku = () => {
     const { bookDetail }= useRouteLoaderData("admin-detail-buku");
     const navigate= useNavigate();
-  
+
     const backHandler=()=>{
         navigate("..");
     }
@@ -22,7 +22,7 @@ export const DetailBuku = () => {
                 {
                     return(
                 <Box>
-        
+
                 <div className='acc-info'>
                     <h1 hidden>Detail Buku ({loadedData.id_buku})</h1>
                     <table>
@@ -66,10 +66,10 @@ export const DetailBuku = () => {
                             <td></td>
                             <td> <img src="../assets/book.png" /></td>
                         </tr>
-                       
-                        
+
+
                     </table>
-        
+
                     <div>
                         <button onClick={backHandler}>Back</button>
                         <button onClick={editHandler} >Edit</button>
@@ -78,11 +78,11 @@ export const DetailBuku = () => {
             </Box> );
                 }
             }
-        
+
         </Await>
     </Suspense>
-    
-    
+
+
     </>
   )
 }
@@ -106,10 +106,10 @@ const loadAdminBook=async (id)=>{
       return resData;
     }
   }
-  
+
   export async function loader({ request, params }) {
     const id = params.bookId;
- 
+
     return defer({
       bookDetail: await loadAdminBook(id),
     });
