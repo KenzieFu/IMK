@@ -7,7 +7,8 @@ export const SearchResult = (props) => {
         return (book.judul_buku.includes(props.keyword) || 
                 book.pengarang.includes(props.keyword) ||
                 book.isbn.includes(props.keyword) ||
-                book.penerbit.includes(props.keyword)
+                book.penerbit.includes(props.keyword)||
+                book.kategori.nama_kategori.includes(props.keyword)
         )
     }
 

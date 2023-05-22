@@ -96,7 +96,7 @@ export const LibraryPage = () => {
         <>
         <Suspense fallback ={<p style={{ textAlign:"center" }}>Loading.....</p>}>
           <Await resolve={books}>
-          {(loadedBooks)=><ListBooks books={loadedBooks}/>}
+          {(loadedBooks)=><ListBooks genre={currentGenre} books={loadedBooks}/>}
           </Await>
         </Suspense>
 
