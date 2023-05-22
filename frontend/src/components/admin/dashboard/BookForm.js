@@ -5,6 +5,8 @@ import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 
 function BookForm({method,book}) {
+
+
   
   const navigate=useNavigate();
   const backHandler=()=>{
@@ -59,6 +61,17 @@ function BookForm({method,book}) {
                   placeholder={book.tahun_terbit??null}
                   type="text"
                 />
+              </FormGroup>
+              <FormGroup>
+                <Label for="tahunTerbit">Kategori</Label>
+                <select value="">
+                  <option value={book.kategori.nama_kategori} >Pilih Kategori</option>
+                      {book.map((book) => (
+                      <option key={book.id_kategori} value={book.kategori.nama_kategori}>
+                    {book.kategori.nama_kategori}
+                  </option>
+              ))}
+            </select>
               </FormGroup>
               <FormGroup>
                 <Label for="sinopsis">Sinopsis</Label>

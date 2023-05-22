@@ -1,43 +1,9 @@
-import React, {useState} from 'react';
-import {useForm} from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import React, {useState, useEffect} from 'react';
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 
-
-
-
 export const CreateBuku = () => {
-  
-  const schema = yup.object().shape({
-    judul_buku: yup.string().required('Title is required'),
-    pengarang: yup.string().required('Author is required'),
-    penerbit: yup.string().required('Author is required'),
-    tahun_terbit: yup.string().required('Author is required'),
-    gambar_buku: yup.string().required('Author is required'),
-    isbn: yup.string().required('ISBN is required'),
-    sinopsis: yup.string().required('Description is required'),
-  });
-
-  const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(schema),
-  });
-  
-    // const initialValues = {
-    //   judul_buku: " ",
-    //   pengarang: " ",
-    //   penerbit: " ",
-    //   tahun_terbit: " ",
-    //   sinopsis: " ",
-    //   gambar_buku: null,
-    //   isbn: " ",
-    // }
-
-
-
-  
 
   const [formData, setFormData] = useState({
     id_buku: '7',
@@ -45,165 +11,69 @@ export const CreateBuku = () => {
     pengarang: '',
     penerbit: '',
     tahun_terbit: '',
-    id_kategori: '1',
+    id_kategori: '',
     sinopsis: '',
     gambar_buku: null,
     isbn: ''
   })
 
+  const [kategori, setKategori] = useState([]);
 
-  const handleChange = (event) => {
-    if (event.target.type === 'file') {
-      setFormData({ ...formData, [event.target.name]: event.target.files[0] });
-    } else {
-      setFormData({ ...formData, [event.target.name]: event.target.value });
-    }
-  };
+  useEffect(() => {
+    fetchOptions();
+  }, []);
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
-
-  // const handleFileChange = (event) => {
-  //   const gambar_buku = event.target.files[0];
-  //   setFormData({ ...formData, gambar_buku });
-  // };
-
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const formDataToSend = new FormData();
-  //     formDataToSend.append('judul_buku', formData.judul_buku);
-  //     formDataToSend.append('pengarang', formData.pengarang);
-  //     formDataToSend.append('penerbit', formData.penerbit);
-  //     formDataToSend.append('tahun_terbit', formData.tahun_terbit);
-  //     formDataToSend.append('gamabr_buku', formData.gambar_buku)
-  //     formDataToSend.append('sinopsis', formData.sinopsis);
-  //     formDataToSend.append('isbn', formData.isbn);
-
-  //     const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
-  //       method: 'POST',
-  //       body: formDataToSend,
-  //     });
-
-  //     if (response.ok) {
-  //       // Data successfully created
-  //       // Perform any necessary actions after successful creation
-  //     } else {
-  //       // Handle error response
-  //       console.log('Error creating data');
-  //     }
-  //   } catch (error) {
-  //     // Handle network or other errors
-  //     console.log('Error:', error.message);
-  //   }
-  // };
-
-
-  // const handleSubmit = async (event) => {
-  //  event.preventDefault();
-  //   try {
-  //     const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
-  //     if (response.ok) {
-  //       // Data successfully created
-  //       // Perform any necessary actions after successful creation
-  //     } else {
-  //       // Handle error response
-  //       console.log('Error creating data');
-  //     }
-  //   } catch (error) {
-  //     // Handle network or other errors
-  //     console.log('Error:', error.message);
-  //   }
-  // };
-
-  //   const handleInputChange = (event) => {
-  //   setFormData({
-  //     ...formData,
-  //     [event.target.name]:[event.target.value]
-  //   });
-  // };
-
-  // const handleInputChange = (event) => {
-  //   if (event.target.name === 'gambar_buku') {
-  //     setFormData({
-  //       ...formData,
-  //       gambar_buku: event.target.files[0]
-  //     });
-  //   } else {
-  //     setFormData({
-  //       ...formData,
-  //       [event.target.judul_buku]: event.target.value,
-  //       [event.target.pengarang]: event.target.value,
-  //       [event.target.penerbit]: event.target.value,
-  //       [event.target.gambar]: event.target.value,
-  //       [event.target.tahun_terbit]: event.target.value,
-  //       [event.target.sinposis]: event.target.value,
-  //       [event.target.isbn]: event.target.value
-  //     });
-  //   }
-  // };
-
-  const handleCreate = async (event) => {
-    event.preventDefault();
+  const fetchOptions = async () => {
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('judul_buku', formData.judul_buku);
-      formDataToSend.append('pengarang', formData.pengarang);
-      formDataToSend.append('penerbit', formData.penerbit);
-      formDataToSend.append('gambar_buku', formData.gambar_buku);
-      formDataToSend.append('tahun_terbit', formData.tahun_terbit);
-      formDataToSend.append('sinopsis', formData.sinopsis);
-      formDataToSend.append('isbn', formData.isbn);
+      const response1 = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku'); // Replace with your API endpoint for table 1
+      const response2 = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/kategori'); // Replace with your API endpoint for table 2
 
+      const data1 = await response1.json();
+      const data2 = await response2.json();
 
-      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
-        method: 'POST',
-        body: formDataToSend
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // },
-        //body: JSON.stringify(FormData)
-      });
-
-      if (response.ok) {
-        // Handle success
-        console.log('Form submitted successfully!');
-      } else {
-        // Handle error
-        console.error('Form submission failed.');
-      }
+      const optionsData = mergeOptions(data1, data2);
+      setKategori(optionsData);
     } catch (error) {
-      console.error('An error occurred during form submission:', error);
+      console.error('Error fetching options:', error);
     }
-
-    //   const createdData = await response.json();
-    //   console.log('Data created:', createdData);
-
-    //   // Reset the form after successful creation
-    //   setFormData({
-    //     id_buku: '',
-    //     judul_buku: '',
-    //     pengarang: '',
-    //     penerbit: '',
-    //     tahun_terbit: '',
-    //     id_kategori: '',
-    //     sinopsis: '',
-    //     gambar_buku: '',
-    //     isbn: ''
-    //   });
-    // } catch (error) {
-    //   console.error('Error creating data:', error);
-    // }
   };
+
+  const mergeOptions = (data1, data2) => {
+    // Assuming each data item has "id" and "label" properties
+    const mergedOptions = [...data1, ...data2];
+    return mergedOptions;
+  };
+
+
+  const handleOptionChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleFileChange = (event) => {
+    setFormData({
+      ...formData,
+      gambar_buku: event.target.files[0],
+    });
+  };
+
+  // const handleChange = (event) => {
+  //   if (event.target.type === 'file') {
+  //     setFormData({ ...formData, [event.target.name]: event.target.files[0] });
+  //   } else {
+  //     setFormData({ ...formData, [event.target.name]: event.target.value });
+  //   }
+  // };
+
 
 
   // const handleInputChange = (event) => {
@@ -219,60 +89,55 @@ export const CreateBuku = () => {
   //   });
   // };
 
-  // const handleCreate = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(formData)
-  //     });
-  //     const createdData = await response.json();
-  //     console.log('Data created:', createdData);
-  //     // Reset the form after successful creation
-  //     setFormData({
-  //       judul_buku: '',
-  //       pengarang: '',
-  //       penerbit: '',
-  //       gambar_buku: null,
-  //       tahun_terbit: '',
-  //       sinposis: '',
-  //       isbn: ''
 
-  //     });
-  //   } catch (error) {
-  //     console.error('Error creating data:', error);
-  //   }
-  // };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  // const [judul_buku, setjudul_buku] = useState('');
-  // const [pengarang, setpengarang] = useState('');
-  // const [penerbit, setpenerbit] = useState('');
-  // const [gambar, setGambar] = useState('');
-  // const [tahun_terbit, settahun_terbit] = useState('');
-  // const [sinposis, setSinopsis] = useState('');
-  // const [isbn, setIsbn] = useState('');
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('judul_buku', formData.judul_buku);
+      formDataToSend.append('pengarang', formData.pengarang);
+      formDataToSend.append('penerbit', formData.penerbit);
+      formDataToSend.append('tahun_terbit', formData.tahun_terbit);
+      formDataToSend.append('gamabr_buku', formData.gambar_buku)
+      formDataToSend.append('id_kategori', formData.id_kategori)
+      formDataToSend.append('sinopsis', formData.sinopsis);
+      formDataToSend.append('isbn', formData.isbn);
+
+      console.log(formData);
+
+      await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/', {
+        method: 'POST',
+        body: formDataToSend,
+
+      }); // Replace with your API endpoint
+      alert('Form submitted successfully!');
+      setFormData({
+            id_buku: '',
+            judul_buku: '',
+            pengarang: '',
+            penerbit: '',
+            tahun_terbit: '',
+            id_kategori: '',
+            sinopsis: '',
+            gambar_buku: '',
+            isbn: ''
+          });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
 
   const navigate=useNavigate();
   const backHandler=()=>{
     navigate("..");
   }
 
-  // const postData= () => {
-  //   console.log(judul_buku);
-  //   console.log(pengarang);
-  //   console.log(penerbit);
-  //   console.log(tahun_terbit);
-  //   console.log(sinposis);
-  //   console.log(isbn);
-
-  // }
-
   return (
     <>
       <h2>Create Buku</h2>
-        <Form onSubmit={handleSubmit(handleCreate)}>
+        <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="exampleBook">judul Buku</Label>
           <Input
@@ -280,8 +145,7 @@ export const CreateBuku = () => {
             name="judul_buku"
             placeholder="Masukkan judul Buku"
             type="text"
-            onChange={handleChange}
-            {...register('judul_buku')}
+            onChange={handleInputChange}
           />
           {/* {errors.judul_buku && <span>{errors.judul_buku.message}</span>} */}
         </FormGroup>
@@ -292,8 +156,7 @@ export const CreateBuku = () => {
             name="pengarang"
             placeholder="Masukkan Nama Pengarang"
             type="text"
-            onChange={handleChange}
-            {...register('pengarang')}
+            onChange={handleInputChange}
           />
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
@@ -304,8 +167,7 @@ export const CreateBuku = () => {
             name="penerbit"
             placeholder="Masukkan Nama Penerbit"
             type="text"
-            onChange={handleChange}
-            {...register('penerbit')}
+            onChange={handleInputChange}
           />
           {/* {errors.penerbit && <span>{errors.penerbit.message}</span>} */}
         </FormGroup>
@@ -316,9 +178,25 @@ export const CreateBuku = () => {
             name="tahun_terbit"
             placeholder="Tahun tebrit"
             type="text"
-            onChange={handleChange}
-            {...register('tahun_terbit')}
+            onChange={handleInputChange}
           />
+          {/* {errors.tahun_terbit && <span>{errors.tahun_terbit.message}</span>} */}
+        </FormGroup>
+        <FormGroup>
+          <Label for="kategori">Kategori Buku</Label>
+          <select
+          name="id_kategori"
+          value={formData.id_kategori}
+          onChange={handleOptionChange}
+          required
+        >
+          <option value="" >Pilih Kategori</option>
+              {kategori.map((kategori) => (
+              <option key={kategori.nama_kategori} value={kategori.nama_kategori}>
+                {kategori.nama_kategori}
+              </option>
+            ))}
+          </select>
           {/* {errors.tahun_terbit && <span>{errors.tahun_terbit.message}</span>} */}
         </FormGroup>
         <FormGroup>
@@ -327,8 +205,7 @@ export const CreateBuku = () => {
             id="examplegambar"
             name="gambar_buku"
             type="file"
-            onChange={handleChange}
-            {...register('gambar_buku')}
+            onChange={handleFileChange}
           />
           {/* {errors.gambar_buku && <span>{errors.gambar_buku.message}</span>} */}
         </FormGroup>
@@ -342,8 +219,7 @@ export const CreateBuku = () => {
             type="textarea"
             rows={10}
             cols={10}
-            onChange={handleChange}
-            {...register('sinopsis')}
+            onChange={handleInputChange}
           />
           {/* {errors.sinopsis && <span>{errors.sinopsis.message}</span>} */}
         </FormGroup>
@@ -354,8 +230,7 @@ export const CreateBuku = () => {
             name="isbn"
             placeholder="ISBN Buku"
             type="text"
-            onChange={handleChange}
-            {...register('isbn')}
+            onChange={handleInputChange}
           />
           {/* {errors.isbn && <span>{errors.isbn.message}</span>} */}
         </FormGroup>

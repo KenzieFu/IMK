@@ -47,6 +47,11 @@ export const DetailBuku = () => {
                             <td>{loadedData.tahun_terbit}</td>
                         </tr>
                         <tr>
+                            <td>Kategori Buku</td>
+                            <td>:</td>
+                            <td>{loadedData.kategori.nama_kategori}</td>
+                        </tr>
+                        <tr>
                             <td>ISBN</td>
                             <td>:</td>
                             <td>{loadedData.isbn}</td>
