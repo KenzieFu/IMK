@@ -177,13 +177,19 @@ exports.getBooks = async function (req, res, next) {
 exports.getPerpusBooks = async function (req, res, next) {
   try {
     const books = await BukuPerpus.findAll({
-      include: [{ model: Buku }],
+      include: [
+        {
+          model: Buku,
+          include: [{ model: Kategori }],
+        },
+      ],
     });
     res.json(books);
   } catch (error) {
     next(error);
   }
 };
+
 
 // Function untuk mengambil daftar buku tahun ajaran baru
 exports.getTahunAjaranBaruBooks = async function (req, res, next) {
