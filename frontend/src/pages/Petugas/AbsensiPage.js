@@ -2,8 +2,8 @@ import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 
-import { json,defer, Await, useLoaderData, useLocation, Link, Form } from 'react-router-dom';
-import { action } from './CreateAbsensi';
+import { redirect, json,defer, Await, useLoaderData, useLocation, Link, Form } from 'react-router-dom';
+
 
 
 export const AbsensiPage = () => {
@@ -63,7 +63,7 @@ export const AbsensiPage = () => {
           id:"button",
           name:"Action",
           width:"30%",
-        cell: (row) => 
+        cell: (row) =>
               (
            <>
                <div>
@@ -72,19 +72,19 @@ export const AbsensiPage = () => {
                   <input type="number" value={row.absensi.id_absensi}  />
                   <button>Belum Selesai</button>
                 </Form>
-                
+
                 }
-    
+
                </div>
            </>
         ),
-        
+
         ignoreRowClick: true,
         allowOverflow: true,
         selector:row=>row.button,
         button: true,
       },
-        
+
     ];
 
 
@@ -116,7 +116,7 @@ export const AbsensiPage = () => {
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
                     <h2>Absensi</h2>
-                  
+
                 </div>
                }
                data={loadedData}
@@ -126,7 +126,7 @@ export const AbsensiPage = () => {
             }
           </Await>
         </Suspense>
-        
+
     </>
   )
 }
@@ -137,7 +137,7 @@ const loaderAbsensi=async()=>{
     console.log(response);
     if(!response.ok)
     {
-      
+
       throw json(
         { message: 'Could not fetch absensi.' },
         {
@@ -145,12 +145,12 @@ const loaderAbsensi=async()=>{
         }
       );
     }
-    
-     
+
+
       const resData=await response.json();
     console.log(resData)
       return resData
-  
+
 }
 
 export const loader=()=>{
@@ -184,7 +184,7 @@ export async function action({ params, request }) {
         status: 500,
       }
     );
-  
+
   }
    return  redirect("/petugas/scan-keluar");
 }

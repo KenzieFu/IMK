@@ -66,7 +66,8 @@ import { loader as adminPinjamDetailLoader } from "./pages/Admin/DetailPinjam";
 import { loader as adminPengembalianLoader } from "./pages/Admin/DaftarPengembalianBukuPage";
 //Calender
 import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
-
+//booking
+import { loader as adminBookingLoader } from './pages/Admin/DaftarBookingBuku'
 
 //create pinjam
 
@@ -121,7 +122,7 @@ import { ScanPage } from "./pages/Petugas/ScanPage";
 import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
 import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
-
+import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -347,10 +348,8 @@ const studentId=useSelector(state=>state.auth.user)
           children:[
             {index:true,
              id:"admin-booking",
-            //  element:<DaftarBookingBuku/>,
-            //  loader:adminPengembalianLoader,
-
-
+             element:<DaftarBookingBuku/>,
+             loader:adminBookingLoader,
             },
             // {
             //   path:":idPengembalian",
@@ -418,7 +417,7 @@ const studentId=useSelector(state=>state.auth.user)
             element:<CreateAbsensi/>,
             loader:petugasCreateAbsensiLoader,
             action:enterPetugasAction,
-            
+
           }
         ]}
       ]

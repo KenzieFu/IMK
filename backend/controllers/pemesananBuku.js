@@ -13,7 +13,7 @@ exports.createPemesananBuku = async function (req, res, next) {
     for(const item in req.body)
     {
       const buku = await BukuPerpus.findByPk(item.id_buku);
-    if (buku === null) {
+    if (!buku?.id_buku) {
       return res.status(200).json({ message: "Buku tidak ditemukan" });
     } else if (buku.stok === 0) {
       return res.status(400).json({ message: "Stok buku kosong" });
@@ -32,7 +32,7 @@ exports.createPemesananBuku = async function (req, res, next) {
 
     res.json(pemesananBuku);
     }
-    
+
   } catch (error) {
     next(error);
   }
