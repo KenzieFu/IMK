@@ -35,6 +35,7 @@ app.use(bodyParser.json({ limit: "50mb" })); // set limit to 50mb
 
 // app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
 app.use(
+  
   multer({
     storage: fileStorage,
     limits: {
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+ 
   next();
 });
 
@@ -56,6 +58,7 @@ app.use((req, res, next) => {
 const corsOptions = {
   origin: "http://localhost:3000",
   Credentials: true,
+  changeOrigin:true,
   optionsSuccessStatus: 200,
 };
 
@@ -71,12 +74,14 @@ app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", true);
+
   next();
 });
 app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
+
   })
 );
 

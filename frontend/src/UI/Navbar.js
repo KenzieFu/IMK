@@ -1,17 +1,21 @@
 import React from 'react'
 import classes from "./Navbar.module.css"
 
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useSubmit } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCart,useEffect } from 'react-use-cart';
 import { authActions } from '../features/auth/authSlice';
 export const Navbar = (props) => {
+  const submit=useSubmit();
 const authen=useSelector(state=>state.auth.isAuth);
 const navigate=useNavigate();
    const dispatch= useDispatch();
 const  logoutHandler=()=>{
   dispatch(authActions.logOut());
-  navigate("/");
+  submit(null,{action:"logout",method:"POST"})
+  
+
+
 }
 const { totalUniqueItems } = useCart()
   return (

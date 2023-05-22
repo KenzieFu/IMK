@@ -86,6 +86,7 @@ exports.login = async function (req, res, next) {
         accessToken:token,
         user: user,
       },
+      token:token,
     });
   } catch (error) {
     next(error);
