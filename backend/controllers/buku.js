@@ -81,6 +81,8 @@ exports.getTahunAjaranBaruBook = async function (req, res, next) {
 // Function untuk menambahkan buku
 exports.createBook = async function (req, res, next) {
   try {
+    
+    console.log(req.body);
     if (!req.file) {
       const error = new Error("Tidak ada gambar yang terupload");
       error.statusCode = 422;

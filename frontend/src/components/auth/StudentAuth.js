@@ -18,6 +18,10 @@ export const StudentAuth = ({children}) => {
             {
                 return <Navigate to="/admin"/>
             }
+            else if(middleware.user.hak_akses ==="Petugas")
+            {
+                return <Navigate to="/petugas"/>
+            }
         }
 
         return(

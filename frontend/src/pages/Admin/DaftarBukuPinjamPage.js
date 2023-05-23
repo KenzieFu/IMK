@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import DataTable, { memoize } from 'react-data-table-component'
-import { DeleteModal } from '../../components/admin/modals/DeleteModal';
+import { KembaliModal } from '../../components/admin/modals/KembaliModal';
 import { memo } from 'react';
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
 import { set } from 'react-hook-form';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import './DaftarBukuPinjamPage.css';
 
 
 export const DaftarBukuPinjamPage = () => {
@@ -21,15 +22,16 @@ export const DaftarBukuPinjamPage = () => {
     const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
 
     return uniqueKategori.map((kategori) => (
-    <DropdownItem onClick={() => setSearchBased(kategori)}>
-      {kategori}
-    </DropdownItem>
-  ));
+      <DropdownItem onClick={() => setSearchBased(kategori)}>
+        {kategori}
+      </DropdownItem>
+    ));
   };
   const showModalHandler = (id) => {
     setDeleteModal(true);
     setCurrentId(id);
   }
+
   const closeModalHandler = () => {
     setDeleteModal(false);
     setCurrentId((prev) => prev);
@@ -40,76 +42,113 @@ export const DaftarBukuPinjamPage = () => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [searchBased, setSearchBased] = React.useState("");
   const [searchBasedDate, setSearchBasedDate] = React.useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen2, setDropdownOpen2] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+
+  const toggleDropdown2 = () => {
+    setDropdownOpen2(!dropdownOpen2);
+  };
   const columns = [
     {
       id: 'id',
-      name: "ID",
-      selector: row => row.id_peminjaman,
+      name: <div className="data-row">ID Pinjam</div>,
+      selector: (row) =>  <div className="data-row">{row.id_peminjaman}</div>,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
     },
     {
       id: "id_siswa",
-      name: 'Id Siswa',
-      selector: row => row.id_siswa,
+      name: <div className="data-row">Id Siswa</div>,
+      selector: (row) =>  <div className="data-row">{row.id_siswa}</div>,
       accessor: "id_siswa",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
     },
     {
       id: "nama_siswa",
-      name: 'Nama Siswa',
-      selector: row => row.siswa.nama_lengkap,
+      name:<div className="data-row">Nama Siswa</div>,
+      selector: (row) => <div className="data-row">{row.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
     },
-
-    // {
-    //   id: "judul_buku",
-    //   name: 'Judul Buku',
-    //   selector: row => row.buku.judul_buku,
-    //   accessor: "judul_buku",
-    //   sortable: true,
-    // },
+    {
+      id: "judul_buku",
+      name:<div className="data-row">Judul Buku</div>,
+      selector: (row) =>  <div className="data-row">{row.buku.judul_buku}</div>,
+      accessor: "judul_buku",
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
+    },
 
     {
       id: "tanggal_pinjam",
-      name: 'Tanggal Pinjam',
+      name: <div className="data-row">Tanggal Pinjam</div>,
       selector: row => {
         const tanggalPinjam = new Date(row.tanggal_pinjam);
         return tanggalPinjam.toLocaleDateString("en-GB");
       },
       accessor: "tanggal_pinjam",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
     },
     {
       id: "tanggal_kembali",
-      name: 'Tanggal Kembali',
+      name: <div className="data-row">Tanggal Pengembalian</div>,
       selector: row => {
         const tanggalKembali = new Date(row.tanggal_kembali);
         return tanggalKembali.toLocaleDateString("en-GB");
       },
       accessor: "tanggal_kembali",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
     },
     {
       id: "button",
-      name: "Action",
+      name: <div className="data-row">Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
-        <div style={{ margin: "0 0" }} >
-          <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
+        <div style={{ margin: "0 0" }} className="action-buttons">
+          <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none" }} className='action-detail'>Rincian</Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }}>Delete</span>
+          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }} className='action-delete'>Hapus</span>
 
         </div>
       ),
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+      },
 
       ignoreRowClick: true,
       allowOverflow: true,
@@ -117,8 +156,6 @@ export const DaftarBukuPinjamPage = () => {
       button: true,
     },
   ];
-
-
   return (
     <>
       <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
@@ -127,74 +164,60 @@ export const DaftarBukuPinjamPage = () => {
       {
         advanceSearch &&
         <>
-        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-          <DropdownToggle caret>
-          Tampilkan data dalam range tanggal
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={() => setSearchBasedDate('')}>
-            Data dalam seluruh rentang tanggal
-            </DropdownItem>
-            <DropdownItem  onClick={() => setSearchBasedDate('admin')}>
-            Data dalam rentang tanggal pinjam tertentu
-        </DropdownItem>
-        <DropdownItem  onClick={() => setSearchBasedDate('petugas')}>
-        Data dalam rentang tanggal pengembalian tertentu
-        </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </>
-        // <div>
-        //   <select onChange={(e) => {
-        //     setSearchBased(e.target.value)
-        //     if(e.target.value === ""){
-        //     setSearchTerm("")
-        //     }
-        //     }}>
-        //     <option disabled >Cari berdasarkan:</option>
-        //     <option value="">Tampilkan semua data</option>
-        //     <option value="nama_siswa">Nama Siswa</option>
-        //     <option value="judul_buku">Judul Buku</option>
-        //   </select>
-        //   <input
-        //     disabled={searchBased === "" ? true : false}
-        //     type="text"
-        //     placeholder="Search"
-        //     value={searchTerm}
-        //     onChange={(e) => setSearchTerm(e.target.value)}
-        //   />
-        //   <div>
-        //     <select onChange={(e) => {
-        //     setSearchBasedDate(e.target.value)
-        //     if(e.target.value === ''){
-        //       setStartDate(null)
-        //       setEndDate(null)
-        //     }
-        //     }}>
-        //       <option disabled >Tampilkan data dalam range tanggal :</option>
-        //       <option value="">Data dalam seluruh rentang tanggal</option>
-        //       <option value="tgl_pinjam">Data dalam rentang tanggal pinjam tertentu</option>
-        //       <option value="tgl_kembali">Data dalam rentang tanggal kembali tertentu</option>
-        //     </select>
-        //   </div>
-        //   <div>
-        //     <label htmlFor="start-date">Start Date:</label>
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="start-date"
-        //       selected={startDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setStartDate(date)}
-        //     />
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="end-date"
-        //       selected={endDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setEndDate(date)}
-        //     />
-        //   </div>
-        // </div>
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data berdasarkan :
+            </DropdownToggle>
+            <DropdownMenu>
+            <DropdownItem onClick={() => {setSearchBased(""); setSearchTerm("")}} className="box-menu">
+               Tampilkan Semua Data
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                Nama Siswa
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                Judul Buku
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data dalam rentang tanggal :
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => { setSearchBasedDate(""); setStartDate(''); setEndDate('') }} className="box-menu">
+                Tanpa rentang tanggal
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
+                Tanggal Peminjaman
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
+                Tanggal Pengembalian
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+
+          <label htmlFor="start-date">Start Date:</label>
+          <Input
+            disabled={searchBasedDate === ""}
+            id="start-date"
+            value={startDate}
+            type="date"
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <Input
+            disabled={searchBasedDate === ""}
+            id="end-date"
+            value={endDate}
+            type="date"
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+          <Input disabled={searchBased === "" ? true : false}
+            type="text"
+            placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} />
+        </>
       }
       <Suspense fallback="">
         <Await resolve={daftarPinjam} >
@@ -202,57 +225,40 @@ export const DaftarBukuPinjamPage = () => {
             <DataTable
               title={
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2>Tabel Peminjaman</h2>
-                  <Link to="create">Create</Link>
+                  <h2 className="data-table-header">Tabel Peminjaman</h2>
+                  <Link to="create"className="button-create"><i class="bi bi-person-plus"> Tambah Peminjaman</i></Link>
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "" && startDate === null && endDate === null) {
-                  return item;
-                } else if (
-                  searchBased === "nama_siswa" &&
-                  item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                } else if (
-                  searchBased === "judul_buku" &&
-                  item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                } else if (
-                  searchBasedDate === "tgl_kembali" &&
-                  startDate !== '' &&
-                  endDate !== '' &&
-                  item.tanggal_kembali >= startDate &&
-                  item.tanggal_kembali <= endDate
-                ) {
-                  return item;
-                } else if (
-                  searchBasedDate === "tgl_kembali" &&
-                  startDate !== null &&
-                  endDate !== null &&
-                  item.tanggal_kembali >= startDate &&
-                  item.tanggal_kembali <= endDate
-                ) {
+
+                if (searchBased === "" && searchBasedDate === "") {
                   return item;
                 }
-                // else if (
-                //   searchBased === "tgl_pengembalian" &&
-                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // } else if (
-                //   searchBased === "tgl_pinjam" &&
-                //   item.tanggal_pinjam.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // }
-                //else if (
+                if (searchBased === "nama") {
+                  if (searchBasedDate === "") {
+                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                  }
+                  else if (searchBasedDate === "pinjam") {
+                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                  }else if (searchBasedDate === "kembali") {
+                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
+                  }
+                }
+                if (searchBased === "judul") {
+                  if (searchBasedDate === "") {
+                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                  }
+                  else if (searchBasedDate === "pinjam") {
+                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                  }  else if (searchBasedDate === "kembali") {
+                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
+                  }
+                } if(searchBasedDate === "pinjam"){
+                  return item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                } if(searchBasedDate === "kembali"){
+                  return item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
+                }
 
-                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // }
 
               })}
               columns={columns}
@@ -261,7 +267,7 @@ export const DaftarBukuPinjamPage = () => {
           }
         </Await>
       </Suspense>
-      {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {showDeleteModal && <KembaliModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
     </>
   )
@@ -300,7 +306,8 @@ export async function action({ params, request }) {
   const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
     method: method,
     headers: {
-      "Authorization": "Bearer"
+      "Authorization": "Bearer",
+
     }
   });
 

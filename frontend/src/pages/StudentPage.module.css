@@ -45,8 +45,8 @@
     margin-bottom: 20px;
 }
 
-
-
 .list-books{
     margin:10px 0;
+    height: 55.5vw;
+    overflow-y: scroll;
 }

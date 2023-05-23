@@ -39,6 +39,7 @@ import { DataIbu } from "./pages/FormRegistrasi/DataIbu";
 import { DataWali } from "./pages/FormRegistrasi/DataWali";
 import { KonfirmasiData } from "./pages/FormRegistrasi/KonfirmasiData";
 import { PetugasPage } from "./pages/PetugasPage";
+import { PetugasAuth } from "./components/auth/PetugasAuth";
 
 
 //Student Loader
@@ -92,6 +93,8 @@ import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
 //Calender
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
+//Delete booking
+import { action as adminDeleteBookingAction } from "./pages/Admin/DaftarBookingBuku"
 
 //Petugas Action
 //Scan Masuk
@@ -130,6 +133,7 @@ import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
 import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
 import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
 import { tokenLoader } from "./components/util/auth";
+import { GuestMode } from "./components/auth/GuestMode";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -168,16 +172,16 @@ const studentId=useSelector(state=>state.auth.user)
         children:[
           {index:true,
             id:'books',
-          element:<LibraryPage/>,
+          element:<GuestMode><LibraryPage/></GuestMode>,
           loader:booksLoader
         },
         {path:":bookId",
           id:"book-detail",
-          element:<BookDetail/>,
+          element:<GuestMode><BookDetail/></GuestMode>,
           loader: bookLoader }
 
         ]},
-       {path:"contactUs", element:<Contact/>},
+       {path:"contactUs", element:<GuestMode><Contact/></GuestMode>},
        {path:"logout", action:logoutAction},
        {path:"calender",
         id:"event-calender",
@@ -352,12 +356,13 @@ const studentId=useSelector(state=>state.auth.user)
           ]
          },
          {
-          path:"booking",
+          path:"booked-books",
           children:[
             {index:true,
              id:"admin-booking",
              element:<DaftarBookingBuku/>,
              loader:adminBookingLoader,
+             action: adminDeleteBookingAction
             },
             // {
             //   path:":idPengembalian",
@@ -401,7 +406,7 @@ const studentId=useSelector(state=>state.auth.user)
     },
     {
       path:"/petugas",
-      element:<PetugasRoot/>,
+      element:  <PetugasAuth><PetugasRoot/></PetugasAuth>  ,
       children:[
         {index:true,element:<PetugasPage/>},
         {path:"scan",

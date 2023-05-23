@@ -19,7 +19,7 @@ const isAuth = useSelector((state)=>state.auth.isAuth);
                 {!isAuth && <div></div>}
                         <div className={classes['content-form']}>
                             <div className={classes['contactus']}>
-                            <h1>Contact us</h1>
+                            <h1>Hubungi Kami</h1>
                             <p>Our friendly team would love to hear from you!</p>
                             </div>
                             <form>

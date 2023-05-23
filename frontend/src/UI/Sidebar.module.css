@@ -40,14 +40,16 @@
 }
 
 .sidebar{
-    display: flex;
-    height: 200vh;
+    background-color: var(--white-light);
+  
+    height: 85vh;
     padding: 1vw 0;
     width: 5vw;
+    position: -webkit-sticky;
     border: transparent;
     overflow-y: auto;
-    border-bottom-left-radius: 2vw;
-    border-top-left-radius: 2vw;
+    border-bottom-right-radius: 2vw;
+    border-top-right-radius: 2vw;
    
     
 }
