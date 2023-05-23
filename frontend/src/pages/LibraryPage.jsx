@@ -16,12 +16,12 @@ export const LibraryPage = () => {
   const isAuth=useSelector(state=>state.auth.isAuth);
   const {books,genres}=useLoaderData('books');
   const [currentGenre,setGenre]=useState(0);
-  console.log(currentGenre)
+
   const setGenreHandler=(index)=>{
-    console.log(index)
+ 
     setGenre(index);
   }
-  console.log("Haihai")
+
   const [enteredKey,setKey]=useState('');
   let check = enteredKey.trim() !=="";
 

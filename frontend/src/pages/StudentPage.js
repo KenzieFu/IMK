@@ -6,7 +6,7 @@ import { StudentCard } from '../components/StudentCard';
 import { LatestBook } from '../components/LatestBook';
 import { PeminjamanBuku } from './PeminjamanBuku';
 import { useSelector } from 'react-redux';
-import { defer, json, useLoaderData } from 'react-router-dom';
+import { Navigate, defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
 import {  QRCodeBox } from '../components/QRcode/QRCodeBox';
@@ -14,6 +14,8 @@ export const StudentPage = () => {
   const [showPinjam,setShowPinjam]=useState(true);
   const [showKembali,setShowKembali]=useState(true);
   const [showBooking,setShowBooking]=useState(true);
+  const isAuth=useSelector(state=>state.auth.isAuth);
+  const {pinjam,kembali}=useLoaderData("pinjam-kembali-buku")
 
   const pinjamHandler=()=>{
     setShowPinjam(true);
@@ -25,6 +27,11 @@ export const StudentPage = () => {
     setShowPinjam(false);
   }
   const {pinjam,kembali}=useLoaderData("pinjam-kembali-booking-buku")
+
+  if(!isAuth)
+  {
+    return <Navigate to="/"/>;
+  }
   return (
     <div className={classes.content}>
 

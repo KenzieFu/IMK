@@ -14,14 +14,14 @@ export const getAuthToken=()=>{
 
     if(tokenDuration < 0)
     return "EXPIRED";
-    console.log(token);
+
     return token;
 }
 
 export const getUserCredentials=()=>{
     const user= localStorage.getItem('user');
     const parsed=JSON.parse(user);
-    console.log(`Parsed :${user}`)
+
     return parsed
 }
 

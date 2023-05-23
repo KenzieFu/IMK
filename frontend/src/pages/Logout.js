@@ -11,6 +11,7 @@ export const action=async({ params, request })=>{
         },
       });
       
+      
     if(!response.ok)
     {
         throw json(
@@ -23,5 +24,5 @@ export const action=async({ params, request })=>{
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('user');
-    return response
+    return response;
 }
