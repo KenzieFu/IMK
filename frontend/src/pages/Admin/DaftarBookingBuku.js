@@ -46,31 +46,31 @@ export const DaftarBookingBuku = () => {
       sortable: true,
     },
     {
-      id: "id_siswa",
-      name: 'Id Siswa',
-      selector: row => row.id_siswa,
-      accessor: "id_siswa",
-      sortable: true,
-    },
-    {
       id: "nama_siswa",
       name: 'Nama Siswa',
-      selector: row => row.id_buku,
+      selector: row => row.siswa.nama_lengkap,
       accessor: "nama_siswa",
       sortable: true,
     },
     {
-        id: "nama_siswa",
-        name: 'Nama Siswa',
+      id: "judul_buku",
+      name: 'Judul Buku',
+      selector: row => row.buku.judul_buku,
+      accessor: "judul_buku",
+      sortable: true,
+    },
+    {
+        id: "waktu",
+        name: 'Waktu',
         selector: row => row.waktu,
-        accessor: "nama_siswa",
+        accessor: "waktu",
         sortable: true,
       },
       {
-        id: "nama_siswa",
-        name: 'Nama Siswa',
+        id: "tanggal",
+        name: 'Tanggal',
         selector: row => row.tanggal,
-        accessor: "nama_siswa",
+        accessor: "tanggal",
         sortable: true,
       },
 
@@ -90,9 +90,9 @@ export const DaftarBookingBuku = () => {
       cell: (row) =>
       (
         <div style={{ margin: "0 0" }} >
-          <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
+          <Link to={`/admin/booked-books/${row.id_pemesanan}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }}>Delete</span>
+          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }}>Delete</span>
 
         </div>
       ),
@@ -230,29 +230,29 @@ export const loader = () => {
   })
 }
 
-// export async function action({ params, request }) {
+export async function action({ params, request }) {
 
-//   const method = request.method;
-//   const data = await request.formData();
-//   console.log(data);
-//   const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
-//     method: method,
-//     headers: {
-//       "Authorization": "Bearer"
-//     }
-//   });
+  const method = request.method;
+  const data = await request.formData();
+  console.log(data);
+  const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/' + data.get('id'), {
+    method: method,
+    headers: {
+      "Authorization": "Bearer"
+    }
+  });
 
-//   if (!response.ok) {
-//     throw json(
-//       { message: 'Could not delete this row.' },
-//       {
-//         status: 500,
-//       }
-//     );
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not delete this row.' },
+      {
+        status: 500,
+      }
+    );
 
-//   }
-//   return redirect("/admin/borrowed-books");
-// }
+  }
+  return redirect("/admin/booked-books");
+}
 
 
 

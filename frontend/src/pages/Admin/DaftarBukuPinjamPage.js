@@ -21,10 +21,10 @@ export const DaftarBukuPinjamPage = () => {
     const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
 
     return uniqueKategori.map((kategori) => (
-    <DropdownItem onClick={() => setSearchBased(kategori)}>
-      {kategori}
-    </DropdownItem>
-  ));
+      <DropdownItem onClick={() => setSearchBased(kategori)}>
+        {kategori}
+      </DropdownItem>
+    ));
   };
   const showModalHandler = (id) => {
     setDeleteModal(true);
@@ -40,12 +40,18 @@ export const DaftarBukuPinjamPage = () => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [searchBased, setSearchBased] = React.useState("");
   const [searchBasedDate, setSearchBasedDate] = React.useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen2, setDropdownOpen2] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+
+  const toggleDropdown2 = () => {
+    setDropdownOpen2(!dropdownOpen2);
   };
   const columns = [
     {
@@ -66,6 +72,13 @@ export const DaftarBukuPinjamPage = () => {
       name: 'Nama Siswa',
       selector: row => row.siswa.nama_lengkap,
       accessor: "nama_siswa",
+      sortable: true,
+    },
+    {
+      id: "judul_buku",
+      name: 'Judul Buku',
+      selector: row => row.buku.judul_buku,
+      accessor: "judul_buku",
       sortable: true,
     },
 
@@ -89,7 +102,7 @@ export const DaftarBukuPinjamPage = () => {
     },
     {
       id: "tanggal_kembali",
-      name: 'Tanggal Kembali',
+      name: 'Tanggal Pengembalian',
       selector: row => {
         const tanggalKembali = new Date(row.tanggal_kembali);
         return tanggalKembali.toLocaleDateString("en-GB");
@@ -127,56 +140,61 @@ export const DaftarBukuPinjamPage = () => {
       {
         advanceSearch &&
         <>
-        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-          <DropdownToggle caret>
-          Tampilkan data dalam range tanggal
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={() => setSearchBasedDate('')}>
-            Data dalam seluruh rentang tanggal
-            </DropdownItem>
-            <DropdownItem  onClick={() => setSearchBasedDate('admin')}>
-            Data dalam rentang tanggal pinjam tertentu
-        </DropdownItem>
-        <DropdownItem  onClick={() => setSearchBasedDate('petugas')}>
-        Data dalam rentang tanggal pengembalian tertentu
-        </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </>
-        // <div>
-        //   <select onChange={(e) => {
-        //     setSearchBased(e.target.value)
-        //     if(e.target.value === ""){
-        //     setSearchTerm("")
-        //     }
-        //     }}>
-        //     <option disabled >Cari berdasarkan:</option>
-        //     <option value="">Tampilkan semua data</option>
-        //     <option value="nama_siswa">Nama Siswa</option>
-        //     <option value="judul_buku">Judul Buku</option>
-        //   </select>
-        //   <input
-        //     disabled={searchBased === "" ? true : false}
-        //     type="text"
-        //     placeholder="Search"
-        //     value={searchTerm}
-        //     onChange={(e) => setSearchTerm(e.target.value)}
-        //   />
-        //   <div>
-        //     <select onChange={(e) => {
-        //     setSearchBasedDate(e.target.value)
-        //     if(e.target.value === ''){
-        //       setStartDate(null)
-        //       setEndDate(null)
-        //     }
-        //     }}>
-        //       <option disabled >Tampilkan data dalam range tanggal :</option>
-        //       <option value="">Data dalam seluruh rentang tanggal</option>
-        //       <option value="tgl_pinjam">Data dalam rentang tanggal pinjam tertentu</option>
-        //       <option value="tgl_kembali">Data dalam rentang tanggal kembali tertentu</option>
-        //     </select>
-        //   </div>
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data berdasarkan :
+            </DropdownToggle>
+            <DropdownMenu>
+            <DropdownItem onClick={() => {setSearchBased(""); setSearchTerm("")}} className="box-menu">
+               Tampilkan Semua Data
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                Nama Siswa
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                Judul Buku
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data dalam rentang tanggal :
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => { setSearchBasedDate(""); setStartDate(''); setEndDate('') }} className="box-menu">
+                Tanpa rentang tanggal
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
+                Tanggal Peminjaman
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
+                Tanggal Pengembalian
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+
+          <label htmlFor="start-date">Start Date:</label>
+          <Input
+            disabled={searchBasedDate === ""}
+            id="start-date"
+            value={startDate}
+            type="date"
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <Input
+            disabled={searchBasedDate === ""}
+            id="end-date"
+            value={endDate}
+            type="date"
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+          <Input disabled={searchBased === "" ? true : false}
+            type="text"
+            placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} />
+        </>
+
         //   <div>
         //     <label htmlFor="start-date">Start Date:</label>
         //     <DatePicker
@@ -207,35 +225,54 @@ export const DaftarBukuPinjamPage = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "" && startDate === null && endDate === null) {
-                  return item;
-                } else if (
-                  searchBased === "nama_siswa" &&
-                  item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                } else if (
-                  searchBased === "judul_buku" &&
-                  item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                } else if (
-                  searchBasedDate === "tgl_kembali" &&
-                  startDate !== '' &&
-                  endDate !== '' &&
-                  item.tanggal_kembali >= startDate &&
-                  item.tanggal_kembali <= endDate
-                ) {
-                  return item;
-                } else if (
-                  searchBasedDate === "tgl_kembali" &&
-                  startDate !== null &&
-                  endDate !== null &&
-                  item.tanggal_kembali >= startDate &&
-                  item.tanggal_kembali <= endDate
-                ) {
+
+                if (searchBased === "" && searchBasedDate === "") {
                   return item;
                 }
+                if (searchBased === "nama") {
+                  if (searchBasedDate === "") {
+                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                  }
+                  else if (searchBasedDate === "pinjam") {
+                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                  }else if (searchBasedDate === "kembali") {
+                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
+                  }
+                }
+                if (searchBased === "judul") {
+                  if (searchBasedDate === "") {
+                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                  }
+                  else if (searchBasedDate === "pinjam") {
+                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                  }  else if (searchBasedDate === "kembali") {
+                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
+                  }
+                } if(searchBasedDate === "pinjam"){
+                  return item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                } if(searchBasedDate === "kembali"){
+                  return item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
+                }
+
+                //  if(searchBased === "judul")
+                // {
+                //   return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                // }
+                //  if (
+                //   searchBasedDate === "pinjam"
+                // ) {
+                //   if (searchBased === "" && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate) {
+                //     return item
+                //   }
+                //   else if (searchBased === "nama" && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate) {
+                //     return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                //   } else if (
+                //     searchBased === "judul" && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
+                //   ) {
+                //     return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                //   }
+                // }
+
                 // else if (
                 //   searchBased === "tgl_pengembalian" &&
                 //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -300,7 +337,8 @@ export async function action({ params, request }) {
   const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
     method: method,
     headers: {
-      "Authorization": "Bearer"
+      "Authorization": "Bearer",
+
     }
   });
 

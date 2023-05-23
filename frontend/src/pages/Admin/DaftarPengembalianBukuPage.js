@@ -27,7 +27,7 @@ export const DaftarPengembalianBukuPage = () => {
         {
           id:"nama_siswa",
           name: 'Nama Siswa',
-          selector: row => row.siswa.nama_lengkap,
+          selector: row => row.peminjaman.siswa.nama_lengkap,
           accessor:"nama_siswa",
           sortable: true,
       },
@@ -55,17 +55,17 @@ export const DaftarPengembalianBukuPage = () => {
         {
             id:"tanggal_pengembalian",
             name: 'Tanggal Pengembalian',
-            selector: row => row.peminjaman.pengembalian.tanggal_pengembalian,
+            selector: row => row.tanggal_pengembalian,
             accessor:"tanggal_pengembalian",
             sortable: true,
         },
         {
             id:"status_kembali",
             name: 'Status',
-            selector: row => row.peminjaman.pengembalian.status,
+            selector: row => row.status,
             accessor:"status_kembali",
             sortable: true,
-            color: (row => row.peminjaman.pengembalian.status === "Tepat Waktu") ? "Green" : "Red"
+            color: (row => row.status === "Tepat Waktu") ? "Green" : "Red"
         },
         {
             id:"button",
@@ -96,7 +96,7 @@ export const DaftarPengembalianBukuPage = () => {
                title="Tabel Pengembalian"
                data={loadedData}
                columns={columns}
-               pagination={loadedData.pengembalian.lenght!==0?true:false}
+               pagination={loadedData}
                    />
             }
           </Await>
