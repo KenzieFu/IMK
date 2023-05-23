@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import classes from './adminbatch.module.css'
 
 
 export const DaftarBookingBuku = () => {
@@ -41,8 +42,8 @@ export const DaftarBookingBuku = () => {
   const columns = [
     {
       id: 'id',
-      name: <div className="data-row">ID Pemesanan</div>,
-      selector: row => <div className="data-row">{row.id_pemesanan}</div>,
+      name: <div className={classes['data-row']}>ID Pemesanan</div>,
+      selector: row => <div className={classes['data-rowid']}>{row.id_pemesanan}</div>,
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -52,8 +53,8 @@ export const DaftarBookingBuku = () => {
     },
     {
       id: "nama_siswa",
-      name: <div className="data-row">Nama Siswa</div>,
-      selector: row => <div className="data-row">{row.siswa.nama_lengkap}</div>,
+      name: <div className={classes['data-row']}>Nama Siswa</div>,
+      selector: row => <div className={classes['data-row']}>{row.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
       headerStyle: {
@@ -64,8 +65,8 @@ export const DaftarBookingBuku = () => {
     },
     {
       id: "judul_buku",
-      name: <div className="data-row">Judul Buku</div>,
-      selector: row => <div className="data-row">{row.buku.judul_buku}</div>,
+      name: <div className={classes['data-row']}>Judul Buku</div>,
+      selector: row => <div className={classes['data-row']}>{row.buku.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
       headerStyle: {
@@ -76,8 +77,8 @@ export const DaftarBookingBuku = () => {
     },
     {
         id: "waktu",
-        name: <div className="data-row">Waktu</div>,
-        selector: row => <div className="data-row">{row.waktu}</div>,
+        name: <div className={classes['data-row']}>Waktu</div>,
+        selector: row => <div className={classes['data-row']}>{row.waktu}</div>,
         accessor: "waktu",
         sortable: true,
         headerStyle: {
@@ -88,8 +89,8 @@ export const DaftarBookingBuku = () => {
       },
       {
         id: "tanggal",
-        name: <div className="data-row">Tanggal</div>,
-        selector: row => <div className="data-row">{row.tanggal}</div>,
+        name: <div className={classes['data-row']}>Tanggal</div>,
+        selector: row => <div className={classes['data-row']}>{row.tanggal}</div>,
         accessor: "tanggal",
         sortable: true,
         headerStyle: {
@@ -110,7 +111,7 @@ export const DaftarBookingBuku = () => {
 
     {
       id: "button",
-      name: <div className="data-row">Aksi</div>,
+      name: <div className={classes['data-row']}>Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
@@ -172,9 +173,9 @@ export const DaftarBookingBuku = () => {
           {(loadedData) =>
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2 className='data-table-header'>Tabel Booking</h2>
-                  <Link to="create" className="button-create"><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
+                  <h1 className={classes['judul1']}>Tabel Booking</h1>
+                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
               }
               data={loadedData.filter((item)=> {
