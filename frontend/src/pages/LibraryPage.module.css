@@ -56,11 +56,20 @@
 .maintop{
     background-color: var(--gray-light);
     height: 80vw;
+    margin-bottom: 5vw;
 }
 
 .mainmid{
+    height: 100%;
     width: 97%;
     margin: auto;
+}
+
+.mainbatch{
+    background-color: var(--white-light);
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    height: 100%;
 }
 
 .searchsugg{

@@ -92,6 +92,8 @@ import { action as adminDeleteStudentAction } from "./pages/Admin/StudentPage";
 import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinjamPage";
 //Calender
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
+//Delete booking
+import { action as adminDeleteBookingAction } from "./pages/Admin/DaftarBookingBuku"
 
 //Petugas Action
 //Scan Masuk
@@ -352,12 +354,13 @@ const studentId=useSelector(state=>state.auth.user)
           ]
          },
          {
-          path:"booking",
+          path:"booked-books",
           children:[
             {index:true,
              id:"admin-booking",
              element:<DaftarBookingBuku/>,
              loader:adminBookingLoader,
+             action: adminDeleteBookingAction
             },
             // {
             //   path:":idPengembalian",

@@ -42,14 +42,12 @@
 .genre{
     width: 97%;
     margin: auto;
-    margin-top: 6vw;
     font-family: Inter;
 }
 
 .genretab{
     font-size: 1.2vw;
     color: var(--accentblack-light);
-    
 }
 
 .genretab-button{

@@ -7,20 +7,25 @@ import { useCart,useEffect } from 'react-use-cart';
 import { authActions } from '../features/auth/authSlice';
 
 export const Navbar = (props) => {
-  
+
 const authen=useSelector(state=>state.auth.isAuth);
 const formRef=useRef();
+const {
+
+  emptyCart
+} = useCart();
 const navigate=useNavigate();
    const dispatch= useDispatch();
 const  logoutHandler=async(e)=>{
+
   const response = await fetch("http://localhost:8080/auth/logout", {
     method: "POST",
     headers:{
       "Authorization":"Bearer"
     },
   });
-  
-  
+
+
 if(!response.ok)
 {
     throw json(
@@ -36,6 +41,7 @@ localStorage.removeItem('user');
 
 
   dispatch(authActions.logOut("test"));
+  emptyCart()
   navigate("/");
 
 }
@@ -56,10 +62,10 @@ const { totalUniqueItems } = useCart()
                    {/*  <li className={classes['linav2']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/admin">Masuk Admin</NavLink></li> */}
                   {!authen &&  <li className={classes['linav3']} onClick={props.onClick}>Login</li>}
 
-                  {authen && 
+                  {authen &&
                     <li  className={classes['linav3']} onClick={logoutHandler}>LogOut</li>
                  }
-                  {authen && <li className={classes['linav3']} onClick={props.onClickCart}>Booking List </li>}
+                  {authen && <li className={classes['linav3']} onClick={props.onClickCart}>Booking List  </li>}
                 </ul>
             </nav>
         </header>

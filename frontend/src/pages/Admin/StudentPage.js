@@ -104,9 +104,45 @@ export const StudentPage = () => {
         },
     ];
 
+    const [advanceSearch, setAdvanceSearch] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState("");
+    const [searchBased, setSearchBased] = React.useState("");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const toggleDropdown = () => {
+      setDropdownOpen(!dropdownOpen);
+    };
 
   return (
     <>
+     <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+            {" "}
+            Pencarian Lebih Lanjut
+          </Button>
+    {
+      advanceSearch && (
+        <>
+         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data berdasarkan :
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => setSearchBased("nisn")} className="box-menu">
+                NISN
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("Nama")} className="box-menu">
+                Nama
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+          <Input disabled={searchBased === "" ? true : false}
+          type="text"
+          placeholder={searchBased === "nisn" ? "Cari data dari NISN..." : searchBased === "nama" ? "Cari Data dari nama siswa..." : "Cari data..."}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </>
+      )
+    }
         <Suspense fallback="">
           <Await resolve={students} >
             {(loadedData)=>
@@ -117,7 +153,16 @@ export const StudentPage = () => {
                     <Link to="registrasi/data-pribadi" style={{listStyle: 'none'}} className="button-create">Tambah Akun</Link>
                 </div>
                }
-               data={loadedData}
+               data={loadedData.filter((item)=> {
+                if(searchBased === ""){
+                  return item
+                }
+                else if(searchBased === "Nama"){
+                  return item.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                } else if(searchBased === "nisn"){
+                  return item.nisn.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                }
+               })}
                columns={columns}
                pagination
                    />

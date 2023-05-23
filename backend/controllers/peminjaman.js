@@ -59,7 +59,6 @@ exports.updatePeminjaman = async function (req, res, next) {
 exports.deletePeminjaman = async function (req, res, next) {
   try {
     const peminjaman = await Peminjaman.findOne({ where: { id_peminjaman: req.params.peminjamanId } });
-
     // tentukan status pengembalian jika lebih dari tangga_kembali maka 'Terlambat' jika tidak 'Tepat Waktu'
     let status = "";
     if (new Date() > peminjaman.tanggal_kembali) {
@@ -102,7 +101,7 @@ exports.getAllPeminjaman = async function (req, res, next) {
     });
     // filter data peminjaman yang id_peminjaman tidak ada di idPeminjaman
     const idPeminjamanSelesai = idPeminjaman.map((p) => p.id_peminjaman);
-    const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));  
+    const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
     res.json(peminjamanBelumSelesai);
   } catch (error) {
     next(error);

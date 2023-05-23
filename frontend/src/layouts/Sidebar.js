@@ -40,8 +40,8 @@ const navigation = [
   },
   {
     title:"Booking",
-    href:"/admin/booking",
-    icon:"bi bi-calendar-event text-primary"
+    href:"/admin/booked-books",
+    icon:"bi bi-book"
   },
   {
     title:"HomePage",
