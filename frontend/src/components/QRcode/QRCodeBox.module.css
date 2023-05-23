@@ -37,16 +37,30 @@
     }
 }
 
-.content{
-    margin-top:20px ;
+.qrcode{
     display: flex;
-    gap:25px;
-    background:"#F1F1F1";
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1vw;
+    background-color: var(--white-light);
+    border-radius: 1.5vw;
+    width: 97%;
 }
 
-.list-books{
-    margin:10px 0;
-    height: 55.5vw;
-    overflow-y: scroll;
+.qrtext{
+    color: var(--blue-light);
+    margin-top: 1vw;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.qrtext:hover{
+    transform: translateY(-0.3vw);
+    color: var(--red-light);
+}
+
+.qrtext span{
+    font-weight: 600;
+    font-size: 1.2vw;
 }
