@@ -29,16 +29,13 @@
 }
 
 .boxescon{
-    height: 70vw;
-}
-
-.boxes{
-    height: 10vw;
+    height: 20vw;
+    margin-bottom: 2vw;
 }
 
 .due-date{
     color:white;
-    background: #FF5959 76%;
+    background: #ff5959bc;
     padding:7px 3px;
     border: transparent;
     border-radius: 1vw;
@@ -78,6 +75,13 @@
     padding:0.8vw 0.4vw;
     border-radius: 1vw;
     font-size: 1vw;
+    transition: all .3s ease;
+}
+
+.book-info_button:hover{
+    text-decoration: none;
+    color: var(--white-light);
+    transform: translateY(-0.3vw);
 }
 
 .rating{

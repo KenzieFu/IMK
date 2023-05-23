@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export const Book = ({book}) => {
   const currentDate=new Date().getDate();
   const remaining=currentDate - new Date(book.tanggal_kembali).getDate();
-  let checker= remaining<0?`Telat ${remaining*-1} hari lagi.`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
+  let checker= remaining<0?`Telat ${remaining*-1} hari lagi`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
   return (
     <div className={classes.boxescon}>
     <div className={classes["boxes"]}>
