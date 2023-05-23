@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, json, redirect, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Collapse,
@@ -15,11 +15,14 @@ import {
 } from "reactstrap";
 import { ReactComponent as LogoWhite } from "../assets/admin/images/logos/xtremelogowhite.svg";
 import user1 from "../assets/admin/images/users/user1.jpg";
+import { useDispatch } from "react-redux";
+import { authActions } from "../features/auth/authSlice";
 
 const Header = () => {
+  const dispatch=useDispatch();
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-
+  const navigate=useNavigate();
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
     setIsOpen(!isOpen);
@@ -27,6 +30,36 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+
+  const  logoutHandler=async(e)=>{
+    const response = await fetch("http://localhost:8080/auth/logout", {
+      method: "POST",
+      headers:{
+        "Authorization":"Bearer"
+      },
+    });
+    
+    
+  if(!response.ok)
+  {
+      throw json(
+          { message: 'Gagal Logout.' },
+          {
+            status: 500,
+          }
+        );
+  }
+  localStorage.removeItem('token');
+  localStorage.removeItem('expiration');
+  localStorage.removeItem('user');
+  
+  
+    dispatch(authActions.logOut("test"));
+    navigate("/");
+  
+  }
+
+
   return (
     <Navbar color="primary" dark expand="md">
       <div className="d-flex align-items-center">
@@ -82,7 +115,7 @@ const Header = () => {
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
             <DropdownItem>Inbox</DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
+            <DropdownItem onClick={logoutHandler} >Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
