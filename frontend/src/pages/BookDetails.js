@@ -108,78 +108,84 @@ const BookDetail = () => {
     // }
     return (
         <>
-            {isAuth && <Sidebar />}
-            <div className={classes.content}>      
-                <div className={classes.cardtopmain}>
-                <div className={classes.cardtop}>   
-                <div className={classes.covertop}>
-                    <div className={classes['texttop']}>
-                        <h1>Yuk Baca Buku!</h1>
-                        <span>Perpustakaan Methodist Charles Wesley tersedia 100+ buku yang bisa diakses kapan saja.</span>
-                    </div>
-                </div> 
-                <div className={classes.card}>
 
-                    {/*  <div className={classes.hero}>
-                        <img src="../assets/hero-details-books.jpg"></img>
-                    </div> */}
-                    <div className={classes.cover}>
-                        <img src="../assets/BookCover.png"></img>
-                    </div>
+            <div className={classes.layout}>
+            {isAuth && <Sidebar />}   
+                    <div className={classes.content}>   
+                        <div className={classes.cardtopmain}>
+                        <div className={classes.cardtop}>   
+                        <div className={classes.covertop}>
+                            <div className={classes['texttop']}>
+                                <h1>Yuk Baca Buku!</h1>
+                                <span>Perpustakaan Methodist Charles Wesley tersedia 100+ buku yang bisa diakses kapan saja.</span>
+                            </div>
+                        </div> 
+                        <div className={classes.card}>
 
-                    <div className={classes.book_info}>
-                        <h2>{book.judul_buku}</h2>
-                        <div className={classes.summary}>
-                            {/* <h3>Sinopsis</h3> */}
-                            <p>{book.sinopsis}</p>
+                            {/*  <div className={classes.hero}>
+                                <img src="../assets/hero-details-books.jpg"></img>
+                            </div> */}
+                            <div className={classes.cover}>
+                                <img src="../assets/BookCover.png"></img>
+                            </div>
+
+                            <div className={classes.book_info}>
+                                <h2>{book.judul_buku}</h2>
+                                <div className={classes.summary}>
+                                    {/* <h3>Sinopsis</h3> */}
+                                    <p>{book.sinopsis}</p>
+                                </div>
+                                <div className={classes.infotable}>
+                                <table>
+                                    <tr>
+                                        <td>Penulis</td>
+                                        <td style={{width:"5vw"}}>:</td>
+                                        <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.pengarang}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Penerbit</td>
+                                        <td style={{width:"5vw"}}>: &nbsp;</td>
+                                        <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.penerbit}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tahun</td>
+                                        <td style={{width:"5vw"}}>: &nbsp;</td>
+                                        <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.tahun_terbit}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td>ISBN</td>
+                                        <td style={{width:"5vw"}}>: &nbsp;</td>
+                                        <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.isbn}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Genre</td>
+                                        <td style={{width:"5vw"}}>: &nbsp;</td>
+                                        <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.kategori.nama_kategori}</td>
+                                    </tr>
+                                </table>
+                                <button className={classes["button-back"]} onClick={backHandler}>Kembali</button>
+                                {/* button ini belum jalan seperti semestinya */}
+                                {showLogin && <LoginModal onClose={closeLoginModal} />}
+                                {/* {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>} */}
+                                <button className={classes["button-borrow"]} onClick={() => {
+                                    if (!isAuth) {
+                                        showLoginModal();
+                                    } else {
+                                        handleAddToCart();
+                                    }
+                                }}
+                                >  {!isAdded ? "Pinjam Buku" : "✔ Telah Dibooking"}</button>
+                            </div>
+                            </div>
                         </div>
-                        <div className={classes.infotable}>
-                        <table>
-                            <tr>
-                                <td>Penulis</td>
-                                <td style={{width:"5vw"}}>:</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.pengarang}</td>
-                            </tr>
-                            <tr>
-                                <td>Penerbit</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.penerbit}</td>
-                            </tr>
-                            <tr>
-                                <td>Tahun</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.tahun_terbit}</td>
-                            </tr> 
-                            <tr>
-                                <td>ISBN</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.isbn}</td>
-                            </tr>
-                            <tr>
-                                <td>Genre</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.kategori.nama_kategori}</td>
-                            </tr>
-                        </table>
-                        <button className={classes["button-back"]} onClick={backHandler}>Kembali</button>
-                        {/* button ini belum jalan seperti semestinya */}
-                        {showLogin && <LoginModal onClose={closeLoginModal} />}
-                        {/* {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>} */}
-                        <button className={classes["button-borrow"]} onClick={() => {
-                            if (!isAuth) {
-                                showLoginModal();
-                            } else {
-                                handleAddToCart();
-                            }
-                        }}
-                        >  {!isAdded ? "Pinjam Buku" : "✔ Telah Dibooking"}</button>
+
                     </div>
                     </div>
                 </div>
 
             </div>
-            </div>
-        </div>
+                   
+            
         </>
     )
 }

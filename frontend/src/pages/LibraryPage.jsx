@@ -32,7 +32,7 @@ export const LibraryPage = () => {
     <>
 
     <div className={classes.content}>
-<div>
+<div style={{ display:"flex" }}>
 {isAuth &&<Sidebar/>}
 
       <div className={classes.main}>
@@ -80,11 +80,10 @@ export const LibraryPage = () => {
         }
 
       </div>
-
-      <div className={classes['mainbatch']}>
-        
-      <div className={classes['mainmid']}>
       {!check &&
+      <div className={classes['mainbatch']}> 
+      
+      <div className={classes['mainmid']}>
           <>
         <Suspense fallback="">
           <Await resolve={genres}>
@@ -93,12 +92,12 @@ export const LibraryPage = () => {
         </Suspense>
 
            </>
-        }
         </div>
         
+        
 
+     
         <div className={classes['mainbot']}>
-        {!check &&
         <>
         <Suspense fallback ={<p style={{ textAlign:"center" }}>Loading.....</p>}>
           <Await resolve={books}>
@@ -108,10 +107,10 @@ export const LibraryPage = () => {
 
             </>
 
-        }
         </div>
+        
+          </div>}
         </div>
-      </div>
 
 
       </div>

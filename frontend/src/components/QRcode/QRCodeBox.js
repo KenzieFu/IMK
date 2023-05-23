@@ -8,7 +8,7 @@ export const QRCodeBox = () => {
       {
         value &&
         <QRCode
-        title="GeeksForGeeks"
+        title="QR Code Anda"
         value={JSON.stringify(value)}
         size={300}/>
       }

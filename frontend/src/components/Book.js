@@ -8,14 +8,16 @@ export const Book = ({book}) => {
   const remaining=currentDate - new Date(book.tanggal_kembali).getDate();
   let checker= remaining<0?`Telat ${remaining*-1} hari lagi.`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
   return (
+    <div className={classes.boxescon}>
+    <div className={classes["boxes"]}>
     <Box>
-        <div style={{ marginLeft:"50px", display:"flex",padding:'35px' }}>
+        <div style={{ display:"flex",padding:'35px' }}>
             <img sty width="150px" height="210" src="./assets/book.png" alt="" />
             <div className={classes["book-info"]} id='book-info'>
                 <span className={classes["due-date"]}>{checker}</span>
                 <div style={{ display:"flex",justifyContent:"space-between", alignItems:"center",marginBottom:"0",paddingBottom:"0" }}>
                   <div>
-                  <h1 className={classes["book-info_h1"]}>{book.buku.judul_Buku}</h1>
+                  <h1 className={classes["book-info_h1"]}>{book.buku.Judul_Buku}</h1>
                   <p style={{ marginTop:"0",paddingTop:"0"  }}>{book.buku.pengarang}</p>
                   </div>
                     <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
@@ -34,5 +36,7 @@ export const Book = ({book}) => {
             </div>
         </div>
     </Box>
+    </div>
+  </div>
   )
 }
