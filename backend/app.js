@@ -46,20 +46,21 @@ app.use(
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
 
 // Set CORS headers
 const corsOptions = {
   origin: "http://localhost:3000",
-  Credentials: true,
-  optionsSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
+
 
 // Set CORS headers
 /* app.use(function(req, res, next) {
