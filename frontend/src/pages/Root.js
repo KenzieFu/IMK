@@ -28,7 +28,8 @@ useEffect(()=>{
   if(token === "EXPIRED")
   {
     submit(null,{action:"/logout",method:"post"});
-    return;
+    dispatch(authActions.logOut())
+    return ;
   }
 
   const tokenDuration=getTokenDuration();
