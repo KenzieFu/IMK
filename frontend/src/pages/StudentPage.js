@@ -18,10 +18,7 @@ export const StudentPage = () => {
   const [showKembali,setShowKembali]=useState(true);
   const [showBooking,setShowBooking]=useState(true);
   const isAuth=useSelector(state=>state.auth.isAuth);
-  const {
 
-    emptyCart
-} = useCart();
 
   const pinjamHandler=()=>{
     setShowPinjam(true);
@@ -36,7 +33,7 @@ export const StudentPage = () => {
 
   if(!isAuth)
   {
-    emptyCart()
+
     return <Navigate to="/"/>;
   }
   return (
