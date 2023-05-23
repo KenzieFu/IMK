@@ -6,7 +6,7 @@ import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from "
 import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
-import "./UserPage.css";
+import classes from './adminbatch.module.css'
 
 export const UserPage = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -39,9 +39,9 @@ export const UserPage = () => {
   const columns = [
     {
       id: "id",
-      name: <div className="data-row">ID Akun</div>,
-      // tambahkan div untuk style tulisan
-      selector: (row) => <div className="data-row">{row.id_akun}</div>,
+      name: <span className={classes['data-row']}>ID Akun</span>,
+      // tambahkan span untuk style tulisan
+      selector: (row) => <span className={classes['data-rowid']}>{row.id_akun}</span>,
       // selector: (row) => row.id_akun,
       sortable: true,
       headerStyle: {
@@ -53,8 +53,8 @@ export const UserPage = () => {
     },
     {
       id: "username",
-      name: <div className="data-row">Username</div>,
-      selector: (row) => <div className="data-row">{row.username}</div>,
+      name: <span className={classes['data-row']}>Username</span>,
+      selector: (row) => <span className={classes['data-row']}>{row.username}</span>,
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -64,8 +64,8 @@ export const UserPage = () => {
     },
     {
       id: "tipe",
-      name: <div className="data-row">Hak Akses</div>,
-      selector: (row) => <div className="data-row"> {row.hak_akses}</div>,
+      name: <span className={classes['data-row']}>Hak Akses</span>,
+      selector: (row) => <span className={classes['data-row']}> {row.hak_akses}</span>,
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -74,15 +74,15 @@ export const UserPage = () => {
     },
     {
       id: "button",
-      name: <div className="data-row">Aksi</div>,
+      name: <span className={classes['data-row']}>Aksi</span>,
       width: "30%",
       cell: (row) => (
-        <div className="action-buttons">
-          <Link to={`/admin/user/${row.id_akun}`} className="action-detail">
-            Rincian
+        <div className={classes["batchbut"]}>
+          <Link to={`/admin/user/${row.id_akun}`} className={classes["detailbut"]}>
+            Rincian &nbsp; <i class="fa fa-info-circle" aria-hidden="true"></i>
           </Link>
-          <span onClick={() => showModalHandler(row.id_akun)} className="action-delete">
-            Hapus
+          <span onClick={() => showModalHandler(row.id_akun)} className={classes["delbut"]}>
+          Rincian &nbsp; <i class="fa fa-info-circle" aria-hidden="true"></i>
           </span>
         </div>
       ),
@@ -155,21 +155,20 @@ export const UserPage = () => {
     } */
   return (
     <>
-      <div className="search-button">
-        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
-        <div>
-          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+      <div className={classes['search-button']}>
+        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes['searchbox']} />
+          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
             {" "}
-            Pencarian Lebih Lanjut
+            Filter <i class="fa fa-filter" aria-hidden="true"></i>
           </Button>
         </div>
-      </div>
       {/* <div className="dropdown-content"> */}
       {advanceSearch && (
         <>
+        <div className={classes['downdown']}>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Tampilkan Akun Berdasarkan Hak Akses
+            <DropdownToggle caret className={classes['dropdown2']}>
+              Filter by
             </DropdownToggle>
             <DropdownMenu>
               {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
@@ -189,15 +188,18 @@ export const UserPage = () => {
               </DropdownItem> */}
             </DropdownMenu>
           </Dropdown>
+        </div>
+
           {/* <div className="additional-content"></div> */}
         </>
       )}
+
       {/* </div> */}
       <Suspense fallback="">
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
-              title={<div className="data-table-header">Akun</div>}
+              title={<h1 className={classes['judul1']}>Akun</h1>}
               data={loadedData.filter((item) => {
                 if (searchBased === "") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());

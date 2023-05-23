@@ -11,38 +11,38 @@ import {
 
 const FeedData = [
   {
-    title: "Cras justo odio",
-    icon: "bi bi-bell",
+    title: "Buku Fisika XII dipinjam",
+    icon: "bi bi-book",
     color: "primary",
     date: "6 minute ago",
   },
   {
-    title: "New user registered.",
-    icon: "bi bi-person",
+    title: "Buku Kimia XII dipinjam",
+    icon: "bi bi-book",
     color: "info",
     date: "6 minute ago",
   },
   {
-    title: "Server #1 overloaded.",
-    icon: "bi bi-hdd",
+    title: "Buku Biologi XII dipinjam",
+    icon: "bi bi-book",
     color: "danger",
     date: "6 minute ago",
   },
   {
-    title: "New order received.",
-    icon: "bi bi-bag-check",
+    title: "Buku Matematika XII dipinjam",
+    icon: "bi bi-book",
     color: "success",
     date: "6 minute ago",
   },
   {
-    title: "Cras justo odio",
-    icon: "bi bi-bell",
+    title: "Buku Fisika XII dipinjam",
+    icon: "bi bi-book",
     color: "dark",
     date: "6 minute ago",
   },
   {
-    title: "Server #1 overloaded.",
-    icon: "bi bi-hdd",
+    title: "Buku Fisika XII dipinjam",
+    icon: "bi bi-book",
     color: "warning",
     date: "6 minute ago",
   },
@@ -52,9 +52,9 @@ const Feeds = () => {
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Feeds</CardTitle>
+        <CardTitle tag="h5">Notifikasi</CardTitle>
         <CardSubtitle className="mb-2 text-muted" tag="h6">
-          Widget you can use
+          What's new? 
         </CardSubtitle>
         <ListGroup flush className="mt-4">
           {FeedData.map((feed, index) => (

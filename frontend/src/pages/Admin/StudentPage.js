@@ -6,7 +6,7 @@ import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'r
 import { set } from 'react-hook-form';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
-import "./StudentPage.css";
+import classes from './adminbatch.module.css'
 
 export const StudentPage = () => {
     const [currentId,setCurrentId]=useState(null);
@@ -29,8 +29,8 @@ export const StudentPage = () => {
       const columns = [
         {
             id:'id',
-            name:<div className="data-row">ID Siswa</div>,
-            selector:(row) =>  <div className="data-row">{row.id_siswa}</div>,
+            name:<span className={classes['data-row']}>ID Siswa</span>,
+            selector:(row) =>  <span className={classes['data-rowid']}>{row.id_siswa}</span>,
             sortable:true,
             headerStyle: {
               fontWeight: "bold",
@@ -41,9 +41,9 @@ export const StudentPage = () => {
         },
         {
             id:"nisn",
-            name: <div className="data-row">NISN</div>,
+            name: <span className={classes['data-row']}>NISN</span>,
             //selector: row => row.nisn,
-            selector:(row) =>  <div className="data-row">{row.nisn}</div>,
+            selector:(row) =>  <span className={classes['data-row']}>{row.nisn}</span>,
             accessor:"nisn",
             sortable: true,
             headerStyle: {
@@ -54,9 +54,9 @@ export const StudentPage = () => {
         },
         {
             id:"nama_lengkap",
-            name:  <div className="data-row">Nama Lengkap</div>,
+            name:  <span className={classes['data-row']}>Nama Lengkap</span>,
             //selector: row => row.nama_lengkap,
-            selector:(row) =>  <div className="data-row">{row.nama_lengkap}</div>,
+            selector:(row) =>  <span className={classes['data-row']}>{row.nama_lengkap}</span>,
             accessor:"nama_lengkap",
             sortable: true,
             headerStyle: {
@@ -67,9 +67,9 @@ export const StudentPage = () => {
         },
         {
             id:"jenis_kelamin",
-            name:  <div className="data-row">Jenis Kelamin</div>,
+            name:  <span className={classes['data-row']}>Jenis Kelamin</span>,
             //selector: row => row.jenis_kelamin,
-            selector:(row) =>  <div className="data-row">{row.jenis_kelamin}</div>,
+            selector:(row) =>  <span className={classes['data-row']}>{row.jenis_kelamin}</span>,
             accessor:"jenis_kelamin",
             sortable: true,
             headerStyle: {
@@ -80,14 +80,16 @@ export const StudentPage = () => {
         },
         {
             id:"button",
-            name: <div className="data-row">Aksi</div>,
+            name: <span className={classes['data-row']}>Aksi</span>,
             width:"30%",
           cell: (row) =>
                 (
-              <div className="action-buttons" >
-            <Link to={`/admin/students/${row.id_siswa}`}  className="action-detail">Rincian</Link>{'                    '}{'       '}
+              <div className={classes["batchbut"]}>
+            <Link to={`/admin/students/${row.id_siswa}`}  className={classes["detailbut"]}>
+              Rincian &nbsp; <i class="fa fa-info-circle"></i></Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_siswa)} style={{ cursor:"pointer" }} className="action-delete">Hapus</span>
+            <span  onClick={()=>showModalHandler(row.id_siswa)} className={classes["delbut"]}> 
+            Hapus  &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i> </span>
                   
             </div>
           ),
@@ -115,9 +117,9 @@ export const StudentPage = () => {
 
   return (
     <>
-     <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+     <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter2']}>
             {" "}
-            Pencarian Lebih Lanjut
+            Cari <i class="fa fa-search" aria-hidden="true"></i>
           </Button>
     {
       advanceSearch && (
@@ -149,9 +151,9 @@ export const StudentPage = () => {
             {(loadedData)=>
                <DataTable
                title={
-                <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2 className="data-table-header">Tabel Siswa</h2>
-                    <Link to="registrasi/data-pribadi" style={{listStyle: 'none'}} className="button-create"><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
+                    <h1 className={classes['judul1']}>Tabel Siswa</h1>
+                    <Link to="registrasi/data-pribadi" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
                }
                data={loadedData.filter((item)=> {

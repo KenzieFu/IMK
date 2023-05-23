@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './DaftarBukuPinjamPage.css';
 
 
 export const DaftarBukuPinjamPage = () => {
