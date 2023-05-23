@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom'
 export const Book = ({book}) => {
   const currentDate=new Date().getDate();
   const remaining=currentDate - new Date(book.tanggal_kembali).getDate();
-  let checker= remaining<0?`Telat ${remaining*-1} hari lagi.`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
+  let checker= remaining<0?`Telat ${remaining*-1} hari lagi`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
   return (
+    <div className={classes.boxescon}>
+    <div className={classes["boxes"]}>
     <Box>
-        <div style={{ marginLeft:"50px", display:"flex",padding:'35px' }}>
+        <div style={{ display:"flex",padding:'35px' }}>
             <img sty width="150px" height="210" src="./assets/book.png" alt="" />
             <div className={classes["book-info"]} id='book-info'>
                 <span className={classes["due-date"]}>{checker}</span>
@@ -34,5 +36,7 @@ export const Book = ({book}) => {
             </div>
         </div>
     </Box>
+    </div>
+  </div>
   )
 }

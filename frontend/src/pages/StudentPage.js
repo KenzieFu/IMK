@@ -81,6 +81,7 @@ export const StudentPage = () => {
           {/*   <StudentCard/> */}
 
           <QRCodeBox/>
+          
             <Suspense fallback={<p>Loading...</p>}>
               <Await resolve={pinjam}>
               {loadedData=><LatestBook latest={loadedData.filter((book,i,{length})=>i===length -1)}/>}
