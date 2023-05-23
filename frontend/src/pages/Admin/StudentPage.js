@@ -4,8 +4,9 @@ import { DeleteModal } from '../../components/admin/modals/DeleteModal';
 import { memo } from 'react';
 import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
 import { set } from 'react-hook-form';
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
-import './StudentPage.css';
+import "./StudentPage.css";
 
 export const StudentPage = () => {
     const [currentId,setCurrentId]=useState(null);
@@ -150,7 +151,7 @@ export const StudentPage = () => {
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
                     <h2 className="data-table-header">Tabel Siswa</h2>
-                    <Link to="registrasi/data-pribadi" style={{listStyle: 'none'}} className="button-create">Tambah Akun</Link>
+                    <Link to="registrasi/data-pribadi" style={{listStyle: 'none'}} className="button-create"><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
                }
                data={loadedData.filter((item)=> {

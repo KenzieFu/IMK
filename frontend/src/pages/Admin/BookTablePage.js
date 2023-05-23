@@ -7,6 +7,7 @@ import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from '
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
+import "./BookTablePage.css";
 
 export const BookTablePage = () => {
 
@@ -46,31 +47,51 @@ export const BookTablePage = () => {
     {
       id: 'id',
       name: <div className="data-row">ID Buku</div>,
-      selector: row => row.id_buku,
+      selector: (row) => <div className="data-row">{row.id_buku}</div>,
 
       sortable: true,
-
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
     },
     {
       id: "judul_buku",
       name: <div className="data-row">Judul Buku</div>,
-      selector: row => row.judul_buku,
+      selector: (row) => <div className="data-row">{row.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "pengarang",
       name: <div className="data-row">Pengarang</div>,
-      selector: row => row.pengarang,
+      selector: (row) =><div className="data-row">{row.pengarang}</div>,
       accessor: "pengarang",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "kategori",
       accessor: "kategori.nama_kategori",
       name: <div className="data-row">Kategori</div>,
-      selector: row => row.kategori.nama_kategori,
+      selector: row => <div className="data-row">{row.kategori.nama_kategori}</div>,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "button",
@@ -79,7 +100,7 @@ export const BookTablePage = () => {
       cell: (row) =>
       (
         <div className="action-buttons" >
-          <Link to={`/admin/books/${row.id_buku}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }} className="action-detail">Rincian</Link>{'                    '}{'       '}
+          <Link to={`/admin/books/${row.id_buku}`} style={{ cursor: "pointer", textDecoration: "none"}} className="action-detail">Rincian</Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
           <span onClick={() => showModalHandler(row.id_buku)} style={{ cursor: "pointer" }} className="action-delete">Hapus</span>
 
@@ -102,20 +123,25 @@ export const BookTablePage = () => {
 
   return (
     <>
+    <div className="search-button">
      <Input
-type="text"
-placeholder="Cari Judul Buku..."
-value={searchTerm}
-onChange={(e) => setSearchTerm(e.target.value)}
-/>
-      <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
-        Pencarian Lebih Lanjut
-      </Button>
+        type="text"
+        placeholder="Cari Judul Buku..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+        />
+          <div>
+            <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
+              Pencarian Lebih Lanjut
+            </Button>
+          </div>
+      </div>
       {
         advanceSearch &&
         <>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret>
+            <DropdownToggle caret className="dropdown-toggle-search">
               Tampilkan data berdasarkan:
             </DropdownToggle>
             <DropdownMenu>
@@ -123,7 +149,7 @@ onChange={(e) => setSearchTerm(e.target.value)}
                 Tampilkan semua data
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem header>Kategori</DropdownItem>
+              <DropdownItem header className="box-menu">Kategori</DropdownItem>
               <Suspense fallback="Loading...">
                 <Await resolve={books}>
                   {(bukuData) => {
@@ -156,7 +182,7 @@ onChange={(e) => setSearchTerm(e.target.value)}
               title={
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h2>Tabel Buku</h2>
-                  <Link to="create">Create</Link>
+                  <Link to="create"className="button-create"><i class="bi bi-person-plus"> Tambah Buku</i></Link>
                 </div>
               }
               data={loadedData.filter((item) => {

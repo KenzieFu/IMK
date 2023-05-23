@@ -6,6 +6,7 @@ import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from '
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
+import "./DaftarPengembalianBukuPage.css";
 
 export const DaftarPengembalianBukuPage = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -50,60 +51,101 @@ export const DaftarPengembalianBukuPage = () => {
 
     {
       id: "nama_siswa",
-      name: 'Nama Siswa',
-      selector: row => row.peminjaman.siswa.nama_lengkap,
+      name: <div className="data-row">Nama Siswa</div>,
+      selector: row => <div className="data-row">{row.peminjaman.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width:"13%"
     },
     {
       id: "judul_buku",
-      name: 'Judul Buku',
-      selector: row => row.peminjaman.buku.judul_buku,
+      name: <div className="data-row">Judul Buku</div>,
+      selector: row => <div className="data-row">{row.peminjaman.buku.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width:"11%"
     },
     {
       id: "tanggal_pinjam",
-      name: 'Tanggal Pinjam',
-      selector: row => row.peminjaman.tanggal_pinjam,
+      name: <div className="data-row">Tanggal Pinjam</div>,
+      selector: row => <div className="data-row">{row.peminjaman.tanggal_pinjam}</div>,
       accessor: "tanggal_pinjam",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width:"15%"
     },
     {
       id: "tanggal_kembali",
-      name: 'Tanggal Dikembalikan',
-      selector: row => row.peminjaman.tanggal_kembali,
+      name: <div className="data-row">Tanggal Dikembalikan</div>,
+      selector: row => <div className="data-row">{row.peminjaman.tanggal_kembali}</div>,
       accessor: "tanggal_kembali",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width:"15%"
     },
     {
       id: "tanggal_pengembalian",
-      name: 'Tanggal Pengembalian',
-      selector: row => row.tanggal_pengembalian,
+      name: <div className="data-row">Tanggal Pengembalian</div>,
+      selector: row => <div className="data-row">{row.tanggal_pengembalian}</div>,
       accessor: "tanggal_pengembalian",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width:"15%"
     },
     {
       id: "status_kembali",
-      name: 'Status',
-      selector: row => row.status,
+      name: <div className="data-row">Status</div>,
+      selector: row => <div className="data-row">{row.status}</div>,
       accessor: "status_kembali",
       sortable: true,
-      color: (row => row.status === "Tepat Waktu") ? "Green" : "Red"
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      color: (row => row.status === "Tepat Waktu") ? "Green" : "Red",
+      width:"15%"
     },
     {
       id: "button",
-      name: "Action",
-      width: "30%",
+      name: <div className="data-row">Aksi</div>,
+      width: "20%",
       cell: (row) =>
       (
-        <div style={{ margin: "0 0" }} >
-          <Link to={`/admin/borrowed-books/${row.peminjaman.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
+        <div style={{ margin: "0 0" }} className='action-buttons'>
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.peminjaman.id_peminjaman)} style={{ cursor: "pointer" }}>Delete</span>
+          <span onClick={() => showModalHandler(row.peminjaman.id_peminjaman)}className='action-check'> <i class="bi bi-check-lg"> Setujui</i></span>
 
         </div>
       ),
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+      },
       ignoreRowClick: true,
       allowOverflow: true,
       selector: row => row.button,
@@ -197,7 +239,7 @@ export const DaftarPengembalianBukuPage = () => {
         <Await resolve={daftarPengembalian} >
           {(loadedData) =>
             <DataTable
-              title="Tabel Pengembalian"
+              title={<div className="data-table-header">Tabel Pengembalian</div>}
               data={loadedData.filter((item) => {
 
                 if (searchBased === "" && searchBasedDate === "" && searchBasedStat === "") {
