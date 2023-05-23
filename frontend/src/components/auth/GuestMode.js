@@ -20,6 +20,14 @@ export const GuestMode = ({children}) => {
             }
         }
 
+        if(auth && token )
+        {
+            if(middleware.user?.hak_akses ==="Admin")
+                return <Navigate to="/admin" />
+            else if(middleware.user?.hak_akses === "Petugas")
+              return <Navigate to="/petugas" />
+        }
+
         return(
             <>
             {children}
