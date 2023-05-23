@@ -88,16 +88,15 @@ export const CreateBuku = () => {
     event.preventDefault();
 
     try {
-      const formDataToSend = new FormData();
-<<<<<<< HEAD
-      formDataToSend.append('judul_buku', formData.judul_buku);
+      /* const formDataToSend = new FormData(); */
+      /* formDataToSend.append('judul_buku', formData.judul_buku);
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
       formDataToSend.append('gambar_buku', formData.gambar_buku)
       formDataToSend.append('id_kategori', formData.id_kategori)
       formDataToSend.append('sinopsis', formData.sinopsis);
-      formDataToSend.append('isbn', formData.isbn);
+      formDataToSend.append('isbn', formData.isbn); */
 
       const sendedData={
         judul_buku:formData.judul_buku,
@@ -115,30 +114,15 @@ export const CreateBuku = () => {
       console.log(sendedData);
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-        headers: { "Content-Type": "multipart/form-data" },
+        
+        headers: {
+        /*   "Content-Type": "multipart/form-data", */
+          "Authorization":"Bearer",
+          // boundry
+          "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+      },
         body:sendedData,
 
-=======
-      formDataToSend.append("judul_buku", formData.judul_buku);
-      formDataToSend.append("pengarang", formData.pengarang);
-      formDataToSend.append("penerbit", formData.penerbit);
-      formDataToSend.append("tahun_terbit", formData.tahun_terbit);
-      formDataToSend.append("gambar_buku", formData.gambar_buku);
-      // formDataToSend.append("gambar_buku", formData.gambar_buku, formData.gambar_buku.name);
-      // append file to form
-      formDataToSend.append("id_kategori", formData.id_kategori);
-      formDataToSend.append("sinopsis", formData.sinopsis);
-      formDataToSend.append("isbn", formData.isbn);
-      console.log(formDataToSend.gambar_buku);
-
-      const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/buku", {
-        method: "POST",
-        headers: {
-          // "Content-Type": "application/json",
-          "Content-Type": "multipart/form-data",
-        },
-        body: formDataToSend,
->>>>>>> 3f104776b7c5692cd46a00149242736ac18478a8
       }); // Replace with your API endpoint
       // console.log semua data yang dikirimkan
       const responseData = await response.json();
@@ -146,7 +130,6 @@ export const CreateBuku = () => {
 
       alert("Form submitted successfully!");
       setFormData({
-<<<<<<< HEAD
             id_buku: '',
             judul_buku: '',
             pengarang: '',
@@ -158,19 +141,6 @@ export const CreateBuku = () => {
             isbn: ''
           });
 
-=======
-        id_buku: "",
-        judul_buku: "",
-        pengarang: "",
-        penerbit: "",
-        tahun_terbit: "",
-        id_kategori: "",
-        sinopsis: "",
-        gambar_buku: "",
-        isbn: "",
-      });
-      console.log("Selesai");
->>>>>>> 3f104776b7c5692cd46a00149242736ac18478a8
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -196,8 +166,7 @@ export const CreateBuku = () => {
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
-<<<<<<< HEAD
-          <Label for="examplePenerbit">Penerbitsssssssssss</Label>
+          <Label for="examplePenerbit">Penerbit</Label>
           <Input
             id="examplePenerbit"
             name="penerbit"
@@ -205,10 +174,6 @@ export const CreateBuku = () => {
             type="text"
             onChange={handleInputChange}
           />
-=======
-          <Label for="examplePenerbit">Penerbit</Label>
-          <Input id="examplePenerbit" name="penerbit" placeholder="Masukkan Nama Penerbit" type="text" onChange={handleInputChange} />
->>>>>>> 3f104776b7c5692cd46a00149242736ac18478a8
           {/* {errors.penerbit && <span>{errors.penerbit.message}</span>} */}
         </FormGroup>
         <FormGroup>
