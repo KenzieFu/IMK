@@ -74,11 +74,12 @@ export const StudentPage = () => {
                   </Await>
                 </Suspense>} */}
 
-
             </div>
           </div>
            <div>
+
           {/*   <StudentCard/> */}
+
           <QRCodeBox/>
             <Suspense fallback={<p>Loading...</p>}>
               <Await resolve={pinjam}>

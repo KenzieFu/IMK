@@ -56,6 +56,7 @@
 }
 
 .content-form{
+    background-color: var(--white-light);
     display: flex;
     flex-direction: column;
     width: 51%;

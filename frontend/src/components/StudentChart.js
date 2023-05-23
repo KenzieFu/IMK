@@ -14,7 +14,8 @@ export const StudentChart = (props) => {
   return (
     <>
         <Box>
-            <div style={{ padding:"0 0 0 30px" }}>
+            <div className={classes.maintop}>
+            <div className={classes.infotop}>
             <div className={classes.info}>
                 <h1>Halo, {student.username}!</h1>
                 <span>Sudahkah kamu membaca buku hari ini?</span>
@@ -25,20 +26,22 @@ export const StudentChart = (props) => {
                 <BookBar image="./assets/bukuKembali.png" label="Buku Kembali" color="#49CF78" />
                 <BookBar image="./assets/chartVector.png" label="Peringkat Membaca" color="#1388CD" />
             </div>
+            </div>
            <div className={classes.history} >
-            <h2>Riwayat Peminjaman Buku</h2>
+            <h1>Riwayat Peminjaman Buku</h1>
                 <nav className={classes.navbar} >
                     <ul style={{ display:"flex",gap:"25px" }}>
                         <li onClick={props.showPinjamHandler} className={currentBarPinjamClassName}>
                             Dipinjam
                             <span className={barPinjamClassName}></span>
                         </li>
-                        <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>Dikembalikan
+                        <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>
+                            Dikembalikan
                         <span className={barKembaliClassName}></span></li>
                         <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>Dibooking
                         <span className={barKembaliClassName}></span></li>
                     </ul>
-                    <span style={{ fontWeight:"bolder" }}>Sort By</span>
+                    <span style={{ fontWeight:"bolder" }}>Sort By <i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </nav>
            </div>
            </div>
