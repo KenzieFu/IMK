@@ -5,7 +5,8 @@ const Siswa = require("../models/siswa");
 const Peminjaman = require("../models/peminjaman");
 const dayjs = require("dayjs");
 const BukuPerpus = require("../models/bukuPerpus");
-const { where } = require("sequelize");
+const { Op } = require("sequelize");
+const Pengembalian = require("../models/pengembalian");
 
 // Function untuk menampilkan pemesanan buku berdasarkan user yang login
 exports.getPemesananBukuByUser = async function (req, res, next) {
@@ -19,14 +20,41 @@ exports.getPemesananBukuByUser = async function (req, res, next) {
       include: [
         {
           model: Buku,
-          include: [ { model: Kategori } ]
+          include: [{ model: Kategori }],
         },
         {
           model: Siswa,
         },
       ],
     });
-    res.json(pemesananBuku);
+    const peminjaman = await Peminjaman.findAll({ where: { id_siswa: 3 }, attributes: ["id_peminjaman"] });
+    const idPeminjaman = peminjaman.map((p) => p.id_peminjaman);
+    // idPeminjaman = [9, 15]
+    // cek idPeminjaman di tabel pengembalian jika tidak ada maka masukkan ke array idPeminjamanBelumSelesai
+    const pengembalian = await Pengembalian.findAll({ where: { id_peminjaman: idPeminjaman }, attributes: ["id_peminjaman"] });
+    const idPeminjamanSelesai = pengembalian.map((p) => p.id_peminjaman);
+    // idPeminjamanSelesai = [9]
+    // filter data peminjaman yang id_peminjaman tidak ada di idPeminjaman
+    const idPeminjamanBelumSelesai = idPeminjaman.filter((p) => !idPeminjamanSelesai.includes(p));
+    // idPeminjamanBelumSelesai = [15]
+    const peminjamanBelumSelesai = await Peminjaman.findAll({
+      // where in idPeminjamanBelumSelesai karena idPeminjamanBelumSelesai adalah array
+      where: { id_peminjaman: { [Op.in]: idPeminjamanBelumSelesai } },
+      include: [
+        {
+          model: Buku,
+          include: [{ model: Kategori }],
+        },
+        {
+          model: Siswa,
+        },
+      ],
+    });
+
+    console.log(idPeminjaman);
+    console.log(idPeminjamanSelesai);
+    console.log(idPeminjamanBelumSelesai);
+    res.json({ pemesananBuku: pemesananBuku, peminjaman: peminjamanBelumSelesai });
   } catch (error) {
     next(error);
   }
@@ -39,7 +67,7 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
   //   "id_siswa": 2,
   //   "id_buku": [2, 3]
   // }
-  
+
   const { id_siswa, id_buku } = req.body;
   // cek dulu id_siswa kalau ada 3 data di tabel peminjaman buku dengan id_siswa yang sama maka tidak bisa melakukan pemesanan
   const peminjamanBukuData = await Peminjaman.findAll({ where: { id_siswa: id_siswa } });
