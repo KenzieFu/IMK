@@ -104,10 +104,24 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn);
 
-      
+      const sendedData={
+        judul_buku:formData.judul_buku,
+        pengarang:formData.pengarang,
+        penerbit:formData.penerbit,
+        tahun_terbit:formData.tahun_terbit,
+        gambar_buku:formData.gambar_buku,
+        id_kategori: formData.id_kategori,
+        sinopsis:formData.sinopsis,
+        isbn:formData.isbn
+
+
+      }
+
+      console.log(sendedData);
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-        body: formDataToSend,
+        headers: { "Content-Type": "multipart/form-data" },
+        body:sendedData,
 
       }); // Replace with your API endpoint
       console.log(response);
@@ -123,6 +137,7 @@ export const CreateBuku = () => {
             gambar_buku: '',
             isbn: ''
           });
+
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -161,7 +176,7 @@ export const CreateBuku = () => {
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
-          <Label for="examplePenerbit">Penerbit</Label>
+          <Label for="examplePenerbit">Penerbitsssssssssss</Label>
           <Input
             id="examplePenerbit"
             name="penerbit"

@@ -18,6 +18,10 @@ export const RootLayout = () => {
 const authen=useSelector(state=>state.auth.isAuth);
 const dispatch=useDispatch();
 const user = useSelector(state=>state.auth.user)
+if(!authen  || (authen ) )
+{
+  
+}
 
 useEffect(()=>{
   if(Object.keys(user)?.length === 0 && token ){
