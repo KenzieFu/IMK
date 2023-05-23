@@ -11,7 +11,6 @@ export const Navbar = (props) => {
 const authen=useSelector(state=>state.auth.isAuth);
 const formRef=useRef();
 const {
-
   emptyCart
 } = useCart();
 const navigate=useNavigate();
@@ -35,13 +34,14 @@ if(!response.ok)
         }
       );
 }
+emptyCart()
 localStorage.removeItem('token');
 localStorage.removeItem('expiration');
 localStorage.removeItem('user');
 
 
   dispatch(authActions.logOut("test"));
-  emptyCart()
+
   navigate("/");
 
 }

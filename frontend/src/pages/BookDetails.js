@@ -27,6 +27,7 @@ const BookDetail = () => {
         theme: "colored",
     });
 
+
     const gagal = () => toast.warning('Buku sudah ada di booking list!', {
         position: "top-center",
         autoClose: 5000,
@@ -47,33 +48,107 @@ const BookDetail = () => {
         progress: undefined,
         theme: "colored",
     });
+    const bookingAda = () => toast.error('Kamu sudah pesan buku ini! Ayo segera ambil di perpustakaan!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const pinjamAda = () => toast.error('Kamu sedang meminjam buku ini! Selesaikan terlebih dahulu lalu pesan lagi!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const pinjamCount = () => toast.error('Buku yang kamu pinjam sudah lebih dari 3!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const pesanCount = () => toast.error('Buku yang kamu pesan sudah melebihi batas (max 3), Segera jemput buku kamu di perpustakaan!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const batasCount = () => toast.error('Kamu sudah mencapai batas maksimal pemesanan buku! Harap selesaikan buku yang anda pinjam atau pemesanan yang lain sebelum memesan lagi!', {
+        position: "top-center",
+        autoClose: 7000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
     const isAuth = useSelector((state) => state.auth.isAuth);
     const akun = useSelector((state) => state.auth.user);
     const [isAdded, setIsAdded] = useState(false);
     const { addItem, items, inCart, totalUniqueItems } = useCart();
-    // console.log(items)
-    console.log(akun)
 
-    // console.log(userItems)
+    // console.log(akun)
+
     const navigate = useNavigate();
 
-
     const { book } = useLoaderData('book-detail');
+    const { pemesanan } = useLoaderData('book-detail');
+    const { peminjaman } = useLoaderData('book-detail');
+
+    // const existingPeminjaman = peminjaman.find((item) => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
+    // const existingPemesanan = pemesanan.find((item) => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
     const backHandler = () => {
         navigate("..");
     }
+    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+
+    const countPemesanan = pemesanan.filter(item => item.id_siswa === 3).length
+
+    const countPeminjaman = peminjaman.filter(item => item.id_siswa === 1).length
+
+
+    const batasBook = countPemesanan + countPeminjaman
 
     const handleAddToCart = () => {
-        const userItems = items.filter((item) => item.id_akun === akun.user.id_siswa);
-        const existingItem =  inCart(book.id_buku)
-        console.log(existingItem )
 
-        if (existingItem) {
+        const existingItem = inCart(book.id_buku)
+        console.log(existingItem)
+        if (existingPemesanan) {
+            bookingAda()
+        }
+        else if (existingPeminjaman) {
+            pinjamAda()
+
+        } else if (countPemesanan === 3) {
+            pesanCount()
+        } else if (countPeminjaman === 3) {
+            pinjamCount()
+        }
+        else if (batasBook === 3) {
+            batasCount()
+        }
+        else if (existingItem) {
             gagal()
-        } else if(totalUniqueItems === 3)
-        {
+        } else if (totalUniqueItems === 3) {
             cartPenuh()
-        }else {
+        } else {
             addItem({
                 id: book.id_buku,
                 name: book.judul_buku,
@@ -81,16 +156,16 @@ const BookDetail = () => {
                 penerbit: book.penerbit,
                 pengarang: book.pengarang,
                 sinopsis: book.sinopsis,
-                id_akun: akun.user.id_siswa
+                id_akun: akun.user.id_siswa,
+                gambar: book.gambar_buku,
+                genre: book.kategori.nama_kategori
             });
             notify()
 
         }
     };
-
     const [showBookingModal, setBookingModal] = useState(false)
     const [showLogin, setShowLogin] = useState(false);
-
 
     const showLoginModal = () => {
         setShowLogin(true);
@@ -98,88 +173,77 @@ const BookDetail = () => {
     const closeLoginModal = () => {
         setShowLogin(false);
     }
-    // const showBookingModalHandler = (id) => {
-    //     setBookingModal(true);
 
-    // }
-    // const closeBookingModalHandler = (id) => {
-    //     setBookingModal(false);
-
-    // }
     return (
         <>
             {isAuth && <Sidebar />}
-            <div className={classes.content}>      
+            <div className={classes.content}>
                 <div className={classes.cardtopmain}>
-                <div className={classes.cardtop}>   
-                <div className={classes.covertop}>
-                    <div className={classes['texttop']}>
-                        <h1>Yuk Baca Buku!</h1>
-                        <span>Perpustakaan Methodist Charles Wesley tersedia 100+ buku yang bisa diakses kapan saja.</span>
-                    </div>
-                </div> 
-                <div className={classes.card}>
-
-                    {/*  <div className={classes.hero}>
-                        <img src="../assets/hero-details-books.jpg"></img>
-                    </div> */}
-                    <div className={classes.cover}>
-                        <img src="../assets/BookCover.png"></img>
-                    </div>
-
-                    <div className={classes.book_info}>
-                        <h2>{book.judul_buku}</h2>
-                        <div className={classes.summary}>
-                            {/* <h3>Sinopsis</h3> */}
-                            <p>{book.sinopsis}</p>
+                    <div className={classes.cardtop}>
+                        <div className={classes.covertop}>
+                            <div className={classes['texttop']}>
+                                <h1>Yuk Baca Buku!</h1>
+                                <span>Perpustakaan Methodist Charles Wesley tersedia 100+ buku yang bisa diakses kapan saja.</span>
+                            </div>
                         </div>
-                        <div className={classes.infotable}>
-                        <table>
-                            <tr>
-                                <td>Penulis</td>
-                                <td style={{width:"5vw"}}>:</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.pengarang}</td>
-                            </tr>
-                            <tr>
-                                <td>Penerbit</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.penerbit}</td>
-                            </tr>
-                            <tr>
-                                <td>Tahun</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.tahun_terbit}</td>
-                            </tr> 
-                            <tr>
-                                <td>ISBN</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.isbn}</td>
-                            </tr>
-                            <tr>
-                                <td>Genre</td>
-                                <td style={{width:"5vw"}}>: &nbsp;</td>
-                                <td style={{ color: "#3a3a3a", fontWeight: "500", width:"20vw" }}>{book.kategori.nama_kategori}</td>
-                            </tr>
-                        </table>
-                        <button className={classes["button-back"]} onClick={backHandler}>Kembali</button>
-                        {/* button ini belum jalan seperti semestinya */}
-                        {showLogin && <LoginModal onClose={closeLoginModal} />}
-                        {/* {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>} */}
-                        <button className={classes["button-borrow"]} onClick={() => {
-                            if (!isAuth) {
-                                showLoginModal();
-                            } else {
-                                handleAddToCart();
-                            }
-                        }}
-                        >  {!isAdded ? "Pinjam Buku" : "✔ Telah Dibooking"}</button>
-                    </div>
+                        <div className={classes.card}>
+                            <div className={classes.cover}>
+                                <img src={"../assets/BookCover.png"}></img>
+                            </div>
+
+                            <div className={classes.book_info}>
+                                <h2>{book.judul_buku}</h2>
+                                <div className={classes.summary}>
+                                    {/* <h3>Sinopsis</h3> */}
+                                    <p>{book.sinopsis}</p>
+                                </div>
+                                <div className={classes.infotable}>
+                                    <table>
+                                        <tr>
+                                            <td>Penulis</td>
+                                            <td style={{ width: "5vw" }}>:</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{book.pengarang}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Penerbit</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{book.penerbit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tahun</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{book.tahun_terbit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ISBN</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{book.isbn}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Genre</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{book.kategori.nama_kategori}</td>
+                                        </tr>
+                                    </table>
+                                    <button className={classes["button-back"]} onClick={backHandler}>Kembali</button>
+                                    {/* button ini belum jalan seperti semestinya */}
+                                    {showLogin && <LoginModal onClose={closeLoginModal} />}
+                                    {/* {showBookingModal && <BookingModals onClose={closeBookingModalHandler} id={book.id_buku} judulBuku={book.judul_buku}/>} */}
+                                    <button className={classes["button-borrow"]} onClick={() => {
+                                        if (!isAuth) {
+                                            showLoginModal();
+                                        } else {
+                                            handleAddToCart();
+                                        }
+                                    }}
+                                    >  {!isAdded ? "Pinjam Buku" : "✔ Telah Dibooking"}</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
             </div>
-            </div>
-        </div>
         </>
     )
 }
@@ -203,10 +267,38 @@ const loadBook = async (id) => {
     }
 }
 
+
+
+const loadPinjams = async () => {
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku-siswa")
+    console.log(response);
+    if (!response.ok) {
+        throw json(
+            { message: 'Could not fetch peminjaman.' },
+            {
+                status: 500,
+            }
+        );
+    }
+    else {
+        const resData = await response.json();
+        return resData;
+    }
+}
+
 export async function loader({ request, params }) {
     const id = params.bookId;
+    const data = await loadPinjams();
+    const peminjamanData = data.peminjaman;
+    const pemesananData = data.pemesananBuku;
+
 
     return defer({
         book: await loadBook(id),
+        daftarBookingDanPemesanan: data,
+        peminjaman: peminjamanData,
+        pemesanan: pemesananData
     });
 }
+
+
