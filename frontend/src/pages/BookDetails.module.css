@@ -41,7 +41,7 @@
 .cardtopmain{
     background-color: var(--gray-light);
     height: 100%;
-    padding-top: 3vw;
+    padding-top: 1vw;
     padding-bottom: 6vw;
 }
 
@@ -92,7 +92,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 4vw;
-    height: 100%;
+    
     padding: 2vw;
 }
 
@@ -233,5 +233,9 @@ tr{
 } */
 
 .content{
-    width: 80%;
+    width: 100%;
+}
+
+.layout{
+    display: flex;
 }
