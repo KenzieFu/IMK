@@ -76,43 +76,15 @@ exports.getTahunAjaranBaruBook = async function (req, res, next) {
 
 // Function untuk menambahkan buku
 exports.createBook = async function (req, res, next) {
-  // contoh data yang dikirimkan dalam json
-  // {
-  //   "id_buku": "1234567890",
-  //   "judul_buku": "Buku A",
-  //   "pengarang": "John Doe",
-  //   "penerbit": "Penerbit A",
-  //   "tahun_terbit": "2000",
-  //   "id_kategori": "1",
-  //   "sinopsis": "Sinopsis buku A",
-  //   "gambar_buku": "Gambar buku A",
-  //   "isbn": "1234567890"
-  // }
   try {
-    // cek ada file yang terupload atau tidak
     if (!req.file) {
       const error = new Error("Tidak ada gambar yang terupload");
       error.statusCode = 422;
       throw error;
     }
 
-    // cek apakah buku sudah ada atau belum
-    // const book = await Buku.findByPk(req.body.id_buku);
-    // if (book) {
-    //   const error = new Error("Buku sudah ada");
-    //   error.statusCode = 422;
-    //   throw error;
-    // };
-
-    const id_buku = req.body.id_buku;
-    const judul_buku = req.body.judul_buku;
-    const pengarang = req.body.pengarang;
-    const penerbit = req.body.penerbit;
-    const tahun_terbit = req.body.tahun_terbit;
-    const id_kategori = req.body.id_kategori;
-    const sinopsis = req.body.sinopsis;
-    const gambar_buku = req.file.path;
-    const isbn = req.body.isbn;
+    const { id_buku, judul_buku, pengarang, penerbit, tahun_terbit, id_kategori, sinopsis, isbn } = req.body;
+    const gambar_buku = req.file.path.replace("\\", "/");
 
     const book = await Buku.create({
       id_buku: id_buku,
@@ -125,9 +97,7 @@ exports.createBook = async function (req, res, next) {
       gambar_buku: gambar_buku,
       isbn: isbn,
     });
-
-    // const book = await Buku.create(req.body);
-    // res.json(book);
+    res.json(book);
   } catch (error) {
     next(error);
   }
@@ -177,13 +147,19 @@ exports.getBooks = async function (req, res, next) {
 exports.getPerpusBooks = async function (req, res, next) {
   try {
     const books = await BukuPerpus.findAll({
-      include: [{ model: Buku }],
+      include: [
+        {
+          model: Buku,
+          include: [{ model: Kategori }],
+        },
+      ],
     });
     res.json(books);
   } catch (error) {
     next(error);
   }
 };
+
 
 // Function untuk mengambil daftar buku tahun ajaran baru
 exports.getTahunAjaranBaruBooks = async function (req, res, next) {

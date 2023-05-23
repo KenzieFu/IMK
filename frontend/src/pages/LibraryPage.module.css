@@ -1,7 +1,7 @@
 :root{
     --white:#ffffff;
     --blue:#2e55ba; 
-    --accentblack:rgb(58, 58, 58);
+    --accentblack:#3a3a3a;
     --red:#FF5959;
     --addgray:#DBD0C0;
     --gray:#FAEEE0;
@@ -63,3 +63,25 @@
     margin: auto;
 }
 
+.searchsugg{
+    display:  block;
+    margin-left: 4vw;
+    padding-top: 3vw;
+}
+
+.searchsugg span{
+    color: var(--blue-light);
+    font-size: 1.2vw;
+    font-weight: 500;
+}
+
+.searchsugg h1{
+    display: flex;
+    line-height: 1vw;
+}
+
+.enteredkey{
+    color: var(--accentblack-light);
+    font-weight: 500;
+    font-size: 1.4vw;
+}

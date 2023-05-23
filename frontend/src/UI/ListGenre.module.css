@@ -42,13 +42,21 @@
 .genre{
     width: 97%;
     margin: auto;
-    margin-top: 4vw;
+    margin-top: 6vw;
     font-family: Inter;
 }
 
 .genretab{
     font-size: 1.2vw;
     color: var(--accentblack-light);
+    
+}
+
+.genretab-button{
+    font-size: 1.2vw;
+    color: var(--accentblack-light);
+    cursor: pointer;
+    display: inline-block;
 }
 
 .genre ul{
@@ -68,6 +76,7 @@
     width: 100%;
     padding: 0.5vw 1vw ;
     border-radius: 1vw;
+    transition: all .5s ease;
 }
 
 .genretab2li{
@@ -94,4 +103,8 @@
 
 .allbooklogo:hover{
     transform: translateY(-7px);
+}
+
+li .currentColor{
+    background-color:var(--beige-light) ;
 }

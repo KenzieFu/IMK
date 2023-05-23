@@ -6,7 +6,7 @@ export const ErrorModal = ({onClose,message}) => {
     <>
       <Modal onClose={onClose}>
       <div> Gambar</div>
-      <p>{message.message}</p>
+      <p>{message?.message}</p>
       <button onClick={onClose}>Close</button>
       </Modal>
     </>

@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 const Buku = require("../models/buku");
 const Siswa = require("../models/siswa");
 const ViewPeminjamanSelesai = require("../models/viewPeminjamanSelesai");
+const Kategori = require("../models/kategori");
 
 // Function untuk menambahkan pengembalian
 exports.createPengembalian = async function (req, res, next) {
@@ -79,7 +80,7 @@ exports.getPengembalian = async function (req, res, next) {
           attributes: ["id_pengembalian", "tanggal_pengembalian", "status"],
         },
         {
-          model: Buku
+          model: Buku,
         },
       ],
     });
@@ -90,22 +91,26 @@ exports.getPengembalian = async function (req, res, next) {
   }
 };
 
-
 // Function untuk menampilkan satu data pengembalian join dengan tabel peminjaman dan siswa dan buku
 exports.getPengembalianAdmin = async function (req, res, next) {
   try {
-    const pengembalian = await ViewPeminjamanSelesai.findOne({
-      attributes: { include: ["tanggal_pengembalian", "status_kembali"] },
+    const pengembalian = await Pengembalian.findOne({
       where: {
         id_pengembalian: req.params.pengembalianId,
       },
       include: [
         {
-          model: Buku,
-        },
-
-        {
-          model: Siswa,
+          model: Peminjaman,
+          // di pemijaman join ke siswa dan buku
+          include: [
+            {
+              model: Siswa,
+            },
+            {
+              model: Buku,
+              include: [{ model: Kategori }],
+            },
+          ],
         },
       ],
     });
@@ -118,15 +123,11 @@ exports.getPengembalianAdmin = async function (req, res, next) {
 // Function untuk menampilkan semua data pengembalian join dengan tabel peminjaman dan siswa dan buku
 exports.getAllPengembalianAdmin = async function (req, res, next) {
   try {
-    const pengembalian = await ViewPeminjamanSelesai.findAll({
-      attributes: { include: ["tanggal_pengembalian", "status_kembali"] },
+    const pengembalian = await Pengembalian.findAll({
       include: [
         {
-          model: Buku,
-        },
-
-        {
-          model: Siswa,
+          model: Peminjaman,
+          include: [{ model: Siswa }, { model: Buku, include: [{ model: Kategori }] }],
         },
       ],
     });

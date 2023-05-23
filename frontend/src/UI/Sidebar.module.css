@@ -1,5 +1,6 @@
 .sidebar{
     display: flex;
+<<<<<<< HEAD
     
  
     height: 84vh;
@@ -10,11 +11,28 @@
     border: transparent;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
+=======
+    height: 200vh;
+    padding: 1vw 0;
+    width: 5vw;
+    border: transparent;
+    overflow-y: auto;
+    border-bottom-left-radius: 2vw;
+    border-top-left-radius: 2vw;
+>>>>>>> c8357c6bfeb1482e7f6dee081279983e24152188
    
     
 }
 .side-nav{
+<<<<<<< HEAD
     padding: 15px 0;
+=======
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+    padding: 2vw;
+>>>>>>> c8357c6bfeb1482e7f6dee081279983e24152188
     width: 100%;
 }
 
@@ -22,14 +40,16 @@
 .side-nav ul{
     display: flex;
     flex-direction: column;
-    gap:3vw;
+    gap: 3vw;
     justify-content: center;
     align-items: center;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 .side-nav ul img{
-    width: 2vw;
+    width: 2.5vw;
+    display: block;
 }

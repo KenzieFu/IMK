@@ -1,38 +1,108 @@
 const PemesananBuku = require("../models/pemesananBuku");
 const Buku = require("../models/buku");
+const Kategori = require("../models/kategori");
 const Siswa = require("../models/siswa");
 const Peminjaman = require("../models/peminjaman");
 const dayjs = require("dayjs");
 const BukuPerpus = require("../models/bukuPerpus");
 const { where } = require("sequelize");
 
+// Function untuk menampilkan pemesanan buku berdasarkan user yang login
+exports.getPemesananBukuByUser = async function (req, res, next) {
+  try {
+    // ditabel pemesanan buku join ke tabel buku dan siswa
+    const pemesananBuku = await PemesananBuku.findAll({
+      where: {
+        // masih statis nanti kubuat lagi dri token
+        id_siswa: 3,
+      },
+      include: [
+        {
+          model: Buku,
+          include: [ { model: Kategori } ]
+        },
+        {
+          model: Siswa,
+        },
+      ],
+    });
+    res.json(pemesananBuku);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Function untuk menambahkan pemesanan buku dengan bangak buku sekaligus
+exports.createPemesananBukuMultiple = async function (req, res, next) {
+  // contoh data yang dikirimkan dalam json
+  // {
+  //   "id_siswa": 2,
+  //   "id_buku": [2, 3]
+  // }
+  
+  const { id_siswa, id_buku } = req.body;
+  // cek dulu id_siswa kalau ada 3 data di tabel peminjaman buku dengan id_siswa yang sama maka tidak bisa melakukan pemesanan
+  const peminjamanBukuData = await Peminjaman.findAll({ where: { id_siswa: id_siswa } });
+  const sisaBukuDapatDipesan = 3 - peminjamanBukuData.length;
+  if (sisaBukuDapatDipesan === 0) {
+    // tambilkan banyak sisa buku yang dapat dipesan
+    return res.status(400).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
+  }
+  // cek ditabel peminjaman dengan id_buku tidak boleh pinjam buku yang sama
+  if (id_buku === undefined) {
+    return res.status(400).json({ message: "Buku tidak ditemukan" });
+  }
+  // if (sisaBukuDapatDipesan >= 1 && sisaBukuDapatDipesan <= 3) {
+  //   // tambilkan banyak sisa buku yang dapat dipesan
+  //   return res.status(400).json({ message: `Anda hanya dapat meminjam buku ${sisaBukuDapatDipesan} eksemplar lagi` });
+  //   // return res.status(400).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
+  // }
+  try {
+    if (id_buku.length === 0) {
+      return res.status(400).json({ message: "Buku tidak ditemukan" });
+    }
+    // looping untuk membuat pemesanan buku
+    for (let i = 0; i < id_buku.length; i++) {
+      // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
+      const buku = await BukuPerpus.findByPk(id_buku[i]);
+      if (buku === null) {
+        return res.status(400).json({ message: "Buku tidak ditemukan" });
+      } else if (buku.stok === 0) {
+        return res.status(400).json({ message: "Stok buku kosong" });
+      }
+      const peminjamanBukuBaru = await Peminjaman.create({
+        id_buku: id_buku[i],
+        id_siswa: id_siswa,
+        tanggal_pinjam: new Date(),
+        tanggal_kembali: new Date().setDate(new Date().getDate() + 14),
+      });
+      res.json({ message: "Pemesanan buku berhasil", pemesananBuku: peminjamanBukuBaru });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Function untuk menambahkan pemesanan buku
 exports.createPemesananBuku = async function (req, res, next) {
+  // create pemesanan mengambil array 0bject dan looping untuk membuat pemesanan buku
   try {
     // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
-    for(const item in req.body)
-    {
+    for (const item in req.body) {
       const buku = await BukuPerpus.findByPk(item.id_buku);
-    if (!buku?.id_buku) {
-      return res.status(200).json({ message: "Buku tidak ditemukan" });
-    } else if (buku.stok === 0) {
-      return res.status(400).json({ message: "Stok buku kosong" });
+      if (!buku?.id_buku) {
+        return res.status(200).json({ message: "Buku tidak ditemukan" });
+      } else if (buku.stok === 0) {
+        return res.status(400).json({ message: "Stok buku kosong" });
+      }
+      let pemesananBuku = await PemesananBuku.create({
+        id_buku: req.body.id_buku,
+        id_siswa: req.body.id_siswa,
+        waktu: dayjs().format("HH:mm:ss"),
+        tanggal: dayjs().format("YYYY-MM-DD"),
+      });
+      res.json(pemesananBuku);
     }
-    let pemesananBuku = await PemesananBuku.create({
-      id_buku: req.body.id_buku,
-      id_siswa: req.body.id_siswa,
-      waktu: dayjs().format("HH:mm:ss"),
-      tanggal: dayjs().format("YYYY-MM-DD"),
-    });
-
-    // kurangi jumlah buku yang dipesan --> udh ada di trigger
-    // const buku = await BukuPerpus.findByPk(req.body.id_buku);
-    // buku.stok = buku.stok - 1;
-    // await buku.save();
-
-    res.json(pemesananBuku);
-    }
-
   } catch (error) {
     next(error);
   }
@@ -148,7 +218,7 @@ exports.batalPemesananBuku = async function (req, res, next) {
         id_pemesanan: req.params.pemesananBukuId,
       },
     });
-    res.json({message: "Pemesanan buku berhasil dibatalkan", pemesananBuku: pemesananBuku, buku: buku});
+    res.json({ message: "Pemesanan buku berhasil dibatalkan", pemesananBuku: pemesananBuku, buku: buku });
   } catch (error) {
     next(error);
   }

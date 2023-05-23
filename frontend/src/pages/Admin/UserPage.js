@@ -1,90 +1,149 @@
-
-import React, { Suspense, useEffect, useState } from 'react'
-import DataTable, { memoize } from 'react-data-table-component'
-import { DeleteModal } from '../../components/admin/modals/DeleteModal';
-import { memo } from 'react';
-import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
-import { set } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import React, { Suspense, useEffect, useState } from "react";
+import DataTable, { memoize } from "react-data-table-component";
+import { DeleteModal } from "../../components/admin/modals/DeleteModal";
+import { memo } from "react";
+import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from "react-router-dom";
+import { set } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
-
-
-
-
+import "./UserPage.css";
 
 export const UserPage = () => {
-  const [currentId,setCurrentId]=useState(null);
-  const [showDeleteModal,setDeleteModal]=useState(false)
-  const { akuns }=useLoaderData('admin-akun');
+  const [currentId, setCurrentId] = useState(null);
+  const [showDeleteModal, setDeleteModal] = useState(false);
+  const { akuns } = useLoaderData("admin-akun");
   const location = useLocation();
   console.log(currentId);
 
   const [advanceSearch, setAdvanceSearch] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState("");
   const [searchBased, setSearchBased] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-   const toggleDropdown = () => {
+  const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
   const [dropdownOpen2, setDropdownOpen2] = useState(false);
   const toggleDropdown2 = () => {
-   setDropdownOpen2(!dropdownOpen2);
- };
+    setDropdownOpen2(!dropdownOpen2);
+  };
 
-  const showModalHandler=(id)=>{
+  const showModalHandler = (id) => {
     setDeleteModal(true);
     setCurrentId(id);
-  }
-  const closeModalHandler=()=>{
+  };
+  const closeModalHandler = () => {
     setDeleteModal(false);
-    setCurrentId((prev)=>prev);
-
-  }
-
+    setCurrentId((prev) => prev);
+  };
 
   const columns = [
     {
-        id:'id',
-        name:"ID",
-        selector:row=>row.id_akun,
-
-        sortable:true,
-
+      id: "id",
+      name: <div className="data-row">ID Akun</div>,
+      // tambahkan div untuk style tulisan
+      selector: (row) => <div className="data-row">{row.id_akun}</div>,
+      // selector: (row) => row.id_akun,
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
     },
     {
-        id:"username",
-        name: 'Username',
-        selector: row => row.username,
-        accessor:"username",
-        sortable: true,
+      id: "username",
+      name: <div className="data-row">Username</div>,
+      selector: (row) => <div className="data-row">{row.username}</div>,
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
-        id:"tipe",
-        accessor:"accessor",
-        name: 'Hak Akses',
-        selector: row => row.hak_akses,
-        sortable: true,
+      id: "tipe",
+      name: <div className="data-row">Hak Akses</div>,
+      selector: (row) => <div className="data-row"> {row.hak_akses}</div>,
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
     },
     {
-        id:"button",
-        name:"Action",
-        width:"30%",
-      cell: (row) =>
-            (
-          <div style={{ margin:"0 0" }} >
-        <Link to={`/admin/user/${row.id_akun}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
-        <input type="hidden" id='row' />
-        <span  onClick={()=>showModalHandler(row.id_akun)} style={{ cursor:"pointer" }}>Delete</span>
+      id: "button",
+      name: <div className="data-row">Aksi</div>,
+      width: "30%",
+      cell: (row) => (
+        <div className="action-buttons">
+          <Link to={`/admin/user/${row.id_akun}`} className="action-detail">
+            Rincian
+          </Link>
+          <span onClick={() => showModalHandler(row.id_akun)} className="action-delete">
+            Hapus
+          </span>
         </div>
       ),
-
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+      },
       ignoreRowClick: true,
       allowOverflow: true,
-      selector:row=>row.button,
-      button: true,
     },
-];
-    /* const [data,setData]=useState(DUMMY_USER);
+  ];
+
+  // const columns = [
+  //   {
+  //     id: "id",
+  //     name: "ID",
+  //     selector: (row) => row.id_akun,
+
+  //     sortable: true,
+  //   },
+  //   {
+  //     id: "username",
+  //     name: "Username",
+  //     selector: (row) => row.username,
+  //     accessor: "username",
+  //     sortable: true,
+  //   },
+  //   {
+  //     id: "tipe",
+  //     accessor: "accessor",
+  //     name: "Hak Akses",
+  //     selector: (row) => row.hak_akses,
+  //     sortable: true,
+  //   },
+  //   {
+  //     id: "button",
+  //     name: "Action",
+  //     width: "30%",
+  //     cell: (row) => (
+  //       <div style={{ margin: "0 0" }}>
+  //         <Link to={`/admin/user/${row.id_akun}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>
+  //           Detail
+  //         </Link>
+  //         {"                    "}
+  //         {"       "}
+  //         <input type="hidden" id="row" />
+  //         <span onClick={() => showModalHandler(row.id_akun)} style={{ cursor: "pointer" }}>
+  //           Delete
+  //         </span>
+  //       </div>
+  //     ),
+
+  //     ignoreRowClick: true,
+  //     allowOverflow: true,
+  //     selector: (row) => row.button,
+  //     button: true,
+  //   },
+  // ];
+  /* const [data,setData]=useState(DUMMY_USER);
 
 
     const deleteHandler=(id,e)=>{
@@ -95,56 +154,52 @@ export const UserPage = () => {
         setData(updatedData);
     } */
   return (
-
     <>
-    <Input
-type="text"
-placeholder="Cari Username..."
-value={searchTerm}
-onChange={(e) => setSearchTerm(e.target.value)}
-/>
-     <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
-        Pencarian Lebih Lanjut
-      </Button>
-     {
-        advanceSearch &&
+      <div className="search-button">
+        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
+        <div>
+          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+            {" "}
+            Pencarian Lebih Lanjut
+          </Button>
+        </div>
+      </div>
+      {/* <div className="dropdown-content"> */}
+      {advanceSearch && (
         <>
-        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-        <DropdownToggle caret>
-          Tampilkan data berdasarkan:
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem  onClick={() => setSearchBased('')}>
-            Tampilkan semua data
-          </DropdownItem>
-          <DropdownItem divider />
-    <DropdownItem header>Hak Akses</DropdownItem>
-          <DropdownItem  onClick={() => setSearchBased('siswa')}>
-            Siswa
-          </DropdownItem>
-          <DropdownItem  onClick={() => setSearchBased('admin')}>
-            Admin
-          </DropdownItem>
-          <DropdownItem  onClick={() => setSearchBased('petugas')}>
-            Petugas
-          </DropdownItem>
-          <DropdownItem  onClick={() => setSearchBased('kasir')}>
-            Kasir
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <div>
-</div>
-      </>
-}
-
-        <Suspense fallback="">
-          <Await resolve={akuns} >
-            {(loadedData)=>
-               <DataTable
-               title="Tabel User"
-               data={loadedData.filter((item) => {
-                if(searchBased === ""){
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Tampilkan Akun Berdasarkan Hak Akses
+            </DropdownToggle>
+            <DropdownMenu>
+              {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
+              {/* <DropdownItem divider /> */}
+              {/* <DropdownItem header>Hak Akses</DropdownItem> */}
+              <DropdownItem onClick={() => setSearchBased("siswa")} className="box-menu">
+                Siswa
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("admin")} className="box-menu">
+                Admin
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("petugas")} className="box-menu">
+                Petugas
+              </DropdownItem>
+              {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
+                Kasir
+              </DropdownItem> */}
+            </DropdownMenu>
+          </Dropdown>
+          {/* <div className="additional-content"></div> */}
+        </>
+      )}
+      {/* </div> */}
+      <Suspense fallback="">
+        <Await resolve={akuns}>
+          {(loadedData) => (
+            <DataTable
+              title={<div className="data-table-header">Akun</div>}
+              data={loadedData.filter((item) => {
+                if (searchBased === "") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
                 } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
@@ -155,71 +210,112 @@ onChange={(e) => setSearchTerm(e.target.value)}
                 } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
                 }
-               })}
-               columns={columns}
-               pagination
-                   />
-            }
-          </Await>
-        </Suspense>
-        {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler}/>}
-        {location.state && <div>{location.state.message}</div>}
+              })}
+              columns={columns}
+              pagination
+              className="data-table" // Atribut selector CSS untuk DataTable
+            />
+          )}
+        </Await>
+      </Suspense>
 
+      {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {location.state && <div>{location.state.message}</div>}
     </>
-  )
-}
+  );
 
+  // return (
+  //   <>
+  //     <Input type="text" placeholder="Cari Username..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+  //     <Button onClick={() => setAdvanceSearch(!advanceSearch)}>Pencarian Lebih Lanjut</Button>
+  //     {advanceSearch && (
+  //       <>
+  //         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+  //           <DropdownToggle caret>Tampilkan data berdasarkan:</DropdownToggle>
+  //           <DropdownMenu>
+  //             <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
+  //             <DropdownItem divider />
+  //             <DropdownItem header>Hak Akses</DropdownItem>
+  //             <DropdownItem onClick={() => setSearchBased("siswa")}>Siswa</DropdownItem>
+  //             <DropdownItem onClick={() => setSearchBased("admin")}>Admin</DropdownItem>
+  //             <DropdownItem onClick={() => setSearchBased("petugas")}>Petugas</DropdownItem>
+  //             <DropdownItem onClick={() => setSearchBased("kasir")}>Kasir</DropdownItem>
+  //           </DropdownMenu>
+  //         </Dropdown>
+  //         <div></div>
+  //       </>
+  //     )}
 
+  //     <Suspense fallback="">
+  //       <Await resolve={akuns}>
+  //         {(loadedData) => (
+  //           <DataTable
+  //             title="Tabel User"
+  //             data={loadedData.filter((item) => {
+  //               if (searchBased === "") {
+  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+  //               } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
+  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+  //               } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
+  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+  //               } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
+  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+  //               } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
+  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+  //               }
+  //             })}
+  //             columns={columns}
+  //             pagination
+  //           />
+  //         )}
+  //       </Await>
+  //     </Suspense>
+  //     {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+  //     {location.state && <div>{location.state.message}</div>}
+  //   </>
+  // );
+};
 
-const loadAkuns=async ()=>{
-  const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/akun")
+const loadAkuns = async () => {
+  const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/akun");
   console.log(response);
-  if(!response.ok)
-  {
+  if (!response.ok) {
     throw json(
-      { message: 'Could not fetch akun.' },
+      { message: "Could not fetch akun." },
       {
         status: 500,
       }
     );
-  }
-  else{
-    const resData=await response.json();
+  } else {
+    const resData = await response.json();
     return resData;
   }
-}
+};
 
-
-export const loader=()=>{
+export const loader = () => {
   return defer({
-    akuns:loadAkuns()
-  })
-}
+    akuns: loadAkuns(),
+  });
+};
 
 export async function action({ params, request }) {
-
   const method = request.method;
   const data = await request.formData();
   console.log(data);
-  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun/' + data.get('id'), {
+  const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/akun/" + data.get("id"), {
     method: method,
-    headers:{
-      "Authorization":"Bearer"
-    }
+    headers: {
+      Authorization: "Bearer",
+    },
   });
 
   if (!response.ok) {
     throw json(
-      { message: 'Could not delete user.' },
+      { message: "Could not delete user." },
       {
         status: 500,
       }
     );
-
   }
-   return  redirect("/admin/user");
+  return redirect("/admin/user");
 }
-
-
-
-

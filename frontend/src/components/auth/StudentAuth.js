@@ -8,9 +8,9 @@ export const StudentAuth = ({children}) => {
     const outlet=useOutlet();
 
         if(!middleware.isAuth)return<Navigate to="/"/>;
-        else if(middleware.isAuth && middleware.user.hak_akses !="Siswa" )
+        else if(middleware.isAuth && middleware.user?.hak_akses !="Siswa" )
         {
-            if(middleware.user.hak_akses ==="Admin")
+            if(middleware.user?.hak_akses ==="Admin")
             {
                 return <Navigate to="/admin"/>
             }

@@ -4,8 +4,7 @@ const Buku = require("../models/buku");
 const Pengembalian = require("../models/pengembalian");
 const BukuPerpus = require("../models/bukuPerpus");
 const { Op } = require("sequelize");
-const ViewPeminjamanSelesai = require("../models/viewPeminjamanSelesai");
-const ViewPeminjamanBelumSelesai = require("../models/viewPeminjamanBelumSelesai");
+const Kategori = require("../models/kategori");
 // Function untuk menambahkan peminjaman
 exports.createPeminjaman = async function (req, res, next) {
   // contoh data yang dikirimkan dalam json
@@ -59,12 +58,6 @@ exports.updatePeminjaman = async function (req, res, next) {
 // Function untuk menghapus data peminjaman
 exports.deletePeminjaman = async function (req, res, next) {
   try {
-    const peminjaman = await Peminjaman.destroy({
-      where: {
-        id_peminjaman: req.params.peminjamanId,
-      },
-    });
-
     // tentukan status pengembalian jika lebih dari tangga_kembali maka 'Terlambat' jika tidak 'Tepat Waktu'
     let status = "";
     if (new Date() > peminjaman.tanggal_kembali) {
@@ -88,6 +81,10 @@ exports.deletePeminjaman = async function (req, res, next) {
 // Function untuk mendapatkan semua data peminjaman join dengan tabel siswa dan buku
 exports.getAllPeminjaman = async function (req, res, next) {
   try {
+    // ambil semua id_peminjaman di tabel pengembalian
+    const idPeminjaman = await Pengembalian.findAll({ attributes: ["id_peminjaman"] });
+    // ambil data yang tidak ada di idPeminjaman
+    console.log(idPeminjaman.length);
     const peminjaman = await Peminjaman.findAll({
       include: [
         {
@@ -97,10 +94,14 @@ exports.getAllPeminjaman = async function (req, res, next) {
         {
           model: Buku,
           as: "buku",
+          include: [{ model: Kategori }],
         },
       ],
     });
-    res.json(peminjaman);
+    // filter data peminjaman yang id_peminjaman tidak ada di idPeminjaman
+    const idPeminjamanSelesai = idPeminjaman.map((p) => p.id_peminjaman);
+    const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
+    res.json(peminjamanBelumSelesai);
   } catch (error) {
     next(error);
   }
@@ -133,7 +134,7 @@ exports.getPeminjaman = async function (req, res, next) {
 // Function untuk mendapatkan data peminjaman berdasarkan user dan belum selesai di pinjam
 exports.getPeminjamanByUser = async function (req, res, next) {
   try {
-    const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
+    const peminjaman = await Peminjaman.findAll({
       where: {
         id_siswa: 2,
       },
@@ -141,6 +142,7 @@ exports.getPeminjamanByUser = async function (req, res, next) {
         {
           model: Buku,
           as: "buku",
+          include: [{ model: Kategori }],
         },
         {
           model: Siswa,
@@ -148,7 +150,35 @@ exports.getPeminjamanByUser = async function (req, res, next) {
         },
       ],
     });
-    res.json(peminjaman);
+    // filter peminjaman yang belum selesai dengan mencek jika id_peminjaman belum ada ditabel pengembalian
+    const idPeminjaman = peminjaman.map((p) => p.id_peminjaman);
+    const pengembalian = await Pengembalian.findAll({
+      where: {
+        id_peminjaman: {
+          [Op.in]: idPeminjaman,
+        },
+      },
+    });
+    const idPeminjamanSelesai = pengembalian.map((p) => p.id_peminjaman);
+    const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
+    res.json(peminjamanBelumSelesai);
+    // eror perbaiki lagi
+    // const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
+    //   where: {
+    //     id_siswa: 2,
+    //   },
+    //   include: [
+    //     {
+    //       model: Buku,
+    //       as: "buku",
+    //     },
+    //     {
+    //       model: Siswa,
+    //       as: "siswa",
+    //     },
+    //   ],
+    // });
+    // res.json(peminjaman);
   } catch (error) {
     next(error);
   }
@@ -157,22 +187,33 @@ exports.getPeminjamanByUser = async function (req, res, next) {
 // Function untuk mendapatkan histori peminjaman berdasarkan user
 exports.getHistoriPeminjaman = async function (req, res, next) {
   try {
-    const peminjaman = await ViewPeminjamanSelesai.findAll({
+    const peminjaman = await Peminjaman.findAll({ where: { id_siswa: 5 } });
+
+    // Ambil semua id_peminjaman dan masukkan ke dalam array
+    const idPeminjaman = peminjaman.map((p) => p.id_peminjaman);
+
+    // Cari semua pengembalian berdasarkan id_peminjaman
+    const pengembalian = await Pengembalian.findAll({
       where: {
-        id_siswa: 5,
+        id_peminjaman: {
+          [Op.in]: idPeminjaman,
+        },
       },
       include: [
         {
-          model: Buku,
-          as: "buku",
-        },
-        {
-          model: Siswa,
-          as: "siswa",
+          model: Peminjaman,
+          include: [
+            { model: Siswa },
+            {
+              model: Buku,
+              include: { model: Kategori },
+            },
+          ],
         },
       ],
     });
-    res.json(peminjaman);
+
+    res.json(pengembalian);
   } catch (error) {
     next(error);
   }

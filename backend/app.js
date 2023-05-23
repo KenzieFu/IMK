@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sequelize = require("./util/database");
 const multer = require("multer");
-const cors = require('cors');
+const cors = require("cors");
 // const feedRoutes = require('./routes/feed');
 const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
@@ -35,6 +35,7 @@ app.use(bodyParser.json({ limit: "50mb" })); // set limit to 50mb
 
 // app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
 app.use(
+  
   multer({
     storage: fileStorage,
     limits: {
@@ -45,24 +46,70 @@ app.use(
 );
 app.use("/images", express.static(path.join(__dirname, "images")));
 
- app.use((req, res, next) => {
-   res.setHeader("Access-Control-Allow-Origin", "*");
-   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
-   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-   next();
- });
-
-// Set CORS headers
-/* app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+<<<<<<< HEAD
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+=======
+ 
+>>>>>>> 9c75e9b94aa629d9c32b47d3c9ced733ab1d2555
   next();
 });
 
-app.use(cors({
-  origin:"http://localhost:3000"
-})) */
+// Set CORS headers
+const corsOptions = {
+  origin: "http://localhost:3000",
+<<<<<<< HEAD
+  credentials: true,
+=======
+  Credentials: true,
+  changeOrigin:true,
+  optionsSuccessStatus: 200,
+>>>>>>> 9c75e9b94aa629d9c32b47d3c9ced733ab1d2555
+};
+
+app.use(cors(corsOptions));
+
+
+// Set CORS headers
+// app.use(function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   next();
+// });
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
+
+  next();
+});
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+
+  })
+);
+
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//   })
+// );
+
+// app.use(cors())
+
+// app.use(cors({
+//   origin:"http://localhost:3000"
+// })) 
 
 // app.use('/feed', feedRoutes);
 app.use("/auth", authRoutes);

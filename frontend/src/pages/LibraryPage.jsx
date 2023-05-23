@@ -10,12 +10,18 @@ import { Suspense } from 'react'
 import {useLoaderData,json,defer,Await} from 'react-router-dom'
 import { ListGenre } from '../UI/ListGenre'
 import { useSelector } from 'react-redux'
+import { SearchResult } from '../components/SearchResult'
 
 export const LibraryPage = () => {
   const isAuth=useSelector(state=>state.auth.isAuth);
   const {books,genres}=useLoaderData('books');
-
-  console.log(genres)
+  const [currentGenre,setGenre]=useState(0);
+  console.log(currentGenre)
+  const setGenreHandler=(index)=>{
+    console.log(index)
+    setGenre(index);
+  }
+  console.log("Haihai")
   const [enteredKey,setKey]=useState('');
   let check = enteredKey.trim() !=="";
 
@@ -30,14 +36,25 @@ export const LibraryPage = () => {
 {isAuth &&<Sidebar/>}
 
       <div className={classes.main}>
+
+        <div className={classes.maintop}>
+        <div className={classes['searchsugg']}>
       {check &&
           <h1>
-            Hasil Pencarian untuk : {enteredKey}
+            <span> Hasil Pencarian untuk : </span>
+            <span style={{color:'#3a3a3a', marginLeft:'0.4vw', fontWeight:'600'}}>{enteredKey}</span>
           </h1>
         }
-        <div className={classes.maintop}>
+        </div>
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'2vw'}}> <SearchBox keyword={enteredKey} keyHandler={keyHandler}/>
       </div>
+      {check &&
+        <Suspense>
+          <Await resolve={books}>
+              {loadedData=><SearchResult keyword={enteredKey} books={loadedData} />}
+          </Await>
+        </Suspense>
+      }
 
       {!isAuth && <div style={{ marginLeft:"0px" }}></div>}
       {!check &&
@@ -69,21 +86,21 @@ export const LibraryPage = () => {
           <>
         <Suspense fallback="">
           <Await resolve={genres}>
-         {(loadedGenres)=><ListGenre genres={loadedGenres}/>}
+         {(loadedGenres)=><ListGenre setGenre={setGenreHandler} current={currentGenre} genres={loadedGenres}/>}
           </Await>
         </Suspense>
 
            </>
         }
         </div>
-
+        
 
         <div className={classes['mainbot']}>
         {!check &&
         <>
         <Suspense fallback ={<p style={{ textAlign:"center" }}>Loading.....</p>}>
           <Await resolve={books}>
-          {(loadedBooks)=><ListBooks books={loadedBooks}/>}
+          {(loadedBooks)=><ListBooks genre={currentGenre} books={loadedBooks}/>}
           </Await>
         </Suspense>
 
