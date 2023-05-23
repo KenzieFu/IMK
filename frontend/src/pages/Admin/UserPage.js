@@ -82,7 +82,7 @@ export const UserPage = () => {
             Rincian &nbsp; <i class="fa fa-info-circle" aria-hidden="true"></i>
           </Link>
           <span onClick={() => showModalHandler(row.id_akun)} className={classes["delbut"]}>
-          Rincian &nbsp; <i class="fa fa-info-circle" aria-hidden="true"></i>
+            Hapus &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i>
           </span>
         </div>
       ),

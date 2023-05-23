@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import classes from './adminbatch.module.css'
 
 
 export const DaftarBukuPinjamPage = () => {
@@ -57,8 +58,8 @@ export const DaftarBukuPinjamPage = () => {
   const columns = [
     {
       id: 'id',
-      name: <div className="data-row">ID Pinjam</div>,
-      selector: (row) =>  <div className="data-row">{row.id_peminjaman}</div>,
+      name: <div className={classes['data-row']}>ID Pinjam</div>,
+      selector: (row) =>  <div className={classes['data-rowid']}>{row.id_peminjaman}</div>,
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -69,8 +70,8 @@ export const DaftarBukuPinjamPage = () => {
     },
     {
       id: "id_siswa",
-      name: <div className="data-row">Id Siswa</div>,
-      selector: (row) =>  <div className="data-row">{row.id_siswa}</div>,
+      name: <div className={classes['data-row']}>Id Siswa</div>,
+      selector: (row) =>  <div className={classes['data-row']}>{row.id_siswa}</div>,
       accessor: "id_siswa",
       sortable: true,
       headerStyle: {
@@ -80,8 +81,8 @@ export const DaftarBukuPinjamPage = () => {
     },
     {
       id: "nama_siswa",
-      name:<div className="data-row">Nama Siswa</div>,
-      selector: (row) => <div className="data-row">{row.siswa.nama_lengkap}</div>,
+      name:<div className={classes['data-row']}>Nama Siswa</div>,
+      selector: (row) => <div className={classes['data-row']}>{row.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
       headerStyle: {
@@ -91,8 +92,8 @@ export const DaftarBukuPinjamPage = () => {
     },
     {
       id: "judul_buku",
-      name:<div className="data-row">Judul Buku</div>,
-      selector: (row) =>  <div className="data-row">{row.buku.judul_buku}</div>,
+      name:<div className={classes['data-row']}>Judul Buku</div>,
+      selector: (row) =>  <div className={classes['data-row']}>{row.buku.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
       headerStyle: {
@@ -103,7 +104,7 @@ export const DaftarBukuPinjamPage = () => {
 
     {
       id: "tanggal_pinjam",
-      name: <div className="data-row">Tanggal Pinjam</div>,
+      name: <div className={classes['data-row']}>Tanggal Pinjam</div>,
       selector: row => {
         const tanggalPinjam = new Date(row.tanggal_pinjam);
         return tanggalPinjam.toLocaleDateString("en-GB");
@@ -117,7 +118,7 @@ export const DaftarBukuPinjamPage = () => {
     },
     {
       id: "tanggal_kembali",
-      name: <div className="data-row">Tanggal Pengembalian</div>,
+      name: <div className={classes['data-row']}>Tanggal Pengembalian</div>,
       selector: row => {
         const tanggalKembali = new Date(row.tanggal_kembali);
         return tanggalKembali.toLocaleDateString("en-GB");
@@ -131,14 +132,16 @@ export const DaftarBukuPinjamPage = () => {
     },
     {
       id: "button",
-      name: <div className="data-row">Aksi</div>,
+      name: <div className={classes['data-row']}>Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
-        <div style={{ margin: "0 0" }} className="action-buttons">
-          <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none" }} className='action-detail'>Rincian</Link>{'                    '}{'       '}
+        <div className={classes["batchbut"]}>
+          <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none" }} className={classes["detailbut"]}>
+              Rincian &nbsp; <i class="fa fa-info-circle"></i></Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }} className='action-delete'>Hapus</span>
+          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }} className={classes["delbut"]}> 
+            Hapus  &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i> </span>
 
         </div>
       ),
@@ -223,9 +226,9 @@ export const DaftarBukuPinjamPage = () => {
           {(loadedData) =>
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2 className="data-table-header">Tabel Peminjaman</h2>
-                  <Link to="create"className="button-create"><i class="bi bi-person-plus"> Tambah Peminjaman</i></Link>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw"}}>
+                  <h1 className={classes['judul1']}>Tabel Peminjaman</h1>
+                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Peminjaman</i></Link>
                 </div>
               }
               data={loadedData.filter((item) => {
