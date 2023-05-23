@@ -1,6 +1,5 @@
 .sidebar{
     display: flex;
-<<<<<<< HEAD
     
  
     height: 84vh;
@@ -11,28 +10,11 @@
     border: transparent;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
-=======
-    height: 200vh;
-    padding: 1vw 0;
-    width: 5vw;
-    border: transparent;
-    overflow-y: auto;
-    border-bottom-left-radius: 2vw;
-    border-top-left-radius: 2vw;
->>>>>>> c8357c6bfeb1482e7f6dee081279983e24152188
    
     
 }
 .side-nav{
-<<<<<<< HEAD
     padding: 15px 0;
-=======
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    height: 100%;
-    padding: 2vw;
->>>>>>> c8357c6bfeb1482e7f6dee081279983e24152188
     width: 100%;
 }
 
