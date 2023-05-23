@@ -8,7 +8,7 @@ const authController = require("../controllers/auth");
 router.post("/login", [body("username").trim().not().isEmpty(), body("password").trim().not().isEmpty()], authController.login);
 
 // POST /perpustakaan/logout
-// http://localhost:8080/perpustakaan/logout
+// http://localhost:8080/auth/logout
 router.post("/logout", authController.logout);
 
 module.exports = router;

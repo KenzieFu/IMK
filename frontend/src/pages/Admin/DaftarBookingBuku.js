@@ -90,9 +90,9 @@ export const DaftarBookingBuku = () => {
       cell: (row) =>
       (
         <div style={{ margin: "0 0" }} >
-          <Link to={`/admin/booked-books/${row.id_pemesanan}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
-          <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }}>Delete</span>
+          {/* <Link to={`/admin/booked-books/${row.id_pemesanan}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
+          <input type="hidden" id='row' /> */}
+          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }}>Setujui</span>
 
         </div>
       ),
@@ -113,74 +113,30 @@ export const DaftarBookingBuku = () => {
       {
         advanceSearch &&
         <>
-        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-          <DropdownToggle caret>
-          Tampilkan data dalam range tanggal
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={() => setSearchBasedDate('')}>
-            Data dalam seluruh rentang tanggal
-            </DropdownItem>
-            <DropdownItem  onClick={() => setSearchBasedDate('admin')}>
-            Data dalam rentang tanggal pinjam tertentu
-        </DropdownItem>
-        <DropdownItem  onClick={() => setSearchBasedDate('petugas')}>
-        Data dalam rentang tanggal pengembalian tertentu
-        </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data berdasarkan :
+            </DropdownToggle>
+            <DropdownMenu>
+            <DropdownItem onClick={() => {setSearchBased(""); setSearchTerm("")}} className="box-menu">
+               Tampilkan Semua Data
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                Nama Siswa
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                Judul Buku
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+          <Input disabled={searchBased === "" ? true : false}
+            type="text"
+            placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} />
+
       </>
-        // <div>
-        //   <select onChange={(e) => {
-        //     setSearchBased(e.target.value)
-        //     if(e.target.value === ""){
-        //     setSearchTerm("")
-        //     }
-        //     }}>
-        //     <option disabled >Cari berdasarkan:</option>
-        //     <option value="">Tampilkan semua data</option>
-        //     <option value="nama_siswa">Nama Siswa</option>
-        //     <option value="judul_buku">Judul Buku</option>
-        //   </select>
-        //   <input
-        //     disabled={searchBased === "" ? true : false}
-        //     type="text"
-        //     placeholder="Search"
-        //     value={searchTerm}
-        //     onChange={(e) => setSearchTerm(e.target.value)}
-        //   />
-        //   <div>
-        //     <select onChange={(e) => {
-        //     setSearchBasedDate(e.target.value)
-        //     if(e.target.value === ''){
-        //       setStartDate(null)
-        //       setEndDate(null)
-        //     }
-        //     }}>
-        //       <option disabled >Tampilkan data dalam range tanggal :</option>
-        //       <option value="">Data dalam seluruh rentang tanggal</option>
-        //       <option value="tgl_pinjam">Data dalam rentang tanggal pinjam tertentu</option>
-        //       <option value="tgl_kembali">Data dalam rentang tanggal kembali tertentu</option>
-        //     </select>
-        //   </div>
-        //   <div>
-        //     <label htmlFor="start-date">Start Date:</label>
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="start-date"
-        //       selected={startDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setStartDate(date)}
-        //     />
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="end-date"
-        //       selected={endDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setEndDate(date)}
-        //     />
-        //   </div>
-        // </div>
+
       }
       <Suspense fallback="">
         <Await resolve={daftarBooking} >
@@ -192,7 +148,16 @@ export const DaftarBookingBuku = () => {
                   <Link to="create">Create</Link>
                 </div>
               }
-              data={loadedData}
+              data={loadedData.filter((item)=> {
+                if(searchBased === ""){
+                  return item
+                }
+                else if(searchBased === "nama"){
+                  return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                } else if(searchBased === "judul"){
+                  return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                }
+               })}
               columns={columns}
               pagination
             />

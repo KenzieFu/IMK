@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import DataTable, { memoize } from 'react-data-table-component'
-import { DeleteModal } from '../../components/admin/modals/DeleteModal';
+import { KembaliModal } from '../../components/admin/modals/KembaliModal';
 import { memo } from 'react';
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
 import { set } from 'react-hook-form';
@@ -30,6 +30,7 @@ export const DaftarBukuPinjamPage = () => {
     setDeleteModal(true);
     setCurrentId(id);
   }
+
   const closeModalHandler = () => {
     setDeleteModal(false);
     setCurrentId((prev) => prev);
@@ -82,14 +83,6 @@ export const DaftarBukuPinjamPage = () => {
       sortable: true,
     },
 
-    // {
-    //   id: "judul_buku",
-    //   name: 'Judul Buku',
-    //   selector: row => row.buku.judul_buku,
-    //   accessor: "judul_buku",
-    //   sortable: true,
-    // },
-
     {
       id: "tanggal_pinjam",
       name: 'Tanggal Pinjam',
@@ -130,8 +123,6 @@ export const DaftarBukuPinjamPage = () => {
       button: true,
     },
   ];
-
-
   return (
     <>
       <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
@@ -194,25 +185,6 @@ export const DaftarBukuPinjamPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)} />
         </>
-
-        //   <div>
-        //     <label htmlFor="start-date">Start Date:</label>
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="start-date"
-        //       selected={startDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setStartDate(date)}
-        //     />
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="end-date"
-        //       selected={endDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setEndDate(date)}
-        //     />
-        //   </div>
-        // </div>
       }
       <Suspense fallback="">
         <Await resolve={daftarPinjam} >
@@ -254,42 +226,6 @@ export const DaftarBukuPinjamPage = () => {
                   return item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
                 }
 
-                //  if(searchBased === "judul")
-                // {
-                //   return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // }
-                //  if (
-                //   searchBasedDate === "pinjam"
-                // ) {
-                //   if (searchBased === "" && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate) {
-                //     return item
-                //   }
-                //   else if (searchBased === "nama" && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate) {
-                //     return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                //   } else if (
-                //     searchBased === "judul" && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
-                //   ) {
-                //     return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                //   }
-                // }
-
-                // else if (
-                //   searchBased === "tgl_pengembalian" &&
-                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // } else if (
-                //   searchBased === "tgl_pinjam" &&
-                //   item.tanggal_pinjam.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // }
-                //else if (
-
-                //   item.tanggal_kembali.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                // ) {
-                //   return item;
-                // }
 
               })}
               columns={columns}
@@ -298,7 +234,7 @@ export const DaftarBukuPinjamPage = () => {
           }
         </Await>
       </Suspense>
-      {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {showDeleteModal && <KembaliModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
     </>
   )

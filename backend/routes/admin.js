@@ -184,7 +184,7 @@ router.put("/peminjaman/:peminjamanId", peminjamanController.updatePeminjaman);
 
 // route untuk menghapus peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
-router.delete("/peminjaman/:peminjamanId", peminjamanController.deletePeminjaman);
+router.post("/peminjaman/:peminjamanId", peminjamanController.deletePeminjaman);
 
 // route untuk menampilkan satu peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
