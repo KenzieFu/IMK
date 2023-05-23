@@ -4,6 +4,10 @@ const BukuPerpus = require("../models/bukuPerpus");
 const BukuTahunAjaranBaru = require("../models/bukuTahunAjaranBaru");
 const { Op } = require("sequelize");
 const ViewJumlahDipinjamin = require("../models/viewJumlahDipinjam");
+// import fs from "fs";
+// import path from "path";
+const path = require("path");
+const fs = require("fs");
 
 // Function untuk menampilkan daftar banyak buku dipinjam
 exports.getJumlahDipinjam = async function (req, res, next) {
@@ -77,6 +81,8 @@ exports.getTahunAjaranBaruBook = async function (req, res, next) {
 // Function untuk menambahkan buku
 exports.createBook = async function (req, res, next) {
   try {
+    
+    console.log(req.body);
     if (!req.file) {
       const error = new Error("Tidak ada gambar yang terupload");
       error.statusCode = 422;
@@ -102,6 +108,7 @@ exports.createBook = async function (req, res, next) {
     next(error);
   }
 };
+
 
 // Function untuk mengubah data buku
 exports.updateBook = async function (req, res, next) {

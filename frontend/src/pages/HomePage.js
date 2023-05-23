@@ -24,7 +24,7 @@ export const HomePage = () => {
    /*  const location = useLocation();
     console.log(location);*/
     const  authenticate=useSelector(state=>state.auth)
-    if(authenticate.isAuth && authenticate?.user?.hak_akses==="Siswa")
+    if(authenticate?.isAuth && authenticate?.user?.hak_akses==="Siswa")
         return <Navigate to="/student"  />
     else
     {

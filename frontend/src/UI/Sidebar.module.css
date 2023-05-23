@@ -1,5 +1,7 @@
 .sidebar{
+    background-color: var(--white-light);
     display: flex;
+<<<<<<< HEAD
     
  
     height: 84vh;
@@ -10,6 +12,15 @@
     border: transparent;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
+=======
+    height: 85vh;
+    padding: 1vw 0;
+    width: 5vw;
+    border: transparent;
+    overflow-y: auto;
+    border-bottom-right-radius: 2vw;
+    border-top-right-radius: 2vw;
+>>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
    
     
 }

@@ -17,7 +17,6 @@ export const DaftarBookingBuku = () => {
   const location = useLocation();
   console.log(currentId);
 
-
   const showModalHandler = (id) => {
     setDeleteModal(true);
     setCurrentId(id);
@@ -47,31 +46,31 @@ export const DaftarBookingBuku = () => {
       sortable: true,
     },
     {
-      id: "id_siswa",
-      name: 'Id Siswa',
-      selector: row => row.id_siswa,
-      accessor: "id_siswa",
-      sortable: true,
-    },
-    {
       id: "nama_siswa",
       name: 'Nama Siswa',
-      selector: row => row.id_buku,
+      selector: row => row.siswa.nama_lengkap,
       accessor: "nama_siswa",
       sortable: true,
     },
     {
-        id: "nama_siswa",
-        name: 'Nama Siswa',
+      id: "judul_buku",
+      name: 'Judul Buku',
+      selector: row => row.buku.judul_buku,
+      accessor: "judul_buku",
+      sortable: true,
+    },
+    {
+        id: "waktu",
+        name: 'Waktu',
         selector: row => row.waktu,
-        accessor: "nama_siswa",
+        accessor: "waktu",
         sortable: true,
       },
       {
-        id: "nama_siswa",
-        name: 'Nama Siswa',
+        id: "tanggal",
+        name: 'Tanggal',
         selector: row => row.tanggal,
-        accessor: "nama_siswa",
+        accessor: "tanggal",
         sortable: true,
       },
 
@@ -91,9 +90,9 @@ export const DaftarBookingBuku = () => {
       cell: (row) =>
       (
         <div style={{ margin: "0 0" }} >
-          <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
-          <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }}>Delete</span>
+          {/* <Link to={`/admin/booked-books/${row.id_pemesanan}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
+          <input type="hidden" id='row' /> */}
+          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }}>Setujui</span>
 
         </div>
       ),
@@ -114,74 +113,30 @@ export const DaftarBookingBuku = () => {
       {
         advanceSearch &&
         <>
-        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-          <DropdownToggle caret>
-          Tampilkan data dalam range tanggal
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={() => setSearchBasedDate('')}>
-            Data dalam seluruh rentang tanggal
-            </DropdownItem>
-            <DropdownItem  onClick={() => setSearchBasedDate('admin')}>
-            Data dalam rentang tanggal pinjam tertentu
-        </DropdownItem>
-        <DropdownItem  onClick={() => setSearchBasedDate('petugas')}>
-        Data dalam rentang tanggal pengembalian tertentu
-        </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Cari Data berdasarkan :
+            </DropdownToggle>
+            <DropdownMenu>
+            <DropdownItem onClick={() => {setSearchBased(""); setSearchTerm("")}} className="box-menu">
+               Tampilkan Semua Data
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                Nama Siswa
+              </DropdownItem>
+              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                Judul Buku
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+          <Input disabled={searchBased === "" ? true : false}
+            type="text"
+            placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} />
+
       </>
-        // <div>
-        //   <select onChange={(e) => {
-        //     setSearchBased(e.target.value)
-        //     if(e.target.value === ""){
-        //     setSearchTerm("")
-        //     }
-        //     }}>
-        //     <option disabled >Cari berdasarkan:</option>
-        //     <option value="">Tampilkan semua data</option>
-        //     <option value="nama_siswa">Nama Siswa</option>
-        //     <option value="judul_buku">Judul Buku</option>
-        //   </select>
-        //   <input
-        //     disabled={searchBased === "" ? true : false}
-        //     type="text"
-        //     placeholder="Search"
-        //     value={searchTerm}
-        //     onChange={(e) => setSearchTerm(e.target.value)}
-        //   />
-        //   <div>
-        //     <select onChange={(e) => {
-        //     setSearchBasedDate(e.target.value)
-        //     if(e.target.value === ''){
-        //       setStartDate(null)
-        //       setEndDate(null)
-        //     }
-        //     }}>
-        //       <option disabled >Tampilkan data dalam range tanggal :</option>
-        //       <option value="">Data dalam seluruh rentang tanggal</option>
-        //       <option value="tgl_pinjam">Data dalam rentang tanggal pinjam tertentu</option>
-        //       <option value="tgl_kembali">Data dalam rentang tanggal kembali tertentu</option>
-        //     </select>
-        //   </div>
-        //   <div>
-        //     <label htmlFor="start-date">Start Date:</label>
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="start-date"
-        //       selected={startDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setStartDate(date)}
-        //     />
-        //     <DatePicker
-        //       disabled={searchBasedDate === ""}
-        //       id="end-date"
-        //       selected={endDate}
-        //       dateFormat="dd/MM/yyyy"
-        //       onChange={(date) => setEndDate(date)}
-        //     />
-        //   </div>
-        // </div>
+
       }
       <Suspense fallback="">
         <Await resolve={daftarBooking} >
@@ -193,7 +148,16 @@ export const DaftarBookingBuku = () => {
                   <Link to="create">Create</Link>
                 </div>
               }
-              data={loadedData}
+              data={loadedData.filter((item)=> {
+                if(searchBased === ""){
+                  return item
+                }
+                else if(searchBased === "nama"){
+                  return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                } else if(searchBased === "judul"){
+                  return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                }
+               })}
               columns={columns}
               pagination
             />
@@ -231,29 +195,29 @@ export const loader = () => {
   })
 }
 
-// export async function action({ params, request }) {
+export async function action({ params, request }) {
 
-//   const method = request.method;
-//   const data = await request.formData();
-//   console.log(data);
-//   const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
-//     method: method,
-//     headers: {
-//       "Authorization": "Bearer"
-//     }
-//   });
+  const method = request.method;
+  const data = await request.formData();
+  console.log(data);
+  const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/' + data.get('id'), {
+    method: method,
+    headers: {
+      "Authorization": "Bearer"
+    }
+  });
 
-//   if (!response.ok) {
-//     throw json(
-//       { message: 'Could not delete this row.' },
-//       {
-//         status: 500,
-//       }
-//     );
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not delete this row.' },
+      {
+        status: 500,
+      }
+    );
 
-//   }
-//   return redirect("/admin/borrowed-books");
-// }
+  }
+  return redirect("/admin/booked-books");
+}
 
 
 

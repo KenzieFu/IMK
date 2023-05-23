@@ -16,12 +16,12 @@ export const LibraryPage = () => {
   const isAuth=useSelector(state=>state.auth.isAuth);
   const {books,genres}=useLoaderData('books');
   const [currentGenre,setGenre]=useState(0);
-  console.log(currentGenre)
+
   const setGenreHandler=(index)=>{
-    console.log(index)
+ 
     setGenre(index);
   }
-  console.log("Haihai")
+
   const [enteredKey,setKey]=useState('');
   let check = enteredKey.trim() !=="";
 
@@ -32,7 +32,7 @@ export const LibraryPage = () => {
     <>
 
     <div className={classes.content}>
-<div>
+<div style={{ display:"flex" }}>
 {isAuth &&<Sidebar/>}
 
       <div className={classes.main}>
@@ -80,9 +80,10 @@ export const LibraryPage = () => {
         }
 
       </div>
-      <div className={classes['mainmid']}>
-
       {!check &&
+      <div className={classes['mainbatch']}> 
+      
+      <div className={classes['mainmid']}>
           <>
         <Suspense fallback="">
           <Await resolve={genres}>
@@ -91,12 +92,12 @@ export const LibraryPage = () => {
         </Suspense>
 
            </>
-        }
         </div>
         
+        
 
+     
         <div className={classes['mainbot']}>
-        {!check &&
         <>
         <Suspense fallback ={<p style={{ textAlign:"center" }}>Loading.....</p>}>
           <Await resolve={books}>
@@ -106,9 +107,10 @@ export const LibraryPage = () => {
 
             </>
 
-        }
         </div>
-      </div>
+        
+          </div>}
+        </div>
 
 
       </div>

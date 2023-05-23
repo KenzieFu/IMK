@@ -14,8 +14,9 @@ const authSlice=createSlice({
             state.isAuth=true;
         },
         logOut:(state,action)=>{
+            console.log(action.payload)
             state.user = {}
-            state.isAuth=false
+            state.isAuth=!state.isAuth;
         }
     }
 })

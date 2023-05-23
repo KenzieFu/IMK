@@ -7,7 +7,7 @@ export const BookBar = (props) => {
         <div className={classes.chartInfo}>
             <div className={classes.label}>
                 <p style={{ color:props.color }}>{props.label}</p>
-                <p style={{ color:"#BEBEBE" }}> <span style={{ color:props.color }}>3</span>/5</p>
+                <p style={{ color:"#BEBEBE", display:"flex", fontSize:"1vw" }}> <span style={{ color:props.color, fontSize:"1vw" }}>3</span>/5</p>
             </div>
     
             <div className={classes.bar}>

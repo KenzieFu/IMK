@@ -58,6 +58,7 @@ exports.updatePeminjaman = async function (req, res, next) {
 // Function untuk menghapus data peminjaman
 exports.deletePeminjaman = async function (req, res, next) {
   try {
+    const peminjaman = await Peminjaman.findOne({ where: { id_peminjaman: req.params.peminjamanId } });
     // tentukan status pengembalian jika lebih dari tangga_kembali maka 'Terlambat' jika tidak 'Tepat Waktu'
     let status = "";
     if (new Date() > peminjaman.tanggal_kembali) {

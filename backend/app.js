@@ -9,6 +9,8 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
 const adminRoutes = require("./routes/admin");
+const Buku = require("./models/buku");
+// const bookController = require("./controllers/buku");
 
 const app = express();
 
@@ -17,9 +19,12 @@ const fileStorage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + "-" + file.originalname);
+    const fileName = new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname;
+    cb(null, fileName);
   },
 });
+
+
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
@@ -34,20 +39,21 @@ const fileFilter = (req, file, cb) => {
 app.use(bodyParser.json({ limit: "50mb" })); // set limit to 50mb
 
 // app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
-app.use(
-  
-  multer({
-    storage: fileStorage,
-    limits: {
-      fileSize: 1024 * 1024 * 50, // set limit to 50mb
-    },
-    fileFilter: fileFilter,
-  }).single("image")
-);
+// app.use(
+//   multer({
+//     storage: fileStorage,
+//     limits: {
+//       fileSize: 1024 * 1024 * 50, // set limit to 50mb
+//     },
+//     fileFilter: fileFilter,
+//   }).single("gambar_buku")
+// );
+
+const upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -56,12 +62,17 @@ app.use((req, res, next) => {
 
 // Set CORS headers
 const corsOptions = {
+<<<<<<< HEAD
   origin: "http://localhost:3000",
   credentials: true,
+=======
+  origin: "*",
+  credentials: true,
+  // allowedHeaders: ["Authorization", "Content-Type"], // you can change the headers
+>>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
 };
 
 app.use(cors(corsOptions));
-
 
 // Set CORS headers
 // app.use(function(req, res, next) {
@@ -71,18 +82,17 @@ app.use(cors(corsOptions));
 //   next();
 // });
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", true);
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+// app.use(express.json());
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
 
-  next();
-});
-app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-
-  })
-);
+//   })
+// );
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Credentials", true);
@@ -99,9 +109,56 @@ app.use(
 
 // app.use(cors({
 //   origin:"http://localhost:3000"
-// })) 
+// }))
 
 // app.use('/feed', feedRoutes);
+// tambah route http://localhost:8080/admin-perpustakaan-methodist-cw/buku --> bukuController.createBook
+app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), async (req, res, next) => {
+  // console.log(req.file);
+  // bagaimana dapat mengakses req.file.path di sini
+  console.log(req.body);
+  // console.log(req.file.path);
+  try {
+    if (!req.file) {
+      const error = new Error("Tidak ada gambar yang terupload");
+      error.statusCode = 422;
+      throw error;
+    }
+
+    const { id_buku, judul_buku, pengarang, penerbit, tahun_terbit, id_kategori, sinopsis, isbn } = req.body;
+    // const gambar_buku = req.file.path.replace("\\", "/");
+    // gambar_buku = "/images/namafile.jpg"
+    const gambar_buku = "/" + req.file.path.replace("\\", "/");
+    // const gambar_buku = req.file.path;
+
+    const book = await Buku.create({
+      id_buku: id_buku,
+      judul_buku: judul_buku,
+      pengarang: pengarang,
+      penerbit: penerbit,
+      tahun_terbit: tahun_terbit,
+      id_kategori: id_kategori,
+      sinopsis: sinopsis,
+      gambar_buku: gambar_buku,
+      isbn: isbn,
+    });
+    // const book = {
+    //   id_buku: id_buku,
+    //   judul_buku: judul_buku,
+    //   pengarang: pengarang,
+    //   penerbit: penerbit,
+    //   tahun_terbit: tahun_terbit,
+    //   id_kategori: id_kategori,
+    //   sinopsis: sinopsis,
+    //   gambar_buku: gambar_buku,
+    //   isbn: isbn,
+    // };
+
+    res.json(book);
+  } catch (error) {
+    next(error);
+  }
+});
 app.use("/auth", authRoutes);
 app.use("/perpustakaan-methodist-cw", perpustakaanRoutes);
 app.use("/admin-perpustakaan-methodist-cw", adminRoutes);

@@ -18,6 +18,10 @@ export const RootLayout = () => {
 const authen=useSelector(state=>state.auth.isAuth);
 const dispatch=useDispatch();
 const user = useSelector(state=>state.auth.user)
+if(!authen  || (authen ) )
+{
+  
+}
 
 useEffect(()=>{
   if(Object.keys(user)?.length === 0 && token ){
@@ -28,7 +32,8 @@ useEffect(()=>{
   if(token === "EXPIRED")
   {
     submit(null,{action:"/logout",method:"post"});
-    return;
+    dispatch(authActions.logOut())
+    return ;
   }
 
   const tokenDuration=getTokenDuration();
@@ -56,7 +61,7 @@ const closeCartModal=()=>{
   return (
     <>
    <CartProvider>
-        <div style={{background:"white", minHeight:"100vh" }} className="App">
+        <div style={{background:"#f4f1f1", minHeight:"100vh" }} className="App">
           {showLogin &&<LoginModal onClose={closeLoginModal}/>}
           {showCart && <Cart onClose={closeCartModal}/>}
     <Navbar style={{position:"relative"}} onClick={showLoginModal} onClickCart={showCartModal} />

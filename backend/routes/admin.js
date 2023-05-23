@@ -68,7 +68,7 @@ router.get("/buku/kategori/:kategoriId", bukuController.getBookByKategori);
 
 // route untuk menambahkan buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku
-router.post("/buku", bukuController.createBook);
+// router.post("/buku", bukuController.createBook);
 
 // route untuk mengupdate buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku/1
@@ -184,7 +184,7 @@ router.put("/peminjaman/:peminjamanId", peminjamanController.updatePeminjaman);
 
 // route untuk menghapus peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
-router.delete("/peminjaman/:peminjamanId", peminjamanController.deletePeminjaman);
+router.post("/peminjaman/:peminjamanId", peminjamanController.deletePeminjaman);
 
 // route untuk menampilkan satu peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
