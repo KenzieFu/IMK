@@ -88,15 +88,15 @@ export const CreateBuku = () => {
     event.preventDefault();
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('judul_buku', formData.judul_buku);
+      /* const formDataToSend = new FormData(); */
+      /* formDataToSend.append('judul_buku', formData.judul_buku);
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
       formDataToSend.append('gambar_buku', formData.gambar_buku)
       formDataToSend.append('id_kategori', formData.id_kategori)
       formDataToSend.append('sinopsis', formData.sinopsis);
-      formDataToSend.append('isbn', formData.isbn);
+      formDataToSend.append('isbn', formData.isbn); */
 
       const sendedData={
         judul_buku:formData.judul_buku,
@@ -114,7 +114,13 @@ export const CreateBuku = () => {
       console.log(sendedData);
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-        headers: { "Content-Type": "multipart/form-data" },
+
+        headers: {
+        /*   "Content-Type": "multipart/form-data", */
+          "Authorization":"Bearer",
+          // boundry
+          "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+      },
         body:sendedData,
 
       }); // Replace with your API endpoint
@@ -160,7 +166,7 @@ export const CreateBuku = () => {
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
-          <Label for="examplePenerbit">Penerbitsssssssssss</Label>
+          <Label for="examplePenerbit">Penerbit</Label>
           <Input
             id="examplePenerbit"
             name="penerbit"
