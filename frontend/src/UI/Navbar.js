@@ -60,12 +60,17 @@ const { totalUniqueItems } = useCart()
                 </div>
                 <ul>
                    {/*  <li className={classes['linav2']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/admin">Masuk Admin</NavLink></li> */}
-                  {!authen &&  <li className={classes['linav3']} onClick={props.onClick}>Login</li>}
+                  {!authen &&  
+                  <li className={classes['linav3']} onClick={props.onClick}>Login
+                  </li>}
+
+                  {authen && <li className={classes['linav3']} onClick={props.onClickCart}> Booking List </li>}
 
                   {authen &&
-                    <li  className={classes['linav3']} onClick={logoutHandler}>LogOut</li>
+                    <li  className={classes['linav3']} onClick={logoutHandler}>Logout
+                    </li>
                  }
-                  {authen && <li className={classes['linav3']} onClick={props.onClickCart}>Booking List  </li>}
+
                 </ul>
             </nav>
         </header>

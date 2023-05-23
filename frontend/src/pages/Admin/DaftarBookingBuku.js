@@ -41,37 +41,62 @@ export const DaftarBookingBuku = () => {
   const columns = [
     {
       id: 'id',
-      name: "ID",
-      selector: row => row.id_pemesanan,
+      name: <div className="data-row">ID Pemesanan</div>,
+      selector: row => <div className="data-row">{row.id_pemesanan}</div>,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "nama_siswa",
-      name: 'Nama Siswa',
-      selector: row => row.siswa.nama_lengkap,
+      name: <div className="data-row">Nama Siswa</div>,
+      selector: row => <div className="data-row">{row.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "judul_buku",
-      name: 'Judul Buku',
-      selector: row => row.buku.judul_buku,
+      name: <div className="data-row">Judul Buku</div>,
+      selector: row => <div className="data-row">{row.buku.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
         id: "waktu",
-        name: 'Waktu',
-        selector: row => row.waktu,
+        name: <div className="data-row">Waktu</div>,
+        selector: row => <div className="data-row">{row.waktu}</div>,
         accessor: "waktu",
         sortable: true,
+        headerStyle: {
+          fontWeight: "bold",
+          textAlign: "center",
+          justifyContent: "center",
+        },
       },
       {
         id: "tanggal",
-        name: 'Tanggal',
-        selector: row => row.tanggal,
+        name: <div className="data-row">Tanggal</div>,
+        selector: row => <div className="data-row">{row.tanggal}</div>,
         accessor: "tanggal",
         sortable: true,
+        headerStyle: {
+          fontWeight: "bold",
+          textAlign: "center",
+          justifyContent: "center",
+        },
       },
 
     // {
@@ -85,18 +110,22 @@ export const DaftarBookingBuku = () => {
 
     {
       id: "button",
-      name: "Action",
+      name: <div className="data-row">Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
-        <div style={{ margin: "0 0" }} >
+        <div style={{ margin: "0 0" }} className='action-buttons'>
           {/* <Link to={`/admin/booked-books/${row.id_pemesanan}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
           <input type="hidden" id='row' /> */}
-          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }}>Setujui</span>
+          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }} className='action-check'> <i class="bi bi-check-lg"> Setujui</i></span>
 
         </div>
       ),
-
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
       ignoreRowClick: true,
       allowOverflow: true,
       selector: row => row.button,
@@ -144,8 +173,8 @@ export const DaftarBookingBuku = () => {
             <DataTable
               title={
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2>Tabel Booking</h2>
-                  <Link to="create">Create</Link>
+                  <h2 className='data-table-header'>Tabel Booking</h2>
+                  <Link to="create" className="button-create"><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
               }
               data={loadedData.filter((item)=> {

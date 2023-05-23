@@ -1,0 +1,92 @@
+.close-icon{
+    position:absolute; 
+    display:flex;
+    cursor:pointer;
+    align-items:center;
+    color:#C4C4C4
+}
+
+.close{
+    font-size:30px;
+    margin-left:10px;
+}
+
+.big-text{
+    font-size:30px;
+     font-weight:bold;
+     margin-top:30px;
+      color:#30D369 
+}
+
+.fail{
+    color: #FF5959;
+}
+
+.container{
+    display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      height: 230px;
+}
+
+.animation{
+    z-index: 10;
+    animation: pulse 1s infinite ease-in-out alternate;
+}
+.message{
+    text-align:center;
+    color:#C4C4C4;
+    font-weight:600;
+    font-size:20px;
+    margin-top:40px 
+}
+
+.close-button{
+    color:white;
+    font-size:20px;
+    font-weight:600;
+     padding:10px 70px;
+     background-color:#30D369;
+     border-radius:10px;
+     text-align:center
+}
+
+.background-fail{
+    background-color: #FF5959;
+}
+
+
+  @keyframes pulse {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+  }
+
+
+
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(.8, .8);
+      opacity: .5;
+    }
+    to {
+      transform: scale(1.2, 1.2);
+      opacity: 0;
+    }
+  }
+
+.circle {
+    border-radius: 50%;
+    background-color: #30D369 ;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    opacity: 0;
+    animation: scaleIn 4s infinite cubic-bezier(.36, .11, .89, .32);
+  }
+
+  .red{
+    background-color: #FF5959;
+}

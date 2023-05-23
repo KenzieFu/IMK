@@ -7,46 +7,46 @@ import user5 from "../../../assets/admin/images/users/user5.jpg";
 
 const tableData = [
   {
-    avatar: user1,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Flexy React",
-    status: "pending",
+    avatar: user2,
+    name: "User 1",
+    email: "kenziefubrianto@gmail.com",
+    role: "Admin",
+    status: "done",
     weeks: "35",
     budget: "95K",
   },
   {
-    avatar: user2,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Lading pro React",
+    avatar: user1,
+    name: "User 2",
+    email: "nakeddog15@gmail.com",
+    role: "Admin",
     status: "done",
     weeks: "35",
     budget: "95K",
   },
   {
     avatar: user3,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Elite React",
+    name: "User 3",
+    email: "vitasariani12@gmail.com",
+    role: "Admin",
     status: "holt",
     weeks: "35",
     budget: "95K",
   },
   {
     avatar: user4,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Flexy React",
-    status: "pending",
+    name: "User 4",
+    email: "trifinelaurensi@gmail.com",
+    role: "TU",
+    status: "holt",
     weeks: "35",
     budget: "95K",
   },
   {
     avatar: user5,
-    name: "Hanna Gover",
-    email: "hgover@gmail.com",
-    project: "Ample React",
+    name: "User 5",
+    email: "johansensihombing099@gmail.com",
+    role: "TU",
     status: "done",
     weeks: "35",
     budget: "95K",
@@ -67,7 +67,7 @@ const ProjectTables = () => {
             <thead>
               <tr>
                 <th>Team Lead</th>
-                <th>Project</th>
+                <th>Role</th>
 
                 <th>Status</th>
                 <th>Weeks</th>
@@ -92,7 +92,7 @@ const ProjectTables = () => {
                       </div>
                     </div>
                   </td>
-                  <td>{tdata.project}</td>
+                  <td>{tdata.role}</td>
                   <td>
                     {tdata.status === "pending" ? (
                       <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>

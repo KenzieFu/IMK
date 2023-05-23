@@ -26,10 +26,15 @@ export const HomePage = () => {
     const  authenticate=useSelector(state=>state.auth)
     if(authenticate?.isAuth && authenticate?.user?.hak_akses==="Siswa")
         return <Navigate to="/student"  />
-    else
+    else if(authenticate?.isAuth && authenticate?.user?.hak_akses==="Admin")
     {
         if(authenticate.user?.hak_akses==="Admin" && authenticate.isAuth)
         return <Navigate to="/admin"/>
+    }
+    else if(authenticate?.isAuth && authenticate?.user?.hak_akses==="Petugas")
+    {
+        if(authenticate.user?.hak_akses==="Petugas" && authenticate.isAuth)
+        return <Navigate to="/petugas"/>
     }
 
    

@@ -4,9 +4,9 @@ import { DeleteModal } from '../../components/admin/modals/DeleteModal';
 import { memo } from 'react';
 import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
 import { set } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
-import "./UserPage.css";
+import { useNavigate } from 'react-router-dom';
+import classes from './adminbatch.module.css'
 
 export const StudentPage = () => {
     const [currentId,setCurrentId]=useState(null);
@@ -29,46 +29,76 @@ export const StudentPage = () => {
       const columns = [
         {
             id:'id',
-            name:"ID",
-            selector:row=>row.id_siswa,
-
+            name:<span className={classes['data-row']}>ID Siswa</span>,
+            selector:(row) =>  <span className={classes['data-rowid']}>{row.id_siswa}</span>,
             sortable:true,
-
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
+            width: "10%",
         },
         {
             id:"nisn",
-            name: 'NISN',
-            selector: row => row.nisn,
+            name: <span className={classes['data-row']}>NISN</span>,
+            //selector: row => row.nisn,
+            selector:(row) =>  <span className={classes['data-row']}>{row.nisn}</span>,
             accessor:"nisn",
             sortable: true,
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
         },
         {
             id:"nama_lengkap",
-            name: 'Nama Lengkap',
-            selector: row => row.nama_lengkap,
+            name:  <span className={classes['data-row']}>Nama Lengkap</span>,
+            //selector: row => row.nama_lengkap,
+            selector:(row) =>  <span className={classes['data-row']}>{row.nama_lengkap}</span>,
             accessor:"nama_lengkap",
             sortable: true,
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
         },
         {
             id:"jenis_kelamin",
-            name: 'Jenis Kelamin',
-            selector: row => row.jenis_kelamin,
+            name:  <span className={classes['data-row']}>Jenis Kelamin</span>,
+            //selector: row => row.jenis_kelamin,
+            selector:(row) =>  <span className={classes['data-row']}>{row.jenis_kelamin}</span>,
             accessor:"jenis_kelamin",
             sortable: true,
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
         },
         {
             id:"button",
-            name:"Action",
+            name: <span className={classes['data-row']}>Aksi</span>,
             width:"30%",
           cell: (row) =>
                 (
-              <div style={{ margin:"0 0" }} >
-            <Link to={`/admin/students/${row.id_siswa}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
+              <div className={classes["batchbut"]}>
+            <Link to={`/admin/students/${row.id_siswa}`}  className={classes["detailbut"]}>
+              Rincian &nbsp; <i class="fa fa-info-circle"></i></Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_siswa)} style={{ cursor:"pointer" }}>Delete</span>
-
+            <span  onClick={()=>showModalHandler(row.id_siswa)} className={classes["delbut"]}> 
+            Hapus  &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i> </span>
+                  
             </div>
           ),
+          headerStyle: {
+            fontWeight: "bold",
+            textAlign: "center",
+            justifyContent: "center",
+            alignItems: "center",
+          },
 
           ignoreRowClick: true,
           allowOverflow: true,
@@ -87,9 +117,9 @@ export const StudentPage = () => {
 
   return (
     <>
-     <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+     <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter2']}>
             {" "}
-            Pencarian Lebih Lanjut
+            Cari <i class="fa fa-search" aria-hidden="true"></i>
           </Button>
     {
       advanceSearch && (
@@ -121,9 +151,9 @@ export const StudentPage = () => {
             {(loadedData)=>
                <DataTable
                title={
-                <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2>Tabel Siswa</h2>
-                    <Link to="registrasi/data-pribadi">Create</Link>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
+                    <h1 className={classes['judul1']}>Tabel Siswa</h1>
+                    <Link to="registrasi/data-pribadi" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
                }
                data={loadedData.filter((item)=> {

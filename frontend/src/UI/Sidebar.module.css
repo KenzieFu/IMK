@@ -41,10 +41,11 @@
 
 .sidebar{
     background-color: var(--white-light);
-    display: flex;
+  
     height: 85vh;
     padding: 1vw 0;
     width: 5vw;
+    position: -webkit-sticky;
     border: transparent;
     overflow-y: auto;
     border-bottom-right-radius: 2vw;
