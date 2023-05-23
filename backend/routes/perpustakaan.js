@@ -195,4 +195,9 @@ router.get("/pemesanan-buku/:pemesananBukuId", pemesananarController.getPemesana
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-batal/1
 router.delete("/pemesanan-batal/:pemesananBukuId", pemesananarController.batalPemesananBuku);
 
+// route untuk menampilkan daftar pemesanan buku berdasarkan siswa yang login
+// http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku-siswa
+router.get("/pemesanan-buku-siswa", pemesananarController.getPemesananBukuByUser);
+
+
 module.exports = router;
