@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
@@ -10,6 +10,33 @@ function BookForm({method,book}) {
   const backHandler=()=>{
     navigate("..");
   }
+
+  const [kategori, setKategori] = useState([]);
+
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
+  const fetchOptions = async () => {
+    try {
+      const response1 = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku'); // Replace with your API endpoint for table 1
+      const response2 = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/kategori'); // Replace with your API endpoint for table 2
+
+      const data1 = await response1.json();
+      const data2 = await response2.json();
+
+      const optionsData = mergeOptions(data1, data2);
+      setKategori(optionsData);
+    } catch (error) {
+      console.error('Error fetching options:', error);
+    }
+  };
+
+  const mergeOptions = (data1, data2) => {
+    // Assuming each data item has "id" and "label" properties
+    const mergedOptions = [...data1, ...data2];
+    return mergedOptions;
+  };
 
 
   return (
@@ -62,11 +89,11 @@ function BookForm({method,book}) {
               </FormGroup>
               <FormGroup>
                 <Label for="tahunTerbit">Kategori</Label>
-                <select value="">
-                  <option value={book.kategori.nama_kategori} >Pilih Kategori</option>
-                      {book.map((book) => (
-                      <option key={book.id_kategori} value={book.kategori.nama_kategori}>
-                    {book.kategori.nama_kategori}
+                <select value={kategori.nama_kategori}>
+                  <option value={kategori.nama_kategori} >Pilih Kategori</option>
+                      {kategori.map((kategori) => (
+                      <option key={kategori.id_kategori} value={kategori.nama_kategori}>
+                    {kategori.nama_kategori}
                   </option>
               ))}
             </select>

@@ -41,17 +41,21 @@
 
 .sidebar{
     display: flex;
-    height: 100%;
+    height: 200vh;
     padding: 1vw 0;
     width: 5vw;
-    background: rgb(255, 0, 0);
     border: transparent;
-    border-bottom-right-radius: 2vw;
-    border-top-right-radius: 2vw;
+    overflow-y: auto;
+    border-bottom-left-radius: 2vw;
+    border-top-left-radius: 2vw;
    
     
 }
 .side-nav{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
     padding: 2vw;
     width: 100%;
 }
@@ -60,14 +64,16 @@
 .side-nav ul{
     display: flex;
     flex-direction: column;
-    gap:3vw;
+    gap: 3vw;
     justify-content: center;
     align-items: center;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 .side-nav ul img{
-    width: 2vw;
+    width: 2.5vw;
+    display: block;
 }

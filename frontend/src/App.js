@@ -78,6 +78,9 @@ import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
 import { loader as petugasCreateAbsensiLoader } from "./pages/Petugas/CreateAbsensi";
 
 
+//All LogoutAction
+import { action as logoutAction } from "./pages/Logout";
+
 //Admin Action
 
 //Buku
@@ -126,6 +129,7 @@ import { AbsensiPage } from "./pages/Petugas/AbsensiPage";
 import { ScanKeluarPage } from "./pages/Petugas/ScanKeluarPage";
 import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
 import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
+import { tokenLoader } from "./components/util/auth";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -152,6 +156,7 @@ const studentId=useSelector(state=>state.auth.user)
       id:"root",
       element: <RootLayout/>,
       errorElement:<ErrorPage/>,
+      loader:tokenLoader,
       children:[
        {index:true ,element:<HomePage/>},
        {path:"student",
@@ -173,7 +178,7 @@ const studentId=useSelector(state=>state.auth.user)
 
         ]},
        {path:"contactUs", element:<Contact/>},
-       {path:"logout"},
+       {path:"logout", action:logoutAction},
        {path:"calender",
         id:"event-calender",
         loader:userCalenderLoader,

@@ -98,6 +98,13 @@ const LoginModal = (props) => {
         const resData=await response.json();
         console.log(resData);
         dispatch(authActions.setCredentials(resData))
+        const token = resData.token;
+        const user = resData.data;
+        localStorage.setItem('token',token);
+        localStorage.setItem('user',JSON.stringify(user))
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours()+1);
+        localStorage.setItem('expiration',expiration.toISOString());
         navigate("/");
       }
 

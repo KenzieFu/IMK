@@ -67,6 +67,7 @@
     font-size: 2vw;
     font-weight: 600;
     margin-top: 1vw;
+    margin-bottom: 2vw;
 }
 
 .popular .book-detail{
@@ -115,4 +116,15 @@
   border: 0vw solid var(--gray-light);
   height: 0vw;
   width: 0vw;
+}
+
+.notfound{
+    background-color: var(--white-light);
+    padding: 1.5vw 0 ;
+}
+
+.notfound h1{
+    color: var(--red-light);
+    font-size: 1.5vw;
+    line-height: 0;
 }
