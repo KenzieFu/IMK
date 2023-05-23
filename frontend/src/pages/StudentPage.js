@@ -10,12 +10,18 @@ import { Navigate, defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
 import {  QRCodeBox } from '../components/QRcode/QRCodeBox';
+import {  useCart } from "react-use-cart";
+
+
 export const StudentPage = () => {
   const [showPinjam,setShowPinjam]=useState(true);
   const [showKembali,setShowKembali]=useState(true);
   const [showBooking,setShowBooking]=useState(true);
   const isAuth=useSelector(state=>state.auth.isAuth);
+  const {
 
+    emptyCart
+} = useCart();
 
   const pinjamHandler=()=>{
     setShowPinjam(true);
@@ -30,6 +36,7 @@ export const StudentPage = () => {
 
   if(!isAuth)
   {
+    emptyCart()
     return <Navigate to="/"/>;
   }
   return (

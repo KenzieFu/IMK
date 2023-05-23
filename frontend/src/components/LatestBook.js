@@ -20,7 +20,7 @@ export const LatestBook = ({latest}) => {
                   <span className='fa fa-star'></span>
             </div>
             <div className={classes["book-info"]}>
-                <h1 className={classes["book-info_h1"]}>{latest[0].buku.judul_Buku}</h1>
+                <h1 className={classes["book-info_h1"]}>{latest[0].buku.Judul_Buku}</h1>
                 <span>{latest[0].buku.pengarang}</span>
             </div>
             <div className={classes.sinopsis}>
