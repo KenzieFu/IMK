@@ -68,7 +68,7 @@ router.get("/buku/kategori/:kategoriId", bukuController.getBookByKategori);
 
 // route untuk menambahkan buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku
-router.post("/buku", bukuController.createBook);
+// router.post("/buku", bukuController.createBook);
 
 // route untuk mengupdate buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku/1
