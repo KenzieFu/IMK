@@ -23,7 +23,7 @@ export const StudentPage = () => {
     <div className={classes.content}>
 
           <Sidebar/>
-          <div>
+          <div className={classes.maintoptop}>
             <StudentChart showPinjam={showPinjam} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler}/>
               <div className={classes["list-books"]}>
                { showPinjam && <Suspense fallback={<p>Loading...</p>}>
@@ -37,11 +37,12 @@ export const StudentPage = () => {
                   </Await>
                 </Suspense>}
 
-
             </div>
           </div>
            <div>
+
           {/*   <StudentCard/> */}
+
           <QRCodeBox/>
             <Suspense fallback={<p>Loading...</p>}>
               <Await resolve={pinjam}>

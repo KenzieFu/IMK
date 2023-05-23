@@ -80,8 +80,10 @@ export const LibraryPage = () => {
         }
 
       </div>
-      <div className={classes['mainmid']}>
 
+      <div className={classes['mainbatch']}>
+        
+      <div className={classes['mainmid']}>
       {!check &&
           <>
         <Suspense fallback="">
@@ -107,6 +109,7 @@ export const LibraryPage = () => {
             </>
 
         }
+        </div>
         </div>
       </div>
 
