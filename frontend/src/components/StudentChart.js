@@ -38,6 +38,8 @@ export const StudentChart = (props) => {
                         <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>
                             Dikembalikan
                         <span className={barKembaliClassName}></span></li>
+                        <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>Dibooking
+                        <span className={barKembaliClassName}></span></li>
                     </ul>
                     <span style={{ fontWeight:"bolder" }}>Sort By <i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </nav>

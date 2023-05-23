@@ -114,7 +114,7 @@ export const CreateBuku = () => {
       console.log(sendedData);
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-        
+
         headers: {
         /*   "Content-Type": "multipart/form-data", */
           "Authorization":"Bearer",

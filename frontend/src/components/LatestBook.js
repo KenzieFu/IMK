@@ -7,9 +7,9 @@ export const LatestBook = ({latest}) => {
     <>
         {latest.length !=0 &&
             <>
-            
+
         <div className={classes.box} style={{ maxWidth:"400px" }}>
-            
+
                 <h1>Baru Dipinjam</h1>
             <img style={{ textAlign:"center",margin:"20px 0" }} src="./assets/book.png" width="270px" height="400px" alt="" />
             <div className={classes.rating}>
@@ -27,11 +27,11 @@ export const LatestBook = ({latest}) => {
                 <h2>Sinopsis</h2>
                 <p>{latest[0].buku.sinopsis}</p>
             </div>
-           
-            
-           
+
+
+
         </div>
-        
+
         </>
         }
         </>
