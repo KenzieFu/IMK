@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { json,defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import './StudentPage.css';
 
 export const StudentPage = () => {
     const [currentId,setCurrentId]=useState(null);
@@ -27,46 +28,74 @@ export const StudentPage = () => {
       const columns = [
         {
             id:'id',
-            name:"ID",
-            selector:row=>row.id_siswa,
-
+            name:<div className="data-row">ID Siswa</div>,
+            selector:(row) =>  <div className="data-row">{row.id_siswa}</div>,
             sortable:true,
-
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
+            width: "10%",
         },
         {
             id:"nisn",
-            name: 'NISN',
-            selector: row => row.nisn,
+            name: <div className="data-row">NISN</div>,
+            //selector: row => row.nisn,
+            selector:(row) =>  <div className="data-row">{row.nisn}</div>,
             accessor:"nisn",
             sortable: true,
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
         },
         {
             id:"nama_lengkap",
-            name: 'Nama Lengkap',
-            selector: row => row.nama_lengkap,
+            name:  <div className="data-row">Nama Lengkap</div>,
+            //selector: row => row.nama_lengkap,
+            selector:(row) =>  <div className="data-row">{row.nama_lengkap}</div>,
             accessor:"nama_lengkap",
             sortable: true,
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
         },
         {
             id:"jenis_kelamin",
-            name: 'Jenis Kelamin',
-            selector: row => row.jenis_kelamin,
+            name:  <div className="data-row">Jenis Kelamin</div>,
+            //selector: row => row.jenis_kelamin,
+            selector:(row) =>  <div className="data-row">{row.jenis_kelamin}</div>,
             accessor:"jenis_kelamin",
             sortable: true,
+            headerStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              justifyContent: "center",
+            },
         },
         {
             id:"button",
-            name:"Action",
+            name: <div className="data-row">Aksi</div>,
             width:"30%",
           cell: (row) =>
                 (
-              <div style={{ margin:"0 0" }} >
-            <Link to={`/admin/students/${row.id_siswa}`} style={{ cursor:"pointer" ,textDecoration:"none",color:"gray" }}>Detail</Link>{'                    '}{'       '}
+              <div className="action-buttons" >
+            <Link to={`/admin/students/${row.id_siswa}`}  className="action-detail">Rincian</Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_siswa)} style={{ cursor:"pointer" }}>Delete</span>
+            <span  onClick={()=>showModalHandler(row.id_siswa)} style={{ cursor:"pointer" }} className="action-delete">Hapus</span>
                   
             </div>
           ),
+          headerStyle: {
+            fontWeight: "bold",
+            textAlign: "center",
+            justifyContent: "center",
+            alignItems: "center",
+          },
 
           ignoreRowClick: true,
           allowOverflow: true,
@@ -84,8 +113,8 @@ export const StudentPage = () => {
                <DataTable
                title={
                 <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2>Tabel Siswa</h2>
-                    <Link to="registrasi/data-pribadi">Create</Link>
+                    <h2 className="data-table-header">Tabel Siswa</h2>
+                    <Link to="registrasi/data-pribadi" style={{listStyle: 'none'}} className="button-create">Tambah Akun</Link>
                 </div>
                }
                data={loadedData}

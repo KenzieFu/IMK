@@ -45,7 +45,7 @@ export const BookTablePage = () => {
   const columns = [
     {
       id: 'id',
-      name: "ID",
+      name: <div className="data-row">ID Buku</div>,
       selector: row => row.id_buku,
 
       sortable: true,
@@ -53,14 +53,14 @@ export const BookTablePage = () => {
     },
     {
       id: "judul_buku",
-      name: 'Judul Buku',
+      name: <div className="data-row">Judul Buku</div>,
       selector: row => row.judul_buku,
       accessor: "judul_buku",
       sortable: true,
     },
     {
       id: "pengarang",
-      name: 'Pengarang',
+      name: <div className="data-row">Pengarang</div>,
       selector: row => row.pengarang,
       accessor: "pengarang",
       sortable: true,
@@ -68,23 +68,29 @@ export const BookTablePage = () => {
     {
       id: "kategori",
       accessor: "kategori.nama_kategori",
-      name: 'Kategori',
+      name: <div className="data-row">Kategori</div>,
       selector: row => row.kategori.nama_kategori,
       sortable: true,
     },
     {
       id: "button",
-      name: "Action",
+      name: <div className="data-row">Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
-        <div style={{ margin: "0 0" }} >
-          <Link to={`/admin/books/${row.id_buku}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
+        <div className="action-buttons" >
+          <Link to={`/admin/books/${row.id_buku}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }} className="action-detail">Rincian</Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_buku)} style={{ cursor: "pointer" }}>Delete</span>
+          <span onClick={() => showModalHandler(row.id_buku)} style={{ cursor: "pointer" }} className="action-delete">Hapus</span>
 
         </div>
       ),
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+      },
 
       ignoreRowClick: true,
       allowOverflow: true,
