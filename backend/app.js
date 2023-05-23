@@ -62,14 +62,8 @@ app.use((req, res, next) => {
 
 // Set CORS headers
 const corsOptions = {
-<<<<<<< HEAD
   origin: "http://localhost:3000",
   credentials: true,
-=======
-  origin: "*",
-  credentials: true,
-  // allowedHeaders: ["Authorization", "Content-Type"], // you can change the headers
->>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
 };
 
 app.use(cors(corsOptions));
