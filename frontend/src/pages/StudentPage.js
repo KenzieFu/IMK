@@ -11,7 +11,7 @@ import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
 import {  QRCodeBox } from '../components/QRcode/QRCodeBox';
 import {  useCart } from "react-use-cart";
-
+import { PengembalianBuku } from './PengembalianBuku';
 
 export const StudentPage = () => {
   const [showPinjam,setShowPinjam]=useState(true);
@@ -29,7 +29,13 @@ export const StudentPage = () => {
   const bookingHandler=()=>{
     setShowPinjam(false);
   }
+
+
+
   const {pinjam,kembali}=useLoaderData("pinjam-kembali-booking-buku")
+
+
+  console.log(kembali)
 
   if(!isAuth)
   {
@@ -53,18 +59,18 @@ export const StudentPage = () => {
                       {loadedData=><PeminjamanBuku  books={loadedData} />}
                   </Await>
                 </Suspense>}
-                { showKembali && <Suspense fallback={<p>Loading...</p>}>
+                {/* { showKembali && <Suspense fallback={<p>Loading...</p>}>
                   <Await resolve={kembali}>
-                      {loadedData=><PeminjamanBuku  books={loadedData} />}
+                      {loadedData=><PengembalianBuku  books={loadedData} />}
                   </Await>
                 </Suspense>}
                 {!showKembali && <Suspense fallback={<p>Loading...</p>}>
                   <Await resolve={kembali}>
-                      {loadedData=><PeminjamanBuku  books={loadedData} />}
+                      {loadedData=><PengembalianBuku  books={loadedData} />}
                   </Await>
-                </Suspense>}
+                </Suspense>} */}
                 {/* { showBooking && <Suspense fallback={<p>Loading...</p>}>
-                  <Await resolve={booking}>
+                  <Await resolve={pemesanan}>
                       {loadedData=><PeminjamanBuku  books={loadedData} />}
                   </Await>
                 </Suspense>}
@@ -81,6 +87,7 @@ export const StudentPage = () => {
           {/*   <StudentCard/> */}
 
           <QRCodeBox/>
+          
             <Suspense fallback={<p>Loading...</p>}>
               <Await resolve={pinjam}>
               {loadedData=><LatestBook latest={loadedData.filter((book,i,{length})=>i===length -1)}/>}
@@ -90,15 +97,11 @@ export const StudentPage = () => {
            </div>
 
 
-
-
         </div>
 
 
   )
 }
-
-
 
 const loadReturned=async (id)=>{
 
@@ -120,8 +123,8 @@ const loadReturned=async (id)=>{
   }
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
-const loadBorrowed=async (id)=>{
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/siswa/buku/histori-peminjaman/"+id)
+const loadBorrowed=async ()=>{
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian")
   console.log(response);
   if(!response.ok)
   {
@@ -159,9 +162,12 @@ const loadBorrowed=async (id)=>{
 // }
 
 export async function loader(id) {
+  const data = await loadBorrowed();
+  const peminjamanData = data.peminjaman;
+
   return defer({
     pinjam:loadBorrowed(id),
-    kembali:loadReturned(id),
+    kembali:peminjamanData,
   })
 }
 

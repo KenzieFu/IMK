@@ -28,6 +28,7 @@ export const CreateAbsensi = () => {
             </Await>
         </Suspense>
         {data && data.message && !error && <ErrorModal message={data} onClose={showHandler}/>}
+      
         
     </>
   )

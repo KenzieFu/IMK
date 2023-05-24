@@ -20,13 +20,14 @@ exports.setWaktuKeluar = async function (req, res, next) {
       }
     );
     if (absensi[0] === 0) {
-      const error = new Error("Gagal scan keluar, Anda belum scan masuk perpustakaan!");
-      error.statusCode = 200;
-      throw error;
+      res.status(200).json(
+        {message:`Gagal,Siswa dengan NIS ${req.params.nisn} Belum Masuk Perpustakaan`,
+         absensi:absensi,status:"gagal"}
+          );
     }
     res.status(200).json(
-      {message:`${req.params.nisn} Berhasil keluar dari Perpustakaan`,
-       absensi:absensi}
+      {message:`Sukses, Siswa dengan NIS ${req.params.nisn} Berhasil keluar dari Perpustakaan`,
+       absensi:absensi,status:"sukses"}
         );
   } catch (error) {
     next(error);
@@ -76,8 +77,9 @@ exports.createAbsensi = async function (req, res, next) {
       /* const error = new Error("Gagal masuk, Anda belum  keluar perpustakaan!");
       error.statusCode = 400; */
       return res.status(200).json({
-        message: "Gagal masuk, Anda belum  keluar perpustakaan!",
+        message: `Gagal, Siswa dengan NIS ${nisn} belum  keluar perpustakaan !`,
         data: {nisn, waktu_masuk, tanggal, waktu_keluar},
+        status:"gagal"
       })
     }
 
@@ -89,8 +91,8 @@ exports.createAbsensi = async function (req, res, next) {
     });
 
     res.status(200).json(
-      {message:`${nisn} Berhasil masuk Ke Perpustakaan`,
-       absensiBaru:absensiBaru}
+      {message:`Siswa dengan NIS ${nisn} masuk ke dalam perpustakaan !`,
+       absensiBaru:absensiBaru,status:"sukses"}
         );
   } catch (error) {
     next(error);

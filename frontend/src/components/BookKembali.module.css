@@ -1,6 +1,6 @@
 :root{
     --white:#ffffff;
-    --blue:#2e55ba; 
+    --blue:#2e55ba;
     --accentblack:rgb(58, 58, 58);
     --red:#FF5959;
     --gray:#f4f1f1;
@@ -28,17 +28,12 @@
     }
 }
 
-.boxescon{
-    height: 20vw;
-    margin-bottom: 2vw;
-}
-
 .due-date{
     color:white;
-    background: #ff5959bc;
+    background: #FF5959 76%;
     padding:7px 3px;
     border: transparent;
-    border-radius: 1vw;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,6 +58,7 @@
     font-size: 2vw;
 }
 
+
 .book-info_button{
     display: flex;
     justify-content: center;
@@ -73,15 +69,8 @@
     background: #FF5959;
     border: none;
     padding:0.8vw 0.4vw;
-    border-radius: 1vw;
+    border-radius: 2vw;
     font-size: 1vw;
-    transition: all .3s ease;
-}
-
-.book-info_button:hover{
-    text-decoration: none;
-    color: var(--white-light);
-    transform: translateY(-0.3vw);
 }
 
 .rating{

@@ -24,7 +24,7 @@ export const LatestBook = ({latest}) => {
                 <span>{latest[0].buku.pengarang}</span>
             </div>
             <div className={classes.sinopsis}>
-                <h2>Sinopsis</h2>
+                <span>Sinopsis</span>
                 <p>{latest[0].buku.sinopsis}</p>
             </div>
 

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import classes from './adminbatch.module.css'
 
 
 export const DaftarBookingBuku = () => {
@@ -41,37 +42,62 @@ export const DaftarBookingBuku = () => {
   const columns = [
     {
       id: 'id',
-      name: "ID",
-      selector: row => row.id_pemesanan,
+      name: <div className={classes['data-row']}>ID Pemesanan</div>,
+      selector: row => <div className={classes['data-rowid']}>{row.id_pemesanan}</div>,
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "nama_siswa",
-      name: 'Nama Siswa',
-      selector: row => row.siswa.nama_lengkap,
+      name: <div className={classes['data-row']}>Nama Siswa</div>,
+      selector: row => <div className={classes['data-row']}>{row.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
       id: "judul_buku",
-      name: 'Judul Buku',
-      selector: row => row.buku.judul_buku,
+      name: <div className={classes['data-row']}>Judul Buku</div>,
+      selector: row => <div className={classes['data-row']}>{row.buku.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
     },
     {
         id: "waktu",
-        name: 'Waktu',
-        selector: row => row.waktu,
+        name: <div className={classes['data-row']}>Waktu</div>,
+        selector: row => <div className={classes['data-row']}>{row.waktu}</div>,
         accessor: "waktu",
         sortable: true,
+        headerStyle: {
+          fontWeight: "bold",
+          textAlign: "center",
+          justifyContent: "center",
+        },
       },
       {
         id: "tanggal",
-        name: 'Tanggal',
-        selector: row => row.tanggal,
+        name: <div className={classes['data-row']}>Tanggal</div>,
+        selector: row => <div className={classes['data-row']}>{row.tanggal}</div>,
         accessor: "tanggal",
         sortable: true,
+        headerStyle: {
+          fontWeight: "bold",
+          textAlign: "center",
+          justifyContent: "center",
+        },
       },
 
     // {
@@ -85,18 +111,22 @@ export const DaftarBookingBuku = () => {
 
     {
       id: "button",
-      name: "Action",
+      name: <div className={classes['data-row']}>Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
-        <div style={{ margin: "0 0" }} >
+        <div style={{ margin: "0 0" }} className='action-buttons'>
           {/* <Link to={`/admin/booked-books/${row.id_pemesanan}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>Detail</Link>{'                    '}{'       '}
           <input type="hidden" id='row' /> */}
-          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }}>Setujui</span>
+          <span onClick={() => showModalHandler(row.id_pemesanan)} style={{ cursor: "pointer" }} className='action-check'> <i class="bi bi-check-lg"> Setujui</i></span>
 
         </div>
       ),
-
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
       ignoreRowClick: true,
       allowOverflow: true,
       selector: row => row.button,
@@ -143,9 +173,9 @@ export const DaftarBookingBuku = () => {
           {(loadedData) =>
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2>Tabel Booking</h2>
-                  <Link to="create">Create</Link>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
+                  <h1 className={classes['judul1']}>Tabel Booking</h1>
+                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
               }
               data={loadedData.filter((item)=> {
