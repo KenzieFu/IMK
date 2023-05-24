@@ -6,7 +6,6 @@ import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from '
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
-import "./DaftarPengembalianBukuPage.css";
 
 export const DaftarPengembalianBukuPage = () => {
   const [currentId, setCurrentId] = useState(null);

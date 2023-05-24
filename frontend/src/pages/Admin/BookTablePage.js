@@ -7,7 +7,7 @@ import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from '
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
-import "./BookTablePage.css";
+import classes from './adminbatch.module.css'
 
 export const BookTablePage = () => {
 
@@ -46,8 +46,8 @@ export const BookTablePage = () => {
   const columns = [
     {
       id: 'id',
-      name: <div className="data-row">ID Buku</div>,
-      selector: (row) => <div className="data-row">{row.id_buku}</div>,
+      name: <div className={classes['data-row']}>ID Buku</div>,
+      selector: (row) => <div className={classes['data-rowid']}>{row.id_buku}</div>,
 
       sortable: true,
       headerStyle: {
@@ -59,8 +59,8 @@ export const BookTablePage = () => {
     },
     {
       id: "judul_buku",
-      name: <div className="data-row">Judul Buku</div>,
-      selector: (row) => <div className="data-row">{row.judul_buku}</div>,
+      name: <div className={classes['data-row']}>Judul Buku</div>,
+      selector: (row) => <div className={classes['data-row']}>{row.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
       headerStyle: {
@@ -71,8 +71,8 @@ export const BookTablePage = () => {
     },
     {
       id: "pengarang",
-      name: <div className="data-row">Pengarang</div>,
-      selector: (row) =><div className="data-row">{row.pengarang}</div>,
+      name: <div className={classes['data-row']}>Pengarang</div>,
+      selector: (row) =><div className={classes['data-row']}>{row.pengarang}</div>,
       accessor: "pengarang",
       sortable: true,
       headerStyle: {
@@ -84,8 +84,8 @@ export const BookTablePage = () => {
     {
       id: "kategori",
       accessor: "kategori.nama_kategori",
-      name: <div className="data-row">Kategori</div>,
-      selector: row => <div className="data-row">{row.kategori.nama_kategori}</div>,
+      name: <div className={classes['data-row']}>Kategori</div>,
+      selector: row => <div className={classes['data-row']}>{row.kategori.nama_kategori}</div>,
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -95,14 +95,14 @@ export const BookTablePage = () => {
     },
     {
       id: "button",
-      name: <div className="data-row">Aksi</div>,
+      name: <div className={classes['data-row']}>Aksi</div>,
       width: "30%",
       cell: (row) =>
       (
-        <div className="action-buttons" >
-          <Link to={`/admin/books/${row.id_buku}`} style={{ cursor: "pointer", textDecoration: "none"}} className="action-detail">Rincian</Link>{'                    '}{'       '}
+        <div className={classes["batchbut"]}>
+          <Link to={`/admin/books/${row.id_buku}`} style={{ cursor: "pointer", textDecoration: "none"}} className={classes["detailbut"]}> Rincian &nbsp; <i class="fa fa-info-circle" aria-hidden="true"></i></Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_buku)} style={{ cursor: "pointer" }} className="action-delete">Hapus</span>
+          <span onClick={() => showModalHandler(row.id_buku)} style={{ cursor: "pointer" }} className={classes["delbut"]}> Hapus &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i></span>
 
         </div>
       ),
@@ -123,6 +123,7 @@ export const BookTablePage = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <div className="search-button">
         <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
         <div>
@@ -130,12 +131,31 @@ export const BookTablePage = () => {
             Pencarian Lebih Lanjut
           </Button>
         </div>
+=======
+    <div className={classes['search-button']}>
+     <Input
+        type="text"
+        placeholder="Cari Judul Buku..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className={classes['searchbox']} 
+        />
+            <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
+            Filter <i class="fa fa-filter" aria-hidden="true"></i>
+            </Button>
+>>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
       </div>
       {advanceSearch && (
         <>
+        <div className={classes['downdown']}>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+<<<<<<< HEAD
             <DropdownToggle caret className="dropdown-toggle-search">
               Tampilkan Buku Berdasarkan Kategori
+=======
+            <DropdownToggle caret className={classes['dropdown2']}>
+            Filter by
+>>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
             </DropdownToggle>
             <DropdownMenu>
               {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
@@ -162,18 +182,31 @@ export const BookTablePage = () => {
           </DropdownItem> */}
             </DropdownMenu>
           </Dropdown>
+        </div>
         </>
+<<<<<<< HEAD
       )}
+=======
+        
+      }
+      
+>>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
       <Suspense fallback="">
         <Await resolve={books}>
           {(loadedData) => (
             <DataTable
               title={
+<<<<<<< HEAD
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h2>Tabel Buku</h2>
                   <Link to="create" className="button-create">
                     <i class="bi bi-person-plus"> Tambah Buku</i>
                   </Link>
+=======
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems:"center", marginTop:"3vw" }}>
+                  <h1 className={classes['judul1']}>Tabel Buku</h1>
+                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Buku</i></Link>
+>>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
                 </div>
               }
               data={loadedData.filter((item) => {

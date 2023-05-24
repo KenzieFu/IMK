@@ -5,6 +5,7 @@ export const ErrorModal = ({onClose,message}) => {
  let bigTextclassName=[classes["big-text"],message?.status!=="sukses"?classes.fail:" "].join("  ")
  let closeButton=[classes["close-button"],message?.status!=="sukses"?classes["background-fail"]:" "].join(" ")
  let imgSrc=`${message?.status==="sukses"?"/assets/Icons/success.png":"/assets/Icons/failed.png"}`
+ let curCircle=[classes.circle,message?.status!=="sukses"?classes.red:" "].join(" ");
  console.log(closeButton)
   return (
     <>
@@ -18,8 +19,9 @@ export const ErrorModal = ({onClose,message}) => {
           <div style={{ textAlign:"center",marginTop:"20px" }}
           > <div className={classes.container}>
                <img className={classes["animation"]} src={imgSrc} alt="" />
-               <div className={classes.circle} style={{ animationDelay:"0s" }}></div>
-               <div className={classes.circle} style={{ animationDelay:"3s" }}></div>
+               <div className={curCircle} style={{ animationDelay:"0s" }}></div>
+               <div className={curCircle} style={{ animationDelay:"2s" }}></div>
+              
         
         
           </div>
