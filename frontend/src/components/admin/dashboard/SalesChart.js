@@ -5,12 +5,16 @@ const SalesChart = () => {
   const chartoptions = {
     series: [
       {
-        name: "Iphone 13",
+        name: "Fisika IX",
         data: [0, 31, 40, 28, 51, 42, 109, 100],
       },
       {
-        name: "Oneplue 9",
+        name: "Biologi IX",
         data: [0, 11, 32, 45, 32, 34, 52, 41],
+      },
+      {
+        name: "Kimia X",
+        data: [0, 34, 22, 50, 32, 23, 52, 21],
       },
     ],
     options: {
@@ -45,9 +49,9 @@ const SalesChart = () => {
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Sales Summary</CardTitle>
+        <CardTitle tag="h5">Chart Peminjaman Buku</CardTitle>
         <CardSubtitle className="text-muted" tag="h6">
-          Yearly Sales Report
+          Laporan Tahunan 
         </CardSubtitle>
         <Chart
           type="area"

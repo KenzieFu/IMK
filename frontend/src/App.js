@@ -9,6 +9,7 @@ import {StudentPage} from './pages/StudentPage'
 import { LibraryPage } from "./pages/LibraryPage";
 import  BookDetail, { loader } from './pages/BookDetails'
 import Contact from "./pages/ContactPage";
+import { CartProvider } from 'react-use-cart'
 
 
 import { lazy } from "react";
@@ -164,8 +165,8 @@ const studentId=useSelector(state=>state.auth.user)
       children:[
        {index:true ,element:<HomePage/>},
        {path:"student",
-       id:"pinjam-kembali-buku",
-        element:<StudentAuth><StudentPage/></StudentAuth>,
+       id:"pinjam-kembali-booking-buku",
+        element:<StudentAuth><CartProvider><StudentPage/></CartProvider></StudentAuth>,
          loader:(s)=>studentLoader(studId)
       },
        {path:"library",
