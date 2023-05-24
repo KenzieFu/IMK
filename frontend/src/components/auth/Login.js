@@ -103,7 +103,8 @@ const LoginModal = (props) => {
         localStorage.setItem('token',token);
         localStorage.setItem('user',JSON.stringify(user))
         const expiration = new Date();
-        expiration.setSeconds(expiration.getSeconds()+30);
+        expiration.setMinutes(expiration.getMinutes()+40);
+        /* expiration.setSeconds(expiration.getSeconds()+30); */
         /* expiration.setHours(expiration.getHours()+1); */
         localStorage.setItem('expiration',expiration.toISOString());
         navigate("/");
