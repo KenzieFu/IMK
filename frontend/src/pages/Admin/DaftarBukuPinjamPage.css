@@ -114,3 +114,70 @@
     border-color: #7bff95;
     color: #ffffff;
   }
+
+  .box-menu {
+  /* kuning soft */
+  background-color: #ffffe6;
+  border-color: #ffffe6;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+  width: 285px;
+}
+
+.box-menu::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.box-menu:hover {
+  /* kuning lebih gelap */
+  background-color: #ffffcc;
+  /* kuning orange */
+  border-color: #ffcc00;
+}
+
+.search-button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dropdown-toggle-search {
+  width: 500px;
+  display: flex;
+  /* justify content penuh box */
+  justify-content: space-between;
+  /* justify-content: start; */
+  align-items: center;
+  margin-left: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.dropdown-menu-search {
+  width: 500px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  /* flexbox */
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+
+.dropdown-pinjam {
+  width: 500px;
+  margin-right: 100px;
+}
