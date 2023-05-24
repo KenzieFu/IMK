@@ -18,16 +18,14 @@ export const RootLayout = () => {
 const authen=useSelector(state=>state.auth.isAuth);
 const dispatch=useDispatch();
 const user = useSelector(state=>state.auth.user)
-if(!authen  || (authen ) )
-{
-  
-}
 
+console.log(token);
 useEffect(()=>{
   if(Object.keys(user)?.length === 0 && token ){
   
     dispatch(authActions.setCredentials({data:getUserCredentials()}));
   }
+  console.log(token)
 
   if(token === "EXPIRED")
   {
@@ -38,10 +36,10 @@ useEffect(()=>{
 
   const tokenDuration=getTokenDuration();
   setTimeout(()=>{
-   
+
   },tokenDuration);
   
-},[token,submit])
+},[token])
 
 
   const showLoginModal=()=>{

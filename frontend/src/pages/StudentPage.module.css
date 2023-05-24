@@ -43,6 +43,7 @@
     gap:25px;
     background:"#F1F1F1";
     margin-bottom: 20px;
+    align-items: flex-start
 }
 
 .list-books{

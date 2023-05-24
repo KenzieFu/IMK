@@ -1,9 +1,12 @@
 import React from 'react'
 import classes from "./Sidebar.module.css"
 import { Link } from 'react-router-dom'
+import StickyBox from "react-sticky-box";
 export const Sidebar = () => {
   return (
     <>
+    <StickyBox offsetTop={90} >
+
     <div className={classes.sidebar}>
         <nav className={classes["side-nav"]}>
           <div className={classes["sidetop"]}>
@@ -23,6 +26,8 @@ export const Sidebar = () => {
         </nav>
     </div>
     
+    </StickyBox>
+   
     </>
   )
 }

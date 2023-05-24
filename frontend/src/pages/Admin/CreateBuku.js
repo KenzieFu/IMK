@@ -88,20 +88,15 @@ export const CreateBuku = () => {
     event.preventDefault();
 
     try {
-<<<<<<< HEAD
-      const formDataToSend = new FormData();
-      formDataToSend.append('judul_buku', formData.judul_buku);
-=======
       /* const formDataToSend = new FormData(); */
       /* formDataToSend.append('judul_buku', formData.judul_buku);
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
       formDataToSend.append('gambar_buku', formData.gambar_buku)
       formDataToSend.append('id_kategori', formData.id_kategori)
       formDataToSend.append('sinopsis', formData.sinopsis);
-      formDataToSend.append('isbn', formData.isbn); 
+      formDataToSend.append('isbn', formData.isbn); */
 
       const sendedData={
         judul_buku:formData.judul_buku,
@@ -119,13 +114,6 @@ export const CreateBuku = () => {
       console.log(sendedData);
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-<<<<<<< HEAD
-        headers: {
-           "Content-Type": "multipart/form-data",
-           // boundry
-           "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-       },
-=======
 
         headers: {
         /*   "Content-Type": "multipart/form-data", */
@@ -133,7 +121,6 @@ export const CreateBuku = () => {
           // boundry
           "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
       },
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
         body:sendedData,
 
       }); // Replace with your API endpoint
