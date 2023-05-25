@@ -89,8 +89,8 @@ export const CreateBuku = () => {
     event.preventDefault();
 
     try {
-       const formDataToSend = new FormData(); 
-       formDataToSend.append('judul_buku', formData.judul_buku);
+      const formDataToSend = new FormData(); 
+      formDataToSend.append('judul_buku', formData.judul_buku);
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
@@ -99,6 +99,7 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn); 
 
+<<<<<<< HEAD
       const sendedData={
         judul_buku:formData.judul_buku,
         pengarang:formData.pengarang,
@@ -112,6 +113,30 @@ export const CreateBuku = () => {
 
     
      const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
+=======
+      // const sendedData={
+      //   judul_buku:formData.judul_buku,
+      //   pengarang:formData.pengarang,
+      //   penerbit:formData.penerbit,
+      //   tahun_terbit:formData.tahun_terbit,
+      //   gambar_buku:formData.gambar_buku,
+      //   id_kategori: formData.id_kategori,
+      //   sinopsis:formData.sinopsis,
+      //   isbn:formData.isbn
+      // }
+
+     const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
+        method: 'POST',
+      //   headers: {
+      //      "Content-Type": "multipart/form-data",
+      //      // boundry
+      //     //  "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+      //  },
+        // body:sendedData,
+        body: formDataToSend,
+
+      }); 
+>>>>>>> 4c2a87a21935871f65c2fa7196bbc9df6f1eaf18
       // console.log semua data yang dikirimkan
       const responseData = response;
       console.log(responseData);
@@ -172,7 +197,7 @@ export const CreateBuku = () => {
         <FormGroup>
           <Label for="kategori">Kategori Buku</Label>
           <select name="id_kategori" value={formData.id_kategori} onChange={handleOptionChange} required>
-            <option value="">Pilih Kategori</option>
+            <option value={kategori.id_kategori}>Pilih Kategori</option>
             {kategori.map((kategori) => (
               <option key={kategori.nama_kategori} value={kategori.id_kategori}>
                 {kategori.nama_kategori}
