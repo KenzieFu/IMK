@@ -18,6 +18,11 @@ const router = express.Router();
 
 // ROUTES FOR SISWA
 
+// route untuk menghapus siswa secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/siswa-multiple
+router.delete("/siswa-multiple", siswaController.deleteSiswaMultiple);
+
+
 // route untuk menampilkan daftar siswa
 // http://localhost:8080/admin-perpustakaan-methodist-cw/siswa
 router.get("/siswa", siswaController.getSiswa);
