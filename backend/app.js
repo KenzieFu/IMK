@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const fileupload = require("express-fileupload");
+// const fileupload = require("express-fileupload");
 const sequelize = require("./util/database");
 const multer = require("multer");
 const cors = require("cors");
@@ -9,11 +9,7 @@ const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
 const adminRoutes = require("./routes/admin");
 const Buku = require("./models/buku");
-<<<<<<< HEAD
 const path = require("path");
-=======
-
->>>>>>> 015c0d9c8a906581e72cf6e76f1669e5eb55a3c0
 // const bookController = require("./controllers/buku");
 
 const app = express();

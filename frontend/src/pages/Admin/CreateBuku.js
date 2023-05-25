@@ -89,13 +89,8 @@ export const CreateBuku = () => {
     event.preventDefault();
 
     try {
-<<<<<<< HEAD
       const formDataToSend = new FormData(); 
       formDataToSend.append('judul_buku', formData.judul_buku);
-=======
-       const formDataToSend = new FormData(); 
-       formDataToSend.append('judul_buku', formData.judul_buku);
->>>>>>> 015c0d9c8a906581e72cf6e76f1669e5eb55a3c0
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
@@ -115,15 +110,6 @@ export const CreateBuku = () => {
       //   isbn:formData.isbn
       // }
 
-<<<<<<< HEAD
-      // console.log(sendedData);
-      console.log(formDataToSend);
-=======
-      console.log(sendedData);
-<<<<<<< HEAD
-     const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
-=======
->>>>>>> 015c0d9c8a906581e72cf6e76f1669e5eb55a3c0
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
       //   headers: {
@@ -134,8 +120,7 @@ export const CreateBuku = () => {
         // body:sendedData,
         body: formDataToSend,
 
-      }); // Replace with your API endpoint
->>>>>>> a6f730397ada37813917dcf3d0448432220bec6e
+      }); 
       // console.log semua data yang dikirimkan
       const responseData = await response.json();
       console.log(responseData);
