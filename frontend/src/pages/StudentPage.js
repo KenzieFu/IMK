@@ -44,8 +44,8 @@ export const StudentPage = () => {
   const { pinjam, kembali, booking } = useLoaderData("pinjam-kembali-booking-buku")
   console.log(booking)
   const CekKembali = kembali.filter(item => item.id_siswa === 1);
-  const CekBooking = booking.filter(item => item.id_siswa === 1)
-  console.log(kembali)
+  const CekBooking = booking.filter(item => item.id_siswa === 1);
+  console.log(CekBooking)
 
   if (!isAuth) {
 
