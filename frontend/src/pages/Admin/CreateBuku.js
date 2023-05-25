@@ -112,13 +112,11 @@ export const CreateBuku = () => {
       console.log(sendedData);
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
-
         headers: {
-        /*   "Content-Type": "multipart/form-data", */
-          "Authorization":"Bearer",
-          // boundry
-          "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-      },
+           "Content-Type": "multipart/form-data",
+           // boundry
+           "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+       },
         body:sendedData,
 
       }); // Replace with your API endpoint
@@ -164,7 +162,7 @@ export const CreateBuku = () => {
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
-          <Label for="examplePenerbit">Penerbit</Label>
+          <Label for="examplePenerbit">Penerbitsssssssssss</Label>
           <Input
             id="examplePenerbit"
             name="penerbit"

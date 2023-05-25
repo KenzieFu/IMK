@@ -12,8 +12,8 @@ const tableData = [
     email: "kenziefubrianto@gmail.com",
     role: "Admin",
     status: "done",
-    weeks: "35",
-    budget: "95K",
+    // weeks: "35",
+    // budget: "95K",
   },
   {
     avatar: user1,
@@ -21,8 +21,8 @@ const tableData = [
     email: "nakeddog15@gmail.com",
     role: "Admin",
     status: "done",
-    weeks: "35",
-    budget: "95K",
+    // weeks: "35",
+    // budget: "95K",
   },
   {
     avatar: user3,
@@ -30,8 +30,8 @@ const tableData = [
     email: "vitasariani12@gmail.com",
     role: "Admin",
     status: "holt",
-    weeks: "35",
-    budget: "95K",
+    // weeks: "35",
+    // budget: "95K",
   },
   {
     avatar: user4,
@@ -39,17 +39,17 @@ const tableData = [
     email: "trifinelaurensi@gmail.com",
     role: "TU",
     status: "holt",
-    weeks: "35",
-    budget: "95K",
+    // weeks: "35",
+    // budget: "95K",
   },
   {
     avatar: user5,
-    name: "User 5",
+    name: "Johansen Sihombing",
     email: "johansensihombing099@gmail.com",
-    role: "TU",
+    role: "Admin",
     status: "done",
-    weeks: "35",
-    budget: "95K",
+    // weeks: "35",
+    // budget: "95K",
   },
 ];
 
@@ -70,8 +70,8 @@ const ProjectTables = () => {
                 <th>Role</th>
 
                 <th>Status</th>
-                <th>Weeks</th>
-                <th>Budget</th>
+                {/* <th>Weeks</th>
+                <th>Budget</th> */}
               </tr>
             </thead>
             <tbody>

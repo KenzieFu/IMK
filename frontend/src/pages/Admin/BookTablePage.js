@@ -122,25 +122,21 @@ export const BookTablePage = () => {
 
   return (
     <>
-    <div className={classes['search-button']}>
-     <Input
-        type="text"
-        placeholder="Cari Judul Buku..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className={classes['searchbox']} 
-        />
-            <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
-            Filter <i class="fa fa-filter" aria-hidden="true"></i>
-            </Button>
+      <div className="search-button">
+        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
+        <div>
+          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+            Pencarian Lebih Lanjut
+          </Button>
+        </div>
       </div>
       {
         advanceSearch &&
         <>
         <div className={classes['downdown']}>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className={classes['dropdown2']}>
-            Filter by
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Tampilkan Buku Berdasarkan Kategori
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={() => setSearchBased('')}>
@@ -173,17 +169,17 @@ export const BookTablePage = () => {
           </Dropdown>
         </div>
         </>
-        
-      }
-      
+      )}
       <Suspense fallback="">
         <Await resolve={books} >
           {(loadedData) =>
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems:"center", marginTop:"3vw" }}>
-                  <h1 className={classes['judul1']}>Tabel Buku</h1>
-                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Buku</i></Link>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <h2>Tabel Buku</h2>
+                  <Link to="create" className="button-create">
+                    <i class="bi bi-person-plus"> Tambah Buku</i>
+                  </Link>
                 </div>
               }
               data={loadedData.filter((item) => {
