@@ -51,6 +51,9 @@ export const DaftarBookingBuku = () => {
         justifyContent: "center",
       },
     },
+
+    
+
     {
       id: "nama_siswa",
       name: <div className={classes['data-row']}>Nama Siswa</div>,
@@ -189,13 +192,14 @@ export const DaftarBookingBuku = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "") {
-                  return item;
-                } else if (searchBased === "nama") {
-                  return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "judul") {
-                  return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase());
-                }
+                  const keyword= searchTerm.toLowerCase()
+                  return(
+                    String(item.id_pemesanan).includes(keyword) ||
+                    item.siswa.nama_lengkap.toLowerCase().includes(keyword) || 
+                    item.buku.judul_buku.toLowerCase().includes(keyword) ||
+                    item.waktu.includes(keyword) || 
+                    item.tanggal.includes(keyword) 
+                  )
               })}
               columns={columns}
               pagination

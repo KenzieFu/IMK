@@ -247,8 +247,8 @@ export const DaftarBukuPinjamPage = () => {
                     String(item.id_siswa).includes(keyword)  ||
                     item.siswa.nama_lengkap.toLowerCase().includes(keyword) ||
                     item.buku.judul_buku.toLowerCase().includes(keyword) ||
-                    new Date(item.tanggal_pinjam).toLocaleDateString("en-gb").includes(keyword) ||
-                  item.tanggal_kembali.includes(keyword) 
+                    new Date(item.tanggal_pinjam).toLocaleDateString("en-GB").includes(keyword) ||
+                  new Date(item.tanggal_kembali).toLocaleDateString("en-GB").includes(keyword) 
 
 
                   )
