@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Suspense, useEffect, useState } from "react";
 import DataTable, { memoize } from "react-data-table-component";
 import { DeleteModal } from "../../components/admin/modals/DeleteModal";
@@ -6,15 +5,6 @@ import { memo } from "react";
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from "react-router-dom";
 import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-=======
-import React, { Suspense, useEffect, useState } from 'react'
-import DataTable, { memoize } from 'react-data-table-component'
-import { DeleteModal } from '../../components/admin/modals/DeleteModal';
-import { memo } from 'react';
-import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from 'react-router-dom';
-import { set } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
->>>>>>> f0bf0da209b978592a20e4c4fc28d26f98529a4e
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import classes from "./adminbatch.module.css";
 
@@ -182,17 +172,10 @@ export const BookTablePage = () => {
           {(loadedData) => (
             <DataTable
               title={
-<<<<<<< HEAD
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Buku</h1>
                   <Link to="create" className={classes["buttoncreate"]}>
                     <i class="bi bi-book"> Tambah Buku</i>
-=======
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2>Tabel Buku</h2>
-                  <Link to="create" className={classes['buttoncreate']}>
-                    <i class="bi bi-person-plus"> Tambah Buku</i>
->>>>>>> f0bf0da209b978592a20e4c4fc28d26f98529a4e
                   </Link>
                 </div>
               }
@@ -257,8 +240,4 @@ export async function action({ params, request }) {
     );
   }
   return redirect("/admin/books");
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f0bf0da209b978592a20e4c4fc28d26f98529a4e
