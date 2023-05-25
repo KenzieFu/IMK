@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from "react-router-dom";
 import axios from "axios"
 import { Button, FormGroup, FormText, Input, Label } from "reactstrap";
+import classes from './adminbatch.module.css';
 
 export const CreateBuku = () => {
   const [formData, setFormData] = useState({
@@ -141,8 +142,9 @@ export const CreateBuku = () => {
 
   return (
     <>
-      <h2>Create Buku</h2>
-      <Form enctype="multipart/form-data"  onSubmit={handleSubmit}>
+      <Form enctype="multipart/form-data"  onSubmit={handleSubmit} className={classes['form']}>
+      <h2 className={classes['judul1']}>Create Buku</h2>
+      <div className={classes['form-grup']}>
         <FormGroup>
           <Label for="exampleBook">judul Buku</Label>
           <Input id="exampleBook" name="judul_buku" placeholder="Masukkan judul Buku" type="text" onChange={handleInputChange} />
@@ -198,6 +200,7 @@ export const CreateBuku = () => {
           <Input id="exampleIsbn" name="isbn" placeholder="ISBN Buku" type="text" onChange={handleInputChange} />
           {/* {errors.isbn && <span>{errors.isbn.message}</span>} */}
         </FormGroup>
+        </div>
         <Button onClick={backHandler}>Cancel</Button>
         <Button style={{ background: "green" }} type="submit">
           Save

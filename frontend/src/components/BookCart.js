@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import classes from "./BookCart.module.css";
 
 export default function Cart(props) {
 
@@ -21,8 +22,6 @@ export default function Cart(props) {
         removeItem,
         emptyCart
     } = useCart();
-
-
 
     const notify = () => toast.success('Buku berhasil dihapus dari booking list!', {
         position: "top-center",
@@ -69,7 +68,7 @@ export default function Cart(props) {
 
     const [hidden, setHidden] = React.useState(false)
 
-    const bookingHandler = async () => {
+    const bookingHandler = async (onClose) => {
 
 
 
@@ -78,6 +77,8 @@ export default function Cart(props) {
         try {
             if (isEmpty) {
                 navigate('library')
+                onClose()
+
 
             } else {
                 let bukuId = []
@@ -119,20 +120,20 @@ export default function Cart(props) {
         <>
             <Modal>
                 {isEmpty ?
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", color: "#e4e4e4" }}>
-                        <p style={{ fontFamily: "Inter", fontSize: "50px", marginBottom: "20px", color: "#1c2431", fontWeight: "bold" }}>Keranjangmu kosong.</p>
-                        <i class="fa fa-shopping-basket" aria-hidden="true" style={{ fontSize: "150px", color: "#e4e4e4" }}></i>
-                        <p style={{ fontFamily: "Inter", fontSize: "20px", marginTop: "20px", color: "#1c2431", fontWeight: "bolder" }}>Yuk ke perpus :).</p>
+                    <div className={classes['mainall']}>
+                        <p>Keranjangmu kosong.</p>
+                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                        <p style={{ fontFamily: "Inter", fontSize: "20px", marginTop: "20px", color: "#1c2431", fontWeight: "bolder" }}>Yuk ke perpus :.</p>
 
                     </div> :
                     <>
                         <h1 style={{ marginBottom:"20px",textAlign: "center" }}>Daftar Pemesanan ({totalUniqueItems})</h1>
 
-                        <div>
+                        <div className={classes['divpenuh']}>
                             {items.map((item) => (
                                 <>
-                                    <div key={item.id} style={{  display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", }}>
-                                        <div style={{padding:"10px"}}><img src="../assets/BookCover.png" /></div>
+                                    <div className={classes['maincontent']} key={item.id} style={{  }}>
+                                        <img src="../assets/BookCover.png" className={classes['imgall']} />
                                         <div>
                                             <table>
                                                 <tr>
@@ -183,9 +184,8 @@ export default function Cart(props) {
                                                 {hidden && item.price}
                                             </table>
                                         </div>
-                                    </div>
-                                    <div style={{display: "flex",
-alignItems:"flex-end"}}>
+                                </div>
+                                    <div style={{display: "flex", alignItems:"flex-end"}}>
                                     <button style={{
                                         marginLeft: "auto",
                                         marginRight: "15px",
@@ -204,7 +204,7 @@ alignItems:"flex-end"}}>
                 }
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", marginTop: "20px", marginBottom: "20px" }}>
                     <Button style={{ backgroundColor: "#ebedec", color: "black", border: "0", marginRight: "10px" }} onClick={props.onClose}>Tutup</Button>
-                    <Button style={{ backgroundColor: "#FF5959", color: "white", border: "0", marginLeft: "10px" }} onClick={bookingHandler} >{isEmpty ? "Ke Perpus!" : "Pesan!"}</Button>
+                    <Button style={{ backgroundColor: "#FF5959", color: "white", border: "0", marginLeft: "10px" }} onClick={()=> bookingHandler(props.onClose)} >{isEmpty ? "Ke Perpus!" : "Pesan!"}</Button>
                 </div>
             </Modal>
         </>

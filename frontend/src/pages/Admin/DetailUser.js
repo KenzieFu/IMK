@@ -3,6 +3,7 @@ import { Box } from '../../UI/Box'
 import { Await, useRouteLoaderData, useNavigate } from 'react-router-dom'
 import { json,defer } from 'react-router-dom'
 import { Suspense } from 'react'
+import classes from './adminbatch.module.css';
 
 export const DetailUser = () => {
     const { userDetail }= useRouteLoaderData("detail-akun");
@@ -49,7 +50,7 @@ export const DetailUser = () => {
                 <Box>
         
                 <div className='acc-info'>
-                    <h1>Akun </h1>
+                    <h1 className={classes['judul1']}>Akun </h1>
                     <table>
                         <tr>
                             <td>Id Akun</td>
@@ -69,9 +70,9 @@ export const DetailUser = () => {
                         
                     </table>
         
-                    <div>
-                        <button onClick={backHandler}>Back</button>
-                        <button onClick={editHandler} >Edit</button>
+                    <div className={classes['batchbut1']}>
+                        <button className={classes['delbut']} onClick={backHandler}>Back</button>
+                        <button className={classes['savbut']} onClick={editHandler} >Edit</button>
                     </div>
                 </div>
             </Box> );
