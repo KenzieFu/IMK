@@ -161,7 +161,7 @@ export const DaftarBukuPinjamPage = () => {
   return (
     <>
       <div className={classes["search-button"]}>
-        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
           Filter <i class="fa fa-filter" aria-hidden="true"></i>
@@ -241,33 +241,17 @@ export const DaftarBukuPinjamPage = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "" && searchBasedDate === "") {
-                  return item;
-                }
-                if (searchBased === "nama") {
-                  if (searchBasedDate === "") {
-                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase());
-                  } else if (searchBasedDate === "pinjam") {
-                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate;
-                  } else if (searchBasedDate === "kembali") {
-                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate;
-                  }
-                }
-                if (searchBased === "judul") {
-                  if (searchBasedDate === "") {
-                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase());
-                  } else if (searchBasedDate === "pinjam") {
-                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate;
-                  } else if (searchBasedDate === "kembali") {
-                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate;
-                  }
-                }
-                if (searchBasedDate === "pinjam") {
-                  return item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate;
-                }
-                if (searchBasedDate === "kembali") {
-                  return item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate;
-                }
+                  const keyword=searchTerm.toLowerCase()
+                  return(
+                    String(item.id_peminjaman).includes(keyword) ||
+                    String(item.id_siswa).includes(keyword)  ||
+                    item.siswa.nama_lengkap.toLowerCase().includes(keyword) ||
+                    item.buku.judul_buku.toLowerCase().includes(keyword) ||
+                    new Date(item.tanggal_pinjam).toLocaleDateString("en-gb").includes(keyword) ||
+                  item.tanggal_kembali.includes(keyword) 
+
+
+                  )
               })}
               columns={columns}
               pagination
