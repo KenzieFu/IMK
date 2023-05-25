@@ -233,7 +233,7 @@ export const DaftarBukuPinjamPage = () => {
               title={
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h2 className="data-table-header">Tabel Peminjaman</h2>
-                  <Link to="create" className="button-create">
+                  <Link to="create" className={classes['buttoncreate']}>
                     <i class="bi bi-person-plus"> Tambah Peminjaman</i>
                   </Link>
                 </div>

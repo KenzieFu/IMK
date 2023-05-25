@@ -175,7 +175,6 @@ export const DaftarBookingBuku = () => {
               title={
                 <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
                   <h1 className={classes['judul1']}>Tabel Booking</h1>
-                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
                 </div>
               }
               data={loadedData.filter((item)=> {

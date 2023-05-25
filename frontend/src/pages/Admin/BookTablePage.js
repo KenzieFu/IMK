@@ -173,7 +173,7 @@ export const BookTablePage = () => {
               title={
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h2>Tabel Buku</h2>
-                  <Link to="create" className="button-create">
+                  <Link to="create" className={classes['buttoncreate']}>
                     <i class="bi bi-person-plus"> Tambah Buku</i>
                   </Link>
                 </div>
