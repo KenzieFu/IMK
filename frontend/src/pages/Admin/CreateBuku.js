@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from "react-router-dom";
+import axios from "axios"
 import { Button, FormGroup, FormText, Input, Label } from "reactstrap";
 
 export const CreateBuku = () => {
@@ -88,15 +89,15 @@ export const CreateBuku = () => {
     event.preventDefault();
 
     try {
-      /* const formDataToSend = new FormData(); */
-      /* formDataToSend.append('judul_buku', formData.judul_buku);
+       const formDataToSend = new FormData(); 
+       formDataToSend.append('judul_buku', formData.judul_buku);
       formDataToSend.append('pengarang', formData.pengarang);
       formDataToSend.append('penerbit', formData.penerbit);
       formDataToSend.append('tahun_terbit', formData.tahun_terbit);
       formDataToSend.append('gambar_buku', formData.gambar_buku)
       formDataToSend.append('id_kategori', formData.id_kategori)
       formDataToSend.append('sinopsis', formData.sinopsis);
-      formDataToSend.append('isbn', formData.isbn); */
+      formDataToSend.append('isbn', formData.isbn); 
 
       const sendedData={
         judul_buku:formData.judul_buku,
@@ -110,6 +111,9 @@ export const CreateBuku = () => {
       }
 
       console.log(sendedData);
+<<<<<<< HEAD
+     const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
+=======
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
         headers: {
@@ -120,6 +124,7 @@ export const CreateBuku = () => {
         body:sendedData,
 
       }); // Replace with your API endpoint
+>>>>>>> a6f730397ada37813917dcf3d0448432220bec6e
       // console.log semua data yang dikirimkan
       const responseData = await response.json();
       console.log(responseData);
@@ -150,7 +155,7 @@ export const CreateBuku = () => {
   return (
     <>
       <h2>Create Buku</h2>
-      <Form onSubmit={handleSubmit}>
+      <Form enctype="multipart/form-data"  onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="exampleBook">judul Buku</Label>
           <Input id="exampleBook" name="judul_buku" placeholder="Masukkan judul Buku" type="text" onChange={handleInputChange} />
