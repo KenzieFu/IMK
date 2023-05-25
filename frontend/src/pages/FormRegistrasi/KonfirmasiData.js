@@ -57,7 +57,7 @@ export const KonfirmasiData = () => {
               },
               body: JSON.stringify({
                 id_siswa: '999',
-                id_akun: "1232",
+              /*   id_akun: "1232", */
                 nisn: state.nisn,
                 nama_lengkap: state.nama_siswa,
                 jenis_kelamin: state.kelamin,
@@ -84,7 +84,7 @@ export const KonfirmasiData = () => {
     }
 
     const closeSubmitModal = () => {
-        navigate('../..')
+      /*   navigate('../..') */
        setIsSubmitted(false);
       }
 
