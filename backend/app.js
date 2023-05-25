@@ -1,5 +1,3 @@
-const path = require("path");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const sequelize = require("./util/database");
@@ -10,6 +8,7 @@ const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
 const adminRoutes = require("./routes/admin");
 const Buku = require("./models/buku");
+const path = require("path");
 // const bookController = require("./controllers/buku");
 
 const app = express();
