@@ -3,6 +3,26 @@ const Akun = require("../models/akun");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 
+// Function untuk menghapus data akun secara multiple
+// misal id_akun = [1,2,3,4,5]
+// hasilnya semua akun dengan id_akun 1,2,3,4,5 akan dihapus
+// cth data yang dikirimkan dalam json
+// { "id_akun": [1,2,3,4,5] }
+exports.deleteAkunMultiple = async function (req, res, next) {
+  try {
+    const akun = await Akun.destroy({
+      where: {
+        id_akun: {
+          [Op.in]: req.body.id_akun,
+        },
+      },
+    });
+    res.json(akun);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Function untuk aktivasi status akun secara multiple
 // misal id_akun = [1,2,3,4,5]
 // body = {status: "Aktif"}
