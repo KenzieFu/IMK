@@ -9,7 +9,7 @@ export const ListBooks = ({books,genre}) => {
           if(other.buku !=null)
           {
             return(
-            <Link to={`/library/${other.id_buku}`}> <li  id={other.id_buku}><img src={other.buku.img} alt="" />
+            <Link to={`/library/${other.id_buku}`}> <li  id={other.id_buku}><img src={`http://localhost:8080${other.buku.gambar_buku}`} alt="" />
             <div className={classes["book-detail"]}><h2>{other.buku.judul_buku}</h2>
             <span>{other.buku.pengarang}</span></div>
             </li></Link>);
@@ -17,13 +17,13 @@ export const ListBooks = ({books,genre}) => {
       }
     )
 
-    const filtered =books.filter((other)=>other.buku.kategori.id_kategori === genre);
-    let   filteredList=filtered.map((other)=>
+    const filtered =books.filter((other)=>other?.buku?.id_kategori === genre);
+    let  filteredList=filtered.map((other)=>
     {
       if(other.buku !=null)
       {
         return(
-        <Link to={`/library/${other.id_buku}`}> <li  id={other.id_buku}><img src={other.buku.img} alt="" />
+        <Link to={`/library/${other.id_buku}`}> <li  id={other.id_buku}><img src={`http://localhost:8080${other.buku.gambar_buku}`} alt="" />
         <div className={classes["book-detail"]}><h2>{other.buku.judul_buku}</h2>
         <span>{other.buku.pengarang}</span></div>
         </li></Link>);

@@ -31,7 +31,7 @@ export const CreateBuku = () => {
       const data2 = await response2.json();
 
       const optionsData = mergeOptions(data1, data2);
-      setKategori(optionsData);
+      setKategori(data2);
     } catch (error) {
       console.error("Error fetching options:", error);
     }
@@ -99,6 +99,8 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn); 
 
+/*   
+     const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
       // const sendedData={
       //   judul_buku:formData.judul_buku,
       //   pengarang:formData.pengarang,
@@ -108,7 +110,7 @@ export const CreateBuku = () => {
       //   id_kategori: formData.id_kategori,
       //   sinopsis:formData.sinopsis,
       //   isbn:formData.isbn
-      // }
+      // } */
 
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
@@ -122,7 +124,7 @@ export const CreateBuku = () => {
 
       }); 
       // console.log semua data yang dikirimkan
-      const responseData = await response.json();
+      const responseData = response;
       console.log(responseData);
 
       alert("Form submitted successfully!");
