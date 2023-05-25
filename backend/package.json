@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.7",
     "express": "^4.16.3",
+    "express-fileupload": "^1.4.0",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.3.2",

@@ -12,7 +12,7 @@ const Siswa = sequelize.define(
     },
     id_akun: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Akun,
         key: "id_akun",
@@ -57,6 +57,10 @@ const Siswa = sequelize.define(
     email: {
       type: DataTypes.STRING(100),
       allowNull: true,
+    },
+    tahun_masuk: {
+      type: DataTypes.STRING(4),
+      allowNull: false,
     },
   },
   {

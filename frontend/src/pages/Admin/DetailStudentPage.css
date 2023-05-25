@@ -1,0 +1,14 @@
+/* back-btn */
+.back-btn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f0f0f0;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}

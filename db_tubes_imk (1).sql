@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2023 at 05:59 AM
+-- Generation Time: May 22, 2023 at 05:49 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -28,7 +28,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_peminjaman` (`in_id_buku` INT, `in_id_siswa` INT, `in_tanggal_pinjam` DATE, `in_tanggal_kembali` DATE)  BEGIN
   INSERT INTO peminjaman (id_buku, id_siswa, tanggal_pinjam, tanggal_kembali)
   VALUES (in_id_buku, in_id_siswa, in_tanggal_pinjam, in_tanggal_kembali);
-
+  
   UPDATE buku
   SET status = 'Sedang Dipinjam'
   WHERE id_buku = in_id_buku;
@@ -39,11 +39,11 @@ END$$
 --
 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_jumlah_buku_dipinjam` (`in_id_siswa` INT) RETURNS INT(11) BEGIN
   DECLARE jumlah_buku INT;
-
+  
   SELECT COUNT(*) INTO jumlah_buku
   FROM peminjaman
   WHERE id_siswa = in_id_siswa AND tanggal_kembali IS NULL;
-
+  
   RETURN jumlah_buku;
 END$$
 
@@ -148,7 +148,7 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_update` AFTER UPDATE ON `buku` FOR EACH ROW BEGIN
-	INSERT INTO log_buku VALUES(NEW.id_buku,
+	INSERT INTO log_buku VALUES(NEW.id_buku, 
                                 CONCAT('Admin mengubah Buku berjudul', OLD.judul_buku, ' dengan pengarang ', OLD.pengarang, ' dengan penerbit ' , OLD.penerbit, ' dengan tahun terbit ', OLD.tahun_terbit, ' dengan kategori_id ', OLD.id_kategori, 'dengan sinopsis ', OLD.sinopsis, ' dengan ISBN ', OLD.isbn, ' menjadi berjudul ' , NEW.judul_buku, ' dengan pengarang ', NEW.pengarang, ' dengan penerbit ' , NEW.penerbit, ' dengan tahun terbit ', NEW.tahun_terbit, ' dengan kategori_id ', NEW.id_kategori, 'dengan sinopsis ', NEW.sinopsis, ' dengan ISBN ', NEW.isbn), CURRENT_TIMESTAMP());
 END
 $$
@@ -178,21 +178,21 @@ INSERT INTO `buku_perpus` (`id_buku`, `stok`) VALUES
 --
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_delete` AFTER DELETE ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(OLD.id_buku,
+	INSERT INTO log_buku_perpus VALUES(OLD.id_buku, 
                                        CONCAT('Admin menghapus stok buku ber-ID ', OLD.id_buku), CURRENT_TIMESTAMP());
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_insert` AFTER INSERT ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(NEW.id_buku,
+	INSERT INTO log_buku_perpus VALUES(NEW.id_buku, 
                                        CONCAT('Admin menambahkan stok buku ber-ID ', NEW.id_buku, ' menjadi ', NEW.stok), CURRENT_TIMESTAMP());
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_update` AFTER UPDATE ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(NEW.id_buku,
+	INSERT INTO log_buku_perpus VALUES(NEW.id_buku, 
                                        CONCAT('Stok buku ber-ID ', NEW.id_buku, 'berubah dari ', OLD.stok, ' menjadi ', NEW.Stok), CURRENT_TIMESTAMP());
 END
 $$
@@ -972,11 +972,11 @@ INSERT INTO `pemesanan_buku` (`id_pemesanan`, `id_buku`, `id_siswa`, `waktu`, `t
 DELIMITER $$
 CREATE TRIGGER `cek_stok_pemesanan` BEFORE INSERT ON `pemesanan_buku` FOR EACH ROW BEGIN
   DECLARE stok_buku INT;
-
+  
   SELECT stok INTO stok_buku
   FROM buku_perpus
   WHERE id_buku = NEW.id_buku;
-
+  
   IF stok_buku >= 1 THEN
     UPDATE buku_perpus
     SET stok = stok_buku - 1
@@ -989,7 +989,7 @@ END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `log_pemesanan_buku` BEFORE DELETE ON `pemesanan_buku` FOR EACH ROW BEGIN
+CREATE TRIGGER `log_pemesanan_buku` BEFORE DELETE ON `pemesanan_buku` FOR EACH ROW BEGIN 
 	INSERT INTO log_pemesanan_buku VALUES (OLD.id_pemesanan, CONCAT('Pemesanan dengan ID ', OLD.id_pemesanan, ', buku dengan ID ', OLD.id_buku, ', oleh siswa dengan ID ', OLD.id_siswa, ', pada waktu ', OLD.waktu, ', tanggal ', OLD.tanggal));
     UPDATE buku_perpus SET stok = stok + 1 WHERE id_buku = OLD.id_buku;
 END
@@ -1076,7 +1076,7 @@ CREATE TRIGGER `status_pengembalian_buku` BEFORE INSERT ON `pengembalian` FOR EA
     	SET NEW.status = 'Terlambat';
     ELSE
     	SET NEW.status = 'Tepat Waktu';
-
+        
     END IF;
 END
 $$

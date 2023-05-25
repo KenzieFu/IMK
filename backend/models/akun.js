@@ -21,6 +21,10 @@ const Akun = sequelize.define(
       type: DataTypes.ENUM("Admin", "Siswa", "Petugas", "Kasir"),
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("Aktif", "Tidak Aktif"),
+      allowNull: false,
+    },
   },
   {
     tableName: "akun",
