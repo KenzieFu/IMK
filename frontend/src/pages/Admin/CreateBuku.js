@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from "react-router-dom";
 import axios from "axios"
 import { Button, FormGroup, FormText, Input, Label } from "reactstrap";
+import classes from './adminbatch.module.css';
 
 export const CreateBuku = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ export const CreateBuku = () => {
       const data2 = await response2.json();
 
       const optionsData = mergeOptions(data1, data2);
-      setKategori(optionsData);
+      setKategori(data2);
     } catch (error) {
       console.error("Error fetching options:", error);
     }
@@ -99,6 +100,8 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn); 
 
+/*   
+     const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
       // const sendedData={
       //   judul_buku:formData.judul_buku,
       //   pengarang:formData.pengarang,
@@ -108,7 +111,7 @@ export const CreateBuku = () => {
       //   id_kategori: formData.id_kategori,
       //   sinopsis:formData.sinopsis,
       //   isbn:formData.isbn
-      // }
+      // } */
 
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
@@ -122,7 +125,7 @@ export const CreateBuku = () => {
 
       }); 
       // console.log semua data yang dikirimkan
-      const responseData = await response.json();
+      const responseData = response;
       console.log(responseData);
 
       alert("Form submitted successfully!");
@@ -150,8 +153,9 @@ export const CreateBuku = () => {
 
   return (
     <>
-      <h2>Create Buku</h2>
-      <Form enctype="multipart/form-data"  onSubmit={handleSubmit}>
+      <Form enctype="multipart/form-data"  onSubmit={handleSubmit} className={classes['form']}>
+      <h2 className={classes['judul1']}>Create Buku</h2>
+      <div className={classes['form-grup']}>
         <FormGroup>
           <Label for="exampleBook">judul Buku</Label>
           <Input id="exampleBook" name="judul_buku" placeholder="Masukkan judul Buku" type="text" onChange={handleInputChange} />
@@ -207,6 +211,7 @@ export const CreateBuku = () => {
           <Input id="exampleIsbn" name="isbn" placeholder="ISBN Buku" type="text" onChange={handleInputChange} />
           {/* {errors.isbn && <span>{errors.isbn.message}</span>} */}
         </FormGroup>
+        </div>
         <Button onClick={backHandler}>Cancel</Button>
         <Button style={{ background: "green" }} type="submit">
           Save

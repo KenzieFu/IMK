@@ -7,11 +7,11 @@ export const StudentChart = (props) => {
     const student=useSelector((state)=>state.auth.user);
     console.log(student)
     let currentBarPinjamClassName= `${classes.currentBar}  ${!props.showPinjam?classes.not:""}`;
-    let currentBarKembaliClassnName= `${classes.currentBar}  ${props.showKembali?classes.not:""}`;
-    let currentBarBookingClassnName= `${classes.currentBar}  ${props.showBooking?classes.not:""}`;
+    let currentBarKembaliClassnName= `${classes.currentBar}  ${!props.showKembali?classes.not:""}`;
+    let currentBarBookingClassnName= `${classes.currentBar}  ${!props.showBooking?classes.not:""}`;
     let barPinjamClassName=`${classes["highlight-line"]} ${!props.showPinjam?classes.notBar:""}`;
-    let barKembaliClassName=`${classes["highlight-line"]} ${props.showKembali?classes.notBar:""}`;
-    let barBookingClassName=`${classes["highlight-line"]} ${props.showBooking?classes.notBar:""}`;
+    let barKembaliClassName=`${classes["highlight-line"]} ${!props.showKembali?classes.notBar:""}`;
+    let barBookingClassName=`${classes["highlight-line"]} ${!props.showBooking?classes.notBar:""}`;
 
 
   return (
@@ -38,12 +38,12 @@ export const StudentChart = (props) => {
                             Dipinjam
                             <span className={barPinjamClassName}></span>
                         </li>
-                        {/* <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>
+                        <li onClick={props.showKembaliHandler} className={currentBarKembaliClassnName}>
                             Dikembalikan
                         <span className={barKembaliClassName}></span></li>
                         <li onClick={props.showBookingHandler} className={currentBarBookingClassnName}>
                             Dibooking
-                        <span className={barBookingClassName}></span></li> */}
+                        <span className={barBookingClassName}></span></li>
                     </ul>
                     <span style={{ fontWeight:"bolder" }}>Sort By <i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </nav>

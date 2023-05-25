@@ -7,6 +7,7 @@
     --gray:#FAEEE0;
     --beige:#F9CF93;
     --lbeige:#FAEEE0;
+    --green:#4ef441;
 
     --white-light:#ffffff;
     --blue-light:#2e55ba;
@@ -17,6 +18,9 @@
     --addgray-light:#e3e3e3;
     --beige-light:#F9CF93;
     --lbeige-light:#FAEEE0;
+    --green-light: #7ffe73;
+    --grey-new: #F7f7f7;
+
 
     --white-dark:#ffffff;
     --blue-dark:#2e55ba;
@@ -26,6 +30,8 @@
     --addgray-dark:#e3e3e3;
     --beige-light:#F9CF93;
     --lbeige-light:#FAEEE0;
+    --green-dark:#42cf35;
+
 }
 
 @media(prefers-color-scheme: dark){
@@ -133,13 +139,23 @@
     gap: 1vw;
 }
 
-.detailbut, .delbut{
+.batchbut1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    padding: 20px;
+}
+
+
+.detailbut, .delbut, .savbut{
     font-size: 14px;
-    color: var(--white-light);
+    background-color: var(--white-light);
     padding: 0.5vw 1.2vw;
     border-radius: 0.6vw;
     cursor: pointer;
     transition: all .3s ease;
+    border-color: var(--white-light);
 }
 
 .detailbut{
@@ -166,4 +182,82 @@
     color: var(--white-light);
     transform: translateY(-0.3vw);
     text-decoration: none;
+    border-color: var(--red-light);
+
+}
+
+.box-edit {
+    box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+    background: hsl(0 0% 100%);
+
+    width: 600px;
+    height: 250px;
+    padding: 3ch;
+    border-radius: 10px;
+    border: 1px solid hsl(0 0% 83%);
+}
+
+.box-edit .box-text {
+    display: coloumn;
+    padding: 20px;
+    line-height: 1.5;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--blue-dark);
+}
+
+.savbut {
+    color: var(--green-dark);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.savbut:hover {
+    background-color: var(--green-light);
+    color: var(--white-light);
+    transform: translateY(-0.3vw);
+    text-decoration: none;
+    border-color: var(--green-light);
+}
+
+.celbut:hover{
+    background-color: var(--red-light);
+    color: var(--white-light);
+    transform: translateY(-0.3vw);
+    text-decoration: none;
+}
+
+.form {  
+    width: 90%;
+    position: relative;
+    margin: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+    background: var(--grey-new);
+    border-radius: 7px;
+}
+
+
+.form-grup {
+    padding: 30px;
+    background-color: var(--white);
+    border-radius: 5px;
+}
+
+.label {
+  margin-top: 10px;
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--blue2-light);
+  letter-spacing: 1px;
+}
+
+.label:nth-of-type(2) {
+  margin-top: 12px;
+}
+
+.input {
+    padding: 10px;
+    padding-left: 20px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 2px;
 }

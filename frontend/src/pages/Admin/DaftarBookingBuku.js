@@ -184,11 +184,16 @@ export const DaftarBookingBuku = () => {
           {(loadedData) => (
             <DataTable
               title={
+<<<<<<< HEAD
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Pemesanan Buku</h1>
                   <Link to="create" className={classes["buttoncreate"]}>
                     <i class="bi bi-book"> Tambah Pemesanan</i>
                   </Link>
+=======
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
+                  <h1 className={classes['judul1']}>Tabel Booking</h1>
+>>>>>>> f0bf0da209b978592a20e4c4fc28d26f98529a4e
                 </div>
               }
               data={loadedData.filter((item) => {
