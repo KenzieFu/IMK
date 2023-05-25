@@ -155,40 +155,40 @@ export const UserPage = () => {
     } */
   return (
     <>
-      <div className={classes['search-button']}>
-        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes['searchbox']} />
-          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
-            {" "}
-            Filter <i class="fa fa-filter" aria-hidden="true"></i>
-          </Button>
-        </div>
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+        </Button>
+      </div>
       {/* <div className="dropdown-content"> */}
       {advanceSearch && (
         <>
-        <div className={classes['downdown']}>
-          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className={classes['dropdown2']}>
-              Filter by
-            </DropdownToggle>
-            <DropdownMenu>
-              {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
-              {/* <DropdownItem divider /> */}
-              {/* <DropdownItem header>Hak Akses</DropdownItem> */}
-              <DropdownItem onClick={() => setSearchBased("siswa")} className="box-menu">
-                Siswa
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("admin")} className="box-menu">
-                Admin
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("petugas")} className="box-menu">
-                Petugas
-              </DropdownItem>
-              {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
+          <div className={classes["downdown"]}>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by
+              </DropdownToggle>
+              <DropdownMenu>
+                {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
+                {/* <DropdownItem divider /> */}
+                {/* <DropdownItem header>Hak Akses</DropdownItem> */}
+                <DropdownItem onClick={() => setSearchBased("siswa")} className="box-menu">
+                  Siswa
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("admin")} className="box-menu">
+                  Admin
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("petugas")} className="box-menu">
+                  Petugas
+                </DropdownItem>
+                {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
                 Kasir
               </DropdownItem> */}
-            </DropdownMenu>
-          </Dropdown>
-        </div>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
 
           {/* <div className="additional-content"></div> */}
         </>
@@ -199,7 +199,14 @@ export const UserPage = () => {
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
-              title={<h1 className={classes['judul1']}>Akun</h1>}
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Akun</h1>
+                  <Link to="create" className={classes["buttoncreate"]}>
+                    <i class="bi bi-person-plus"> Tambah Akun</i>
+                  </Link>
+                </div>
+              }
               data={loadedData.filter((item) => {
                 if (searchBased === "") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
