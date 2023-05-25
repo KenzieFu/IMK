@@ -202,9 +202,6 @@ export const UserPage = () => {
               title={
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Akun</h1>
-                  <Link to="create" className={classes["buttoncreate"]}>
-                    <i class="bi bi-person-plus"> Tambah Akun</i>
-                  </Link>
                 </div>
               }
               data={loadedData.filter((item) => {

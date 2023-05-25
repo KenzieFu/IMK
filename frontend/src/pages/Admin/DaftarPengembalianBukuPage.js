@@ -256,9 +256,6 @@ export const DaftarPengembalianBukuPage = () => {
               title={
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Pengembalian</h1>
-                  <Link to="create" className={classes["buttoncreate"]}>
-                    <i class="bi bi-book"> Tambah Pengembalian</i>
-                  </Link>
                 </div>
               }
               data={loadedData.filter((item) => {
