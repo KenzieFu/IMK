@@ -117,8 +117,8 @@ const BookDetail = () => {
         navigate("..");
     }
     
-    const existingPemesanan = pemesanan.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
-    const existingPeminjaman = peminjaman.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === 3);
 
     const countPemesanan = pemesanan.filter(item => item.id_siswa === 3).length
 

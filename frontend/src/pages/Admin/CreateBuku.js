@@ -111,9 +111,6 @@ export const CreateBuku = () => {
       }
 
       console.log(sendedData);
-<<<<<<< HEAD
-     const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
-=======
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
         headers: {
@@ -124,7 +121,6 @@ export const CreateBuku = () => {
         body:sendedData,
 
       }); // Replace with your API endpoint
->>>>>>> a6f730397ada37813917dcf3d0448432220bec6e
       // console.log semua data yang dikirimkan
       const responseData = await response.json();
       console.log(responseData);
