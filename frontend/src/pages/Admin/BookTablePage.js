@@ -1,4 +1,3 @@
-
 import React, { Suspense, useEffect, useState } from 'react'
 import DataTable, { memoize } from 'react-data-table-component'
 import { DeleteModal } from '../../components/admin/modals/DeleteModal';
@@ -247,6 +246,3 @@ export async function action({ params, request }) {
   }
   return redirect("/admin/books");
 }
-
-
-
