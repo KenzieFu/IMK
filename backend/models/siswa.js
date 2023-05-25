@@ -12,7 +12,7 @@ const Siswa = sequelize.define(
     },
     id_akun: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Akun,
         key: "id_akun",

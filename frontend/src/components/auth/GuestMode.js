@@ -11,22 +11,26 @@ export const GuestMode = ({children}) => {
     const outlet=useOutlet();
      
 
-        if(!auth && token === null)return<Navigate to="/"/>;
-        else if(auth && middleware.user?.hak_akses !="Siswa" )
+      
+        if(auth && middleware.user?.hak_akses !="Siswa" )
         {
             if(middleware.user?.hak_akses ==="Admin")
             {
                 return <Navigate to="/admin"/>
             }
+            else if(middleware.user?.hak_akses === "Petugas")
+            {
+                return <Navigate to="/petugas" />
+            }
         }
-
+/* 
         if(auth && token )
         {
             if(middleware.user?.hak_akses ==="Admin")
                 return <Navigate to="/admin" />
             else if(middleware.user?.hak_akses === "Petugas")
-              return <Navigate to="/petugas" />
-        }
+              
+        } */
 
         return(
             <>

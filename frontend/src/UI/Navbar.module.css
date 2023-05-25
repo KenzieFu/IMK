@@ -35,6 +35,10 @@
     height: auto;
 }
 
+.navbar ul li{
+    text-decoration: none;
+}
+
 .navbar ul{
     font-family:inherit;
     width:35%;
@@ -47,6 +51,14 @@
     justify-content:space-around;
     gap:20px;
     font-weight: 550;
+}
+
+.navbar ul .linav a.active{
+    text-decoration: none;
+    color:red;
+}
+.navbar ul .linav a{
+    text-decoration: none;
 }
 
 .linav{
