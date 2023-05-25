@@ -36,7 +36,57 @@ export const UserPage = () => {
     setCurrentId((prev) => prev);
   };
 
+  const [selectedStatus, setSelectedStatus] = useState([])
+  const [selectedSiswa, setSelectedSiswa] = useState()
+
+  console.log(selectedStatus)
+  const handleUpdateStatus = async (id) => {
+    setSelectedStatus((prevStatus) =>
+    prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
+  );
+    try {
+
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_akun: id,
+          status: "Tidak Aktif"
+
+        })
+      });
+
+      const createdData = await response.json();
+      console.log('Data created:', createdData);
+
+      // Reset the form after successful creation
+      selectedStatus([])
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
   const columns = [
+    {
+      id: "id",
+  name: <span className={classes['data-row']}>Tes</span>,
+  selector: (row) =>
+    <input
+      type="checkbox"
+      checked={selectedStatus.includes(row.id_akun)}
+      onChange={() => handleUpdateStatus(row.id_akun)}
+      className={classes['data-rowid']}
+    />,
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
+    },
     {
       id: "id",
       name: <span className={classes['data-row']}>ID Akun</span>,
@@ -73,6 +123,16 @@ export const UserPage = () => {
       },
     },
     {
+      id: "tipe",
+      name: <span className={classes['data-row']}>Status</span>,
+      selector: (row) => <span className={classes['data-row']}> {row.status}</span>,
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
+    },
+    {
       id: "button",
       name: <span className={classes['data-row']}>Aksi</span>,
       width: "30%",
@@ -96,6 +156,7 @@ export const UserPage = () => {
       allowOverflow: true,
     },
   ];
+
 
   // const columns = [
   //   {
@@ -220,9 +281,10 @@ export const UserPage = () => {
           )}
         </Await>
       </Suspense>
-
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
+      <Button onClick={()=>handleUpdateStatus(selectedStatus)}></Button>
+
     </>
   );
 
