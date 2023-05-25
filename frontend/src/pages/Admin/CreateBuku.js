@@ -31,7 +31,7 @@ export const CreateBuku = () => {
       const data2 = await response2.json();
 
       const optionsData = mergeOptions(data1, data2);
-      setKategori(optionsData);
+      setKategori(data2);
     } catch (error) {
       console.error("Error fetching options:", error);
     }
@@ -110,23 +110,10 @@ export const CreateBuku = () => {
         isbn:formData.isbn
       }
 
-      console.log(sendedData);
-<<<<<<< HEAD
+    
      const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
-=======
-     const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
-        method: 'POST',
-        headers: {
-           "Content-Type": "multipart/form-data",
-           // boundry
-           "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-       },
-        body:sendedData,
-
-      }); // Replace with your API endpoint
->>>>>>> a6f730397ada37813917dcf3d0448432220bec6e
       // console.log semua data yang dikirimkan
-      const responseData = await response.json();
+      const responseData = response;
       console.log(responseData);
 
       alert("Form submitted successfully!");
@@ -167,7 +154,7 @@ export const CreateBuku = () => {
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
-          <Label for="examplePenerbit">Penerbitsssssssssss</Label>
+          <Label for="examplePenerbit">Penerbit</Label>
           <Input
             id="examplePenerbit"
             name="penerbit"
@@ -187,7 +174,7 @@ export const CreateBuku = () => {
           <select name="id_kategori" value={formData.id_kategori} onChange={handleOptionChange} required>
             <option value="">Pilih Kategori</option>
             {kategori.map((kategori) => (
-              <option key={kategori.nama_kategori} value={kategori.nama_kategori}>
+              <option key={kategori.nama_kategori} value={kategori.id_kategori}>
                 {kategori.nama_kategori}
               </option>
             ))}
