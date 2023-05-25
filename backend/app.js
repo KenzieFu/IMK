@@ -2,6 +2,7 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const fileupload = require("express-fileupload");
 const sequelize = require("./util/database");
 const multer = require("multer");
 const cors = require("cors");
@@ -10,9 +11,11 @@ const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
 const adminRoutes = require("./routes/admin");
 const Buku = require("./models/buku");
+
 // const bookController = require("./controllers/buku");
 
 const app = express();
+
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -109,12 +112,13 @@ app.use(cors(corsOptions));
 // app.use('/feed', feedRoutes);
 // tambah route http://localhost:8080/admin-perpustakaan-methodist-cw/buku --> bukuController.createBook
 app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), async (req, res, next) => {
-  // console.log(req.file);
+ 
+   console.log(req.file);
   // bagaimana dapat mengakses req.file.path di sini
-  console.log(req.body);
+
   // console.log(req.file.path);
   try {
-    if (!req.file) {
+    if (!req.files) {
       const error = new Error("Tidak ada gambar yang terupload");
       error.statusCode = 422;
       throw error;
@@ -123,7 +127,7 @@ app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), 
     const { id_buku, judul_buku, pengarang, penerbit, tahun_terbit, id_kategori, sinopsis, isbn } = req.body;
     // const gambar_buku = req.file.path.replace("\\", "/");
     // gambar_buku = "/images/namafile.jpg"
-    const gambar_buku = "/" + req.file.path.replace("\\", "/");
+    const gambar_buku = "/" + req.files.path.replace("\\", "/");
     // const gambar_buku = req.file.path;
 
     const book = await Buku.create({
