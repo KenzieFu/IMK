@@ -1,0 +1,18 @@
+.maincontent{
+    display: flex;
+    height: 100%;
+}
+
+.divpenuh{
+    height: 20vw;
+    width: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column !important;
+    flex-direction: row;  
+}
+
+.imgall{
+    height: 200px;
+    width: 150px;
+}

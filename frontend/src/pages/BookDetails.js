@@ -117,12 +117,12 @@ const BookDetail = () => {
         navigate("..");
     }
     
-    const existingPemesanan = pemesanan.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
-    const existingPeminjaman = peminjaman.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPemesanan = pemesanan.find(item => item?.id_buku === book?.id_buku && item?.id_siswa === 3);
+    const existingPeminjaman = peminjaman.find(item => item?.id_buku === book?.id_buku && item?.id_siswa === 3);
 
-    const countPemesanan = pemesanan.filter(item => item.id_siswa === 3).length
+    const countPemesanan = pemesanan.filter(item => item?.id_siswa === 3).length
 
-    const countPeminjaman = peminjaman.filter(item => item.id_siswa === 1).length
+    const countPeminjaman = peminjaman.filter(item => item?.id_siswa === 1).length
 
 
     const batasBook = countPemesanan + countPeminjaman
@@ -190,7 +190,7 @@ const BookDetail = () => {
                         </div>
                         <div className={classes.card}>
                             <div className={classes.cover}>
-                                <img src={"../assets/BookCover.png"}></img>
+                                <img src={`http://localhost:8080${book.gambar_buku}`}></img>
                             </div>
 
                             <div className={classes.book_info}>

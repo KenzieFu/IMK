@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const PopularBook = (props) => {
   
     const pop =props.books.filter((popular,index)=> (index%3 !==0 || index===0) );
-    const daily=pop.map((popular)=><Link to={`/library/${popular.id_buku}`}><li  id={popular.id}><img src="./assets/BookCover.png" alt="" />
+    const daily=pop.map((popular)=><Link to={`/library/${popular.id_buku}`}><li  id={popular.id}><img src={`http://localhost:8080${popular.buku.gambar_buku}`} alt="" />
     <div className={classes["book-detail"]}><h2>{popular.buku.judul_buku}</h2>
     <span>{popular.buku.pengarang}</span></div>
 </li></Link>)
