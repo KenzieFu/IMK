@@ -58,6 +58,10 @@ const Siswa = sequelize.define(
       type: DataTypes.STRING(100),
       allowNull: true,
     },
+    tahun_masuk: {
+      type: DataTypes.STRING(4),
+      allowNull: false,
+    },
   },
   {
     tableName: "siswa",

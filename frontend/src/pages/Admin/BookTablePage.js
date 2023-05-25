@@ -123,7 +123,6 @@ export const BookTablePage = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <div className="search-button">
         <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
         <div>
@@ -131,31 +130,13 @@ export const BookTablePage = () => {
             Pencarian Lebih Lanjut
           </Button>
         </div>
-=======
-    <div className={classes['search-button']}>
-     <Input
-        type="text"
-        placeholder="Cari Judul Buku..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className={classes['searchbox']} 
-        />
-            <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
-            Filter <i class="fa fa-filter" aria-hidden="true"></i>
-            </Button>
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
       </div>
       {advanceSearch && (
         <>
         <div className={classes['downdown']}>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-<<<<<<< HEAD
             <DropdownToggle caret className="dropdown-toggle-search">
               Tampilkan Buku Berdasarkan Kategori
-=======
-            <DropdownToggle caret className={classes['dropdown2']}>
-            Filter by
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
             </DropdownToggle>
             <DropdownMenu>
               {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
@@ -184,29 +165,17 @@ export const BookTablePage = () => {
           </Dropdown>
         </div>
         </>
-<<<<<<< HEAD
       )}
-=======
-        
-      }
-      
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
       <Suspense fallback="">
         <Await resolve={books}>
           {(loadedData) => (
             <DataTable
               title={
-<<<<<<< HEAD
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h2>Tabel Buku</h2>
                   <Link to="create" className="button-create">
                     <i class="bi bi-person-plus"> Tambah Buku</i>
                   </Link>
-=======
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems:"center", marginTop:"3vw" }}>
-                  <h1 className={classes['judul1']}>Tabel Buku</h1>
-                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Buku</i></Link>
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
                 </div>
               }
               data={loadedData.filter((item) => {

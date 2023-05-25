@@ -5,13 +5,8 @@ import { memo } from "react";
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from "react-router-dom";
 import { set } from "react-hook-form";
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-import "./StudentPage.css";
-=======
 import { useNavigate } from 'react-router-dom';
 import classes from './adminbatch.module.css'
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
 
 export const StudentPage = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -29,115 +24,89 @@ export const StudentPage = () => {
     setCurrentId((prev) => prev);
   };
 
-  const columns = [
-    {
-      id: "id",
-      name: <div className="data-row">ID Siswa</div>,
-      selector: (row) => <div className="data-row">{row.id_siswa}</div>,
-      sortable: true,
-      headerStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        justifyContent: "center",
-      },
-      width: "10%",
-    },
-    {
-      id: "nisn",
-      name: <div className="data-row">NISN</div>,
-      //selector: row => row.nisn,
-      selector: (row) => <div className="data-row">{row.nisn}</div>,
-      accessor: "nisn",
-      sortable: true,
-      headerStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        justifyContent: "center",
-      },
-    },
-    {
-      id: "nama_lengkap",
-      name: <div className="data-row">Nama Lengkap</div>,
-      //selector: row => row.nama_lengkap,
-      selector: (row) => <div className="data-row">{row.nama_lengkap}</div>,
-      accessor: "nama_lengkap",
-      sortable: true,
-      headerStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        justifyContent: "center",
-      },
-    },
-    {
-      id: "jenis_kelamin",
-      name: <div className="data-row">Jenis Kelamin</div>,
-      //selector: row => row.jenis_kelamin,
-      selector: (row) => <div className="data-row">{row.jenis_kelamin}</div>,
-      accessor: "jenis_kelamin",
-      sortable: true,
-      headerStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        justifyContent: "center",
-      },
-    },
-    {
-      id: "button",
-      name: <div className="data-row">Aksi</div>,
-      width: "30%",
-      cell: (row) => (
-        <div className="action-buttons">
-          <Link to={`/admin/students/${row.id_siswa}`} className="action-detail">
-            Rincian
-          </Link>
-          {"                    "}
-          {"       "}
-          <input type="hidden" id="row" />
-          <span onClick={() => showModalHandler(row.id_siswa)} style={{ cursor: "pointer" }} className="action-delete">
-            Hapus
-          </span>
-        </div>
-      ),
-      headerStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        justifyContent: "center",
-        alignItems: "center",
-      },
+  // const columns = [
+  //   {
+  //     id: "id",
+  //     name: <div className="data-row">ID Siswa</div>,
+  //     selector: (row) => <div className="data-row">{row.id_siswa}</div>,
+  //     sortable: true,
+  //     headerStyle: {
+  //       fontWeight: "bold",
+  //       textAlign: "center",
+  //       justifyContent: "center",
+  //     },
+  //     width: "10%",
+  //   },
+  //   {
+  //     id: "nisn",
+  //     name: <div className="data-row">NISN</div>,
+  //     //selector: row => row.nisn,
+  //     selector: (row) => <div className="data-row">{row.nisn}</div>,
+  //     accessor: "nisn",
+  //     sortable: true,
+  //     headerStyle: {
+  //       fontWeight: "bold",
+  //       textAlign: "center",
+  //       justifyContent: "center",
+  //     },
+  //   },
+  //   {
+  //     id: "nama_lengkap",
+  //     name: <div className="data-row">Nama Lengkap</div>,
+  //     //selector: row => row.nama_lengkap,
+  //     selector: (row) => <div className="data-row">{row.nama_lengkap}</div>,
+  //     accessor: "nama_lengkap",
+  //     sortable: true,
+  //     headerStyle: {
+  //       fontWeight: "bold",
+  //       textAlign: "center",
+  //       justifyContent: "center",
+  //     },
+  //   },
+  //   {
+  //     id: "jenis_kelamin",
+  //     name: <div className="data-row">Jenis Kelamin</div>,
+  //     //selector: row => row.jenis_kelamin,
+  //     selector: (row) => <div className="data-row">{row.jenis_kelamin}</div>,
+  //     accessor: "jenis_kelamin",
+  //     sortable: true,
+  //     headerStyle: {
+  //       fontWeight: "bold",
+  //       textAlign: "center",
+  //       justifyContent: "center",
+  //     },
+  //   },
+  //   {
+  //     id: "button",
+  //     name: <div className="data-row">Aksi</div>,
+  //     width: "30%",
+  //     cell: (row) => (
+  //       <div className="action-buttons">
+  //         <Link to={`/admin/students/${row.id_siswa}`} className="action-detail">
+  //           Rincian
+  //         </Link>
+  //         {"                    "}
+  //         {"       "}
+  //         <input type="hidden" id="row" />
+  //         <span onClick={() => showModalHandler(row.id_siswa)} style={{ cursor: "pointer" }} className="action-delete">
+  //           Hapus
+  //         </span>
+  //       </div>
+  //     ),
+  //     headerStyle: {
+  //       fontWeight: "bold",
+  //       textAlign: "center",
+  //       justifyContent: "center",
+  //       alignItems: "center",
+  //     },
 
-      ignoreRowClick: true,
-      allowOverflow: true,
-      selector: (row) => row.button,
-      button: true,
-    },
-  ];
+  //     ignoreRowClick: true,
+  //     allowOverflow: true,
+  //     selector: (row) => row.button,
+  //     button: true,
+  //   },
+  // ];
 
-<<<<<<< HEAD
-  const [advanceSearch, setAdvanceSearch] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [searchBased, setSearchBased] = React.useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  return (
-    <>
-      <div className="search-button">
-        <Input
-          disabled={searchBased === "" ? true : false}
-          type="text"
-          placeholder={searchBased === "nisn" ? "Cari Berdasarkan NISN Siswa" : searchBased === "nama" ? "Cari Berdasarkan Nama Siswa" : "Pencarian"}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} className="search-input"
-        />
-        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
-          {" "}
-          Pencarian Lebih Lanjut
-        </Button>
-      </div>
-      {advanceSearch && (
-=======
       const columns = [
         {
             id:'id',
@@ -235,7 +204,6 @@ export const StudentPage = () => {
           </Button>
     {
       advanceSearch && (
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
         <>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
             <DropdownToggle caret className="dropdown-toggle-search">
@@ -251,19 +219,6 @@ export const StudentPage = () => {
             </DropdownMenu>
           </Dropdown>
         </>
-<<<<<<< HEAD
-      )}
-      <Suspense fallback="">
-        <Await resolve={students}>
-          {(loadedData) => (
-            <DataTable
-              title={
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2 className="data-table-header">Tabel Siswa</h2>
-                  <Link to="registrasi/data-pribadi" style={{ listStyle: "none" }} className="button-create">
-                    <i class="bi bi-person-plus"> Tambah Siswa</i>
-                  </Link>
-=======
       )
     }
         <Suspense fallback="">
@@ -274,7 +229,6 @@ export const StudentPage = () => {
                 <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
                     <h1 className={classes['judul1']}>Tabel Siswa</h1>
                     <Link to="registrasi/data-pribadi" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
                 </div>
               }
               data={loadedData.filter((item) => {
@@ -289,7 +243,7 @@ export const StudentPage = () => {
               columns={columns}
               pagination
             />
-          )}
+          }
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
