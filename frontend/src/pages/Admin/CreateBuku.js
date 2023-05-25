@@ -99,24 +99,8 @@ export const CreateBuku = () => {
       formDataToSend.append('sinopsis', formData.sinopsis);
       formDataToSend.append('isbn', formData.isbn); 
 
-<<<<<<< HEAD
-      const sendedData={
-        judul_buku:formData.judul_buku,
-        pengarang:formData.pengarang,
-        penerbit:formData.penerbit,
-        tahun_terbit:formData.tahun_terbit,
-        gambar_buku:formData.gambar_buku,
-        id_kategori: formData.id_kategori,
-        sinopsis:formData.sinopsis,
-        isbn:formData.isbn
-      }
-
-<<<<<<< HEAD
-      console.log(sendedData);
-=======
-    
+/*   
      const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
-=======
       // const sendedData={
       //   judul_buku:formData.judul_buku,
       //   pengarang:formData.pengarang,
@@ -126,9 +110,8 @@ export const CreateBuku = () => {
       //   id_kategori: formData.id_kategori,
       //   sinopsis:formData.sinopsis,
       //   isbn:formData.isbn
-      // }
+      // } */
 
->>>>>>> 00f20ae63c4a63ca250d4fd4f103727cf2fa9856
      const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
         method: 'POST',
       //   headers: {
@@ -139,12 +122,7 @@ export const CreateBuku = () => {
         // body:sendedData,
         body: formDataToSend,
 
-<<<<<<< HEAD
-      }); // Replace with your API endpoint
-=======
       }); 
->>>>>>> 4c2a87a21935871f65c2fa7196bbc9df6f1eaf18
->>>>>>> 00f20ae63c4a63ca250d4fd4f103727cf2fa9856
       // console.log semua data yang dikirimkan
       const responseData = response;
       console.log(responseData);
