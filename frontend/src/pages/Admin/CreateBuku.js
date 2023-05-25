@@ -123,8 +123,6 @@ export const CreateBuku = () => {
 
       }); 
       // console.log semua data yang dikirimkan
-      const responseData = await response.json();
-      console.log(responseData);
 
       alert("Form submitted successfully!");
       setFormData({
