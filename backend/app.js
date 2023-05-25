@@ -118,7 +118,7 @@ app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), 
 
   // console.log(req.file.path);
   try {
-    if (!req.files) {
+    if (!req.file) {
       const error = new Error("Tidak ada gambar yang terupload");
       error.statusCode = 422;
       throw error;
@@ -127,7 +127,7 @@ app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), 
     const { id_buku, judul_buku, pengarang, penerbit, tahun_terbit, id_kategori, sinopsis, isbn } = req.body;
     // const gambar_buku = req.file.path.replace("\\", "/");
     // gambar_buku = "/images/namafile.jpg"
-    const gambar_buku = "/" + req.files.path.replace("\\", "/");
+    const gambar_buku = "/" + req.file.path.replace("\\", "/");
     // const gambar_buku = req.file.path;
 
     const book = await Buku.create({
@@ -169,6 +169,9 @@ app.use((error, req, res, next) => {
   const data = error.data;
   res.status(status).json({ message: message, data: data });
 });
+
+
+
 
 // sequelize
 //   .sync()
