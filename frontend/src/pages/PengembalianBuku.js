@@ -1,13 +1,20 @@
-// import React from 'react'
-// import { BookKembali } from '../components/BookKembali'
+import React from 'react'
+import { BookKembali } from '../components/BookKembali'
 
-// export const PengembalianBuku = ({books}) => {
+export const PengembalianBuku = ({books}) => {
 
-//   return (
-//     <>
-//        {books.map((book)=>
-//         <BookKembali book={book}/>
-//        )}
-//     </>
-//   )
-// }
+    // if(!books){
+    //     return<>
+    //     <p>Belum ada buku yang kamu kembalikan</p>
+    //     </>
+    // }
+
+  return (
+    <>
+       {books.map((book)=>
+        <BookKembali book={book}/>
+       )}
+    </>
+  )
+
+}

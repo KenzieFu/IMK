@@ -43,6 +43,7 @@ localStorage.removeItem('user');
   dispatch(authActions.logOut("test"));
 
   navigate("/");
+  emptyCart()
 
 }
 const { totalUniqueItems } = useCart()
@@ -60,7 +61,7 @@ const { totalUniqueItems } = useCart()
                 </div>
                 <ul>
                    {/*  <li className={classes['linav2']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/admin">Masuk Admin</NavLink></li> */}
-                  {!authen &&  
+                  {!authen &&
                   <li className={classes['linav3']} onClick={props.onClick}>Login
                   </li>}
 

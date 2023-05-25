@@ -69,7 +69,7 @@ export default function Cart(props) {
 
     const [hidden, setHidden] = React.useState(false)
 
-    const bookingHandler = async () => {
+    const bookingHandler = async (onClose) => {
 
 
 
@@ -78,6 +78,8 @@ export default function Cart(props) {
         try {
             if (isEmpty) {
                 navigate('library')
+                onClose()
+
 
             } else {
                 let bukuId = []
@@ -204,7 +206,7 @@ alignItems:"flex-end"}}>
                 }
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", marginTop: "20px", marginBottom: "20px" }}>
                     <Button style={{ backgroundColor: "#ebedec", color: "black", border: "0", marginRight: "10px" }} onClick={props.onClose}>Tutup</Button>
-                    <Button style={{ backgroundColor: "#FF5959", color: "white", border: "0", marginLeft: "10px" }} onClick={bookingHandler} >{isEmpty ? "Ke Perpus!" : "Pesan!"}</Button>
+                    <Button style={{ backgroundColor: "#FF5959", color: "white", border: "0", marginLeft: "10px" }} onClick={()=> bookingHandler(props.onClose)} >{isEmpty ? "Ke Perpus!" : "Pesan!"}</Button>
                 </div>
             </Modal>
         </>
