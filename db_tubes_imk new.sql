@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2023 at 05:59 AM
+-- Generation Time: May 25, 2023 at 05:18 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -28,7 +28,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_peminjaman` (`in_id_buku` INT, `in_id_siswa` INT, `in_tanggal_pinjam` DATE, `in_tanggal_kembali` DATE)  BEGIN
   INSERT INTO peminjaman (id_buku, id_siswa, tanggal_pinjam, tanggal_kembali)
   VALUES (in_id_buku, in_id_siswa, in_tanggal_pinjam, in_tanggal_kembali);
-
+  
   UPDATE buku
   SET status = 'Sedang Dipinjam'
   WHERE id_buku = in_id_buku;
@@ -39,11 +39,11 @@ END$$
 --
 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_jumlah_buku_dipinjam` (`in_id_siswa` INT) RETURNS INT(11) BEGIN
   DECLARE jumlah_buku INT;
-
+  
   SELECT COUNT(*) INTO jumlah_buku
   FROM peminjaman
   WHERE id_siswa = in_id_siswa AND tanggal_kembali IS NULL;
-
+  
   RETURN jumlah_buku;
 END$$
 
@@ -82,24 +82,28 @@ CREATE TABLE `akun` (
   `id_akun` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `hak_akses` enum('Admin','Siswa','Petugas','Kasir') NOT NULL
+  `hak_akses` enum('Admin','Siswa','Petugas','Kasir') NOT NULL,
+  `status` enum('Aktif','Tidak Aktif','','') NOT NULL DEFAULT 'Tidak Aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `akun`
 --
 
-INSERT INTO `akun` (`id_akun`, `username`, `password`, `hak_akses`) VALUES
-(2, 'fine', '$2y$10$DjvyUB75L9TkpHy8kmmfaORJuzA5ulpzacpAJG5BWYW5Iho04q5sC', 'Siswa'),
-(3, 'lauren', '$2y$10$cM7dtCEhazQqW8R67Nb4puYaiEOn3DIrXY9syNlpAIGT3TQzelhsq', 'Siswa'),
-(4, 'gint', '$2y$10$1Jcq66NyH1a5xrkCYbHomuD/rb4JnzsuDvmJSc8O8SEbmRdiaIIde', 'Siswa'),
-(5, 'munth', '$2y$10$VdtvdF6Dh0i2WXYlchryjOyHUas5GCehbVWIk4nqpuwCv..PqGnoq', 'Siswa'),
-(6, 'johansen', '$2a$12$XXT4QHePcrzSFaB.YHMa4OMoMdBfLd.6QvT/7WJzTKffp/vVHhQOS', 'Admin'),
-(11, 'guru1', '$2a$12$IUMkb7Ur9D7uwSQGx3asVerEvED/aMcH9e7xTD7pgJyfFn3h3s5du', 'Petugas'),
-(12, 'guru2', '$2a$12$7By/TdhCJzKK07lm0KMdauVj8klDyZyOx8K8GIGuuGHeuUvdM0kbe', 'Petugas'),
-(13, 'guru3', '$2a$12$.ZBiAre8tEiqZKGLaHlo9ewIu57dG9wBMh3ZwK1bNBNjfpAzECcm6', 'Kasir'),
-(14, 'guru4', '$2a$12$XovRdmppkqYBA.Q3zR1OKOqOEbI/9YOBYC0rgBCoUK03P8yjAr1GC', 'Kasir'),
-(100, 'admin', '$2a$12$qLt7jg9iL9GCU586Iy9bQeampW0nsBmt1w6kknhJaym7Qx7NZjKZC', 'Admin');
+INSERT INTO `akun` (`id_akun`, `username`, `password`, `hak_akses`, `status`) VALUES
+(2, 'fine', '$2y$10$DjvyUB75L9TkpHy8kmmfaORJuzA5ulpzacpAJG5BWYW5Iho04q5sC', 'Siswa', 'Tidak Aktif'),
+(3, 'lauren', '$2y$10$cM7dtCEhazQqW8R67Nb4puYaiEOn3DIrXY9syNlpAIGT3TQzelhsq', 'Siswa', 'Tidak Aktif'),
+(4, 'gint', '$2y$10$1Jcq66NyH1a5xrkCYbHomuD/rb4JnzsuDvmJSc8O8SEbmRdiaIIde', 'Siswa', 'Tidak Aktif'),
+(5, 'munth', '$2y$10$VdtvdF6Dh0i2WXYlchryjOyHUas5GCehbVWIk4nqpuwCv..PqGnoq', 'Siswa', 'Tidak Aktif'),
+(6, 'johansen', '$2a$12$XXT4QHePcrzSFaB.YHMa4OMoMdBfLd.6QvT/7WJzTKffp/vVHhQOS', 'Admin', 'Tidak Aktif'),
+(11, 'guru1', '$2a$12$IUMkb7Ur9D7uwSQGx3asVerEvED/aMcH9e7xTD7pgJyfFn3h3s5du', 'Petugas', 'Tidak Aktif'),
+(12, 'guru2', '$2a$12$7By/TdhCJzKK07lm0KMdauVj8klDyZyOx8K8GIGuuGHeuUvdM0kbe', 'Petugas', 'Tidak Aktif'),
+(13, 'guru3', '$2a$12$.ZBiAre8tEiqZKGLaHlo9ewIu57dG9wBMh3ZwK1bNBNjfpAzECcm6', 'Kasir', 'Tidak Aktif'),
+(14, 'guru4', '$2a$12$XovRdmppkqYBA.Q3zR1OKOqOEbI/9YOBYC0rgBCoUK03P8yjAr1GC', 'Kasir', 'Tidak Aktif'),
+(100, 'admin', '$2a$12$qLt7jg9iL9GCU586Iy9bQeampW0nsBmt1w6kknhJaym7Qx7NZjKZC', 'Admin', 'Tidak Aktif'),
+(1234567891, '1234567890', '$2a$12$4rPM9Ub0m00DKnu05OuGY.vwwAQyliAiManZg3RkHe9k/HBZHt0KW', 'Siswa', 'Tidak Aktif'),
+(1234567892, '1234567890', '$2a$12$6IImMza/NzHWB4VcUpDrWufu3RIP4LRYa/mrZz7O4B34063qo.nRC', 'Siswa', 'Tidak Aktif'),
+(1234567893, '1234567890', '$2a$12$SQfaQ/xzY0uvf9zL7UOa8eB3FQ1UwzLhW.QtH54Z8sMq5Wn7jm5Pa', 'Siswa', 'Tidak Aktif');
 
 -- --------------------------------------------------------
 
@@ -127,7 +131,8 @@ INSERT INTO `buku` (`id_buku`, `judul_buku`, `pengarang`, `penerbit`, `tahun_ter
 (1, 'Fisika XI', 'pengarang1', 'gramedia', 2003, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '/images/fisika', '978-602-8519-93-5'),
 (2, 'Fisika XII', 'pengarang2', 'usu', 2021, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '/images/fisika', '978-602-8519-93-6'),
 (3, 'Kimia XII', 'pengarang3', 'gramedia', 2002, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '/images/kimia', '978-602-8519-93-7'),
-(4, 'Biologi X', 'pengarang4', 'labxe', 2012, 3, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '/images/biologi', '978-602-8519-93-8');
+(4, 'Biologi X', 'pengarang4', 'labxe', 2012, 3, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '/images/biologi', '978-602-8519-93-8'),
+(1234567890, 'Buku A', 'test', 'test', 2020, 1, 'test', '/images/2023-05-23T13-56-24.507Z-058.jpeg', '12345678');
 
 --
 -- Triggers `buku`
@@ -148,7 +153,7 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_update` AFTER UPDATE ON `buku` FOR EACH ROW BEGIN
-	INSERT INTO log_buku VALUES(NEW.id_buku,
+	INSERT INTO log_buku VALUES(NEW.id_buku, 
                                 CONCAT('Admin mengubah Buku berjudul', OLD.judul_buku, ' dengan pengarang ', OLD.pengarang, ' dengan penerbit ' , OLD.penerbit, ' dengan tahun terbit ', OLD.tahun_terbit, ' dengan kategori_id ', OLD.id_kategori, 'dengan sinopsis ', OLD.sinopsis, ' dengan ISBN ', OLD.isbn, ' menjadi berjudul ' , NEW.judul_buku, ' dengan pengarang ', NEW.pengarang, ' dengan penerbit ' , NEW.penerbit, ' dengan tahun terbit ', NEW.tahun_terbit, ' dengan kategori_id ', NEW.id_kategori, 'dengan sinopsis ', NEW.sinopsis, ' dengan ISBN ', NEW.isbn), CURRENT_TIMESTAMP());
 END
 $$
@@ -170,29 +175,30 @@ CREATE TABLE `buku_perpus` (
 --
 
 INSERT INTO `buku_perpus` (`id_buku`, `stok`) VALUES
-(2, 9),
-(3, 12);
+(1, 10),
+(2, 7),
+(3, 10);
 
 --
 -- Triggers `buku_perpus`
 --
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_delete` AFTER DELETE ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(OLD.id_buku,
+	INSERT INTO log_buku_perpus VALUES(OLD.id_buku, 
                                        CONCAT('Admin menghapus stok buku ber-ID ', OLD.id_buku), CURRENT_TIMESTAMP());
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_insert` AFTER INSERT ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(NEW.id_buku,
+	INSERT INTO log_buku_perpus VALUES(NEW.id_buku, 
                                        CONCAT('Admin menambahkan stok buku ber-ID ', NEW.id_buku, ' menjadi ', NEW.stok), CURRENT_TIMESTAMP());
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_update` AFTER UPDATE ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(NEW.id_buku,
+	INSERT INTO log_buku_perpus VALUES(NEW.id_buku, 
                                        CONCAT('Stok buku ber-ID ', NEW.id_buku, 'berubah dari ', OLD.stok, ' menjadi ', NEW.Stok), CURRENT_TIMESTAMP());
 END
 $$
@@ -599,7 +605,22 @@ INSERT INTO `log_buku` (`id_buku`, `riwayat`, `timestamp`) VALUES
 (5, 'Admin mengubah Buku berjudulBiologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9 menjadi berjudul Biologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9', '2023-05-03 22:13:20'),
 (6, 'Admin mengubah Buku berjudulfisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test menjadi berjudul fisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test', '2023-05-03 22:13:25'),
 (6, 'Admin menghapus Buku berjudul fisika dengan pengarang test dengan penerbit test dengan tahun terbit 2000 dengan kategori_id 1dengan sinopsis test dengan ISBN test', '2023-05-18 14:23:05'),
-(5, 'Admin menghapus Buku berjudul Biologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9', '2023-05-18 14:24:06');
+(5, 'Admin menghapus Buku berjudul Biologi XI dengan pengarang pengarang4 dengan penerbit labxe dengan tahun terbit 2013 dengan kategori_id 3dengan sinopsis Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. dengan ISBN 978-602-8519-93-9', '2023-05-18 14:24:06'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 12:28:42'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 19:35:02'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 12:35:26'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 19:35:44'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 12:35:56'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 19:38:14'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 12:38:21'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 19:41:40'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 12:42:07'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 19:50:48'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 13:20:39'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 20:20:49'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 13:24:34'),
+(1234567890, 'Admin menghapus Buku berjudul Buku A dengan pengarang test dengan penerbit test dengan tahun terbit 2020 dengan kategori_id 1dengan sinopsis test dengan ISBN 12345678', '2023-05-23 20:56:16'),
+(1234567890, 'Admin memasukkan Buku berjudul Buku A dengan pengarang bernama test', '2023-05-23 13:56:24');
 
 -- --------------------------------------------------------
 
@@ -762,7 +783,12 @@ INSERT INTO `log_buku_perpus` (`id_buku`, `riwayat`, `timestamp`) VALUES
 (3, 'Stok buku ber-ID 3berubah dari 10 menjadi 11', '2023-05-21 12:35:02'),
 (3, 'Stok buku ber-ID 3berubah dari 11 menjadi 10', '2023-05-21 19:35:15'),
 (3, 'Stok buku ber-ID 3berubah dari 10 menjadi 11', '2023-05-21 12:35:37'),
-(3, 'Stok buku ber-ID 3berubah dari 11 menjadi 12', '2023-05-21 12:35:37');
+(3, 'Stok buku ber-ID 3berubah dari 11 menjadi 12', '2023-05-21 12:35:37'),
+(2, 'Stok buku ber-ID 2berubah dari 9 menjadi 8', '2023-05-22 05:05:23'),
+(3, 'Stok buku ber-ID 3berubah dari 12 menjadi 11', '2023-05-22 05:05:23'),
+(2, 'Stok buku ber-ID 2berubah dari 8 menjadi 7', '2023-05-22 05:18:01'),
+(3, 'Stok buku ber-ID 3berubah dari 11 menjadi 10', '2023-05-22 05:18:01'),
+(1, 'Admin menambahkan stok buku ber-ID 1 menjadi 10', '2023-05-23 16:07:58');
 
 -- --------------------------------------------------------
 
@@ -964,7 +990,11 @@ CREATE TABLE `pemesanan_buku` (
 INSERT INTO `pemesanan_buku` (`id_pemesanan`, `id_buku`, `id_siswa`, `waktu`, `tanggal`) VALUES
 (16, 1, 1, '09:00:00', '2023-01-01'),
 (17, 2, 2, '10:30:00', '2023-02-02'),
-(18, 3, 3, '11:45:00', '2023-03-03');
+(18, 3, 2, '11:45:00', '2023-03-03'),
+(40, 2, 2, '12:05:23', '2023-05-22'),
+(41, 3, 3, '12:05:23', '2023-05-22'),
+(42, 2, 1, '12:18:01', '2023-05-22'),
+(43, 3, 1, '12:18:01', '2023-05-22');
 
 --
 -- Triggers `pemesanan_buku`
@@ -972,11 +1002,11 @@ INSERT INTO `pemesanan_buku` (`id_pemesanan`, `id_buku`, `id_siswa`, `waktu`, `t
 DELIMITER $$
 CREATE TRIGGER `cek_stok_pemesanan` BEFORE INSERT ON `pemesanan_buku` FOR EACH ROW BEGIN
   DECLARE stok_buku INT;
-
+  
   SELECT stok INTO stok_buku
   FROM buku_perpus
   WHERE id_buku = NEW.id_buku;
-
+  
   IF stok_buku >= 1 THEN
     UPDATE buku_perpus
     SET stok = stok_buku - 1
@@ -989,7 +1019,7 @@ END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `log_pemesanan_buku` BEFORE DELETE ON `pemesanan_buku` FOR EACH ROW BEGIN
+CREATE TRIGGER `log_pemesanan_buku` BEFORE DELETE ON `pemesanan_buku` FOR EACH ROW BEGIN 
 	INSERT INTO log_pemesanan_buku VALUES (OLD.id_pemesanan, CONCAT('Pemesanan dengan ID ', OLD.id_pemesanan, ', buku dengan ID ', OLD.id_buku, ', oleh siswa dengan ID ', OLD.id_siswa, ', pada waktu ', OLD.waktu, ', tanggal ', OLD.tanggal));
     UPDATE buku_perpus SET stok = stok + 1 WHERE id_buku = OLD.id_buku;
 END
@@ -1015,18 +1045,15 @@ CREATE TABLE `peminjaman` (
 --
 
 INSERT INTO `peminjaman` (`id_peminjaman`, `id_buku`, `id_siswa`, `tanggal_pinjam`, `tanggal_kembali`) VALUES
-(1, 3, 2, '2023-04-01', '2023-04-29'),
+(1, 2, 2, '2023-04-01', '2023-04-29'),
 (2, 3, 5, '2023-04-02', '2023-04-24'),
 (3, 2, 5, '2023-04-23', '2023-05-04'),
 (4, 1, 1, '2023-03-31', '2023-04-15'),
 (5, 4, 2, '2023-04-01', '2023-04-29'),
-(9, 1, 1, '2023-05-21', '2023-06-04'),
+(9, 1, 3, '2023-05-21', '2023-06-04'),
 (10, 1, 1, '2023-05-21', '2023-06-04'),
-(11, 1, 1, '2023-05-21', '2023-06-04'),
-(12, 1, 1, '2023-05-21', '2023-06-04'),
-(13, 3, 1, '2023-05-21', '2023-06-04'),
-(14, 1, 3, '2023-05-21', '2023-06-04'),
-(15, 1, 3, '2023-05-21', '2023-06-04');
+(14, 1, 2, '2023-05-21', '2023-06-04'),
+(15, 2, 3, '2023-05-21', '2023-06-04');
 
 --
 -- Triggers `peminjaman`
@@ -1060,10 +1087,10 @@ CREATE TABLE `pengembalian` (
 --
 
 INSERT INTO `pengembalian` (`id_pengembalian`, `id_peminjaman`, `tanggal_pengembalian`, `status`) VALUES
-(0, 8, '2023-05-21', 'Tepat Waktu'),
 (1, 1, '2023-04-28', 'Tepat Waktu'),
 (2, 2, '2023-04-28', 'Terlambat'),
-(3, 3, '2023-05-09', 'Terlambat');
+(3, 3, '2023-05-09', 'Terlambat'),
+(4, 9, '2023-05-21', 'Tepat Waktu');
 
 --
 -- Triggers `pengembalian`
@@ -1076,7 +1103,7 @@ CREATE TRIGGER `status_pengembalian_buku` BEFORE INSERT ON `pengembalian` FOR EA
     	SET NEW.status = 'Terlambat';
     ELSE
     	SET NEW.status = 'Tepat Waktu';
-
+        
     END IF;
 END
 $$
@@ -1126,19 +1153,21 @@ CREATE TABLE `siswa` (
   `agama` enum('Islam','Kristen Protestan','Kristen Katolik','Hindu','Budha') NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `nomor_telepon` varchar(15) NOT NULL,
-  `email` varchar(100) DEFAULT NULL
+  `email` varchar(100) DEFAULT NULL,
+  `tahun_masuk` int(11) DEFAULT 2023
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `siswa`
 --
 
-INSERT INTO `siswa` (`id_siswa`, `id_akun`, `nisn`, `nama_lengkap`, `jenis_kelamin`, `tanggal_lahir`, `tempat_lahir`, `kelas`, `agama`, `alamat`, `nomor_telepon`, `email`) VALUES
-(1, 6, '0044798474', 'Kenzie', 'Laki-laki', '2023-04-01', 'Medan', '10', 'Budha', 'Jl Ratna 14, Jawa Timur', '0-31-504-8335', 'gimsfg@holliefindlaymusic.com'),
-(2, 5, '320301 ', 'Fubrianto', 'Laki-laki', '2023-03-01', 'Sibolga', '11', 'Hindu', 'Jl Utama VI/56 Kav Jelambar Polri 16-14, Dki Jakarta', '0-21-560-4532', 'exstreem@4movierulzfree.com'),
-(3, 4, '110802', 'Bendicta', 'Perempuan', '2023-04-10', 'Medan', '12', 'Kristen Katolik', ' Jl P Jayakarta 141 Bl IV/B 32, Jakarta', '0-21-639-2332', 'ammotroop05@contabilidadebrasil.org'),
-(4, 3, '0118741444', 'Erick', 'Laki-laki', '2023-02-05', 'Siantar', '10', 'Kristen Protestan', ' Jl I Gusti Ngurah Rai 54 RT 001/01, Dki Jakarta', '0-21-862-2081', 'kamelpolo@rjtrainingsolutions.com'),
-(5, 2, '0118741444', 'Sari', 'Perempuan', '2023-04-11', 'Batam', '12', 'Islam', 'Jl Gn Sahari XII/14-16, Dki Jakarta', ' 0-21-659-2852', 'kamelpolo@rjtrainingsolutions.com');
+INSERT INTO `siswa` (`id_siswa`, `id_akun`, `nisn`, `nama_lengkap`, `jenis_kelamin`, `tanggal_lahir`, `tempat_lahir`, `kelas`, `agama`, `alamat`, `nomor_telepon`, `email`, `tahun_masuk`) VALUES
+(1, 6, '0044798474', 'Kenzie', 'Laki-laki', '2023-04-01', 'Medan', '10', 'Budha', 'Jl Ratna 14, Jawa Timur', '0-31-504-8335', 'gimsfg@holliefindlaymusic.com', 2023),
+(2, 5, '320301 ', 'Fubrianto', 'Laki-laki', '2023-03-01', 'Sibolga', '11', 'Hindu', 'Jl Utama VI/56 Kav Jelambar Polri 16-14, Dki Jakarta', '0-21-560-4532', 'exstreem@4movierulzfree.com', 2023),
+(3, 4, '110802', 'Bendicta', 'Perempuan', '2023-04-10', 'Medan', '12', 'Kristen Katolik', ' Jl P Jayakarta 141 Bl IV/B 32, Jakarta', '0-21-639-2332', 'ammotroop05@contabilidadebrasil.org', 2023),
+(4, 3, '0118741444', 'Erick', 'Laki-laki', '2023-02-05', 'Siantar', '10', 'Kristen Protestan', ' Jl I Gusti Ngurah Rai 54 RT 001/01, Dki Jakarta', '0-21-862-2081', 'kamelpolo@rjtrainingsolutions.com', 2023),
+(5, 2, '0118741444', 'Sari', 'Perempuan', '2023-04-11', 'Batam', '12', 'Islam', 'Jl Gn Sahari XII/14-16, Dki Jakarta', ' 0-21-659-2852', 'kamelpolo@rjtrainingsolutions.com', 2023),
+(2147483647, 1234567893, '1234567890', 'John Doe', 'Laki-laki', '2000-01-01', 'Jakarta', 'XII', 'Kristen Protestan', 'Jl. Jalan No. 1', '081234567890', 'john.doe@gmail', 2023);
 
 -- --------------------------------------------------------
 
@@ -1419,7 +1448,7 @@ ALTER TABLE `absensi`
 -- AUTO_INCREMENT for table `akun`
 --
 ALTER TABLE `akun`
-  MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234567891;
+  MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234567894;
 
 --
 -- AUTO_INCREMENT for table `buku`
@@ -1449,13 +1478,19 @@ ALTER TABLE `log_pemesanan_buku`
 -- AUTO_INCREMENT for table `pemesanan_buku`
 --
 ALTER TABLE `pemesanan_buku`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
   MODIFY `id_peminjaman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `pengembalian`
+--
+ALTER TABLE `pengembalian`
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pesan_masuk`

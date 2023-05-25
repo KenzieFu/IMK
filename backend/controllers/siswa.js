@@ -3,6 +3,8 @@ const Buku = require("../models/buku");
 const Kategori = require("../models/kategori");
 const Peminjaman = require("../models/peminjaman");
 const Pengembalian = require("../models/pengembalian");
+const Akun = require("../models/akun");
+const bcrypt = require("bcryptjs");
 
 // Function untuk mengambil daftar siswa
 exports.getSiswa = async function (req, res, next) {
@@ -38,11 +40,39 @@ exports.createSiswa = async function (req, res, next) {
   //  "agama": "Kristen Protestan",
   //   "alamat": "Jl. Jalan No. 1",
   //   "nomor_telepon": "081234567890",
-  //   "email": "john.doe@gmail"
+  //   "email": "john.doe@gmail",
+  //   "tahun_masuk": "2023"
   //   }
+  // akun : id_akun, username, password, hak_akses, status
   try {
-    const siswa = await Siswa.create(req.body);
-    res.json(siswa);
+    // bycrypt password
+    const hashedPassword = await bcrypt.hash(req.body.nisn, 12);
+    req.body.password = hashedPassword;
+    const akun = await Akun.create({
+      username: req.body.nisn,
+      password: req.body.password,
+      hak_akses: "Siswa",
+      status: "Aktif",
+    });
+    // siswa : id_siswa, id_akun, nisn, nama_lengkap, jenis_kelamin, tanggal_lahir, tempat_lahir, kelas, agama, alamat, nomor_telepon, email, tahun_masuk
+    // create random id_siswa 11 digit
+    const id_siswa = Math.floor(Math.random() * 10000000000) + 1;
+    const siswa = await Siswa.create({
+      id_siswa: id_siswa,
+      id_akun: akun.id_akun,
+      nisn: req.body.nisn,
+      nama_lengkap: req.body.nama_lengkap,
+      jenis_kelamin: req.body.jenis_kelamin,
+      tanggal_lahir: req.body.tanggal_lahir,
+      tempat_lahir: req.body.tempat_lahir,
+      kelas: req.body.kelas,
+      agama: req.body.agama,
+      alamat: req.body.alamat,
+      nomor_telepon: req.body.nomor_telepon,
+      email: req.body.email,
+      tahun_masuk: req.body.tahun_masuk,
+    });
+    res.json({ siswa, akun });
   } catch (error) {
     next(error);
   }

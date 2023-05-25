@@ -108,12 +108,23 @@ export const CreateBuku = () => {
         id_kategori: formData.id_kategori,
         sinopsis:formData.sinopsis,
         isbn:formData.isbn
-
-
       }
 
       console.log(sendedData);
+<<<<<<< HEAD
      const response= await axios.post('http://localhost:8080/admin-perpustakaan-methodist-cw/buku',formDataToSend); // Replace with your API endpoint
+=======
+     const response= await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku', {
+        method: 'POST',
+        headers: {
+           "Content-Type": "multipart/form-data",
+           // boundry
+           "Content-Type": "multipart/form-data ; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+       },
+        body:sendedData,
+
+      }); // Replace with your API endpoint
+>>>>>>> a6f730397ada37813917dcf3d0448432220bec6e
       // console.log semua data yang dikirimkan
       const responseData = await response.json();
       console.log(responseData);
@@ -156,7 +167,7 @@ export const CreateBuku = () => {
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
-          <Label for="examplePenerbit">Penerbit</Label>
+          <Label for="examplePenerbit">Penerbitsssssssssss</Label>
           <Input
             id="examplePenerbit"
             name="penerbit"

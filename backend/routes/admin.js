@@ -152,6 +152,11 @@ router.get("/guru", guruController.getAllGuru);
 
 // ROUTES FOR AKUN
 
+// route untuk aktivasi akun secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi
+router.put("/akun-aktivasi", akunController.aktivasiAkunMultiple);
+
+
 // route untuk menambahkan akun
 // http://localhost:8080/admin-perpustakaan-methodist-cw/akun
 router.post("/akun", akunController.createAkun);

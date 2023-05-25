@@ -15,10 +15,10 @@ export const BookTablePage = () => {
     const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
 
     return uniqueKategori.map((kategori) => (
-    <DropdownItem onClick={() => setSearchBased(kategori)}>
-      {kategori}
-    </DropdownItem>
-  ));
+      <DropdownItem onClick={() => setSearchBased(kategori)} className="box-menu">
+        {kategori}
+      </DropdownItem>
+    ));
   };
   const [currentId, setCurrentId] = useState(null);
   const [showDeleteModal, setDeleteModal] = useState(false)
@@ -123,40 +123,31 @@ export const BookTablePage = () => {
 
   return (
     <>
-    <div className={classes['search-button']}>
-     <Input
-        type="text"
-        placeholder="Cari Judul Buku..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className={classes['searchbox']} 
-        />
-            <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
-            Filter <i class="fa fa-filter" aria-hidden="true"></i>
-            </Button>
+      <div className="search-button">
+        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input" />
+        <div>
+          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
+            Pencarian Lebih Lanjut
+          </Button>
+        </div>
       </div>
-      {
-        advanceSearch &&
+      {advanceSearch && (
         <>
         <div className={classes['downdown']}>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className={classes['dropdown2']}>
-            Filter by
+            <DropdownToggle caret className="dropdown-toggle-search">
+              Tampilkan Buku Berdasarkan Kategori
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={() => setSearchBased('')}>
-                Tampilkan semua data
-              </DropdownItem>
+              {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem header className="box-menu">Kategori</DropdownItem>
+              <DropdownItem header className="box-menu">
+                Kategori
+              </DropdownItem> */}
               <Suspense fallback="Loading...">
                 <Await resolve={books}>
                   {(bukuData) => {
-                    return (
-                      <>
-                        {mapKategoriToOptions(bukuData)}
-                      </>
-                    );
+                    return <>{mapKategoriToOptions(bukuData)}</>;
                   }}
                 </Await>
               </Suspense>
@@ -174,37 +165,36 @@ export const BookTablePage = () => {
           </Dropdown>
         </div>
         </>
-        
-      }
-      
+      )}
       <Suspense fallback="">
-        <Await resolve={books} >
-          {(loadedData) =>
+        <Await resolve={books}>
+          {(loadedData) => (
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems:"center", marginTop:"3vw" }}>
-                  <h1 className={classes['judul1']}>Tabel Buku</h1>
-                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Buku</i></Link>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <h2>Tabel Buku</h2>
+                  <Link to="create" className="button-create">
+                    <i class="bi bi-person-plus"> Tambah Buku</i>
+                  </Link>
                 </div>
               }
               data={loadedData.filter((item) => {
-                if(searchBased === ""){
+                if (searchBased === "") {
                   return item.judul_buku.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === item.kategori.nama_kategori ) {
+                } else if (searchBased === item.kategori.nama_kategori) {
                   return item.judul_buku.toLowerCase().includes(searchTerm.toLowerCase());
                 }
               })}
               columns={columns}
               pagination
             />
-          }
+          )}
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
-
     </>
-  )
+  );
 }
 
 
