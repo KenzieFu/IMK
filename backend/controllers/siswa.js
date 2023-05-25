@@ -5,6 +5,27 @@ const Peminjaman = require("../models/peminjaman");
 const Pengembalian = require("../models/pengembalian");
 const Akun = require("../models/akun");
 const bcrypt = require("bcryptjs");
+const { Op } = require("sequelize");
+
+// Function untuk menghapus data siswa secara multiple
+// misal id_siswa = [1,2,3,4,5]
+// hasilnya semua siswa dengan id_siswa 1,2,3,4,5 akan dihapus
+// cth data yang dikirimkan dalam json
+// { "id_siswa": [1,2,3,4,5] }
+exports.deleteSiswaMultiple = async function (req, res, next) {
+  try {
+    const siswa = await Siswa.destroy({
+      where: {
+        id_siswa: {
+          [Op.in]: req.body.id_siswa,
+        },
+      },
+    });
+    res.json(siswa);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // Function untuk mengambil daftar siswa
 exports.getSiswa = async function (req, res, next) {

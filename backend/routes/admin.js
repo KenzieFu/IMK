@@ -18,6 +18,11 @@ const router = express.Router();
 
 // ROUTES FOR SISWA
 
+// route untuk menghapus siswa secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/siswa-multiple
+router.delete("/siswa-multiple", siswaController.deleteSiswaMultiple);
+
+
 // route untuk menampilkan daftar siswa
 // http://localhost:8080/admin-perpustakaan-methodist-cw/siswa
 router.get("/siswa", siswaController.getSiswa);
@@ -40,6 +45,11 @@ router.put("/siswa/:siswaId", siswaController.updateSiswa);
 router.delete("/siswa/:siswaId", siswaController.deleteSiswa);
 
 // ROUTES FOR BUKU
+
+// route untuk menghapus buku secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/buku-multiple
+router.delete("/buku-multiple", bukuController.deleteBookMultiple);
+
 // route untuk menampilkan daftar buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku
 router.get("/buku", bukuController.getBooks);
@@ -151,6 +161,11 @@ router.get("/guru/:guruId", guruController.getGuru);
 router.get("/guru", guruController.getAllGuru);
 
 // ROUTES FOR AKUN
+
+// route untuk menghapus akun secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/akun
+router.delete("/akun", akunController.deleteAkunMultiple);
+
 
 // route untuk aktivasi akun secara multiple
 // http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi
