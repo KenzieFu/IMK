@@ -198,37 +198,42 @@ export const StudentPage = () => {
 
   return (
     <>
-     <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter2']}>
-            {" "}
-            Cari <i class="fa fa-search" aria-hidden="true"></i>
-          </Button>
-    {
-      advanceSearch && (
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari Berdasarkan Nama Siswa" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+        </Button>
+      </div>
+      {advanceSearch && (
         <>
-          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Tampilkan Akun Berdasarkan
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => setSearchBased("nisn")} className="box-menu">
-                NISN
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("Nama")} className="box-menu">
-                Nama
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <div className={classes["downdown"]}>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by <i class="fa fa-filter" aria-hidden="true"></i>
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={() => setSearchBased("nisn")} className="box-menu">
+                  NISN
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("Nama")} className="box-menu">
+                  Nama
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
         </>
-      )
-    }
-        <Suspense fallback="">
-          <Await resolve={students} >
-            {(loadedData)=>
-               <DataTable
-               title={
-                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
-                    <h1 className={classes['judul1']}>Tabel Siswa</h1>
-                    <Link to="registrasi/data-pribadi" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Siswa</i></Link>
+      )}
+      <Suspense fallback="">
+        <Await resolve={students}>
+          {(loadedData) => (
+            <DataTable
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Siswa</h1>
+                  <Link to="registrasi/data-pribadi" className={classes["buttoncreate"]}>
+                    <i class="bi bi-person-plus"> Tambah Siswa</i>
+                  </Link>
                 </div>
               }
               data={loadedData.filter((item) => {
@@ -243,7 +248,7 @@ export const StudentPage = () => {
               columns={columns}
               pagination
             />
-          }
+          )}
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}

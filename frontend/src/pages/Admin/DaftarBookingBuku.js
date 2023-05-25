@@ -137,66 +137,76 @@ export const DaftarBookingBuku = () => {
 
   return (
     <>
-      <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
-        Pencarian Lebih Lanjut
-      </Button>
-      {
-        advanceSearch &&
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+        </Button>
+      </div>
+      {advanceSearch && (
         <>
-       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Cari Data berdasarkan :
-            </DropdownToggle>
-            <DropdownMenu>
-            <DropdownItem onClick={() => {setSearchBased(""); setSearchTerm("")}} className="box-menu">
-               Tampilkan Semua Data
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
-                Nama Siswa
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
-                Judul Buku
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <Input disabled={searchBased === "" ? true : false}
+          <div className={classes["downdown"]}>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by <i class="fa fa-filter" aria-hidden="true"></i>
+              </DropdownToggle>
+              <DropdownMenu>
+                {/* <DropdownItem
+                  onClick={() => {
+                    setSearchBased("");
+                    setSearchTerm("");
+                  }}
+                  className="box-menu"
+                >
+                  Tampilkan Semua Data
+                </DropdownItem> */}
+                <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                  Nama Siswa
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                  Judul Buku
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+          {/* <Input
+            disabled={searchBased === "" ? true : false}
             type="text"
             placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} />
-
-      </>
-
-      }
+            onChange={(e) => setSearchTerm(e.target.value)}
+          /> */}
+        </>
+      )}
       <Suspense fallback="">
-        <Await resolve={daftarBooking} >
-          {(loadedData) =>
+        <Await resolve={daftarBooking}>
+          {(loadedData) => (
             <DataTable
               title={
-                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw" }}>
-                  <h1 className={classes['judul1']}>Tabel Booking</h1>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Pemesanan Buku</h1>
                 </div>
               }
-              data={loadedData.filter((item)=> {
-                if(searchBased === ""){
-                  return item
+              data={loadedData.filter((item) => {
+                if (searchBased === "") {
+                  return item;
+                } else if (searchBased === "nama") {
+                  return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase());
+                } else if (searchBased === "judul") {
+                  return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase());
                 }
-                else if(searchBased === "nama"){
-                  return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                } else if(searchBased === "judul"){
-                  return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                }
-               })}
+              })}
               columns={columns}
               pagination
             />
-          }
+          )}
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
     </>
-  )
+  );
 }
 
 

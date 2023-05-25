@@ -6,6 +6,7 @@ import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from '
 import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
+import classes from './adminbatch.module.css';
 
 export const DaftarPengembalianBukuPage = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -47,11 +48,10 @@ export const DaftarPengembalianBukuPage = () => {
     setDropdownOpen3(!dropdownOpen3);
   };
   const columns = [
-
     {
       id: "nama_siswa",
-      name: <div className="data-row">Nama Siswa</div>,
-      selector: row => <div className="data-row">{row.peminjaman.siswa.nama_lengkap}</div>,
+      name: <div className={classes["data-row"]}>Nama Siswa</div>,
+      selector: (row) => <div className={classes["data-row"]}>{row.peminjaman.siswa.nama_lengkap}</div>,
       accessor: "nama_siswa",
       sortable: true,
       headerStyle: {
@@ -59,12 +59,12 @@ export const DaftarPengembalianBukuPage = () => {
         textAlign: "center",
         justifyContent: "center",
       },
-      width:"13%"
+      width: "13%",
     },
     {
       id: "judul_buku",
-      name: <div className="data-row">Judul Buku</div>,
-      selector: row => <div className="data-row">{row.peminjaman.buku.judul_buku}</div>,
+      name: <div className={classes["data-row"]}>Judul Buku</div>,
+      selector: (row) => <div className={classes["data-row"]}>{row.peminjaman.buku.judul_buku}</div>,
       accessor: "judul_buku",
       sortable: true,
       headerStyle: {
@@ -72,12 +72,12 @@ export const DaftarPengembalianBukuPage = () => {
         textAlign: "center",
         justifyContent: "center",
       },
-      width:"11%"
+      width: "11%",
     },
     {
       id: "tanggal_pinjam",
-      name: <div className="data-row">Tanggal Pinjam</div>,
-      selector: row => <div className="data-row">{row.peminjaman.tanggal_pinjam}</div>,
+      name: <div className={classes['data-row']}>Tanggal Pinjam</div>,
+      selector: (row) => <div className={classes['data-row']}>{row.peminjaman.tanggal_pinjam}</div>,
       accessor: "tanggal_pinjam",
       sortable: true,
       headerStyle: {
@@ -85,12 +85,12 @@ export const DaftarPengembalianBukuPage = () => {
         textAlign: "center",
         justifyContent: "center",
       },
-      width:"15%"
+      width: "15%",
     },
     {
       id: "tanggal_kembali",
-      name: <div className="data-row">Tanggal Dikembalikan</div>,
-      selector: row => <div className="data-row">{row.peminjaman.tanggal_kembali}</div>,
+      name: <div className={classes['data-row']}>Tanggal Dikembalikan</div>,
+      selector: (row) => <div className={classes['data-row']}>{row.peminjaman.tanggal_kembali}</div>,
       accessor: "tanggal_kembali",
       sortable: true,
       headerStyle: {
@@ -98,12 +98,12 @@ export const DaftarPengembalianBukuPage = () => {
         textAlign: "center",
         justifyContent: "center",
       },
-      width:"15%"
+      width: "15%",
     },
     {
       id: "tanggal_pengembalian",
-      name: <div className="data-row">Tanggal Pengembalian</div>,
-      selector: row => <div className="data-row">{row.tanggal_pengembalian}</div>,
+      name: <div className={classes['data-row']}>Tanggal Pengembalian</div>,
+      selector: (row) => <div className={classes['data-row']}>{row.tanggal_pengembalian}</div>,
       accessor: "tanggal_pengembalian",
       sortable: true,
       headerStyle: {
@@ -111,12 +111,12 @@ export const DaftarPengembalianBukuPage = () => {
         textAlign: "center",
         justifyContent: "center",
       },
-      width:"15%"
+      width: "15%",
     },
     {
       id: "status_kembali",
-      name: <div className="data-row">Status</div>,
-      selector: row => <div className="data-row">{row.status}</div>,
+      name: <div className={classes['data-row']}>Status</div>,
+      selector: (row) => <div className={classes['data-row']}>{row.status}</div>,
       accessor: "status_kembali",
       sortable: true,
       headerStyle: {
@@ -124,19 +124,20 @@ export const DaftarPengembalianBukuPage = () => {
         textAlign: "center",
         justifyContent: "center",
       },
-      color: (row => row.status === "Tepat Waktu") ? "Green" : "Red",
-      width:"15%"
+      color: ((row) => row.status === "Tepat Waktu") ? "Green" : "Red",
+      width: "15%",
     },
     {
       id: "button",
-      name: <div className="data-row">Aksi</div>,
+      name: <div className={classes['data-row']}>Aksi</div>,
       width: "20%",
-      cell: (row) =>
-      (
-        <div style={{ margin: "0 0" }} className='action-buttons'>
-          <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.peminjaman.id_peminjaman)}className='action-check'> <i class="bi bi-check-lg"> Setujui</i></span>
-
+      cell: (row) => (
+        <div style={{ margin: "0 0" }} className="action-buttons">
+          <input type="hidden" id="row" />
+          <span onClick={() => showModalHandler(row.peminjaman.id_peminjaman)} className="action-check">
+            {" "}
+            <i class="bi bi-check-lg"> Setujui</i>
+          </span>
         </div>
       ),
       headerStyle: {
@@ -147,256 +148,417 @@ export const DaftarPengembalianBukuPage = () => {
       },
       ignoreRowClick: true,
       allowOverflow: true,
-      selector: row => row.button,
+      selector: (row) => row.button,
       button: true,
     },
   ];
 
   return (
     <>
-      <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
-        Pencarian Lebih Lanjut
-      </Button>
-      {
-        advanceSearch &&
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+        </Button>
+      </div>
+      {advanceSearch && (
         <>
-          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Cari Data berdasarkan :
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => { setSearchBased(""); setSearchTerm("") }} className="box-menu">
-                Tampilkan Semua Data
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
-                Nama Siswa
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
-                Judul Buku
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Cari Data dalam rentang tanggal :
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => { setSearchBasedDate(""); setStartDate(''); setEndDate('') }} className="box-menu">
-                Tanpa rentang tanggal
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
-                Tanggal Peminjaman
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
-                Tanggal Kembali
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedDate("pengembalian")} className="box-menu">
-                Tanggal Pengembalian
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <Dropdown isOpen={dropdownOpen3} toggle={toggleDropdown3}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Tampilkan data berdasarkan status :
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => { setSearchBasedStat(""); }} className="box-menu">
-                Tampilkan semua status
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedStat("tepat_waktu")} className="box-menu">
-                Tepat Waktu
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedStat("terlambat")} className="box-menu">
-                Terlambat
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-
+          <div className={classes["downdown"]}>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by <i class="fa fa-filter" aria-hidden="true"></i>
+              </DropdownToggle>
+              <DropdownMenu>
+                {/* <DropdownItem
+                  onClick={() => {
+                    setSearchBased("");
+                    setSearchTerm("");
+                  }}
+                  className="box-menu"
+                >
+                  Tampilkan Semua Data
+                </DropdownItem> */}
+                <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                  Nama Siswa
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                  Judul Buku
+                </DropdownItem>
+                {/* </DropdownMenu>
+            </Dropdown>
+            <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
+              <DropdownToggle caret className="dropdown-toggle-search">
+                Cari Data dalam rentang tanggal :
+              </DropdownToggle>
+              <DropdownMenu> */}
+                <DropdownItem
+                  onClick={() => {
+                    setSearchBasedDate("");
+                    setStartDate("");
+                    setEndDate("");
+                  }}
+                  className="box-menu"
+                >
+                  Tanpa rentang tanggal
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
+                  Tanggal Peminjaman
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
+                  Tanggal Kembali
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBasedDate("pengembalian")} className="box-menu">
+                  Tanggal Pengembalian
+                </DropdownItem>
+                {/* </DropdownMenu>
+            </Dropdown>
+            <Dropdown isOpen={dropdownOpen3} toggle={toggleDropdown3}>
+              <DropdownToggle caret className="dropdown-toggle-search">
+                Tampilkan data berdasarkan status :
+              </DropdownToggle>
+              <DropdownMenu> */}
+                <DropdownItem
+                  onClick={() => {
+                    setSearchBasedStat("");
+                  }}
+                  className="box-menu"
+                >
+                  Tampilkan semua status
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBasedStat("tepat_waktu")} className="box-menu">
+                  Tepat Waktu
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBasedStat("terlambat")} className="box-menu">
+                  Terlambat
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+          {/* <div className={classes["search-button"]}> */}
           <label htmlFor="start-date">Start Date:</label>
-          <Input
-            disabled={searchBasedDate === ""}
-            id="start-date"
-            value={startDate}
-            type="date"
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <Input
-            disabled={searchBasedDate === ""}
-            id="end-date"
-            value={endDate}
-            type="date"
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-          <Input disabled={searchBased === "" ? true : false}
-            type="text"
-            placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} />
+          <Input disabled={searchBasedDate === ""} id="start-date" value={startDate} type="date" onChange={(e) => setStartDate(e.target.value)} />
+          <Input disabled={searchBasedDate === ""} id="end-date" value={endDate} type="date" onChange={(e) => setEndDate(e.target.value)} />
+          {/* <Input
+              disabled={searchBased === "" ? true : false}
+              type="text"
+              placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            /> */}
+          {/* </div> */}
         </>
-      }
+      )}
       <Suspense fallback="">
-        <Await resolve={daftarPengembalian} >
-          {(loadedData) =>
+        <Await resolve={daftarPengembalian}>
+          {(loadedData) => (
             <DataTable
-              title={<div className="data-table-header">Tabel Pengembalian</div>}
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Pengembalian</h1>
+                </div>
+              }
               data={loadedData.filter((item) => {
-
                 if (searchBased === "" && searchBasedDate === "" && searchBasedStat === "") {
                   return item;
                 }
                 if (searchBased === "nama") {
                   if (searchBasedDate === "" && searchBasedStat === "") {
-                    return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                  } if (searchBasedStat === "") {
+                    return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase());
+                  }
+                  if (searchBasedStat === "") {
                     if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate
-                    } if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate
-                    } if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate
+                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate;
                     }
-                  } if (searchBasedStat === "terlambat") {
-                    if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "terlambat"
-                    } if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
-                    } if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                    if (searchBasedDate === "kembali") {
+                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate;
                     }
-                  } if (searchBasedStat === "tepat_waktu") {
+                    if (searchBasedDate === "pengembalian") {
+                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate;
+                    }
+                  }
+                  if (searchBasedStat === "terlambat") {
                     if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && endDate && item.status.toLowerCase() === "tepat waktu"
-                    } if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && endDate && item.status.toLowerCase() === "tepat waktu"
-                    } if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && endDate && item.status.toLowerCase() === "tepat waktu"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
+                    }
+                    if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
+                    }
+                    if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      );
+                    }
+                  }
+                  if (searchBasedStat === "tepat_waktu") {
+                    if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                    if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                    if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.tanggal_pengembalian >= startDate &&
+                        item.tanggal_kembali <= endDate &&
+                        endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
                     }
                   }
                 }
                 if (searchBased === "judul") {
                   if (searchBasedDate === "" && searchBasedStat === "") {
-                    return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                  } if (searchBasedStat === "") {
+                    return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase());
+                  }
+                  if (searchBasedStat === "") {
                     if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate
-                    } if (searchBasedDate === "kembali") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate
-                    } if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate
+                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate;
                     }
-                  } if (searchBasedStat === "terlambat") {
-                    if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "terlambat"
-                    } if (searchBasedDate === "kembali") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
-                    } if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                    if (searchBasedDate === "kembali") {
+                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate;
                     }
-                  } if (searchBasedStat === "tepat_waktu") {
+                    if (searchBasedDate === "pengembalian") {
+                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate;
+                    }
+                  }
+                  if (searchBasedStat === "terlambat") {
                     if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && endDate && item.status.toLowerCase() === "tepat waktu"
-                    } if (searchBasedDate === "kembali") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && endDate && item.status.toLowerCase() === "tepat waktu"
-                    } if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && endDate && item.status.toLowerCase() === "tepat waktu"
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
+                    }
+                    if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
+                    }
+                    if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      );
+                    }
+                  }
+                  if (searchBasedStat === "tepat_waktu") {
+                    if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                    if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                    if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.tanggal_pengembalian >= startDate &&
+                        item.tanggal_kembali <= endDate &&
+                        endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
                     }
                   }
                 }
                 if (searchBasedStat === "terlambat") {
                   if (searchBased === "" && item.status.toLowerCase() === "terlambat") {
                     if (searchBasedDate === "") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "terlambat"
-                    }
-                    else if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "terlambat"
+                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "terlambat";
+                    } else if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
                     } else if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
                     } else if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      );
                     }
-                  }
-
-                  else if (searchBased === "nama") {
+                  } else if (searchBased === "nama") {
                     if (searchBasedDate === "") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "terlambat"
-                    }
-                    else if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "terlambat"
+                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "terlambat";
+                    } else if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
                     } else if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
                     } else if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      );
                     }
-                  }
-                  else if (searchBased === "judul") {
+                  } else if (searchBased === "judul") {
                     if (searchBasedDate === "") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                    }
-                    else if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "terlambat"
+                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase());
+                    } else if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
                     } else if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "terlambat"
+                      );
                     } else if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
-                    }
-                  }
-                } if (searchBasedStat === "tepat_waktu") {
-                  if (searchBased === "" && item.status.toLowerCase() === "tepat waktu") {
-                    if (searchBasedDate === "") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "tepat waktu"
-                    }
-                    else if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    } else if (searchBasedDate === "kembali") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    } else if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    }
-                  }
-
-                  else if (searchBased === "nama") {
-                    if (searchBasedDate === "") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "tepat waktu"
-                    }
-                    else if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    } else if (searchBasedDate === "kembali") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    } else if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    }
-                  }
-                  else if (searchBased === "judul") {
-                    if (searchBasedDate === "") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "tepat waktu"
-                    }
-                    else if (searchBasedDate === "pinjam") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    } else if (searchBasedDate === "kembali") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
-                    } else if (searchBasedDate === "pengembalian") {
-                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "terlambat"
+                      );
                     }
                   }
                 }
-                if(searchBasedDate === "pinjam"){
-                  return item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate
-                } if(searchBasedDate === "kembali"){
-                  return item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate
-                } if(searchBasedDate === "pengembalian"){
-                  return item.tanggal_pengembalian >= startDate && item.tanggal_pengembalian <= endDate
+                if (searchBasedStat === "tepat_waktu") {
+                  if (searchBased === "" && item.status.toLowerCase() === "tepat waktu") {
+                    if (searchBasedDate === "") {
+                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "tepat waktu";
+                    } else if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    } else if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    } else if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                  } else if (searchBased === "nama") {
+                    if (searchBasedDate === "") {
+                      return item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "tepat waktu";
+                    } else if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    } else if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    } else if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.tanggal_pengembalian >= startDate &&
+                        item.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                  } else if (searchBased === "judul") {
+                    if (searchBasedDate === "") {
+                      return item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.status.toLowerCase() === "tepat waktu";
+                    } else if (searchBasedDate === "pinjam") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_pinjam >= startDate &&
+                        item.peminjaman.tanggal_pinjam <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    } else if (searchBasedDate === "kembali") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        item.peminjaman.tanggal_kembali >= startDate &&
+                        item.peminjaman.tanggal_kembali <= endDate &&
+                        item.status.toLowerCase() === "tepat waktu"
+                      );
+                    } else if (searchBasedDate === "pengembalian") {
+                      return (
+                        item.peminjaman.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pengembalian >= startDate && item.tanggal_kembali <= endDate && item.status.toLowerCase() === "tepat waktu"
+                      );
+                    }
+                  }
+                }
+                if (searchBasedDate === "pinjam") {
+                  return item.peminjaman.tanggal_pinjam >= startDate && item.peminjaman.tanggal_pinjam <= endDate;
+                }
+                if (searchBasedDate === "kembali") {
+                  return item.peminjaman.tanggal_kembali >= startDate && item.peminjaman.tanggal_kembali <= endDate;
+                }
+                if (searchBasedDate === "pengembalian") {
+                  return item.tanggal_pengembalian >= startDate && item.tanggal_pengembalian <= endDate;
                 }
               })}
               columns={columns}
               pagination={loadedData}
             />
-          }
+          )}
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
     </>
-  )
+  );
 }
 
 
