@@ -231,17 +231,9 @@ export const DaftarBukuPinjamPage = () => {
           {(loadedData) => (
             <DataTable
               title={
-<<<<<<< HEAD
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2 className="data-table-header">Tabel Peminjaman</h2>
-                  <Link to="create" className="button-create">
-                    <i class="bi bi-person-plus"> Tambah Peminjaman</i>
-                  </Link>
-=======
                 <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw"}}>
                   <h1 className={classes['judul1']}>Tabel Peminjaman</h1>
                   <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Peminjaman</i></Link>
->>>>>>> ecb9098b1aeb2f8b18094a9f3b517210e0ff3e8c
                 </div>
               }
               data={loadedData.filter((item) => {
