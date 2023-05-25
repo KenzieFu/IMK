@@ -692,10 +692,30 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.npmjs.org/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+"mongoose@*", "mongoose@^5.3.2":
+  "integrity" "sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA=="
+  "resolved" "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
+  "version" "5.13.17"
+=======
+=======
+>>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
 mongoose@^5.3.2:
   version "5.13.17"
   resolved "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
   integrity sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA==
+<<<<<<< HEAD
+>>>>>>> ae69317aacafd3412b5aa77b8970619a3f9a2cbd
+=======
+"mongoose@^5.3.2":
+  "integrity" "sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA=="
+  "resolved" "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
+  "version" "5.13.17"
+>>>>>>> c8357c6bfeb1482e7f6dee081279983e24152188
+=======
+>>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
   dependencies:
     "@types/bson" "1.x || 4.0.x"
     "@types/mongodb" "^3.5.27"

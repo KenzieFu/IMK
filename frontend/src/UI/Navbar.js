@@ -51,9 +51,9 @@ const { totalUniqueItems } = useCart()
         <header className={classes["nav-header"]}>
             <nav className={classes.navbar}>
                 <ul>
-                    <li className={classes['linav']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/">Home</NavLink></li>
-                    <li className={classes['linav']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="contactUs">Hubungi</NavLink></li>
-                    <li className={classes['linav']}><NavLink style={{textDecoration:"none", color:"#2E55BA"}} to="/library">Perpustakaan</NavLink></li>
+                    <li className={classes.linav}><NavLink className={({isActive})=>isActive?classes.active:undefined}/*  style={{textDecoration:"none", color:"#2E55BA"}} */ to={authen?"/student":"/"}>Home</NavLink></li>
+                    <li className={classes.linav}><NavLink className={({isActive})=>isActive?classes.active:undefined}/*  style={{textDecoration:"none", color:"#2E55BA"}} */ to="contactUs">Hubungi</NavLink></li>
+                    <li className={classes.linav}><NavLink className={({isActive})=>isActive?classes.active:undefined}/*  style={{textDecoration:"none", color:"#2E55BA"}} */ to="/library">Perpustakaan</NavLink></li>
                 </ul>
                 <div className={classes.divide}>
                     <img src="/assets/logopng.png" className={classes['logo']} alt="" />

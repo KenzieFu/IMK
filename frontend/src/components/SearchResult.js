@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 export const SearchResult = (props) => {
   
     const filtered=(book)=>{
-        return (book.judul_buku.includes(props.keyword) || 
-                book.pengarang.includes(props.keyword) ||
-                book.isbn.includes(props.keyword) ||
-                book.penerbit.includes(props.keyword)||
-                book.kategori.nama_kategori.includes(props.keyword)
+      const low=props.keyword.toLowerCase()
+        return (book.judul_buku.toLowerCase().includes(low) || 
+                book.pengarang.toLowerCase().includes(low) ||
+                book.isbn.toLowerCase().includes(low) ||
+                book.penerbit.toLowerCase().includes(low)||
+                book.kategori.nama_kategori.toLowerCase().includes(low)
         )
     }
 

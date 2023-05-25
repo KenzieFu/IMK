@@ -32,7 +32,7 @@ export const LibraryPage = () => {
     <>
 
     <div className={classes.content}>
-<div style={{ display:"flex" }}>
+<div style={{ display:"flex", alignItems:"flex-start" }}>
 {isAuth &&<Sidebar/>}
 
       <div className={classes.main}>

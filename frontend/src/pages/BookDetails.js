@@ -116,8 +116,9 @@ const BookDetail = () => {
     const backHandler = () => {
         navigate("..");
     }
-    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === 3);
-    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    
+    const existingPemesanan = pemesanan.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPeminjaman = peminjaman.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
 
     const countPemesanan = pemesanan.filter(item => item.id_siswa === 3).length
 
@@ -176,7 +177,8 @@ const BookDetail = () => {
 
     return (
         <>
-            {isAuth && <Sidebar />}
+        <div className={classes.layout}>
+        {isAuth && <Sidebar />}
             <div className={classes.content}>
                 <div className={classes.cardtopmain}>
                     <div className={classes.cardtop}>
@@ -244,6 +246,9 @@ const BookDetail = () => {
                     </div>
                 </div>
             </div>
+
+        </div>
+           
         </>
     )
 }

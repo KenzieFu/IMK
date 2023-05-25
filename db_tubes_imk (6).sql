@@ -25,27 +25,12 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_peminjaman` (`in_id_buku` INT, `in_id_siswa` INT, `in_tanggal_pinjam` DATE, `in_tanggal_kembali` DATE)  BEGIN
-  INSERT INTO peminjaman (id_buku, id_siswa, tanggal_pinjam, tanggal_kembali)
-  VALUES (in_id_buku, in_id_siswa, in_tanggal_pinjam, in_tanggal_kembali);
 
-  UPDATE buku
-  SET status = 'Sedang Dipinjam'
-  WHERE id_buku = in_id_buku;
-END$$
 
 --
 -- Functions
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_jumlah_buku_dipinjam` (`in_id_siswa` INT) RETURNS INT(11) BEGIN
-  DECLARE jumlah_buku INT;
 
-  SELECT COUNT(*) INTO jumlah_buku
-  FROM peminjaman
-  WHERE id_siswa = in_id_siswa AND tanggal_kembali IS NULL;
-
-  RETURN jumlah_buku;
-END$$
 
 DELIMITER ;
 
@@ -148,7 +133,7 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_update` AFTER UPDATE ON `buku` FOR EACH ROW BEGIN
-	INSERT INTO log_buku VALUES(NEW.id_buku,
+	INSERT INTO log_buku VALUES(NEW.id_buku, 
                                 CONCAT('Admin mengubah Buku berjudul', OLD.judul_buku, ' dengan pengarang ', OLD.pengarang, ' dengan penerbit ' , OLD.penerbit, ' dengan tahun terbit ', OLD.tahun_terbit, ' dengan kategori_id ', OLD.id_kategori, 'dengan sinopsis ', OLD.sinopsis, ' dengan ISBN ', OLD.isbn, ' menjadi berjudul ' , NEW.judul_buku, ' dengan pengarang ', NEW.pengarang, ' dengan penerbit ' , NEW.penerbit, ' dengan tahun terbit ', NEW.tahun_terbit, ' dengan kategori_id ', NEW.id_kategori, 'dengan sinopsis ', NEW.sinopsis, ' dengan ISBN ', NEW.isbn), CURRENT_TIMESTAMP());
 END
 $$
@@ -178,21 +163,21 @@ INSERT INTO `buku_perpus` (`id_buku`, `stok`) VALUES
 --
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_delete` AFTER DELETE ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(OLD.id_buku,
+	INSERT INTO log_buku_perpus VALUES(OLD.id_buku, 
                                        CONCAT('Admin menghapus stok buku ber-ID ', OLD.id_buku), CURRENT_TIMESTAMP());
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_insert` AFTER INSERT ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(NEW.id_buku,
+	INSERT INTO log_buku_perpus VALUES(NEW.id_buku, 
                                        CONCAT('Admin menambahkan stok buku ber-ID ', NEW.id_buku, ' menjadi ', NEW.stok), CURRENT_TIMESTAMP());
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_buku_perpus_update` AFTER UPDATE ON `buku_perpus` FOR EACH ROW BEGIN
-	INSERT INTO log_buku_perpus VALUES(NEW.id_buku,
+	INSERT INTO log_buku_perpus VALUES(NEW.id_buku, 
                                        CONCAT('Stok buku ber-ID ', NEW.id_buku, 'berubah dari ', OLD.stok, ' menjadi ', NEW.Stok), CURRENT_TIMESTAMP());
 END
 $$
@@ -218,48 +203,7 @@ INSERT INTO `buku_tahun_ajaran_baru` (`id_buku`, `stok`, `harga`) VALUES
 (1, 23, 50000),
 (2, 45, 65000),
 (3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000),
-(1, 23, 50000),
-(2, 45, 65000),
-(3, 90, 100000),
-(4, 55, 75000),
-(5, 56, 89000);
+(4, 55, 75000);
 
 --
 -- Triggers `buku_tahun_ajaran_baru`
@@ -972,11 +916,11 @@ INSERT INTO `pemesanan_buku` (`id_pemesanan`, `id_buku`, `id_siswa`, `waktu`, `t
 DELIMITER $$
 CREATE TRIGGER `cek_stok_pemesanan` BEFORE INSERT ON `pemesanan_buku` FOR EACH ROW BEGIN
   DECLARE stok_buku INT;
-
+  
   SELECT stok INTO stok_buku
   FROM buku_perpus
   WHERE id_buku = NEW.id_buku;
-
+  
   IF stok_buku >= 1 THEN
     UPDATE buku_perpus
     SET stok = stok_buku - 1
@@ -989,7 +933,7 @@ END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `log_pemesanan_buku` BEFORE DELETE ON `pemesanan_buku` FOR EACH ROW BEGIN
+CREATE TRIGGER `log_pemesanan_buku` BEFORE DELETE ON `pemesanan_buku` FOR EACH ROW BEGIN 
 	INSERT INTO log_pemesanan_buku VALUES (OLD.id_pemesanan, CONCAT('Pemesanan dengan ID ', OLD.id_pemesanan, ', buku dengan ID ', OLD.id_buku, ', oleh siswa dengan ID ', OLD.id_siswa, ', pada waktu ', OLD.waktu, ', tanggal ', OLD.tanggal));
     UPDATE buku_perpus SET stok = stok + 1 WHERE id_buku = OLD.id_buku;
 END
@@ -1076,7 +1020,7 @@ CREATE TRIGGER `status_pengembalian_buku` BEFORE INSERT ON `pengembalian` FOR EA
     	SET NEW.status = 'Terlambat';
     ELSE
     	SET NEW.status = 'Tepat Waktu';
-
+        
     END IF;
 END
 $$
@@ -1185,23 +1129,6 @@ CREATE TABLE `view_jumlah_pinjam` (
 ,`jumlah_pinjam` bigint(21)
 );
 
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `view_peminjaman_belum_selesai`
--- (See below for the actual view)
---
-CREATE TABLE `view_peminjaman_belum_selesai` (
-);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `view_peminjaman_selesai`
--- (See below for the actual view)
---
-CREATE TABLE `view_peminjaman_selesai` (
-);
 
 -- --------------------------------------------------------
 
@@ -1238,23 +1165,6 @@ DROP TABLE IF EXISTS `view_jumlah_pinjam`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jumlah_pinjam`  AS SELECT `b`.`id_buku` AS `id_buku`, `b`.`judul_buku` AS `judul_buku`, count(`b`.`id_buku`) AS `jumlah_pinjam` FROM (`buku` `b` join `peminjaman` `p` on(`b`.`id_buku` = `p`.`id_buku`)) GROUP BY `b`.`id_buku`, `b`.`judul_buku` ;
 
--- --------------------------------------------------------
-
---
--- Structure for view `view_peminjaman_belum_selesai`
---
-DROP TABLE IF EXISTS `view_peminjaman_belum_selesai`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_peminjaman_belum_selesai`  AS SELECT `p`.`id_peminjaman` AS `id_peminjaman`, `p`.`id_buku` AS `id_buku`, `p`.`id_siswa` AS `id_siswa`, `p`.`tanggal_pinjam` AS `tanggal_pinjam`, `p`.`tanggal_kembali` AS `tanggal_kembali`, `p`.`status` AS `status` FROM (`peminjaman` `p` left join `pengembalian` `pe` on(`p`.`id_peminjaman` = `pe`.`id_peminjaman`)) WHERE `pe`.`id_pengembalian` is null OR `p`.`status` = 'Belum Selesai' ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `view_peminjaman_selesai`
---
-DROP TABLE IF EXISTS `view_peminjaman_selesai`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_peminjaman_selesai`  AS SELECT `p`.`id_peminjaman` AS `id_peminjaman`, `p`.`id_buku` AS `id_buku`, `pe`.`id_pengembalian` AS `id_pengembalian`, `pe`.`status` AS `status_kembali`, `pe`.`tanggal_pengembalian` AS `tanggal_pengembalian`, `p`.`id_siswa` AS `id_siswa`, `p`.`tanggal_pinjam` AS `tanggal_pinjam`, `p`.`tanggal_kembali` AS `tanggal_kembali`, `p`.`status` AS `status` FROM (`peminjaman` `p` join `pengembalian` `pe` on(`p`.`id_peminjaman` = `pe`.`id_peminjaman`)) WHERE `p`.`status` = 'Selesai' ;
 
 -- --------------------------------------------------------
 
@@ -1302,7 +1212,6 @@ ALTER TABLE `buku`
 -- Indexes for table `buku_perpus`
 --
 ALTER TABLE `buku_perpus`
-  ADD PRIMARY KEY (`id_buku`,`stok`),
   ADD KEY `ID_Buku` (`id_buku`);
 
 --
@@ -1310,6 +1219,19 @@ ALTER TABLE `buku_perpus`
 --
 ALTER TABLE `buku_tahun_ajaran_baru`
   ADD KEY `ID_Buku` (`id_buku`);
+
+--
+-- Indexes for table `data_calon_siswa`
+--
+ALTER TABLE `data_calon_siswa`
+  ADD PRIMARY KEY (`id_calon`);
+
+--
+-- Indexes for table `data_ortu_wali_calon_siswa`
+--
+ALTER TABLE `data_ortu_wali_calon_siswa`
+  ADD PRIMARY KEY (`id_data`),
+  ADD KEY `id_calon` (`id_calon`);
 
 --
 -- Indexes for table `events`
@@ -1328,6 +1250,18 @@ ALTER TABLE `guru`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`);
+
+--
+-- Indexes for table `keteragan_kesehatan_calon_siswa`
+--
+ALTER TABLE `keteragan_kesehatan_calon_siswa`
+  ADD KEY `id_calon` (`id_calon`);
+
+--
+-- Indexes for table `keterangan_pendidikan_calon_siswa`
+--
+ALTER TABLE `keterangan_pendidikan_calon_siswa`
+  ADD KEY `id_calon` (`id_calon`);
 
 --
 -- Indexes for table `log_buku`
@@ -1428,6 +1362,18 @@ ALTER TABLE `buku`
   MODIFY `id_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234567891;
 
 --
+-- AUTO_INCREMENT for table `data_calon_siswa`
+--
+ALTER TABLE `data_calon_siswa`
+  MODIFY `id_calon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `data_ortu_wali_calon_siswa`
+--
+ALTER TABLE `data_ortu_wali_calon_siswa`
+  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
@@ -1471,20 +1417,63 @@ ALTER TABLE `pesan_masuk`
 -- Constraints for table `absensi`
 --
 ALTER TABLE `absensi`
-  ADD CONSTRAINT `relation_siswa_absensi` FOREIGN KEY (`nisn`) REFERENCES `siswa` (`nisn`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `relation_siswa_absensi` FOREIGN KEY (`nisn`) REFERENCES `siswa` (`nisn`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `buku`
+--
+ALTER TABLE `buku`
+  ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `buku_perpus`
 --
 ALTER TABLE `buku_perpus`
-  ADD CONSTRAINT `buku_perpus_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`);
+  ADD CONSTRAINT `buku_perpus_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `buku_tahun_ajaran_baru`
+--
+ALTER TABLE `buku_tahun_ajaran_baru`
+  ADD CONSTRAINT `buku_tahun_ajaran_baru_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `data_ortu_wali_calon_siswa`
+--
+ALTER TABLE `data_ortu_wali_calon_siswa`
+  ADD CONSTRAINT `data_ortu_wali_calon_siswa_ibfk_1` FOREIGN KEY (`id_calon`) REFERENCES `data_calon_siswa` (`id_calon`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `keteragan_kesehatan_calon_siswa`
+--
+ALTER TABLE `keteragan_kesehatan_calon_siswa`
+  ADD CONSTRAINT `keteragan_kesehatan_calon_siswa_ibfk_1` FOREIGN KEY (`id_calon`) REFERENCES `data_calon_siswa` (`id_calon`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `keterangan_pendidikan_calon_siswa`
+--
+ALTER TABLE `keterangan_pendidikan_calon_siswa`
+  ADD CONSTRAINT `keterangan_pendidikan_calon_siswa_ibfk_1` FOREIGN KEY (`id_calon`) REFERENCES `data_calon_siswa` (`id_calon`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `nota_pembelian_buku`
+--
+ALTER TABLE `nota_pembelian_buku`
+  ADD CONSTRAINT `nota_pembelian_buku_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pemesanan_buku`
 --
 ALTER TABLE `pemesanan_buku`
-  ADD CONSTRAINT `pemesanan_buku_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`),
-  ADD CONSTRAINT `pemesanan_buku_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`);
+  ADD CONSTRAINT `pemesanan_buku_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pemesanan_buku_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `peminjaman`
+--
+ALTER TABLE `peminjaman`
+  ADD CONSTRAINT `peminjaman_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `peminjaman_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `siswa`
