@@ -40,6 +40,11 @@ router.put("/siswa/:siswaId", siswaController.updateSiswa);
 router.delete("/siswa/:siswaId", siswaController.deleteSiswa);
 
 // ROUTES FOR BUKU
+
+// route untuk menghapus buku secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/buku-multiple
+router.delete("/buku-multiple", bukuController.deleteBookMultiple);
+
 // route untuk menampilkan daftar buku
 // http://localhost:8080/admin-perpustakaan-methodist-cw/buku
 router.get("/buku", bukuController.getBooks);
