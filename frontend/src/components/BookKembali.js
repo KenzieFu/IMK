@@ -18,7 +18,7 @@ export const BookKembali = ({book}) => {
                   <h1 className={classes["book-info_h1"]}>{book.buku.judul_Buku}</h1>
                   <p style={{ marginTop:"0",paddingTop:"0"  }}>{book.buku.pengarang}</p>
                   </div>
-                    <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
+                    <Link type='button' to={`/library/${book.id_buku}`} className={classes["book-info_button"]}>Details</Link>
                 </div>
 
                 <div className={classes.rating}>
