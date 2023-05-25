@@ -152,6 +152,11 @@ router.get("/guru", guruController.getAllGuru);
 
 // ROUTES FOR AKUN
 
+// route untuk menghapus akun secara multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/akun
+router.delete("/akun", akunController.deleteAkunMultiple);
+
+
 // route untuk aktivasi akun secara multiple
 // http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi
 router.put("/akun-aktivasi", akunController.aktivasiAkunMultiple);
