@@ -111,19 +111,21 @@ const BookDetail = () => {
     const { pemesanan } = useLoaderData('book-detail');
     const { peminjaman } = useLoaderData('book-detail');
 
+
     // const existingPeminjaman = peminjaman.find((item) => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
     // const existingPemesanan = pemesanan.find((item) => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
     const backHandler = () => {
         navigate("..");
     }
-    
-    const existingPemesanan = pemesanan.find(item => item?.id_buku === book?.id_buku && item?.id_siswa === 3);
-    const existingPeminjaman = peminjaman.find(item => item?.id_buku === book?.id_buku && item?.id_siswa === 3);
 
-    const countPemesanan = pemesanan.filter(item => item?.id_siswa === 3).length
+    const existingPemesanan = pemesanan.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPeminjaman = peminjaman.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    console.log(existingPemesanan)
+    const countPemesanan = pemesanan.filter(item => item.id_siswa === 3).length
 
-    const countPeminjaman = peminjaman.filter(item => item?.id_siswa === 1).length
+    const countPeminjaman = peminjaman.filter(item => item.id_siswa === 1).length
 
+    console.log(pemesanan)
 
     const batasBook = countPemesanan + countPeminjaman
 
@@ -131,10 +133,10 @@ const BookDetail = () => {
 
         const existingItem = inCart(book.id_buku)
         console.log(existingItem)
-        if (existingPemesanan) {
+        if (existingPemesanan.length !== 0) {
             bookingAda()
         }
-        else if (existingPeminjaman) {
+        else if (existingPeminjaman.length !== 0) {
             pinjamAda()
 
         } else if (countPemesanan === 3) {
@@ -190,7 +192,7 @@ const BookDetail = () => {
                         </div>
                         <div className={classes.card}>
                             <div className={classes.cover}>
-                                <img src={`http://localhost:8080${book.gambar_buku}`}></img>
+                                <img src={"../assets/BookCover.png"}></img>
                             </div>
 
                             <div className={classes.book_info}>
@@ -248,7 +250,7 @@ const BookDetail = () => {
             </div>
 
         </div>
-           
+
         </>
     )
 }

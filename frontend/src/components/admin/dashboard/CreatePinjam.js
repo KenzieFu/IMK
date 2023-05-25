@@ -2,6 +2,7 @@ import React, {Suspense, useState} from 'react';
 import { Await, Form, Link, defer, json, redirect, useActionData, useLoaderData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 import Select from 'react-select';
+import classes from '../../../pages/Admin/adminbatch.module.css';
 
 export const CreatePinjam = () => {
   const {daftarBuku, daftarSiswa} = useLoaderData('create-pinjam')
@@ -67,10 +68,11 @@ export const CreatePinjam = () => {
 
   return (
     <>
-      <h2>Create Pinjam</h2>
-        <Form onSubmit={handleCreate}>
+        <Form onSubmit={handleCreate}  className={classes['form']}>
+          <h2 className={classes['judul1']}>Create Pinjam</h2>
+          <div className={classes['form-grup']}>
         <FormGroup>
-          <Label for="exampleBook">Judul Buku</Label>
+          <Label className={classes['label']} for="exampleBook">Judul Buku</Label>
           <Suspense fallback="Loading...">
       <Await resolve={daftarBuku}>
         {(bukuData) => (
@@ -80,7 +82,7 @@ export const CreatePinjam = () => {
     </Suspense>
         </FormGroup>
         <FormGroup>
-          <Label for="examplePengarang">Nama Siswa</Label>
+          <Label className={classes['label']} for="examplePengarang">Nama Siswa</Label>
           <Suspense fallback="Loading...">
       <Await resolve={daftarSiswa}>
         {(siswaData) => (
@@ -89,8 +91,11 @@ export const CreatePinjam = () => {
       </Await>
     </Suspense>
         </FormGroup>
-          <Button onClick={backHandler}>Cancel</Button>
-          <Button style={{ background:"green" }} type="submit">Save</Button>
+        </div>
+        <div className={classes['batchbut1']}>
+          <Button onClick={backHandler} className={classes['delbut']}>Cancel</Button>
+          <Button type="submit" className={classes['savbut']}>Simpan</Button>
+        </div>
       </Form>
     </>
   )

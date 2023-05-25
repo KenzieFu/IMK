@@ -9,37 +9,37 @@ const navigation = [
     icon: "bi bi-speedometer2",
   },
   {
-    title: "User",
+    title: "Akun",
     href:"/admin/user",
     icon:"bi bi-person"
   },
   {
-    title:"Student",
+    title:"Siswa",
     href:"/admin/students",
     icon:"bi bi-person"
   },
   {
-    title:"Books",
+    title:"Buku",
     href:"/admin/books",
     icon:"bi bi-book"
   },
   {
-    title:"Borrowed Books",
+    title:"Peminjaman Buku",
     href:"/admin/borrowed-books",
     icon:"bi  bi-book text-danger"
   },
   {
-    title:"Returned Books",
+    title:"Pengembalian Buku",
     href:"/admin/returned-books",
     icon:"bi  bi-book text-primary"
   },
   {
-    title:"Events",
+    title:"Kalender",
     href:"/admin/calender",
     icon:"bi bi-calendar-event text-primary"
   },
   {
-    title:"Booking",
+    title:"Pemesanan Buku",
     href:"/admin/booked-books",
     icon:"bi bi-book"
   },
@@ -49,7 +49,7 @@ const navigation = [
     icon:"bi bi-calendar-event text-primary"
   },
   {
-    title: "History",
+    title: "Histori",
     icon: "bi bi-journals",
     dropdown: [
       {

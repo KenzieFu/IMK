@@ -160,17 +160,19 @@ export const DaftarBukuPinjamPage = () => {
   ];
   return (
     <>
-      <div className="search-button">
-        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className="action-filter">
-          Pencarian Lebih Lanjut
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
         </Button>
       </div>
       {advanceSearch && (
         <>
-          <div className="dropdown-pinjam">
+          <div className={classes["downdown"]}>
             <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-              <DropdownToggle caret className="dropdown-toggle-search">
-                Tampilkan Berdasarkan Nama Siswa atau Judul Buku 
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by <i class="fa fa-filter" aria-hidden="true"></i>
               </DropdownToggle>
               <DropdownMenu>
                 {/* <DropdownItem
@@ -188,13 +190,13 @@ export const DaftarBukuPinjamPage = () => {
                 <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
                   Judul Buku
                 </DropdownItem>
-              </DropdownMenu>
+                {/* </DropdownMenu>
             </Dropdown>
             <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
               <DropdownToggle caret className="dropdown-toggle-search">
-                Tampilkan Berdasarkan Rentang Tanggal 
+                Tampilkan Berdasarkan Rentang Tanggal
               </DropdownToggle>
-              <DropdownMenu>
+              <DropdownMenu> */}
                 {/* <DropdownItem
                   onClick={() => {
                     setSearchBasedDate("");
@@ -206,10 +208,10 @@ export const DaftarBukuPinjamPage = () => {
                   Tanpa rentang tanggal
                 </DropdownItem> */}
                 <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
-               Rentang Tanggal Peminjaman
+                  Rentang Tanggal Pinjam
                 </DropdownItem>
                 <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
-               Rentang Tanggal Pengembalian
+                  Rentang Tanggal kembali
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -231,10 +233,10 @@ export const DaftarBukuPinjamPage = () => {
           {(loadedData) => (
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <h2 className="data-table-header">Tabel Peminjaman</h2>
-                  <Link to="create" className="button-create">
-                    <i class="bi bi-person-plus"> Tambah Peminjaman</i>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Peminjaman</h1>
+                  <Link to="create" className={classes["buttoncreate"]}>
+                    <i class="bi bi-book"> Tambah Peminjaman</i>
                   </Link>
                 </div>
               }

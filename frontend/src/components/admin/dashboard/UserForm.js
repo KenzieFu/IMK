@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
-
+import classes from '../../../pages/Admin/adminbatch.module.css';
 
 
 function UserForm({method,user}) {
@@ -12,11 +12,12 @@ function UserForm({method,user}) {
   }
   return (
     <>
-      <Form method={method}>
-              <h2>Id Akun : {user.id_akun}</h2>
+      <Form method={method} className={classes['form']}>
+              <h2 className={classes['judul1']}>Id Akun : {user.id_akun}</h2>
               <input hidden name='id_akun' value={user.id_akun} />
+              <div className={classes['from-grup']}>
               <FormGroup>
-                <Label for="exampleUser">Username</Label>
+                <Label className={classes['label']} for="exampleUser">Username</Label>
                 <Input
                   defaultValue={user.username??null}
                   id="exampleUser"
@@ -26,7 +27,7 @@ function UserForm({method,user}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="examplePassword">Password</Label>
+                <Label className={classes['label']} for="examplePassword">Password</Label>
                 <Input
                   defaultValue={user.password??null}
                   value={user.password??null}
@@ -38,8 +39,8 @@ function UserForm({method,user}) {
               </FormGroup>
       
               <FormGroup>
-                <Label for="hak_akses">Hak Akses</Label>
-                <Input id="hak_akses" name="hak_akses" value={user.hak_akses} type="select">
+                <Label className={classes['label']} for="hak_akses">Hak Akses</Label>
+                <Input  id="hak_akses" name="hak_akses" value={user.hak_akses} type="select">
                 
                 <option  value="Siswa">Siswa</option>
                   <option  value="Admin">Admin</option>
@@ -47,9 +48,11 @@ function UserForm({method,user}) {
                   <option  value="Petugas">Petugas</option>
                 </Input>
               </FormGroup>
-              <Button onClick={backHandler}>Cancel</Button>
-              <Button style={{ background:"green" }}>Save</Button>
-              
+              </div>
+              <div className={classes['batchbut1']}>
+              <Button onClick={backHandler} className={classes['delbut']}>Cancel</Button>
+              <Button className={classes['savbut']}>Save</Button>
+              </div>
             </Form>
     </>
   );

@@ -68,7 +68,7 @@ export default function Cart(props) {
 
     const [hidden, setHidden] = React.useState(false)
 
-    const bookingHandler = async () => {
+    const bookingHandler = async (onClose) => {
 
 
 
@@ -77,6 +77,8 @@ export default function Cart(props) {
         try {
             if (isEmpty) {
                 navigate('library')
+                onClose()
+
 
             } else {
                 let bukuId = []

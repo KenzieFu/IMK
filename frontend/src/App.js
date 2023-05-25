@@ -189,7 +189,7 @@ const studentId=useSelector(state=>state.auth.user)
         loader:userCalenderLoader,
         children:[
           {index:true,
-           element:<StudentAuth><EventPage/></StudentAuth>,
+           element:<StudentAuth><CartProvider><EventPage/></CartProvider></StudentAuth>,
            action:eventAction}
         ]}
       ]
