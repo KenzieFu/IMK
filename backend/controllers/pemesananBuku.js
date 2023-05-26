@@ -5,12 +5,17 @@ const Siswa = require("../models/siswa");
 const Peminjaman = require("../models/peminjaman");
 const dayjs = require("dayjs");
 const BukuPerpus = require("../models/bukuPerpus");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const Pengembalian = require("../models/pengembalian");
 
 // Function untuk menampilkan pemesanan buku berdasarkan user yang login
 exports.getPemesananBukuByUser = async function (req, res, next) {
   try {
+      //Check id
+
+
+
+
     // ditabel pemesanan buku join ke tabel buku dan siswa
     const pemesananBuku = await PemesananBuku.findAll({
       where: {
@@ -62,20 +67,60 @@ exports.getPemesananBukuByUser = async function (req, res, next) {
 
 // Function untuk menambahkan pemesanan buku dengan bangak buku sekaligus
 exports.createPemesananBukuMultiple = async function (req, res, next) {
+  const { id_siswa, id_buku } = req.body;
+  const peminjaman = await Peminjaman.findAll({
+    where: {
+      id_siswa: id_siswa,
+    },
+    include: [
+      {
+        model: Buku,
+        as: "buku",
+        include: [{ model: Kategori }],
+      },
+      {
+        model: Siswa,
+        as: "siswa",
+      },
+    ],
+  });
+  // filter peminjaman yang belum selesai dengan mencek jika id_peminjaman belum ada ditabel pengembalian
+  const idPeminjaman = peminjaman.map((p) => p.id_peminjaman);
+  const pengembalian = await Pengembalian.findAll({
+    where: {
+      id_peminjaman: {
+        [Op.in]: idPeminjaman,
+      },
+    },
+  });
+  const idPeminjamanSelesai = pengembalian.map((p) => p.id_peminjaman);
+  const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
   // contoh data yang dikirimkan dalam json
   // {
   //   "id_siswa": 2,
   //   "id_buku": [2, 3]
   // }
 
-  const { id_siswa, id_buku } = req.body;
+  
   // cek dulu id_siswa kalau ada 3 data di tabel peminjaman buku dengan id_siswa yang sama maka tidak bisa melakukan pemesanan
-  const peminjamanBukuData = await Peminjaman.findAll({ where: { id_siswa: id_siswa } });
-  const sisaBukuDapatDipesan = 3 - peminjamanBukuData.length;
-  if (sisaBukuDapatDipesan === 0) {
+/*   const peminjamanBukuData = await Peminjaman.findAll({ where: { id_siswa: id_siswa } }); */
+const pemesananUser = await PemesananBuku.findAll({where:{id_siswa:id_siswa}});
+  const sisaBukuDapatDipesan =( 3 - peminjamanBelumSelesai.length -pemesananUser.length) -id_buku.length;
+  console.log(id_buku.length)
+  console.log(peminjamanBelumSelesai.length)
+  console.log(pemesananUser.length)
+ 
+
+  if (sisaBukuDapatDipesan < 0) {
+    console.log("Buku sudah MAXXXX")
     // tambilkan banyak sisa buku yang dapat dipesan
     return res.status(500).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
   }
+/*   const pemesananBuku= await PemesananBuku.findAll({where:{id_siswa:id_siswa,id_buku:id_buku}})
+  if(pemesananBuku.length)
+  {
+    return res.status(501).json({data:pemesananBuku});
+  } */
   // cek ditabel peminjaman dengan id_buku tidak boleh pinjam buku yang sama
   if (id_buku === undefined) {
     return res.status(400).json({ message: "Buku tidak ditemukan" });

@@ -50,8 +50,8 @@ function UserForm({method,user}) {
               </FormGroup>
               </div>
               <div className={classes['batchbut1']}>
-              <Button onClick={backHandler} className={classes['delbut']}>Cancel</Button>
-              <Button className={classes['savbut']}>Save</Button>
+              <Button onClick={backHandler} className={classes['delbut']}>Batalkan</Button>
+              <Button className={classes['savbut']}>Simpan</Button>
               </div>
             </Form>
     </>

@@ -42,7 +42,7 @@ export const StudentPage = () => {
 
 
 
-  const { pinjam, kembali, booking } = useLoaderData("pinjam-kembali-booking-buku")
+  const { pinjam, kembali, booking,count } = useLoaderData("pinjam-kembali-booking-buku")
   console.log(booking)
   /* const CekKembali = kembali.filter(item => item.id_siswa === akun.user.id_siswa); */
   const CekBooking = booking.filter(item => item?.id_siswa === akun.user?.id_siswa);
@@ -57,7 +57,12 @@ export const StudentPage = () => {
 
       <Sidebar />
       <div>
-        <StudentChart showPinjam={showPinjam} showKembali={showKembali} showBooking={showBooking} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler} showBookingHandler={bookingHandler} />
+        <Suspense>
+          <Await resolve={count}>
+          {loadedData =><StudentChart count={loadedData} showPinjam={showPinjam} showKembali={showKembali} showBooking={showBooking} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler} showBookingHandler={bookingHandler} />}
+          </Await>
+        </Suspense>
+       
         <div className={classes["list-books"]}>
           {showPinjam && <Suspense fallback={<p>Loading...</p>}>
             <Await resolve={pinjam}>
@@ -157,13 +162,18 @@ const loadBooking = async (id) => {
 export async function loader(id) {
   const data = await loadBorrowed(id);
   const dataB = await loadBooking(id);
-  const peminjamanData = data;
+  const dataR= await loadReturned(id)
+    const count ={
+      countPeminjaman:data.length,
+      countPemesanan :dataB.filter((data)=>data.siswa.id_siswa === id).length,
+    }
   const bookingData = dataB
 
   return defer({
     pinjam: loadBorrowed(id),
-    kembali: loadReturned(id),
-    booking: bookingData,
+    kembali: dataR,
+    booking: dataB,
+    count:count
 
   })
 }
