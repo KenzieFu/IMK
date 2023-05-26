@@ -7,10 +7,30 @@ import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, } from "reactstrap";
 import classes from './adminbatch.module.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { UpdateModal } from "../../components/admin/modals/UpdateModals";
+import { DeleteRame } from "../../components/admin/modals/DeleteRame";
+
+const notifyStatus = () => toast.success('Status para user berhasil diaktifkan!', {
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+});
+
 
 export const UserPage = () => {
+  const navigate=useNavigate();
   const [currentId, setCurrentId] = useState(null);
   const [showDeleteModal, setDeleteModal] = useState(false);
+  const [showDeleteRameModal, setDeleteRameModal] = useState(false);
+  const [showUpdateModal, setUpdateModal] = useState(false);
+  const [showUpdateTModal, setUpdateTModal] = useState(false);
   const { akuns } = useLoaderData("admin-akun");
   const location = useLocation();
   console.log(currentId);
@@ -19,6 +39,10 @@ export const UserPage = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchBased, setSearchBased] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [reloadTable, setReloadTable] = useState(false); // State to trigger table reload
+
+  const [akun, setUser] = useState([])
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -36,6 +60,32 @@ export const UserPage = () => {
     setDeleteModal(false);
     setCurrentId((prev) => prev);
   };
+
+  const showUpModalHandler = () => {
+    setUpdateModal(true);
+
+  };
+  const closeUpModalHandler = () => {
+    setUpdateModal(false);
+
+  };
+  const showUpTdkModalHandler = () => {
+    setUpdateTModal(true);
+
+  };
+  const closeUpTdkModalHandler = () => {
+    setUpdateTModal(false);
+
+  };
+  const showDelRameModalHandler = () => {
+    setDeleteRameModal(true);
+
+  };
+  const closeDelRameModalHandler = () => {
+    setDeleteRameModal(false);
+
+  };
+
 
   const [selectedStatus, setSelectedStatus] = useState([])
   console.log(akuns)
@@ -67,7 +117,8 @@ export const UserPage = () => {
       const deletedData = await response.json();
       console.log('Data deleted:', deletedData);
 
-      selectedStatus([])
+      navigate("/admin/user")
+
     } catch (error) {
       console.error('Error creating data:', error);
     }
@@ -75,40 +126,42 @@ export const UserPage = () => {
 
   const handleCheckAll = () => {
     if (selectedStatus.length === akuns.length) {
-      // If all items are already selected, uncheck all
+
       setSelectedStatus([]);
     } else {
-      // Otherwise, select all items
+
       const allIds = akuns.map((akun) => akun.id_akun);
       setSelectedStatus(allIds);
     }
   };
-
   const handleUpdateStatusAktif = async (id) => {
-
     try {
-
       const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          "Authorization":"Bearer"
+          "Authorization": "Bearer"
         },
         body: JSON.stringify({
           id_akun: id,
           status: "Aktif"
-
         })
       });
 
-      const createdData = await response.json();
-      console.log('Data created:', createdData);
+      const updatedData = await response.json();
+      console.log('Data updated:', updatedData);
 
-      selectedStatus([])
+
+      setSelectedStatus([]);
+
+      notifyStatus();
+
+      navigate("/admin/user")
     } catch (error) {
-      console.error('Error creating data:', error);
+      console.error('Error updating data:', error);
     }
   };
+
 
   const handleUpdateStatusTdkAktif = async (id) => {
 
@@ -131,7 +184,11 @@ export const UserPage = () => {
       console.log('Data created:', createdData);
 
       // Reset the form after successful creation
-      selectedStatus([])
+      setSelectedStatus([]);
+
+      notifyStatus();
+
+      navigate("/admin/user")
 
     } catch (error) {
       console.error('Error creating data:', error);
@@ -324,10 +381,13 @@ export const UserPage = () => {
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {showDeleteRameModal && <DeleteRame onDelete={() =>{handleDeleteBanyak(selectedStatus)}} onClose={closeDelRameModalHandler}/>}
+      {showUpdateModal && <UpdateModal onUpdate={()=>{handleUpdateStatusAktif(selectedStatus)}}  onClose={closeUpModalHandler} />}
+      {showUpdateTModal && <UpdateModal onUpdate ={()=>{handleUpdateStatusTdkAktif(selectedStatus)}} onClose={closeUpTdkModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
-      <Button onClick={()=>handleUpdateStatusAktif(selectedStatus)}>Aktif Akun</Button>
-      <Button onClick={()=>handleUpdateStatusTdkAktif(selectedStatus)}>Non-aktifkan Akun</Button>
-      <Button onClick={()=>handleDeleteBanyak(selectedStatus)}>Hapus Akun</Button>
+      <Button onClick={()=> showUpModalHandler(selectedStatus)}>Aktif Akun</Button>
+      <Button onClick={()=> showUpTdkModalHandler(selectedStatus)}>Non-aktifkan Akun</Button>
+      <Button onClick={()=> showDelRameModalHandler(selectedStatus)}>Hapus Akun</Button>
 
 
 

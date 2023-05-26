@@ -14,14 +14,12 @@ import { useCart } from "react-use-cart";
 import { BookingBuku } from './BookingBuku';
 import { PengembalianBuku } from './PengembalianBuku';
 
-
 export const StudentPage = () => {
   const [showPinjam, setShowPinjam] = useState(true);
   const [showKembali, setShowKembali] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
   const isAuth = useSelector(state => state.auth.isAuth);
   const akun=useSelector(state=>state.auth.user)
-
 
   const pinjamHandler = () => {
     setShowPinjam(true);
@@ -39,8 +37,6 @@ export const StudentPage = () => {
     setShowKembali(false)
     setShowPinjam(false);
   }
-
-
 
   const { pinjam, kembali, booking } = useLoaderData("pinjam-kembali-booking-buku")
   console.log(booking)
@@ -69,7 +65,6 @@ export const StudentPage = () => {
               <Await resolve={kembali}>
               {loadedData=><PengembalianBuku books={loadedData} />}
               </Await>
-            
 
           </Suspense>}
 
@@ -115,7 +110,7 @@ const loadReturned = async (id) => {
     const resData = await response.json();
     console.log(resData)
     return resData;
-  
+
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
 const loadBorrowed = async (id) => {

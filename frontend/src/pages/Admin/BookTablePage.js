@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState} from "react";
 import DataTable, { memoize } from "react-data-table-component";
 import { DeleteModal } from "../../components/admin/modals/DeleteModal";
 import { memo } from "react";
@@ -7,7 +7,21 @@ import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import classes from "./adminbatch.module.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { DeleteRame } from "../../components/admin/modals/DeleteRame";
 
+
+const notifyStatus = () => toast.success('Status para user berhasil diaktifkan!', {
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+});
 export const BookTablePage = () => {
   const mapKategoriToOptions = (bukuData) => {
     const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
@@ -22,13 +36,20 @@ export const BookTablePage = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
   const { books } = useLoaderData("admin-buku");
   const location = useLocation();
+  const navigate=useNavigate();
 
   const [advanceSearch, setAdvanceSearch] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchBased, setSearchBased] = React.useState("");
+  const [showDeleteRameModal, setDeleteRameModal] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const [selectedBook, setSelectedBook] = useState([])
+  const [book, setBooks] = useState([])
+
+  const [reloadTable, setReloadTable] = useState(false); // State to trigger table reload
+
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -41,6 +62,14 @@ export const BookTablePage = () => {
   const closeModalHandler = () => {
     setDeleteModal(false);
     setCurrentId((prev) => prev);
+  };
+  const showDelRameModalHandler = () => {
+    setDeleteRameModal(true);
+
+  };
+  const closeDelRameModalHandler = () => {
+    setDeleteRameModal(false);
+
   };
 
   const handlerSelectedBook=(id)=>{
@@ -79,6 +108,7 @@ export const BookTablePage = () => {
       console.log('Data deleted:', deletedData);
 
       selectedBook([])
+      navigate("/admin/books")
     } catch (error) {
       console.error('Error creating data:', error);
     }
@@ -265,8 +295,9 @@ export const BookTablePage = () => {
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {showDeleteRameModal && <DeleteRame onDelete={() =>{handleDeleteBanyak(selectedBook)}} onClose={closeDelRameModalHandler}/>}
       {location.state && <div>{location.state.message}</div>}
-      <Button onClick={()=>handleDeleteBanyak(selectedBook)}>Hapus Akun</Button>
+      <Button onClick={()=>showDelRameModalHandler(selectedBook)}>Hapus Akun</Button>
 
     </>
   );

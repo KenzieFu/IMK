@@ -7,13 +7,17 @@ import { set } from "react-hook-form";
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 import classes from './adminbatch.module.css'
+import { DeleteRame } from "../../components/admin/modals/DeleteRame";
+
 
 export const StudentPage = () => {
   const [currentId, setCurrentId] = useState(null);
   const [showDeleteModal, setDeleteModal] = useState(false);
+  const [showDeleteRameModal, setDeleteRameModal] = useState(false);
   const { students } = useLoaderData("admin-siswa");
   const location = useLocation();
   console.log(currentId);
+  const navigate=useNavigate();
 
   const showModalHandler = (id) => {
     setDeleteModal(true);
@@ -22,6 +26,15 @@ export const StudentPage = () => {
   const closeModalHandler = () => {
     setDeleteModal(false);
     setCurrentId((prev) => prev);
+  };
+
+  const showDelRameModalHandler = () => {
+    setDeleteRameModal(true);
+
+  };
+  const closeDelRameModalHandler = () => {
+    setDeleteRameModal(false);
+
   };
   const [selectedSiswa, setSelectedSiswa] = useState([])
 
@@ -61,6 +74,7 @@ export const StudentPage = () => {
       console.log('Data deleted:', deletedData);
 
       selectedSiswa([])
+      navigate("/admin/students")
     } catch (error) {
       console.error('Error creating data:', error);
     }
@@ -310,8 +324,9 @@ export const StudentPage = () => {
         </Await>
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {showDeleteRameModal && <DeleteRame onDelete={() =>{handleDeleteBanyak(selectedSiswa)}} onClose={closeDelRameModalHandler}/>}
       {location.state && <div>{location.state.message}</div>}
-      <Button onClick={()=>handleDeleteBanyak(selectedSiswa)}>Hapus Siswa</Button>
+      <Button onClick={()=>showDelRameModalHandler(selectedSiswa)}>Hapus Siswa</Button>
 
     </>
   );
