@@ -12,7 +12,7 @@ export const BookKembali = ({book}) => {
         <div style={{ marginLeft:"50px", display:"flex",padding:'35px' }}>
             <img sty width="150px" height="210" src="./assets/book.png" alt="" />
             <div className={classes["book-info"]} id='book-info'>
-                <span className={classes["due-date"]}>{book.pengembalian.status}</span>
+                <span className={classes["due-date"]}>{book.pengembalian?.status}</span>
                 <div style={{ display:"flex",justifyContent:"space-between", alignItems:"center",marginBottom:"0",paddingBottom:"0" }}>
                   <div>
                   <h1 className={classes["book-info_h1"]}>{book.buku.judul_Buku}</h1>

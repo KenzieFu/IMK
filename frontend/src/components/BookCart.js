@@ -65,6 +65,17 @@ export default function Cart(props) {
         progress: undefined,
         theme: "colored",
     });
+    const cartPeminjamanMax = () => toast.warning("Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar"
+    , {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
 
     const [hidden, setHidden] = React.useState(false)
 
@@ -100,6 +111,13 @@ export default function Cart(props) {
                     },
                     body: JSON.stringify(tes)
                 });
+
+                if(response.status === 500)
+                {
+                    cartPeminjamanMax()
+                    emptyCart()
+                    return
+                }
 
                 console.log(tes)
                 const createdData = await response.json();

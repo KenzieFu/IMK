@@ -7,11 +7,12 @@ export const PengembalianBuku = ({books}) => {
     //     return<>
     //     <p>Belum ada buku yang kamu kembalikan</p>
     //     </>
+    const filter = books.filter(item=>item.pengembalian!=null)
     // }
 
   return (
     <>
-       {books.map((book)=>
+       {filter.map((book)=>
         <BookKembali book={book}/>
        )}
     </>

@@ -137,7 +137,7 @@ exports.getPeminjamanByUser = async function (req, res, next) {
   try {
     const peminjaman = await Peminjaman.findAll({
       where: {
-        id_siswa: 2,
+        id_siswa: req.params.idSiswa,
       },
       include: [
         {
