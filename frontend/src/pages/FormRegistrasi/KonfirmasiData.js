@@ -9,8 +9,21 @@ import ConfirmModal from "./modal/confirm_submit";
 import { useState } from "react";
 import SubmittedModal from "./modal/submited_modal";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const KonfirmasiData = () => {
+
+    const notify = () => toast.success('Data calon siswa telah disubmit!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
 
     const {state} = useAppState();
     const { steps } = useAppState();
@@ -30,7 +43,7 @@ export const KonfirmasiData = () => {
     setShowConfirm(true);
   }
 
-  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/siswa';
+  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/calon-siswa';
 
  const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -56,19 +69,82 @@ export const KonfirmasiData = () => {
                 "Authorization":"Bearer"
               },
               body: JSON.stringify({
-                id_siswa: '999',
-              /*   id_akun: "1232", */
-                nisn: state.nisn,
-                nama_lengkap: state.nama_siswa,
-                jenis_kelamin: state.kelamin,
-                tanggal_lahir: state.tglLahir,
+                dataCalonSiswa: {
+
+                nama_calon: state.nama_siswa,
+                nik_calon: state.nik_siswa,
+                no_akte_lahir: state.no_akteLahir,
                 tempat_lahir: state.tptLahir,
-                kelas: state.diterima,
-                agama: state.agama,
+                tanggal_lahir: state.tglLahir,
                 alamat: state.alamat_rumah,
-                nomor_telepon: state.no_HP_siswa,
+                gender: state.kelamin,
+                agama: state.agama,
+                warga_negara: state.warga_negara,
+                anak_ke: state.anak_ke,
+                jlh_saudara_kandung: state.jmlh_saudara,
+                no_hp: state.no_HP_siswa,
                 email: state.email_siswa,
-               })
+            },
+            dataOrtuAyah: {
+                tipe: "Ayah",
+                nama_lengkap: state.nama_ayah,
+                nik: state.nik_ayah,
+                tempat_lahir: state.tpt_lahir_ayah,
+                tanggal_lahir: state.tgl_lahir_ayah,
+                agama: state.agama_ayah,
+                pendidikan_terakhir: state.pendidikan_ayah,
+                pekerjaan: state.pekerjaan_ayah,
+                penghasilan_per_bulan: state.penghasilan_ayah,
+                alamat: state.alamat_rumah,
+                no_hp: state.no_HP_ayah,
+                email: state.email_ayah,
+                status:state.status_ayah
+            },
+            dataOrtuIbu: {
+                tipe: "Ibu",
+                nama_lengkap: state.nama_ibu,
+                nik: state.nik_ibu,
+                tempat_lahir: state.tpt_lahir_ibu,
+                tanggal_lahir: state.tgl_lahir_ibu,
+                agama: state.agama_ibu,
+                pendidikan_terakhir: state.pendidikan_ibu,
+                pekerjaan: state.pekerjaan_ibu,
+                penghasilan_per_bulan: state.penghasilan_ibu,
+                alamat: state.alamat_rumah,
+                no_hp: state.no_HP_ibu,
+                email: state.email_ibu,
+                status:state.status_ibu
+            },
+            dataOrtuWali: {
+                tipe: "Wali",
+                nama_lengkap: state.nama_wali,
+                nik: state.nik_wali,
+                tempat_lahir: state.tpt_lahir_wali,
+                tanggal_lahir: state.tgl_lahir_wali,
+                agama: state.agama_wali,
+                pendidikan_terakhir: state.pendidikan_wali,
+                pekerjaan: state.pekerjaan_wali,
+                penghasilan_per_bulan: state.penghasilan_wali,
+                alamat: state.alamat_rumah,
+                no_hp: state.no_HP_wali,
+                email: state.email_wali,
+            },
+            keteranganKesehatan: {
+                golongan_darah: state.goldar,
+                berat_badan: state.berat_badan,
+                tinggi_badan: state.tinggi_badan,
+                penyakit_dulu: state.penyakit,
+                cacat_jasmani: state.cacat_jasmani
+            },
+            keteranganPendidikan: {
+                nisn: state.nisn,
+                nama_sekolah_sebelumnya: state.sklh_lama,
+                diterima_di_kelas: state.diterima,
+                no_ijazah: state.no_ijazah,
+                tgl_ijazah: state.tgl_ijazah
+            }
+
+        })
 
             });
 

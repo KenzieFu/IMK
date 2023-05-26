@@ -13,7 +13,6 @@ import { QRCodeBox } from '../components/QRcode/QRCodeBox';
 import { BookingBuku } from './BookingBuku';
 import { PengembalianBuku } from './PengembalianBuku';
 
-
 export const StudentPage = () => {
   const [showPinjam, setShowPinjam] = useState(true);
   const [showKembali, setShowKembali] = useState(false);
@@ -72,7 +71,7 @@ const renderHandler=()=>{
           {loadedData =><StudentChart count={loadedData} showPinjam={showPinjam} showKembali={showKembali} showBooking={showBooking} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler} showBookingHandler={bookingHandler} />}
           </Await>
         </Suspense>
-       
+
         <div className={classes["list-books"]}>
           {showPinjam && <Suspense fallback={<p>Loading...</p>}>
             <Await resolve={pinjam}>
@@ -84,7 +83,6 @@ const renderHandler=()=>{
               <Await resolve={kembali}>
               {loadedData=><PengembalianBuku books={loadedData} />}
               </Await>
-            
 
           </Suspense>}
 
@@ -130,7 +128,7 @@ const loadReturned = async (id) => {
     const resData = await response.json();
     console.log(resData)
     return resData;
-  
+
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
 const loadBorrowed = async (id) => {

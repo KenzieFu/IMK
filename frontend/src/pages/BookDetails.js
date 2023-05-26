@@ -13,7 +13,6 @@ import Modal from "../UI/Modal";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const BookDetail = () => {
 
     const notify = () => toast.success('Buku berhasil ditambahkan ke booking list!', {
@@ -117,14 +116,14 @@ const BookDetail = () => {
     const backHandler = () => {
         navigate("..");
     }
-    
 
-    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
-    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
+
+    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user?.id_siswa);
+    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user?.id_siswa);
     console.log(existingPemesanan)
-    const countPemesanan = pemesanan.filter(item => item.id_siswa === akun.user.id_siswa).length
+    const countPemesanan = pemesanan.filter(item => item.id_siswa === akun.user?.id_siswa).length
 
-    const countPeminjaman = peminjaman.filter(item => item.id_siswa === akun.user.id_siswa).length
+    const countPeminjaman = peminjaman.filter(item => item.id_siswa === akun.user?.id_siswa).length
 
     console.log(pemesanan)
     console.log(peminjaman)

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from "react-router-dom";
 import axios from "axios"
+// import { useFormik } from "formik";
+// import * as Yup from "yup";
 import { Button, FormGroup, FormText, Input, Label } from "reactstrap";
 import classes from './adminbatch.module.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const CreateBuku = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +20,38 @@ export const CreateBuku = () => {
     gambar_buku: null,
     isbn: "",
   });
+
+  const notify = () => toast.success('Buku berhasil ditambahkan', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+});
+
+  // const formik = useFormik({
+  //   initialValues: {
+  //     judul_buku: "",
+  //     pengarang: "",
+  //     penerbit: "",
+  //     tahun_terbit: "",
+  //     sinopsis: "",
+  //     gambar_buku: null,
+  //     isbn: "",
+  //   }
+  // })
+
+  // validationSchema: Yup.object({
+  //   judul_buku: Yup.string().required("Judul harus diisi"),
+  //   pengarang: Yup.string().required("Nama pengarang harus diisi"),
+  //   penerbit: Yup.string().required("Nama penerbit harus diisi"),
+  //   tahun_terbit: Yup.string().min(4, "Tahun terbit tidak boleh kurang dari 4 digit").max(4, "Tahun terbit tidak boleh lebih dari 4 digit").required("Data harus diisi"),
+  //   sinopsis: Yup.string().required("Data harus diisi"),
+  //   isbn: Yup.string().required("Data harus diisi")
+  // })
 
   const [kategori, setKategori] = useState([]);
 
@@ -124,7 +160,6 @@ export const CreateBuku = () => {
       }); 
       // console.log semua data yang dikirimkan
 
-      alert("Form submitted successfully!");
       setFormData({
             id_buku: '',
             judul_buku: '',
@@ -154,12 +189,12 @@ export const CreateBuku = () => {
       <div className={classes['form-grup']}>
         <FormGroup>
           <Label className={classes['label']} for="exampleBook">judul Buku</Label>
-          <Input className={classes['input']} id="exampleBook" name="judul_buku" placeholder="Masukkan judul Buku" type="text" onChange={handleInputChange} />
+          <Input className={classes['input']} id="exampleBook" name="judul_buku" placeholder="Masukkan judul Buku" type="text" value={formData.judul_buku}  onChange={handleInputChange} />
           {/* {errors.judul_buku && <span>{errors.judul_buku.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label className={classes['label']} for="examplePengarang">Pengarang</Label>
-          <Input className={classes['input']} id="examplePengarang" name="pengarang" placeholder="Masukkan Nama Pengarang" type="text" onChange={handleInputChange} />
+          <Input className={classes['input']} id="examplePengarang" name="pengarang" placeholder="Masukkan Nama Pengarang" type="text" value={formData.pengarang} onChange={handleInputChange} />
           {/* {errors.pengarang && <span>{errors.pengarang.message}</span>} */}
         </FormGroup>
         <FormGroup>
@@ -171,12 +206,13 @@ export const CreateBuku = () => {
             type="text"
             onChange={handleInputChange}
             className={classes['input']}
+            value={formData.penerbit}
           />
           {/* {errors.penerbit && <span>{errors.penerbit.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label className={classes['label']} for="tahun_terbit">Tahun Terbit</Label>
-          <Input className={classes['input']} id="tahun_terbit" name="tahun_terbit" placeholder="Tahun tebrit" type="text" onChange={handleInputChange} />
+          <Input className={classes['input']} id="tahun_terbit" name="tahun_terbit" placeholder="Tahun tebrit" type="text" value={formData.tahun_terbit}  onChange={handleInputChange} />
           {/* {errors.tahun_terbit && <span>{errors.tahun_terbit.message}</span>} */}
         </FormGroup>
         <FormGroup>
@@ -200,18 +236,18 @@ export const CreateBuku = () => {
 
         <FormGroup>
           <Label className={classes['label']} for="sinopsis">Sinopsis</Label>
-          <Input  id="sinopsis" name="sinopsis" placeholder="Silahkan Tulis Sinopsis Secara Singkat" type="textarea" rows={10} cols={10} onChange={handleInputChange} />
+          <Input  id="sinopsis" name="sinopsis" placeholder="Silahkan Tulis Sinopsis Secara Singkat" value={formData.sinopsis} type="textarea" rows={10} cols={10} onChange={handleInputChange} />
           {/* {errors.sinopsis && <span>{errors.sinopsis.message}</span>} */}
         </FormGroup>
         <FormGroup>
           <Label className={classes['label']} for="exampleIsbn">ISBN</Label>
-          <Input className={classes['input']} id="exampleIsbn" name="isbn" placeholder="ISBN Buku" type="text" onChange={handleInputChange} />
+          <Input className={classes['input']} id="exampleIsbn" name="isbn" placeholder="ISBN Buku" type="text" value={formData.isbn} onChange={handleInputChange} />
           {/* {errors.isbn && <span>{errors.isbn.message}</span>} */}
         </FormGroup>
         </div>
         <div className={classes['batchbut1']}>
         <Button onClick={backHandler} className={classes['delbut']}>Cancel</Button>
-        <Button className={classes['savbut']} type="submit">
+        <Button className={classes['savbut']} type="submit" onClick={notify}>
           Simpan
         </Button>
         </div>
