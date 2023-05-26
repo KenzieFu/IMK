@@ -1,8 +1,22 @@
 import Modal from '../../../UI/Modal'
 import React from 'react'
 import { Form, json, redirect, useLocation, useNavigate, useNavigation, useSubmit } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import classes from '../../../pages/Admin/adminbatch.module.css';
 
+const notifyDelete = () => toast.success('Berhasil menghapus data!', {
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+});
 export const DeleteModal = (props) => {
   const location=useLocation();
   const navigate=useNavigate();
@@ -15,6 +29,7 @@ const startDeleteHandler=async(e)=>{
 
   submit(e.currentTarget,{method:"delete"});
   props.onClose();
+  notifyDelete()
 
 }
 
@@ -30,7 +45,6 @@ const startDeleteHandler=async(e)=>{
            </div>
             </div>
          </Form>
-
 
     </Modal>
   )

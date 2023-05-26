@@ -59,7 +59,7 @@ import { loader as adminBookLoader } from "./pages/Admin/DetailBuku";
 
 //Students
 import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
-
+import { loader as studentDetailLoader } from "./pages/Admin/DetailStudentPage"
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
 import { loader as adminPinjamDetailLoader } from "./pages/Admin/DetailPinjam";
@@ -286,10 +286,11 @@ const studentId=useSelector(state=>state.auth.user)
              {
               path:":idSiswa",
               id:"detail-siswa",
+              loader:studentDetailLoader,
               children:[
                 {
                   index:true,
-                  element:<DetailStudentPage/>
+                  element:<DetailStudentPage/>,
                 },
                 {
                   path:"edit",

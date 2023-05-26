@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
-import classes from '../../../pages/Admin/adminbatch.module.css';
+
 
 
 function BookForm({method,book}) {
@@ -26,7 +26,7 @@ function BookForm({method,book}) {
       const data2 = await response2.json();
 
       const optionsData = mergeOptions(data1, data2);
-      setKategori(data2);
+      setKategori(optionsData);
     } catch (error) {
       console.error('Error fetching options:', error);
     }
@@ -41,13 +41,11 @@ function BookForm({method,book}) {
 
   return (
     <>
-      <Form method={method} className={classes['form']}>
-              <h2 className={classes['judul1']}>Edit Buku</h2>
-              <h2 hidden>Id Buku : {book.id_buku}</h2>
+      <Form method={method}>
+              <h2>Id Buku : {book.id_buku}</h2>
               <input hidden name='id_buku' value={book.id_buku} />
-              <div className={classes['form-grup']}>
-              <FormGroup >
-                <Label className={classes['label']} for="exampleBook">Judul Buku</Label>
+              <FormGroup>
+                <Label for="exampleBook">Judul Buku</Label>
                 <Input
                   defaultValue={book.judul_buku??null}
                   id="exampleBook"
@@ -57,7 +55,7 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className={classes['label']} for="examplePengarang">Pengarang</Label>
+                <Label for="examplePengarang">Pengarang</Label>
                 <Input
                   defaultValue={book.pengarang??null}
                   value={book.pengarang??null}
@@ -68,7 +66,7 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className={classes['label']} for="examplePenerbit">Penerbit</Label>
+                <Label for="examplePenerbit">Penerbit</Label>
                 <Input
                   defaultValue={book.penerbit??null}
                   value={book.penerbit??null}
@@ -79,7 +77,7 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className={classes['label']} for="tahunTerbit">Tahun Terbit</Label>
+                <Label for="tahunTerbit">Tahun Terbit</Label>
                 <Input
                   defaultValue={book.tahun_terbit??null}
                   value={book.tahun_terbit??null}
@@ -90,18 +88,18 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className={classes['label']} for="tahunTerbit">Kategori</Label>
-                <select style={{marginLeft: 13, width: 150, height: 30, borderRadius: 3}} value={kategori.nama_kategori}>
-                <option value={kategori.id_kategori}>Pilih Kategori</option>
-                  {kategori.map((kategori) => (
-                    <option key={kategori.nama_kategori} value={kategori.id_kategori}>
-                      {kategori.nama_kategori}
-                    </option>
-                  ))}
+                <Label for="tahunTerbit">Kategori</Label>
+                <select value={kategori.nama_kategori}>
+                  <option value={kategori.nama_kategori} >Pilih Kategori</option>
+                      {kategori.map((kategori) => (
+                      <option key={kategori.id_kategori} value={kategori.nama_kategori}>
+                    {kategori.nama_kategori}
+                  </option>
+              ))}
             </select>
               </FormGroup>
               <FormGroup>
-                <Label className={classes['label']} for="sinopsis">Sinopsis</Label>
+                <Label for="sinopsis">Sinopsis</Label>
                 <Input
                   defaultValue={book.sinopsis??null}
                   value={book.sinopsis??null}
@@ -114,7 +112,7 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className={classes['label']} for="exampleIsbn">ISBN</Label>
+                <Label for="exampleIsbn">ISBN</Label>
                 <Input
                   defaultValue={book.isbn??null}
                   value={book.isbn??null}
@@ -124,12 +122,9 @@ function BookForm({method,book}) {
                   type="text"
                 />
               </FormGroup>
-              </div>
-              
-              <div className={classes['batchbut1']}>
-              <Button onClick={backHandler} className={classes['delbut']}>Batalkan</Button>
-              <Button type='submit' className={classes['savbut']} >Simpan</Button>
-              </div>
+
+              <Button onClick={backHandler}>Cancel</Button>
+              <Button type='submit' style={{ background:"green" }}>Save</Button>
 
             </Form>
     </>
@@ -153,16 +148,13 @@ export async function action({ request, params }) {
     isbn: data.get('isbn'),
   };
 
-  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku';
 
-  if (method === 'PUT') {
     const id = params.bookId;
-    url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id;
-  }
 
 
-  const response = await fetch(url, {
-    method: method,
+
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id, {
+    method: 'put',
     headers: {
       'Content-Type': 'application/json',
       "Authorization":"Bearer"
