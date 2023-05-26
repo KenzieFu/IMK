@@ -30,7 +30,9 @@ exports.deleteBookMultiple = async function (req, res, next) {
 // Function untuk menampilkan daftar banyak buku dipinjam
 exports.getJumlahDipinjam = async function (req, res, next) {
   try {
-    const jumlahDipinjam = await ViewJumlahDipinjamin.findAll();
+    const jumlahDipinjam = await ViewJumlahDipinjamin.findAll({
+      include: Buku,
+    });
     res.json(jumlahDipinjam);
   } catch (error) {
     next(error);
@@ -40,7 +42,9 @@ exports.getJumlahDipinjam = async function (req, res, next) {
 // Function untuk
 exports.getJumlahDipinjamById = async function (req, res, next) {
   try {
-    const jumlahDipinjam = await ViewJumlahDipinjamin.findByPk(req.params.bukuId);
+    const jumlahDipinjam = await ViewJumlahDipinjamin.findByPk(req.params.bukuId, {
+      include: Buku,
+    });
     res.json(jumlahDipinjam);
   } catch (error) {
     next(error);
