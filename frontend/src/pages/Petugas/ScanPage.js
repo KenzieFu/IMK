@@ -14,7 +14,7 @@ export const ScanPage = () => {
 
   return (
    <>
-    <ScanQrBox className={classes['scanqr']} label={"masuk perpustakaan"} showInfo={showInfo} showHandler={showHandler}/>
+    <ScanQrBox className={classes['scanqr']} showInfo={showInfo} showHandler={showHandler}/>
 
     {showInfo && <ErrorModal message={data}  onClose={showHandler}/>}
    </>
