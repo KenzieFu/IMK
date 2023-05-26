@@ -63,7 +63,7 @@ export default UserForm;
 export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
-  
+  console.log("ajnfoaw")
   const akunData = {
     id_akun: data.get('id_akun'),
     username: data.get('username'),
