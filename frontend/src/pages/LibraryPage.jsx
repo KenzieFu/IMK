@@ -14,7 +14,7 @@ import { SearchResult } from '../components/SearchResult'
 
 export const LibraryPage = () => {
   const isAuth=useSelector(state=>state.auth.isAuth);
-  const {books,genres}=useLoaderData('books');
+  const {books,genres,popular}=useLoaderData('books');
   const [currentGenre,setGenre]=useState(0);
 
   const setGenreHandler=(index)=>{
@@ -71,7 +71,7 @@ export const LibraryPage = () => {
       {!check &&
         <>
         <Suspense fallback={<p style={{ textAlign:"center" }}>Loading.....</p>}>
-          <Await resolve={books}>
+          <Await resolve={popular}>
             {(loadedBooks)=><PopularBook books={loadedBooks}/>}
         </Await>
         </Suspense>
@@ -156,8 +156,27 @@ const loadGenre=async ()=>{
   }
 }
 
+const loadPopular=async()=>{
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/jumlah-dipinjam");
+  console.log(response);
+  if(!response.ok)
+  {
+    throw json(
+      { message: 'Could not fetch genres.' },
+      {
+        status: 500,
+      }
+    );
+  }
+
+    const resData=await response.json();
+    return resData;
+
+}
+
 export const loader=()=>{
   return defer({
+    popular:loadPopular(),
     books:loadBooks(),
     genres:loadGenre(),
   })
