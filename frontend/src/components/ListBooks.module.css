@@ -77,7 +77,8 @@
  
  .book-detail h2{
      font-size: 15px;
-     color: black;
+     color: var(--accentblack-light);
+     line-height: 1.7vw;
      margin:3px 0;
  }
  
