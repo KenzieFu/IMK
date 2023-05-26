@@ -74,7 +74,7 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
   const sisaBukuDapatDipesan = 3 - peminjamanBukuData.length;
   if (sisaBukuDapatDipesan === 0) {
     // tambilkan banyak sisa buku yang dapat dipesan
-    return res.status(400).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
+    return res.status(500).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
   }
   // cek ditabel peminjaman dengan id_buku tidak boleh pinjam buku yang sama
   if (id_buku === undefined) {

@@ -192,7 +192,7 @@ const BookDetail = () => {
                         </div>
                         <div className={classes.card}>
                             <div className={classes.cover}>
-                                <img src={"../assets/BookCover.png"}></img>
+                                <img src={`http://localhost:8080${book.gambar_buku}`} className={classes['imagefoto']}></img>
                             </div>
 
                             <div className={classes.book_info}>

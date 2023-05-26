@@ -199,7 +199,7 @@ export const StudentPage = () => {
   return (
     <>
       <div className={classes["search-button"]}>
-        <Input type="text" placeholder="Cari Berdasarkan Nama Siswa" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
           Filter <i class="fa fa-filter" aria-hidden="true"></i>
@@ -237,13 +237,13 @@ export const StudentPage = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "") {
-                  return item;
-                } else if (searchBased === "Nama") {
-                  return item.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "nisn") {
-                  return item.nisn.toString().toLowerCase().includes(searchTerm.toLowerCase());
-                }
+                const keyword=searchTerm.toLowerCase();
+                  return(
+                    String(item.id).includes(keyword) ||
+                    String(item.nisn).includes(keyword) ||
+                    item.nama_lengkap.toLowerCase().includes(keyword)||
+                    item.jenis_kelamin.toLowerCase().includes(keyword)
+                  )
               })}
               columns={columns}
               pagination

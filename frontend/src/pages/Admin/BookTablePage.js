@@ -126,7 +126,7 @@ export const BookTablePage = () => {
   return (
     <>
       <div className={classes["search-button"]}>
-        <Input type="text" placeholder="Cari Berdasarkan Judul Buku" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} /> 
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} /> 
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
           Filter <i class="fa fa-filter" aria-hidden="true"></i>
@@ -180,11 +180,13 @@ export const BookTablePage = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                if (searchBased === "") {
-                  return item.judul_buku.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === item.kategori.nama_kategori) {
-                  return item.judul_buku.toLowerCase().includes(searchTerm.toLowerCase());
-                }
+                  const keyword=searchTerm.toLowerCase()
+                  return(
+                    String(item.id_buku).includes(keyword) ||
+                    item.judul_buku.toLowerCase().includes(keyword) ||
+                    item.pengarang.toLowerCase().includes(keyword) ||
+                    item.nama_kategori.toLowerCase().includes(keyword)
+                  )
               })}
               columns={columns}
               pagination

@@ -111,7 +111,8 @@ app.use(cors(corsOptions));
 app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), async (req, res, next) => {
  
    console.log(req.file);
-   console.log(req.fileS);
+   console.log(req.body)
+   console.log(req.files);
   // bagaimana dapat mengakses req.file.path di sini
 
   // console.log(req.file.path);
@@ -129,7 +130,7 @@ app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), 
     // const gambar_buku = req.file.path;
 
     const book = await Buku.create({
-      id_buku: id_buku,
+     /*  id_buku: id_buku, */
       judul_buku: judul_buku,
       pengarang: pengarang,
       penerbit: penerbit,

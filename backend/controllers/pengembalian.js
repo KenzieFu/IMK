@@ -62,7 +62,7 @@ exports.deletePengembalian = async function (req, res, next) {
 // id_akun diambil dari jwt user : "id_akun"
 exports.getPengembalian = async function (req, res, next) {
   try {
-    const id_siswa = 5;
+    const id_siswa = req.params.idSiswa;
 
     const siswa = await Siswa.findOne({
       where: {

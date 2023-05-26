@@ -105,6 +105,10 @@
     transition:  all .3s ease; 
 }
 
+.imagefoto{
+    width: 15vw;
+}
+
 .cover img {
     height: 35vw;
     width: auto;
