@@ -117,15 +117,17 @@ const BookDetail = () => {
     const backHandler = () => {
         navigate("..");
     }
+    
 
-    const existingPemesanan = pemesanan.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
-    const existingPeminjaman = peminjaman.filter(item => item.id_buku === book.id_buku && item.id_siswa === 3);
+    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
+    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user.id_siswa);
     console.log(existingPemesanan)
-    const countPemesanan = pemesanan.filter(item => item.id_siswa === 3).length
+    const countPemesanan = pemesanan.filter(item => item.id_siswa === akun.user.id_siswa).length
 
-    const countPeminjaman = peminjaman.filter(item => item.id_siswa === 1).length
+    const countPeminjaman = peminjaman.filter(item => item.id_siswa === akun.user.id_siswa).length
 
     console.log(pemesanan)
+    console.log(peminjaman)
 
     const batasBook = countPemesanan + countPeminjaman
 
@@ -133,10 +135,10 @@ const BookDetail = () => {
 
         const existingItem = inCart(book.id_buku)
         console.log(existingItem)
-        if (existingPemesanan.length !== 0) {
+        if (existingPemesanan) {
             bookingAda()
         }
-        else if (existingPeminjaman.length !== 0) {
+        else if (existingPeminjaman) {
             pinjamAda()
 
         } else if (countPemesanan === 3) {
@@ -275,9 +277,28 @@ const loadBook = async (id) => {
 }
 
 
+const loadBorrowed = async (id) => {
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
+    console.log(response);
+    if (!response.ok) {
+      throw json(
+        { message: 'Could not fetch books.' },
+        {
+          status: 500,
+        }
+      );
+    }
+    else {
+      const resData = await response.json();
+     /*  console.log(resData.peminjaman) */
+      return resData;
+    }
+  }
 
-const loadPinjams = async () => {
-    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku-siswa")
+
+
+const loadPesan = async () => {
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/")
     console.log(response);
     if (!response.ok) {
         throw json(
@@ -295,16 +316,16 @@ const loadPinjams = async () => {
 
 export async function loader({ request, params }) {
     const id = params.bookId;
-    const data = await loadPinjams();
-    const peminjamanData = data.peminjaman;
-    const pemesananData = data.pemesananBuku;
+
+    const dataPinjam=await loadBorrowed(id)
+    const peminjamanData = dataPinjam;
 
 
     return defer({
         book: await loadBook(id),
-        daftarBookingDanPemesanan: data,
+       /*  daftarBookingDanPemesanan: data, */
         peminjaman: peminjamanData,
-        pemesanan: pemesananData
+        pemesanan: await loadPesan()
     });
 }
 

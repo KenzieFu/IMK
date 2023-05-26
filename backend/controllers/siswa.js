@@ -6,6 +6,114 @@ const Pengembalian = require("../models/pengembalian");
 const Akun = require("../models/akun");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
+const DataCalonSiswa = require("../models/dataCalonSiswa");
+const DataOrtuWaliCalonSiswa = require("../models/dataOrtuWaliCalonSiswa");
+const KeteranganKesehatanCalonSiswa = require("../models/keteranganKesehatanCalonSiswa");
+const KeteranganPendidikanCalonSiswa = require("../models/keteranganPendidikanCalonSiswa");
+
+// Function untuk create data calon siswa dan tabel terkait
+// cth data yang dikirimkan dalam json
+// {
+//   "dataCalonSiswa": {
+//     "nama_calon": "John Doe",
+//     "nik_calon": 1234567890,
+//     "no_akte_lahir": "12345",
+//     "tempat_lahir": "Jakarta",
+//     "tanggal_lahir": "2005-05-10",
+//     "alamat": "Jl. ABC No. 123",
+//     "gender": "Laki-laki",
+//     "agama": "Islam",
+//     "warga_negara": "Indonesia",
+//     "anak_ke": 2,
+//     "jlh_saudara_kandung": 3,
+//     "no_hp": "081234567890",
+//     "email": "john.doe@example.com"
+//   },
+//   "dataOrtuWali": {
+//     "tipe": "Ayah",
+//     "nama_lengkap": "John Doe Sr.",
+//     "nik": 9876543210,
+//     "tempat_lahir": "Jakarta",
+//     "tanggal_lahir": "1975-03-15",
+//     "agama": "Islam",
+//     "pendidikan_terakhir": "S1",
+//     "pekerjaan": "PNS",
+//     "penghasilan_per_bulan": 10000000,
+//     "alamat": "Jl. XYZ No. 456",
+//     "no_hp": "081234567891",
+//     "email": "john.doe.sr@example.com",
+//     "status": "hidup"
+//   },
+//   "keteranganKesehatan": {
+//     "golongan_darah": "O",
+//     "berat_badan": 60,
+//     "tinggi_badan": 170,
+//     "penyakit_dulu": "Tidak ada penyakit",
+//     "cacat_jasmani": "Tidak ada cacat jasmani"
+//   },
+//   "keteranganPendidikan": {
+//     "nisn": 1234567890,
+//     "nama_sekolah_sebelumnya": "SMP ABC",
+//     "diterima_di_kelas": "X",
+//     "no_ijazah": "1234567",
+//     "tgl_ijazah": "2023-05-20"
+//   }
+// }
+
+exports.createDataCalonSiswa = async function (req, res, next) {
+  const { dataCalonSiswa, dataOrtuAyah, dataOrtuIbu, dataOrtuWali, keteranganKesehatan, keteranganPendidikan } = req.body;
+
+  try {
+    // Create data calon siswa
+    const createdDataCalonSiswa = await DataCalonSiswa.create(dataCalonSiswa);
+
+    // Assign calon siswa ID to related tables
+    const idCalon = createdDataCalonSiswa.id_calon;
+
+    // Create data ortu/wali calon siswa
+    // kondisi : ayah or ibu or wali
+    if (dataOrtuAyah) {
+      const createdDataOrtuAyah = await DataOrtuWaliCalonSiswa.create({
+        ...dataOrtuAyah,
+        id_calon: idCalon,
+        tipe: "Ayah",
+      });
+    } else if (dataOrtuIbu) {
+      const createdDataOrtuIbu = await DataOrtuWaliCalonSiswa.create({
+        ...dataOrtuIbu,
+        id_calon: idCalon,
+        tipe: "Ibu",
+      });
+    } else {
+      const createdDataOrtuWali = await DataOrtuWaliCalonSiswa.create({
+        ...dataOrtuWali,
+        id_calon: idCalon,
+        tipe: "Wali",
+      });
+    }
+
+    // Create keterangan kesehatan calon siswa
+    const createdKeteranganKesehatan = await KeteranganKesehatanCalonSiswa.create({
+      ...keteranganKesehatan,
+      id_calon: idCalon,
+    });
+
+    // Create keterangan pendidikan calon siswa
+    const createdKeteranganPendidikan = await KeteranganPendidikanCalonSiswa.create({
+      ...keteranganPendidikan,
+      id_calon: idCalon,
+    });
+
+    // Response with created data
+    res.json({
+      dataCalonSiswa: createdDataCalonSiswa,
+      keteranganKesehatan: createdKeteranganKesehatan,
+      keteranganPendidikan: createdKeteranganPendidikan,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // Function untuk menghapus data siswa secara multiple
 // misal id_siswa = [1,2,3,4,5]
@@ -157,7 +265,7 @@ exports.getHistoriPeminjaman = (req, res, next) => {
     include: [
       {
         model: Buku,
-        attributes: ["Judul_Buku","pengarang","id_buku",'sinopsis'],
+        attributes: ["Judul_Buku", "pengarang", "id_buku", "sinopsis"],
       },
     ],
   })
@@ -184,25 +292,22 @@ exports.getHistoriPengembalian = (req, res, next) => {
 
   Peminjaman.findAll({
     where: { id_siswa: siswaId },
-    include: [{ model: Buku, attributes: ["Judul_Buku","id_buku","gambar_buku"] }],
+    include: [{ model: Buku, attributes: ["Judul_Buku", "id_buku", "gambar_buku"] }],
   })
     .then((peminjaman) => {
       if (!peminjaman) {
         const error = new Error("Could not find peminjaman.");
         error.statusCode = 404;
         throw error;
-       
       }
       console.log("Peminjaman fetched.");
-      
 
       //   res.status(200).json({ message: "Peminjaman fetched.", peminjaman: peminjaman });
       //   return Pengembalian.findAll({ where: { id_peminjaman: peminjaman[0].id_peminjaman } });
       // mapping semua id_peminjaman
       const id_peminjaman = peminjaman.map((item) => item.id_peminjaman);
       console.log(id_peminjaman);
-      return Pengembalian.findAll({ where: { id_peminjaman: id_peminjaman },
-         });
+      return Pengembalian.findAll({ where: { id_peminjaman: id_peminjaman } });
     })
     .then((pengembalian) => {
       if (!pengembalian) {
@@ -212,9 +317,8 @@ exports.getHistoriPengembalian = (req, res, next) => {
       }
       console.log("Pengembalian fetched.");
       console.log(pengembalian);
-      res.status(200).json({ message: "Pengembalian fetched.",pengembalian:pengembalian  });
+      res.status(200).json({ message: "Pengembalian fetched.", pengembalian: pengembalian });
     })
-
 
     .catch((err) => {
       if (!err.statusCode) {

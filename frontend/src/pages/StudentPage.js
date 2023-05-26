@@ -20,6 +20,7 @@ export const StudentPage = () => {
   const [showKembali, setShowKembali] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
   const isAuth = useSelector(state => state.auth.isAuth);
+  const akun=useSelector(state=>state.auth.user)
 
 
   const pinjamHandler = () => {
@@ -43,8 +44,8 @@ export const StudentPage = () => {
 
   const { pinjam, kembali, booking } = useLoaderData("pinjam-kembali-booking-buku")
   console.log(booking)
-  const CekKembali = kembali.filter(item => item.id_siswa === 1);
-  const CekBooking = booking.filter(item => item.id_siswa === 1);
+  /* const CekKembali = kembali.filter(item => item.id_siswa === akun.user.id_siswa); */
+  const CekBooking = booking.filter(item => item?.id_siswa === akun.user?.id_siswa);
   console.log(CekBooking)
 
   if (!isAuth) {
@@ -65,8 +66,10 @@ export const StudentPage = () => {
           </Suspense>}
 
           {showKembali && <Suspense fallback={<p>Loading...</p>}>
-
-            <PengembalianBuku books={CekKembali} />
+              <Await resolve={kembali}>
+              {loadedData=><PengembalianBuku books={loadedData} />}
+              </Await>
+            
 
           </Suspense>}
 
@@ -89,10 +92,7 @@ export const StudentPage = () => {
             {loadedData => <LatestBook latest={loadedData.filter((book, i, { length }) => i === length - 1)} />}
           </Await>
         </Suspense>
-
       </div>
-
-
     </div>
 
 
@@ -101,7 +101,7 @@ export const StudentPage = () => {
 
 const loadReturned = async (id) => {
 
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/siswa/buku/histori-pengembalian/" + id)
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian/" + id)
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -111,15 +111,15 @@ const loadReturned = async (id) => {
       }
     );
   }
-  else {
+
     const resData = await response.json();
-    console.log(resData.pengembalian)
-    return resData.pengembalian;
-  }
+    console.log(resData)
+    return resData;
+  
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
-const loadBorrowed = async () => {
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian")
+const loadBorrowed = async (id) => {
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -131,8 +131,8 @@ const loadBorrowed = async () => {
   }
   else {
     const resData = await response.json();
-    console.log(resData.peminjaman)
-    return resData.peminjaman;
+   /*  console.log(resData.peminjaman) */
+    return resData;
   }
 }
 
@@ -155,14 +155,14 @@ const loadBooking = async (id) => {
 }
 
 export async function loader(id) {
-  const data = await loadBorrowed();
-  const dataB = await loadBooking();
+  const data = await loadBorrowed(id);
+  const dataB = await loadBooking(id);
   const peminjamanData = data;
   const bookingData = dataB
 
   return defer({
     pinjam: loadBorrowed(id),
-    kembali: peminjamanData,
+    kembali: loadReturned(id),
     booking: bookingData,
 
   })
