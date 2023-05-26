@@ -10,6 +10,103 @@ const DataCalonSiswa = require("../models/dataCalonSiswa");
 const DataOrtuWaliCalonSiswa = require("../models/dataOrtuWaliCalonSiswa");
 const KeteranganKesehatanCalonSiswa = require("../models/keteranganKesehatanCalonSiswa");
 const KeteranganPendidikanCalonSiswa = require("../models/keteranganPendidikanCalonSiswa");
+const bcryptjs = require("bcryptjs");
+const dayjs = require("dayjs");
+
+// Function untuk update status siswa secara multiple dari data calon siswa berdasarkan id_calon
+// cth data yang dikirimkan dalam json
+// { "id_calon": [1,2,3,4,5] }
+// update : status menjadi aktif
+// exports.aktivasiSiswaMultiple = async function (req, res, next) {
+//   try {
+//     // update status siswa
+//     const siswa = await DataCalonSiswa.update(
+//       {
+//         status: req.body.status,
+//       },
+//       {
+//         where: {
+//           id_calon: {
+//             [Op.in]: req.body.id_calon,
+//           },
+//         },
+//       }
+//     );
+//     res.json(siswa);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+// exports.createSiswaFromCalonSiswa = async function (req, res, next) {
+//   const { id_calon } = req.body;
+
+//   try {
+//     // Get data calon siswa berdasarkan id_calon
+//     const dataCalonSiswa = await DataCalonSiswa.findAll({
+//       where: {
+//         id_calon: {
+//           [Op.in]: id_calon,
+//         },
+//       },
+//     });
+
+//     // Create akun siswa dari data siswa
+//     const createdAkunSiswa = await Akun.bulkCreate(
+//       createdSiswa.map((siswa) => {
+//         return {
+//           // id_siswa: siswa.id_siswa,
+//           username: siswa.nisn,
+//           password: bcryptjs.hashSync(siswa.nisn, 8),
+//           role: "Siswa",
+//           status: "Aktif",
+//         };
+//       })
+//     );
+
+//     // ambil semua id_akun yang telah dibuat
+//     const id_akun = createdAkunSiswa.map((akun) => akun.id_akun);
+
+//     // Create siswa dari data calon siswa :
+//     // id_siswa: ID Siswa
+//     // id_akun: ID Akun
+//     // nisn: NISN (Nomor Induk Siswa Nasional)
+//     // nama_lengkap: Nama Lengkap
+//     // jenis_kelamin: Jenis Kelamin
+//     // tanggal_lahir: Tanggal Lahir
+//     // tempat_lahir: Tempat Lahir
+//     // kelas: Kelas
+//     // agama: Agama
+//     // alamat: Alamat
+//     // nomor_telepon: Nomor Telepon
+//     // email: Email
+//     // tahun_masuk: Tahun Masuk (default: 2023)
+//     const createdSiswa = await Siswa.bulkCreate(
+//       dataCalonSiswa.map((data) => {
+//         return {
+//           id_siswa: data.id_calon,
+//           // id_akun: createdSiswa.id_akun,
+//           id_akun: id_akun.shift(),
+//           nisn: data.nisn,
+//           nama_lengkap: data.nama_calon,
+//           jenis_kelamin: data.jenis_kelamin,
+//           tanggal_lahir: data.tanggal_lahir,
+//           tempat_lahir: data.tempat_lahir,
+//           // kelas: data.kelas,
+//           agama: data.agama,
+//           alamat: data.alamat,
+//           nomor_telepon: data.no_hp,
+//           email: data.email,
+//           tahun_masuk: dayjs().year(),
+//         };
+//       })
+//     );
+
+//     res.status(200).json({ message: "Berhasil membuat siswa dari data calon siswa" });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 // Function untuk create data calon siswa dan tabel terkait
 // cth data yang dikirimkan dalam json
@@ -78,13 +175,15 @@ exports.createDataCalonSiswa = async function (req, res, next) {
         id_calon: idCalon,
         tipe: "Ayah",
       });
-    } else if (dataOrtuIbu) {
+    }
+    if (dataOrtuIbu) {
       const createdDataOrtuIbu = await DataOrtuWaliCalonSiswa.create({
         ...dataOrtuIbu,
         id_calon: idCalon,
         tipe: "Ibu",
       });
-    } else {
+    }
+    if (dataOrtuWali) {
       const createdDataOrtuWali = await DataOrtuWaliCalonSiswa.create({
         ...dataOrtuWali,
         id_calon: idCalon,
