@@ -162,17 +162,17 @@ const loadBooking = async (id) => {
 export async function loader(id) {
   const data = await loadBorrowed(id);
   const dataB = await loadBooking(id);
+  const dataR= await loadReturned(id)
     const count ={
       countPeminjaman:data.length,
       countPemesanan :dataB.filter((data)=>data.siswa.id_siswa === id).length,
     }
-  const peminjamanData = data;
   const bookingData = dataB
 
   return defer({
     pinjam: loadBorrowed(id),
-    kembali: loadReturned(id),
-    booking: bookingData,
+    kembali: dataR,
+    booking: dataB,
     count:count
 
   })

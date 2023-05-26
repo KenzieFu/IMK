@@ -129,7 +129,7 @@ export default function Cart(props) {
                 if(response.status === 500)
                 {
                     cartPeminjamanMax()
-                    emptyCart()
+                   
                     return
                 }
                 if(response.status === 501)
@@ -175,7 +175,7 @@ export default function Cart(props) {
                                 <>
                                     <div className={classes['maincontent']} key={item.id} style={{  }}>
                                         <div className={classes['gambarnya']}>
-                                        <img src="../assets/BookCover.png" className={classes['imgall']} />
+                                        <img src={`http://localhost:8080${item.gambar}`} className={classes['imgall']} />
                                         </div>
                                         <div className={classes['tablecon']}>
                                             <table>
