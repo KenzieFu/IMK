@@ -65,6 +65,16 @@ export default function Cart(props) {
         progress: undefined,
         theme: "colored",
     });
+    const bookingAda = () => toast.error('Kamu sudah pesan buku ini! Ayo segera ambil di perpustakaan!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
     const cartPeminjamanMax = () => toast.warning("Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar"
     , {
         position: "top-center",
@@ -101,6 +111,8 @@ export default function Cart(props) {
                     id_siswa: akun.user.id_siswa,
                     id_buku: bukuId
                 }
+
+                const length=bukuId.length +
                 console.log(bukuId)
                 console.log(akun.user.id_siswa)
                 const response = await fetch(url, {
@@ -112,10 +124,21 @@ export default function Cart(props) {
                     body: JSON.stringify(tes)
                 });
 
+                
+
                 if(response.status === 500)
                 {
                     cartPeminjamanMax()
                     emptyCart()
+                    return
+                }
+                if(response.status === 501)
+                {
+                    bookingAda()
+                    //remove item
+                    const resData=await response.data
+                    items.filter(item=>item.id)
+                    emptyCart();
                     return
                 }
 
