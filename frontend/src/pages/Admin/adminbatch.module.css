@@ -4,7 +4,7 @@
     --accentblack:rgb(58, 58, 58);
     --red:#FF5959;
     --addgray:#DBD0C0;
-    --gray:#FAEEE0;
+    --gray:#FAEEE0; 
     --beige:#F9CF93;
     --lbeige:#FAEEE0;
     --green:#4ef441;
@@ -80,6 +80,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    margin-right: 35px;
     font-size: 1.2vw;
     background-color: var(--blue2-light);
     border-radius: 1vw;
@@ -87,6 +88,7 @@
     padding: 0.8vw 1vw;
     transition: all .3s ease;
 }
+
 
 .buttoncreate:hover{
     color: var(--white-light);

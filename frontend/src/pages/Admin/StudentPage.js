@@ -232,7 +232,7 @@ export const StudentPage = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Siswa</h1>
                   <Link to="registrasi/data-pribadi" className={classes["buttoncreate"]}>
-                    <i class="bi bi-person-plus"> Tambah Siswa</i>
+                    <i class="bi bi-person-plus"></i>
                   </Link>
                 </div>
               }
