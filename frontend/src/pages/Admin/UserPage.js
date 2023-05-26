@@ -123,6 +123,7 @@ export const UserPage = () => {
       selector: (row) => <span className={classes['data-rowid']}>{row.id_akun}</span>,
       // selector: (row) => row.id_akun,
       sortable: true,
+      accessor:"id_akun",
       headerStyle: {
         fontWeight: "bold",
         textAlign: "center",
@@ -134,6 +135,7 @@ export const UserPage = () => {
       id: "username",
       name: <span className={classes['data-row']}>Username</span>,
       selector: (row) => <span className={classes['data-row']}>{row.username}</span>,
+      accessor:"username",
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -145,6 +147,7 @@ export const UserPage = () => {
       id: "tipe",
       name: <span className={classes['data-row']}>Hak Akses</span>,
       selector: (row) => <span className={classes['data-row']}> {row.hak_akses}</span>,
+      accessor:"hak_akses",
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -190,7 +193,7 @@ export const UserPage = () => {
   return (
     <>
       <div className={classes["search-button"]}>
-        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
           Filter <i class="fa fa-filter" aria-hidden="true"></i>
@@ -233,6 +236,7 @@ export const UserPage = () => {
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
+<<<<<<< HEAD
               title={<h1 className={classes['judul1']}>Akun</h1>}
               data={loadedData.filter((item) => {
                 if (searchBased === "") {
@@ -247,8 +251,27 @@ export const UserPage = () => {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
                 }
               })}
+=======
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Akun</h1>
+                </div>
+              }
+              data={loadedData.filter((item) =>
+                {
+                  const keyword=searchTerm.toLowerCase()
+                 return (
+                  String(item.id).includes(keyword) ||
+                  item.username.toLowerCase().includes(keyword) ||
+                  item.hak_akses.toLowerCase().includes(keyword) ||
+                  item.status.toLowerCase().includes(keyword)
+                )}
+               
+              )}
+>>>>>>> e3b4aa8571d54b0e4092df14fe2927df940ade00
               columns={columns}
               pagination
+              
               className="data-table" // Atribut selector CSS untuk DataTable
             />
           )}
