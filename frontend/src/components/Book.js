@@ -4,9 +4,13 @@ import classes from "./Book.module.css"
 import { Link } from 'react-router-dom'
 
 export const Book = ({book}) => {
-  const currentDate=new Date().getDate();
-  const remaining=currentDate - new Date(book.tanggal_kembali).getDate();
-  let checker= remaining<0?`Telat ${remaining*-1} hari lagi`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
+  const currentDate=new Date();
+  
+  const remainings=new Date(book.tanggal_kembali)-currentDate;
+  const remaining=Math.floor(remainings /(1000*60*60*24));
+  console.log(remainings)
+  console.log(remaining)
+  let checker= remaining<0?`Telat ${remaining*-1} hari`:remaining===0?`Hari ini`:`${remaining} hari lagi.`;
   return (
     <div className={classes.boxescon}>
     <div className={classes["boxes"]}>
