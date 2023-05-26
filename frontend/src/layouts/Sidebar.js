@@ -43,25 +43,25 @@ const navigation = [
     href:"/admin/booked-books",
     icon:"bi bi-book"
   },
-  {
-    title:"HomePage",
-    href:"/",
-    icon:"bi bi-calendar-event text-primary"
-  },
-  {
-    title: "Histori",
-    icon: "bi bi-journals",
-    dropdown: [
-      {
-        title: "Books History",
-        href: "/admin/history/page1",
-      },
-      {
-        title: "Page 2",
-        href: "/admin/history/page2",
-      },
-    ],
-  },
+  // {
+  //   title:"HomePage",
+  //   href:"/",
+  //   icon:"bi bi-calendar-event text-primary"
+  // },
+  // {
+  //   title: "Histori",
+  //   icon: "bi bi-journals",
+  //   dropdown: [
+  //     {
+  //       title: "Books History",
+  //       href: "/admin/history/page1",
+  //     },
+  //     {
+  //       title: "Page 2",
+  //       href: "/admin/history/page2",
+  //     },
+  //   ],
+  // },
   /* {
     title: "Alert",
     href: "/admin/alerts",

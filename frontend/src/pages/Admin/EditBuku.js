@@ -7,7 +7,6 @@ export const EditBuku = () => {
   const {bookDetail}=useRouteLoaderData('admin-detail-buku')
   return (
     <Box>
-      <h1>Edit Buku</h1>
       <BookForm book={bookDetail} method="PUT"/>
     </Box>
   )

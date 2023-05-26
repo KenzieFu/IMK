@@ -13,7 +13,11 @@ export const StudentChart = (props) => {
     let barKembaliClassName=`${classes["highlight-line"]} ${!props.showKembali?classes.notBar:""}`;
     let barBookingClassName=`${classes["highlight-line"]} ${!props.showBooking?classes.notBar:""}`;
 
+    console.log(`Count Pinjam : ${props.count.countPeminjaman}`);
+    console.log(`Count Pesanan : ${props.count.countPemesanan}`);
 
+    const countPinjam=props.count.countPeminjaman;
+    const countPesan=props.count.countPemesanan;
   return (
     <>
         <Box>
@@ -24,10 +28,10 @@ export const StudentChart = (props) => {
                 <span>Sudahkah kamu membaca buku hari ini?</span>
             </div>
             <div className={classes.chart}>
-                <BookBar image="./assets/bukuPinjam.png" label="Buku Pinjam" color="#FF0000" />
-                <BookBar image="./assets/clockVector.png" label="Lama Membaca" color="#FFBD35"/>
-                <BookBar image="./assets/bukuKembali.png" label="Buku Kembali" color="#49CF78" />
-                <BookBar image="./assets/chartVector.png" label="Peringkat Membaca" color="#1388CD" />
+                <BookBar image="./assets/bukuPinjam.png" current={countPinjam} max="3" label="Buku Pinjam" color="#FF0000" />
+               {/*  <BookBar image="./assets/clockVector.png" max={} label="Lama Membaca" color="#FFBD35"/> */}
+                <BookBar image="./assets/bukuKembali.png" current={countPesan} max={countPesan?3-countPinjam:"-"} label="Buku Dibooking" color="#49CF78" />
+         {/*        <BookBar image="./assets/chartVector.png" label="Peringkat Membaca" color="#1388CD" /> */}
             </div>
             </div>
            <div className={classes.history} >

@@ -148,16 +148,13 @@ export async function action({ request, params }) {
     isbn: data.get('isbn'),
   };
 
-  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku';
 
-  if (method === 'PUT') {
     const id = params.bookId;
-    url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id;
-  }
 
 
-  const response = await fetch(url, {
-    method: method,
+
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id, {
+    method: 'put',
     headers: {
       'Content-Type': 'application/json',
       "Authorization":"Bearer"
