@@ -60,7 +60,7 @@ export const BookPesan = ({book,rerender}) => {
                   </div>
                     <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
 
-                    <button  onClick={()=>handleModal()}>Batalkan Pemesanan</button>
+                    <button  onClick={()=>handleModal()} className={classes['book-info_cancel']}>Batalkan Pemesanan</button>
                 </div>
             </div>
         </div>
