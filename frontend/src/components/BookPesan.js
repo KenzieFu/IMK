@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Box } from '../UI/Box'
 import classes from "./BookKembali.module.css"
-import { Link, json } from 'react-router-dom'
+import { Link, json, useSubmit } from 'react-router-dom'
 import { ConfirmationModal } from './modals/ConfirmationModal'
 
-export const BookPesan = ({book}) => {
-
+export const BookPesan = ({book,rerender}) => {
+  const formRef=useRef();
   const [showConfirm,setConfirm]=useState(false);
-
-  const deleteItem=(id)=>{
-    
-  }
+  const submit=useSubmit()
 
   const handleDelete=async(id)=>{
-    let url="http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/";
+
+    const formData=new FormData(formRef.current);
+    formData.append("id_pemesanan",id)
+    submit(formData,{method:"DELETE"});
+    handleModal();
+    /* let url="http://localhost:8080/perpustakaan-methodist-cw/pemesanan-batal/";
     const response = await fetch(url+ id, {
       method: "DELETE",
       headers: {
@@ -30,12 +32,13 @@ export const BookPesan = ({book}) => {
       );
     }
 
-    handleModal();
+    handleModal(); */
   }
   console.log(showConfirm)
   const handleModal=()=>{
     console.log("afkbfepiwpfoae")
     setConfirm(prev=>!prev);
+    rerender()
   }
 
 
@@ -63,7 +66,7 @@ export const BookPesan = ({book}) => {
         </div>
     </Box>
 
-     {showConfirm && <ConfirmationModal deleteItem={handleDelete.bind(this,book.id_pemesanan)} onClose={handleModal} book={book.buku.judul_buku}/>}
+     {showConfirm && <ConfirmationModal method="DELETE" ref={formRef} deleteItem={handleDelete.bind(this,book.id_pemesanan)} onClose={handleModal} book={book.buku.judul_buku}/>}
     </>
     
   )
