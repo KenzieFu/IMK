@@ -10,7 +10,7 @@ export const ListBooks = ({books,genre}) => {
           {
             return(
             <Link to={`/library/${other.id_buku}`}> <li  id={other.id_buku}><img src={`http://localhost:8080${other.buku.gambar_buku}`} alt="" />
-            <div className={classes["book-detail"]}><h2>{other.buku.judul_buku}</h2>
+            <div className={classes["book-detail"]}>  <h2>{ other.buku.judul_buku.length > 15 ? other.buku.judul_buku.substring(0,14) +"..":other.buku.judul_buku}</h2>
             <span>{other.buku.pengarang}</span></div>
             </li></Link>);
           }
