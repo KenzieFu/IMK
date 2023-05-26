@@ -1,7 +1,6 @@
-const path = require("path");
-
 const express = require("express");
 const bodyParser = require("body-parser");
+// const fileupload = require("express-fileupload");
 const sequelize = require("./util/database");
 const multer = require("multer");
 const cors = require("cors");
@@ -10,9 +9,11 @@ const authRoutes = require("./routes/auth");
 const perpustakaanRoutes = require("./routes/perpustakaan");
 const adminRoutes = require("./routes/admin");
 const Buku = require("./models/buku");
+const path = require("path");
 // const bookController = require("./controllers/buku");
 
 const app = express();
+
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -108,9 +109,12 @@ app.use(cors(corsOptions));
 // app.use('/feed', feedRoutes);
 // tambah route http://localhost:8080/admin-perpustakaan-methodist-cw/buku --> bukuController.createBook
 app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), async (req, res, next) => {
-  // console.log(req.file);
+ 
+   console.log(req.file);
+   console.log(req.body)
+   console.log(req.files);
   // bagaimana dapat mengakses req.file.path di sini
-  console.log(req.body);
+
   // console.log(req.file.path);
   try {
     if (!req.file) {
@@ -126,7 +130,7 @@ app.post('/admin-perpustakaan-methodist-cw/buku', upload.single("gambar_buku"), 
     // const gambar_buku = req.file.path;
 
     const book = await Buku.create({
-      id_buku: id_buku,
+     /*  id_buku: id_buku, */
       judul_buku: judul_buku,
       pengarang: pengarang,
       penerbit: penerbit,
@@ -164,6 +168,9 @@ app.use((error, req, res, next) => {
   const data = error.data;
   res.status(status).json({ message: message, data: data });
 });
+
+
+
 
 // sequelize
 //   .sync()

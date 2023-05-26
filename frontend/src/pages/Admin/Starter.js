@@ -48,7 +48,7 @@ const Starter = () => {
   return (
     <div>
       {/***Top Cards***/}
-      <Row>
+      {/* <Row>
         <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-success text-success"
@@ -85,7 +85,7 @@ const Starter = () => {
             icon="bi bi-bag"
           />
         </Col>
-      </Row>
+      </Row> */}
       {/***Sales & Feed***/}
       <Row>
         <Col sm="6" lg="6" xl="7" xxl="8">

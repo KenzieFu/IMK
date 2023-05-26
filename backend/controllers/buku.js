@@ -9,6 +9,24 @@ const ViewJumlahDipinjamin = require("../models/viewJumlahDipinjam");
 const path = require("path");
 const fs = require("fs");
 
+// Function untuk menghapus data buku secara multiple
+// misal id_buku = [1,2,3,4,5]
+// hasilnya semua buku dengan id_buku 1,2,3,4,5 akan dihapus
+// cth data yang dikirimkan dalam json
+// { "id_buku": [1,2,3,4,5] }
+exports.deleteBookMultiple = async function (req, res, next) {
+  try {
+    const buku = await Buku.destroy({
+      where: {
+        id_buku:{ [Op.in]: req.body.id_buku },
+      },
+    });
+    res.json(buku);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Function untuk menampilkan daftar banyak buku dipinjam
 exports.getJumlahDipinjam = async function (req, res, next) {
   try {
@@ -83,6 +101,7 @@ exports.createBook = async function (req, res, next) {
   try {
     
     console.log(req.body);
+    console.log(req.file)
     if (!req.file) {
       const error = new Error("Tidak ada gambar yang terupload");
       error.statusCode = 422;

@@ -1,0 +1,243 @@
+.search-button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.search-input {
+  width: 500px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dropdown-toggle-search {
+  width: 500px;
+  display: flex;
+  /* justify content penuh box */
+  justify-content: space-between;
+  /* justify-content: start; */
+  align-items: center;
+  margin-left: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-menu-search {
+  width: 500px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  /* flexbox */
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #555;
+}
+
+.search-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-toggle:hover {
+  background-color: #333;
+}
+
+.dropdown-menu {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  width: 300px;
+}
+
+.additional-content {
+  /* tambahkan style sesuai kebutuhan Anda */
+}
+
+.data-table {
+  /* tambahkan style sesuai kebutuhan Anda */
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-buttons a {
+  cursor: pointer;
+  text-decoration: none;
+  color: gray;
+}
+
+.action-buttons span {
+  cursor: pointer;
+  color: gray;
+}
+
+.action-buttons input[type="hidden"] {
+  display: none;
+}
+
+.action-buttons .action-delete {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 4px;
+  background-color: #ff4d4f;
+  border: 1px solid #ff4d4f;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.action-buttons .action-delete::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("https://img.icons8.com/material-rounded/24/000000/delete-forever.png") no-repeat left top;
+  background-size: cover;
+  margin-right: 4px;
+}
+
+.action-buttons .action-delete:hover {
+  background-color: #ff7875;
+  border-color: #ff7875;
+  color: #ffffff;
+}
+
+.action-buttons .action-detail {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 4px;
+  background-color: #1890ff;
+  border: 1px solid #1890ff;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.action-buttons .action-detail::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("https://img.icons8.com/material-rounded/24/000000/visible--v2.png") no-repeat left top;
+  background-size: cover;
+  margin-right: 4px;
+}
+
+.action-buttons .action-detail:hover {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.search-button .action-filter {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 4px;
+  background-color: #555;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.search-button .action-filter::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 35px;
+  background: url("https://img.icons8.com/material-rounded/24/000000/filter.png") no-repeat left center;
+  background-size: 20px 20px;
+}
+
+.search-button .action-filter:hover {
+  /* background-color: #40a9ff;
+    border-color: #40a9ff; */
+  /* ganti warna menjadi ke abu - abu lebih gelap */
+  background-color: #333;
+  border-color: #333;
+}
+
+/* box-menu kotak pilihan berwarna krem */
+.box-menu {
+  /* kuning soft */
+  background-color: #ffffe6;
+  border-color: #ffffe6;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+  width: 285px;
+}
+
+.box-menu::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.box-menu:hover {
+  /* kuning lebih gelap */
+  background-color: #ffffcc;
+  /* kuning orange */
+  border-color: #ffcc00;
+}
+
+.data-table-header {
+  font-weight: bold;
+  /* buat judul nya cantik */
+  color: #1890ff;
+  font-size: 30px;
+  font-family: "Roboto", sans-serif;
+}
+
+.data-row {
+  text-align: center;
+  font-family: "Arial", Courier, monospace;
+  font-size: medium;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-create {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 7px;
+  background-color: #4dff71;
+  border: 1px solid #4dff71;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+  list-style: none;
+}
+
+.button-create:hover {
+  background-color: #7bff95;
+  border-color: #7bff95;
+  color: #ffffff;
+}

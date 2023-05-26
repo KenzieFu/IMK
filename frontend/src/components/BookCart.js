@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import classes from "./BookCart.module.css";
 
 export default function Cart(props) {
 
@@ -21,8 +22,6 @@ export default function Cart(props) {
         removeItem,
         emptyCart
     } = useCart();
-
-
 
     const notify = () => toast.success('Buku berhasil dihapus dari booking list!', {
         position: "top-center",
@@ -69,7 +68,7 @@ export default function Cart(props) {
 
     const [hidden, setHidden] = React.useState(false)
 
-    const bookingHandler = async () => {
+    const bookingHandler = async (onClose) => {
 
 
 
@@ -78,6 +77,8 @@ export default function Cart(props) {
         try {
             if (isEmpty) {
                 navigate('library')
+                onClose()
+
 
             } else {
                 let bukuId = []
@@ -119,92 +120,77 @@ export default function Cart(props) {
         <>
             <Modal>
                 {isEmpty ?
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", color: "#e4e4e4" }}>
-                        <p style={{ fontFamily: "Inter", fontSize: "50px", marginBottom: "20px", color: "#1c2431", fontWeight: "bold" }}>Keranjangmu kosong.</p>
-                        <i class="fa fa-shopping-basket" aria-hidden="true" style={{ fontSize: "150px", color: "#e4e4e4" }}></i>
-                        <p style={{ fontFamily: "Inter", fontSize: "20px", marginTop: "20px", color: "#1c2431", fontWeight: "bolder" }}>Yuk ke perpus :).</p>
+                    <div className={classes['mainall']}>
+                        <div className={classes['vectorimg']}></div>
+                        <p>Yah, keranjangmu kosong nih :(</p>
+                        <span>Yuk liat-liat perpustakaan </span>
 
                     </div> :
                     <>
-                        <h1 style={{ marginBottom:"20px",textAlign: "center" }}>Daftar Pemesanan ({totalUniqueItems})</h1>
+                        <h1 className={classes['judulall']}> Daftar Pemesanan <span>{totalUniqueItems}</span></h1>
 
-                        <div>
+                        <div className={classes['divpenuh']}>
                             {items.map((item) => (
                                 <>
-                                    <div key={item.id} style={{  display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", }}>
-                                        <div style={{padding:"10px"}}><img src="../assets/BookCover.png" /></div>
-                                        <div>
+                                    <div className={classes['maincontent']} key={item.id} style={{  }}>
+                                        <div className={classes['gambarnya']}>
+                                        <img src="../assets/BookCover.png" className={classes['imgall']} />
+                                        </div>
+                                        <div className={classes['tablecon']}>
                                             <table>
+                                                
+                                                    <div className={classes['titletop']}>
+                                                        <div className={classes['garismerah']}></div>
+                                                        <h1>
+                                                        {item.name}
+                                                        </h1>
+                                                    </div>
                                                 <tr>
-                                                    <td>
-                                                        Judul Buku
-                                                    </td>
-
-                                                    <td>
-                                                        :{item.name}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
+                                                    <th>
                                                         Genre
-                                                    </td>
+                                                    </th>
 
                                                     <td>
-                                                        :{item.genre}
+                                                        : &nbsp; {item.genre}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
+                                                    <th>
                                                         Pengarang
-                                                    </td>
+                                                    </th>
 
                                                     <td>
-                                                        :{item.pengarang}
+                                                        : &nbsp; {item.pengarang}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
+                                                    <th>
                                                         Penerbit
-                                                    </td>
+                                                    </th>
                                                     <td>
-                                                        :{item.penerbit}
+                                                        : &nbsp; {item.penerbit}
                                                     </td>
+                                                </tr>
 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Sinopsis
-                                                    </td>
-                                                    <td style={{ width: "500px" }}>
-                                                        :{item.sinopsis.substring(0, 100)}
-                                                        <span style={{ color: "#2e55ba" }}>Cek selengkapnya...</span>
-                                                    </td>
-                                                </tr>
                                                 {hidden && item.price}
                                             </table>
                                         </div>
+                                </div>
+                                    <div style={{display:"flex", flexDirection:"column"}}>
+                                    <div className={classes['penutong']}>
+                                    <p> Buku sudah ditambahkan ke booking list!</p>
+                                    <button className={classes['tong']} onClick={() => { removeItem(item.id); notify() }}><i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </div>
-                                    <div style={{display: "flex",
-alignItems:"flex-end"}}>
-                                    <button style={{
-                                        marginLeft: "auto",
-                                        marginRight: "15px",
-                                        padding: "10px",
-                                        backgroundColor: "#ebedec",
-                                        color: "#fff",
-                                        border: "none",
-                                        borderRadius: "5%",
-                                        cursor: "pointer",
-                                    }} onClick={() => { removeItem(item.id); notify() }}><i class="fa fa-trash" aria-hidden="true" style={{color:"black", fontSize:"30px"}}></i></button>
+                                    <div className={classes['hrline']}></div>
                                     </div>
                                 </>
                             ))}
                         </div>
                     </>
                 }
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", marginTop: "20px", marginBottom: "20px" }}>
-                    <Button style={{ backgroundColor: "#ebedec", color: "black", border: "0", marginRight: "10px" }} onClick={props.onClose}>Tutup</Button>
-                    <Button style={{ backgroundColor: "#FF5959", color: "white", border: "0", marginLeft: "10px" }} onClick={bookingHandler} >{isEmpty ? "Ke Perpus!" : "Pesan!"}</Button>
+                <div className={classes['buttonbatch']}>
+                    <Button className={classes.buttclose} onClick={props.onClose}><i class="fa fa-times" aria-hidden="true"></i> Tutup</Button>
+                    <Button className={classes.buttopen} onClick={bookingHandler} >{isEmpty ? "Ke Perpus!" : "Pesan !"}</Button>
                 </div>
             </Modal>
         </>

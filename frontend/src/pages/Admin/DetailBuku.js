@@ -64,7 +64,7 @@ export const DetailBuku = () => {
                         <tr>
                             <td></td>
                             <td></td>
-                            <td> <img src="../assets/book.png" /></td>
+                            <td> <img src={`http://localhost:8080${loadedData.gambar_buku}`} /></td>
                         </tr>
 
 

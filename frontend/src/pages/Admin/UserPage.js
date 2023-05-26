@@ -44,6 +44,7 @@ export const UserPage = () => {
       selector: (row) => <span className={classes['data-rowid']}>{row.id_akun}</span>,
       // selector: (row) => row.id_akun,
       sortable: true,
+      accessor:"id_akun",
       headerStyle: {
         fontWeight: "bold",
         textAlign: "center",
@@ -55,6 +56,7 @@ export const UserPage = () => {
       id: "username",
       name: <span className={classes['data-row']}>Username</span>,
       selector: (row) => <span className={classes['data-row']}>{row.username}</span>,
+      accessor:"username",
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -66,6 +68,7 @@ export const UserPage = () => {
       id: "tipe",
       name: <span className={classes['data-row']}>Hak Akses</span>,
       selector: (row) => <span className={classes['data-row']}> {row.hak_akses}</span>,
+      accessor:"hak_akses",
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -155,40 +158,40 @@ export const UserPage = () => {
     } */
   return (
     <>
-      <div className={classes['search-button']}>
-        <Input type="text" placeholder="Cari Berdasarkan Username" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes['searchbox']} />
-          <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes['action-filter']}>
-            {" "}
-            Filter <i class="fa fa-filter" aria-hidden="true"></i>
-          </Button>
-        </div>
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+        </Button>
+      </div>
       {/* <div className="dropdown-content"> */}
       {advanceSearch && (
         <>
-        <div className={classes['downdown']}>
-          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className={classes['dropdown2']}>
-              Filter by
-            </DropdownToggle>
-            <DropdownMenu>
-              {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
-              {/* <DropdownItem divider /> */}
-              {/* <DropdownItem header>Hak Akses</DropdownItem> */}
-              <DropdownItem onClick={() => setSearchBased("siswa")} className="box-menu">
-                Siswa
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("admin")} className="box-menu">
-                Admin
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("petugas")} className="box-menu">
-                Petugas
-              </DropdownItem>
-              {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
+          <div className={classes["downdown"]}>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by
+              </DropdownToggle>
+              <DropdownMenu>
+                {/* <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem> */}
+                {/* <DropdownItem divider /> */}
+                {/* <DropdownItem header>Hak Akses</DropdownItem> */}
+                <DropdownItem onClick={() => setSearchBased("siswa")} className="box-menu">
+                  Siswa
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("admin")} className="box-menu">
+                  Admin
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("petugas")} className="box-menu">
+                  Petugas
+                </DropdownItem>
+                {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
                 Kasir
               </DropdownItem> */}
-            </DropdownMenu>
-          </Dropdown>
-        </div>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
 
           {/* <div className="additional-content"></div> */}
         </>
@@ -199,22 +202,25 @@ export const UserPage = () => {
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
-              title={<h1 className={classes['judul1']}>Akun</h1>}
-              data={loadedData.filter((item) => {
-                if (searchBased === "") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                }
-              })}
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Akun</h1>
+                </div>
+              }
+              data={loadedData.filter((item) =>
+                {
+                  const keyword=searchTerm.toLowerCase()
+                 return (
+                  String(item.id).includes(keyword) ||
+                  item.username.toLowerCase().includes(keyword) ||
+                  item.hak_akses.toLowerCase().includes(keyword) ||
+                  item.status.toLowerCase().includes(keyword)
+                )}
+               
+              )}
               columns={columns}
               pagination
+              
               className="data-table" // Atribut selector CSS untuk DataTable
             />
           )}

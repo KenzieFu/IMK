@@ -22,7 +22,7 @@ export const DaftarBukuPinjamPage = () => {
     const uniqueKategori = [...new Set(bukuData.map((buku) => buku.kategori.nama_kategori))];
 
     return uniqueKategori.map((kategori) => (
-      <DropdownItem onClick={() => setSearchBased(kategori)}>
+      <DropdownItem onClick={() => setSearchBased(kategori)} className="box-menu">
         {kategori}
       </DropdownItem>
     ));
@@ -160,119 +160,109 @@ export const DaftarBukuPinjamPage = () => {
   ];
   return (
     <>
-      <Button onClick={() => setAdvanceSearch(!advanceSearch)}>
-        Pencarian Lebih Lanjut
-      </Button>
-      {
-        advanceSearch &&
+      <div className={classes["search-button"]}>
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
+        <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
+          {" "}
+          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+        </Button>
+      </div>
+      {advanceSearch && (
         <>
-          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Cari Data berdasarkan :
-            </DropdownToggle>
-            <DropdownMenu>
-            <DropdownItem onClick={() => {setSearchBased(""); setSearchTerm("")}} className="box-menu">
-               Tampilkan Semua Data
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
-                Nama Siswa
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
-                Judul Buku
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
-            <DropdownToggle caret className="dropdown-toggle-search">
-              Cari Data dalam rentang tanggal :
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => { setSearchBasedDate(""); setStartDate(''); setEndDate('') }} className="box-menu">
-                Tanpa rentang tanggal
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
-                Tanggal Peminjaman
-              </DropdownItem>
-              <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
-                Tanggal Pengembalian
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-
+          <div className={classes["downdown"]}>
+            <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+              <DropdownToggle caret className={classes["dropdown2"]}>
+                Filter by <i class="fa fa-filter" aria-hidden="true"></i>
+              </DropdownToggle>
+              <DropdownMenu>
+                {/* <DropdownItem
+                  onClick={() => {
+                    setSearchBased("");
+                    setSearchTerm("");
+                  }}
+                  className="box-menu"
+                >
+                  Tampilkan Semua Data
+                </DropdownItem> */}
+                <DropdownItem onClick={() => setSearchBased("nama")} className="box-menu">
+                  Nama Siswa
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBased("judul")} className="box-menu">
+                  Judul Buku
+                </DropdownItem>
+                {/* </DropdownMenu>
+            </Dropdown>
+            <Dropdown isOpen={dropdownOpen2} toggle={toggleDropdown2}>
+              <DropdownToggle caret className="dropdown-toggle-search">
+                Tampilkan Berdasarkan Rentang Tanggal
+              </DropdownToggle>
+              <DropdownMenu> */}
+                {/* <DropdownItem
+                  onClick={() => {
+                    setSearchBasedDate("");
+                    setStartDate("");
+                    setEndDate("");
+                  }}
+                  className="box-menu"
+                >
+                  Tanpa rentang tanggal
+                </DropdownItem> */}
+                <DropdownItem onClick={() => setSearchBasedDate("pinjam")} className="box-menu">
+                  Rentang Tanggal Pinjam
+                </DropdownItem>
+                <DropdownItem onClick={() => setSearchBasedDate("kembali")} className="box-menu">
+                  Rentang Tanggal kembali
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
           <label htmlFor="start-date">Start Date:</label>
+          <Input disabled={searchBasedDate === ""} id="start-date" value={startDate} type="date" onChange={(e) => setStartDate(e.target.value)} />
+          <Input disabled={searchBasedDate === ""} id="end-date" value={endDate} type="date" onChange={(e) => setEndDate(e.target.value)} />
           <Input
-            disabled={searchBasedDate === ""}
-            id="start-date"
-            value={startDate}
-            type="date"
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <Input
-            disabled={searchBasedDate === ""}
-            id="end-date"
-            value={endDate}
-            type="date"
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-          <Input disabled={searchBased === "" ? true : false}
+            disabled={searchBased === "" ? true : false}
             type="text"
-            placeholder={searchBased === "nama" ? "Cari data dari nama siswa..." : searchBased === "judul" ? "Cari Data dari judul buku..." : "Cari data..."}
+            placeholder={searchBased === "nama" ? "Pencarian Berdasarkan Nama Siswa" : searchBased === "judul" ? "Pencarian Data Berdasarkan Judul Buku" : "Cari data..."}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} />
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </>
-      }
+      )}
       <Suspense fallback="">
-        <Await resolve={daftarPinjam} >
-          {(loadedData) =>
+        <Await resolve={daftarPinjam}>
+          {(loadedData) => (
             <DataTable
               title={
-                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center", marginTop:"1vw"}}>
-                  <h1 className={classes['judul1']}>Tabel Peminjaman</h1>
-                  <Link to="create" className={classes['buttoncreate']}><i class="bi bi-person-plus"> Tambah Peminjaman</i></Link>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Tabel Peminjaman</h1>
+                  <Link to="create" className={classes["buttoncreate"]}>
+                    <i class="bi bi-book"> Tambah Peminjaman</i>
+                  </Link>
                 </div>
               }
               data={loadedData.filter((item) => {
-
-                if (searchBased === "" && searchBasedDate === "") {
-                  return item;
-                }
-                if (searchBased === "nama") {
-                  if (searchBasedDate === "") {
-                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                  }
-                  else if (searchBasedDate === "pinjam") {
-                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
-                  }else if (searchBasedDate === "kembali") {
-                    return item.siswa.nama_lengkap.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
-                  }
-                }
-                if (searchBased === "judul") {
-                  if (searchBasedDate === "") {
-                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                  }
-                  else if (searchBasedDate === "pinjam") {
-                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
-                  }  else if (searchBasedDate === "kembali") {
-                    return item.buku.judul_buku.toString().toLowerCase().includes(searchTerm.toLowerCase()) && item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
-                  }
-                } if(searchBasedDate === "pinjam"){
-                  return item.tanggal_pinjam >= startDate && item.tanggal_pinjam <= endDate
-                } if(searchBasedDate === "kembali"){
-                  return item.tanggal_kembali >= startDate && item.tanggal_kembali <= endDate
-                }
+                  const keyword=searchTerm.toLowerCase()
+                  return(
+                    String(item.id_peminjaman).includes(keyword) ||
+                    String(item.id_siswa).includes(keyword)  ||
+                    item.siswa.nama_lengkap.toLowerCase().includes(keyword) ||
+                    item.buku.judul_buku.toLowerCase().includes(keyword) ||
+                    new Date(item.tanggal_pinjam).toLocaleDateString("en-GB").includes(keyword) ||
+                  new Date(item.tanggal_kembali).toLocaleDateString("en-GB").includes(keyword) 
 
 
+                  )
               })}
               columns={columns}
               pagination
             />
-          }
+          )}
         </Await>
       </Suspense>
       {showDeleteModal && <KembaliModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
     </>
-  )
+  );
 }
 
 

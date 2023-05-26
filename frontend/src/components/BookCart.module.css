@@ -1,0 +1,224 @@
+:root{
+    --white:#ffffff;
+    --blue:#2e55ba; 
+    --accentblack:rgb(58, 58, 58);
+    --red:#FF5959;
+    --gray:#f4f1f1;
+
+    --white-light:#ffffff;
+    --blue-light:#2e55ba;
+    --accentblack-light:rgb(58, 58, 58);
+    --red-light:#FF5959;
+    --gray-light:#f4f1f1;
+
+    --white-dark:#ffffff;
+    --blue-dark:#2e55ba;
+    --accentblack-dark:rgb(58, 58, 58);
+    --red-dark:#FF5959;
+    --gray-dark:#f4f1f1;
+}
+
+@media(prefers-color-scheme: dark){
+    :root{
+        --white: var(--white-dark);
+        --blue: var(--blue-dark);
+        --accentblack: var(--accentblack-dark);
+        --red: var(--red-dark);
+        --gray: var(--gray-dark);
+    }
+}
+
+@keyframes bounce {
+    70% { transform:translateY(0%); }
+    80% { transform:translateY(-15%); }
+    90% { transform:translateY(0%); }
+    95% { transform:translateY(-7%); }
+    97% { transform:translateY(0%); }
+    99% { transform:translateY(-3%); }
+    100% { transform:translateY(0); }
+}
+
+.judulall{
+    display: flex;
+    align-items: center;
+    font-size: 2vw;
+    margin-left: 2vw;
+    color: var(--blue-light);
+    font-weight: 600;
+}
+
+.judulall span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.5vw;
+    background-color: var(--red-light);
+    font-size: 1.6vw;
+    width: 2.2vw;
+    height: 2.2vw;
+    border-radius: 50%;
+    color: var(--white-light);
+    animation: bounce 2s ease infinite;
+}
+
+.maincontent{
+    font-family: 'Inter';
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.divpenuh{
+    height: 25vw;
+    width: 97%;
+    margin: auto;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 1.2vw;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column !important;
+    flex-direction: row;  
+}
+
+.gambarnya{
+    width: 32%;
+}
+
+.tablecon {
+    display: flex;
+    width: 60%;
+    align-items: center;
+    margin-left: 1vw;
+}
+
+.tablecon table{
+    width: 100%;
+}
+
+.tablecon table th{
+    width: 2vw;
+    font-weight: 600;
+}
+
+.tablecon table td{
+    text-align: left;
+    margin-bottom: 1vw;
+}
+
+.tablecon h1{
+    color: var(--blue-light);
+    font-size: 2vw;
+}
+
+.tablecon .titletop{
+    display: flex;
+    align-items: center;
+}
+
+.garismerah{
+    height: 1.6vw;
+    width: 0.3vw;
+    border-radius: 10px;
+    margin-right: 0.6vw;
+    background-color: var(--red-light);
+}
+
+.imgall{
+    height: 20vw;
+    width: 15vw;
+    border-radius: 1vw;
+    padding: 1vw;
+}
+
+.hrline{
+    display: flex;
+    margin: auto;
+    background-color: var(--gray-light);
+    height: 5px;
+    width: 97%;
+    margin-bottom: 1vw;
+}
+
+.penutong{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 97%;
+    margin: auto;
+}
+
+.penutong p{
+    font-size: inherit;
+    color: var(--blue-light);
+    
+}
+
+.tong{
+    background-color: transparent;
+    font-size: 30px;
+    color: var(--red-light);
+    cursor: "pointer";
+    transition: all .3s ease;
+}
+
+.tong:hover{
+    transform: translateY(-0.5vw);
+}
+
+.buttonbatch{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5vw 1vw 1vw;
+    gap: 1vw;
+}
+
+.buttclose:hover{
+    background-color: #FF5959;
+    color: var(--white-light);
+    transform: translateY(-0.4vw);
+}
+
+.buttclose{
+    background-color: var(--white-light);
+    color: var(--red-light);
+    border: none;
+    border-radius: 0.8vw;
+    box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2.6px;
+    transition: all .3s ease;
+}
+
+.buttopen{
+    background-color: var(--red-light);
+    border-radius: 0.8vw;
+    border: none;
+    transition: all .3s ease;
+}
+
+.buttopen:hover{
+    background-color: var(--red-light);
+    transform: translateY(-0.4vw);
+}
+
+.mainall{
+    margin-top: 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainall p{
+    font-size: 1.5vw;
+    font-weight: 600;
+    margin-top: 1vw;
+}
+
+.vectorimg{
+    background-image: url(../../public/assets/read.jpg);
+    background-size: contain;
+    border-radius: 50%;
+    height: 12vw;
+    width: 12vw;
+    animation: bounce 3.2s ease infinite;
+}

@@ -172,6 +172,13 @@ busboy@^0.2.11:
     dicer "0.2.5"
     readable-stream "1.1.x"
 
+busboy@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/busboy/-/busboy-1.6.0.tgz"
+  integrity sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==
+  dependencies:
+    streamsearch "^1.1.0"
+
 bytes@3.1.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz"
@@ -342,6 +349,13 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
+
+express-fileupload@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/express-fileupload/-/express-fileupload-1.4.0.tgz"
+  integrity sha512-RjzLCHxkv3umDeZKeFeMg8w7qe0V09w3B7oGZprr/oO2H/ISCgNzuqzn7gV3HRWb37GjRk429CCpSLS2KNTqMQ==
+  dependencies:
+    busboy "^1.6.0"
 
 express-validator@^7.0.1:
   version "7.0.1"
@@ -692,30 +706,10 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.npmjs.org/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-"mongoose@*", "mongoose@^5.3.2":
-  "integrity" "sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA=="
-  "resolved" "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
-  "version" "5.13.17"
-=======
-=======
->>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
 mongoose@^5.3.2:
   version "5.13.17"
   resolved "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
   integrity sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA==
-<<<<<<< HEAD
->>>>>>> ae69317aacafd3412b5aa77b8970619a3f9a2cbd
-=======
-"mongoose@^5.3.2":
-  "integrity" "sha512-kzlwQgrWaQflFSdENNGN4+FQEm/yOMgR1T1okIp5fARGQ8YKdjO+0U9Ikzsv5OVSFIkE0ATyJj2XxawYbf2bpA=="
-  "resolved" "https://registry.npmjs.org/mongoose/-/mongoose-5.13.17.tgz"
-  "version" "5.13.17"
->>>>>>> c8357c6bfeb1482e7f6dee081279983e24152188
-=======
->>>>>>> 27afdf9737a5f9b19c9a84f10737436c20b66ef4
   dependencies:
     "@types/bson" "1.x || 4.0.x"
     "@types/mongodb" "^3.5.27"
@@ -1137,6 +1131,11 @@ statuses@2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz"
   integrity sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==
+
+streamsearch@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/streamsearch/-/streamsearch-1.1.0.tgz"
+  integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
 streamsearch@0.1.2:
   version "0.1.2"
