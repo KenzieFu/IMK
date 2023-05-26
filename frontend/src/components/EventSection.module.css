@@ -1,6 +1,134 @@
+:root{
+    --white:#ffffff;
+    --blue:#2e55ba; 
+    --accentblack:rgb(58, 58, 58);
+    --red:#FF5959;
+    --addgray:#DBD0C0;
+    --gray:#FAEEE0;
+    --beige:#F9CF93;
+    --lbeige:#FAEEE0;
+
+    --white-light:#ffffff;
+    --blue-light:#2e55ba;
+    --accentblack-light:rgb(58, 58, 58);
+    --red-light:#FF5959;
+    --gray-light:#f4f1f1;
+    --addgray-light:#e3e3e3;
+    --beige-light:#F9CF93;
+    --lbeige-light:#FAEEE0;
+
+    --white-dark:#ffffff;
+    --blue-dark:#2e55ba;
+    --accentblack-dark:rgb(58, 58, 58);
+    --red-dark:#FF5959;
+    --gray-dark:#f4f1f1;
+    --addgray-dark:#e3e3e3;
+    --beige-light:#F9CF93;
+    --lbeige-light:#FAEEE0;
+}
+
+@media(prefers-color-scheme: dark){
+    :root{
+        --white: var(--white-dark);
+        --blue: var(--blue-dark);
+        --accentblack: var(--accentblack-dark);
+        --red: var(--red-dark);
+        --gray: var(--gray-dark);
+    }
+}
+
+.garis{
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--red-light);
+}
+
+.bungkus{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
 .box-section{
-    border:solid red 3px;
+    /* border: solid 3px black; */
     padding: 10px;
     border-radius: 20px;
     margin:10px 5px;
+}
+
+.paginate1{
+    display:flex;
+    background-color: #FF5959;
+    padding: 5px;
+}
+
+.title_item{
+    margin-left: 10px;
+    color: #00278C;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.details{
+    margin-top: 5vh;
+    color: #00278C;
+    font-size: 1.3vw;
+    font-weight: 600;
+}
+
+.downdown{
+    margin: auto;
+    margin-top: 1vw;
+    display: flex;
+    justify-content: right;
+    width: 94%;
+}
+
+.container {
+    display: flex;
+  }
+  
+.left {
+    flex: 1;
+  }
+  
+.right {
+    flex: 1;
+  }
+
+.content_event{
+    margin-top: 10px;;
+    width: 1000px;
+  }
+
+  .content_event i{
+    margin-right: 20px;;
+  }
+
+.calendar{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .calendar i{
+    margin-right: 15px;;
+  }
+
+.status{
+    margin-bottom: 5px;
+}
+
+.crtbut {
+    color: var(--green-dark);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.crtbut:hover {
+    background-color: var(--green-light);
+    color: var(--white-light);
+    transform: translateY(-0.3vw);
+    text-decoration: none;
+    border-color: var(--green-light);
 }
