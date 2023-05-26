@@ -3,6 +3,8 @@ import {ScanQrBox} from "../../components/QRcode/ScanQrBox";
 import { json, redirect, useActionData } from 'react-router-dom';
 import { InfoAbsensiModal } from '../../components/admin/modals/InfoAbsesiModal';
 import { ErrorModal } from '../../components/modals/ErrorModal';
+import classes from './ScanPage.module.css'
+
 export const ScanPage = () => {
   const [showInfo,setShowInfo]=useState(false);
   const data=useActionData();
