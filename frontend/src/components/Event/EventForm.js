@@ -2,6 +2,8 @@ import React, { useRef } from 'react'
 import { Input } from '../../UI/Input'
 import { Form, useSubmit } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import classes from "./EventForm.module.css"
+import { Label } from "reactstrap";
 export const EventForm = ({onClose,currentDate,method,children,event,changeList,label}) => {
   const submit=useSubmit();
 
@@ -33,17 +35,24 @@ export const EventForm = ({onClose,currentDate,method,children,event,changeList,
     onClose();
     
   }
-  
+
   return (
     <>
         <Form ref={formData} method={method}>
             {children}
-          
-            <Input name="title_event" label="Judul Event" id="judul" type="text"  defaultValue={event?event.title_event:""}/>
-            <Input name="content_event"  label="Deskripsi Event" id="desc" type="textarea"  defaultValue={event?event.content_event:""}/>
-            <Input type="date" label="Tanggal Event"  id="date" name="tanggal_event" addAttribute={{ value:convertDate }} />
-            <button onClick={onClose}>Cancel</button>
-            <button onClick={(e)=>submitHandler(e)}>{label}</button>
+            <div className={classes['form']}>
+              <div className={classes['form-grup']}>
+            <Label for="judul">Judul Event</Label>          
+            <Input  name="title_event" id="judul" type="text"  defaultValue={event?event.title_event:""}/>
+            <Label for="desc">Deskripsi Event</Label> 
+            <textarea className={classes['textarea1']} name="content_event" id="desc" rows={10} cols={5} defaultValue={event?event.content_event:""}/>
+            <Label for="date">Tanggal Event</Label> 
+            <Input type="date" id="date" name="tanggal_event" addAttribute={{ value:convertDate }} />
+            </div> </div>
+            <div className={classes['batchbut1']} > 
+            <button className={classes['delbut']} onClick={onClose}>Cancel</button>
+            <button className={classes['savbut']} onClick={(e)=>submitHandler(e)}>{label}</button>
+            </div> 
         </Form>
         
     </>

@@ -9,19 +9,22 @@ export const BookKembali = ({book}) => {
 
   return (
     <Box>
-        <div style={{ marginLeft:"50px", display:"flex",padding:'35px' }}>
-            <img sty width="150px" height="210" src="./assets/book.png" alt="" />
+        <div style={{ marginLeft:"10px", display:"flex",padding:'35px' }}>
+            <img sty width="150px" height="210" src={`http://localhost:8080${book.buku.gambar_buku}`} alt="" />
             <div className={classes["book-info"]} id='book-info'>
                 <span className={classes["due-date"]}>{book.pengembalian?.status}</span>
                 <div style={{ display:"flex",justifyContent:"space-between", alignItems:"center",marginBottom:"0",paddingBottom:"0" }}>
                   <div>
-                  <h1 className={classes["book-info_h1"]}>{book.buku.judul_Buku}</h1>
+                  <h1 className={classes["book-info_h1"]}>{book.buku.judul_buku}</h1>
                   <p style={{ marginTop:"0",paddingTop:"0"  }}>{book.buku.pengarang}</p>
+                  <p>Tanggal Dipinjam : {book.tanggal_pinjam}</p>
+                    <p>Tanggal Pengembalian : {book.pengembalian.tanggal_pengembalian}</p>
                   </div>
+
                     <Link type='button' to={`/library/${book.id_buku}`} className={classes["book-info_button"]}>Details</Link>
                 </div>
 
-                <div className={classes.rating}>
+              {/*   <div className={classes.rating}>
                   <div className={classes.stars}>
                   <span className={'fa fa-star '+ classes.checked}></span>
                   <span className={'fa fa-star '+ classes.checked}></span>
@@ -30,7 +33,7 @@ export const BookKembali = ({book}) => {
                   <span className='fa fa-star'></span>
                   </div>
                   <span>3.0</span>
-                </div>
+                </div> */}
             </div>
         </div>
     </Box>

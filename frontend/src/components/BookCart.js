@@ -5,11 +5,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./BookCart.module.css";
 
 export default function Cart(props) {
-
+    const location=useLocation();
     const authen = useSelector(state => state.auth.isAuth);
     const akun = useSelector((state) => state.auth.user)
     const navigate = useNavigate();
@@ -148,7 +148,11 @@ export default function Cart(props) {
                 console.log('Data created:', createdData);
                 emptyCart()
                 sukses()
+                navigate(location.pathname);
+              
             }
+            
+  
 
         } catch (error) {
             console.error('Error creating data:', error);

@@ -1,0 +1,10 @@
+diff a/frontend/src/layouts/Sidebar.js b/frontend/src/layouts/Sidebar.js	(rejected hunks)
+@@ -49,7 +49,7 @@
+     icon:"bi bi-calendar-event text-primary"
+   },
+   {
+-    title: "History",
++    title: "Histori",
+     icon: "bi bi-journals",
+     dropdown: [
+       {

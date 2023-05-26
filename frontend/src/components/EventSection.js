@@ -4,6 +4,7 @@ import classes from "./EventSection.module.css"
 import { useSelector } from 'react-redux'
 import { EventForm } from './Event/EventForm'
 import { Form, useSubmit } from 'react-router-dom'
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 export const EventSection = ({selectedDate,currentDate,onPageHandler,currentIndex,updateListHandler}) => {
   const submit=useSubmit();
   
@@ -28,6 +29,11 @@ const deleteHandler=(e,id)=>{
 
 }
 
+const [dropdownOpen, setDropdownOpen] = useState(false);
+const toggleDropdown = () => {
+  setDropdownOpen(!dropdownOpen);
+};
+
 
 const deleteUpdateList=()=>{
   const updatedList=selectedDate.filter((item,index)=>index !=currentIndex);
@@ -47,28 +53,49 @@ updateListHandler(updatedLists);
 
 let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
 
-
 <>
-  <div style={{ display:"flex", justifyContent:"space-between" }}>
-    <div></div>
-    {user.isAuth &&<div>
-      {user.user?.id_akun ===item.id_akun &&
-          <button onClick={showEditHandler}>Edit</button>
-      }
-      {user.user?.id_akun ===item.id_akun && 
-      <Form method='Delete'>
-        <input type="text" name='id_event' value={selectedDate[currentIndex].id_event} />
-        <button type='submit' onClick={(e)=>deleteHandler(e)}>Delete</button>
-      </Form>
-      }
-    </div>}
-  </div>
-
-  <div>
-    <div>{item.tipe} -- {item.title_event}</div>
-    <div>{item.content_event}</div>
-    <div>{item.tanggal_event}</div>
-    <div>{item.status}</div>
+<div className={classes['container']}>
+<div className={classes['left']}>
+    <div className={classes['bungkus']}>
+    <div className={classes['garis']}></div>
+    <div className= {classes.title_item}>{item.tipe} -- {item.title_event}</div> </div>
+    <div className= {classes.details}>Details</div>
+    <div className= {classes.content_event}><i class="fa fa-bars" aria-hidden="true"></i>{item.content_event}</div>
+    <div className= {classes.calendar}><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {item.tanggal_event}</div>
+    <div className= {classes.status}>{item.status}</div>
+  </div> 
+  <div className={classes['right']}>
+  <div className={classes['downdown']}>
+  <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className={classes['dropdown2']}>
+            <i class="fa fa-pencil" aria-hidden="true"></i> Aksi
+            </DropdownToggle>
+            <DropdownMenu>
+            {user.isAuth &&<div>
+              {user.user?.id_akun ===item.id_akun &&
+              <DropdownItem onClick={showEditHandler} className="box-menu">
+                Edit
+              </DropdownItem>}
+              {user.user?.id_akun ===item.id_akun &&
+              <Form method='Delete'>
+              <input
+              type="text" name='id_event' value={selectedDate[currentIndex].id_event} hidden/>
+              {/* <button type='submit' onClick={(e)=>deleteHandler(e)}></button> */}
+              <DropdownItem onClick={(e)=>deleteHandler(e)} className="box-menu">
+                Delete
+              </DropdownItem>
+              </Form>}
+              <DropdownItem onClick={showHandler} className="box-menu">
+                Create
+              </DropdownItem>
+              {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
+                Kasir
+              </DropdownItem> */}
+            </div>}
+            </DropdownMenu>
+          </Dropdown>
+          </div>
+          </div>
   </div>
 </>
 
@@ -79,9 +106,6 @@ let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
 
 );
 
-
-
-
 return (
 <div className={classes["box-section"]}>
 { !showCreate && !showEdit && <>
@@ -90,14 +114,14 @@ return (
   <>
 
     {display}
-    <div style={{ display:"flex",justifyContent:"space-between" }}>
+    <div >
       <div>
-        <Paginate items={selectedDate} itemsPerPage={1} onPageChange={onPageHandler} />
+        <Paginate style={{backgroundColor:"transparent"}} items={selectedDate} itemsPerPage={1} onPageChange={onPageHandler} />
       </div>
-      <div>
+      {/* <div>
         {user.isAuth && currentDate &&
         <button onClick={showHandler}>Create Event</button>}
-      </div>
+      </div> */}
 
     </div>
   </>
@@ -107,10 +131,10 @@ return (
 
   <>
     <div>
-      <span>{currentDate.day}</span>
+      {/* <span>{currentDate.day}</span>
       <span>{currentDate.month}</span>
-      <span>{currentDate.year}</span>
-      {user.isAuth && currentDate.length != 0 && <button onClick={showHandler}>CreateEvent</button>}
+      <span>{currentDate.year}</span> */}
+      {user.isAuth && currentDate.length != 0 && <button className={classes['crtbut']} onClick={showHandler}>CreateEvent</button>}
     </div>
   </>
   }

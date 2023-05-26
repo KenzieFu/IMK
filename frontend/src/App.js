@@ -108,6 +108,9 @@ import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
 //Keluar Manual
 import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
 
+//Action Batalin Pemesanan (siswa)
+import { action as batalPesananAction } from "./pages/StudentPage";
+
 
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
@@ -167,7 +170,8 @@ const studentId=useSelector(state=>state.auth.user)
        {path:"student",
        id:"pinjam-kembali-booking-buku",
         element:<StudentAuth><CartProvider><StudentPage/></CartProvider></StudentAuth>,
-         loader:(s)=>studentLoader(studId)
+         loader:(s)=>studentLoader(studId),
+         action:batalPesananAction
       },
        {path:"library",
         children:[

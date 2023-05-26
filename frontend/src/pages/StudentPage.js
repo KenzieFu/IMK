@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from "./StudentPage.module.css";
 import { Sidebar } from '../UI/Sidebar';
 import { StudentChart } from '../components/StudentChart';
@@ -10,7 +10,6 @@ import { Navigate, defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
 import { QRCodeBox } from '../components/QRcode/QRCodeBox';
-import { useCart } from "react-use-cart";
 import { BookingBuku } from './BookingBuku';
 import { PengembalianBuku } from './PengembalianBuku';
 
@@ -18,8 +17,20 @@ export const StudentPage = () => {
   const [showPinjam, setShowPinjam] = useState(true);
   const [showKembali, setShowKembali] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
+  const[render,setRender]=useState(false);
   const isAuth = useSelector(state => state.auth.isAuth);
   const akun=useSelector(state=>state.auth.user)
+
+
+
+  console.log(render)
+
+
+const renderHandler=()=>{
+
+  setRender(prev=>!prev);
+}
+
 
   const pinjamHandler = () => {
     setShowPinjam(true);
@@ -77,7 +88,7 @@ export const StudentPage = () => {
 
           {showBooking && <Suspense fallback={<p>Loading...</p>}>
 
-            <BookingBuku books={CekBooking} />
+            <BookingBuku rerender={renderHandler} books={CekBooking} />
 
           </Suspense>}
 
@@ -138,6 +149,8 @@ const loadBorrowed = async (id) => {
   }
 }
 
+
+
 const loadBooking = async (id) => {
   const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/")
   console.log(response);
@@ -173,6 +186,30 @@ export async function loader(id) {
     count:count
 
   })
+}
+
+export const action=async({params,request})=>{
+  let url="http://localhost:8080/perpustakaan-methodist-cw/pemesanan-batal/";
+  const data=await request.formData()
+
+  const response = await fetch(url+ data.get("id_pemesanan"), {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer",
+    },
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: "Could not delete Item." },
+      {
+        status: 500,
+      }
+    );
+  }
+  return response
+
+
 }
 
 

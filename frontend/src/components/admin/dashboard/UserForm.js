@@ -53,8 +53,8 @@ function UserForm({method,user}) {
 
               <FormGroup>
                 <Label className={classes['label']} for="hak_akses">Hak Akses</Label>
-                <Input  id="hak_akses" name="hak_akses" value={user.hak_akses} type="select">
-                <option  value="Siswa">Siswa</option>
+                <Input  id="hak_akses" name="hak_akses" defaultValue={user.hak_akses} type="select">
+                <option   value="Siswa">Siswa</option>
                   <option  value="Admin">Admin</option>
                   <option  value="Kasir">Kasir</option>
                   <option  value="Petugas">Petugas</option>
@@ -76,7 +76,7 @@ export default UserForm;
 export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
-
+  console.log("ajnfoaw")
   const akunData = {
     id_akun: data.get('id_akun'),
     username: data.get('username'),
