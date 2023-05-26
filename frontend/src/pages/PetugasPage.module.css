@@ -44,6 +44,7 @@
 
 .main{
     display: flex;
+    background-color: var(--gray-light);
     height: 100%;
     width: 100%;
     padding-top: 1vw;
@@ -51,17 +52,17 @@
 
 .sidebar{
     display: block;
+    background-color: var(--gray-light);
     padding: 1vw;
     width: 15vw;
     height: 40vw;
-    margin-top: 2vw;
     padding: 1vw;
 }
 
 .logo{
     display: flex;
     justify-content: center;
-    border: 1px solid white;
+    border: 1px solid var(--blue-light);
     border-radius: 50%;
     align-items: center;
     width: 6vw;
@@ -82,33 +83,33 @@
     margin-bottom: 1vw;
 }
 
-hr{
-    transform: rotate(90deg);
-    background-color: red;
-    height: 30px;
-    width: 2px;
-}
-
 .mainup{
     background-color: var(--white-light);
-    width: 96%;
+    width: 40vw;
     height: 40vw;
-    margin: auto;
-    margin-top: 2vw;
     margin-bottom: 3vw;
 }
 
 .upcont{
-    width: 40%;
-    padding: 1vw;
+    width: 100%;
+    padding: 2vw;
+    padding-left: 2vw;
 }
 
 .mainup h1{
-    font-size: 2.4vw;
+    font-size: 1.5vw;
     font-weight: 600;
     color: var(--accentblack-light);
-    line-height: 3vw;
+    line-height: 2vw;
 }
+
+.mainup span{
+    font-size: 1.8vw;
+    font-weight: 600;
+    color: var(--accentblack-light);
+    margin-top: 3vw;
+}
+
 
 .mainin{
     display: flex;
@@ -120,3 +121,43 @@ hr{
     height: 50vw;
     width: 100%vw;
 }
+
+.butt{
+    background-color: var(--red-light);
+    color: var(--white-light);
+    padding: 0.5vw;
+    border-radius: 1vw;
+    text-align: center;
+    margin-top: 1vw;
+    width: 8vw;
+    transition: all .3s ease;
+}
+
+.butt:hover{
+    transform: translateY(-0.3vw);
+    cursor: pointer;
+}
+
+.scanin{
+    background-color: #F9CF93;
+    width: 95%;
+    height: 15vw;
+    margin-top: 2vw;
+    border-radius: 1.2vw;
+}
+
+.scanin h1{
+    padding: 2vw;
+    font-weight: 600;
+}
+
+
+/* 
+.profpic{
+    background-image: url(../../public/assets/anime-run.gif);
+    background-size: cover;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    margin-top: 2vw;
+} */
