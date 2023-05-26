@@ -104,9 +104,14 @@ exports.createPemesananBukuMultiple = async function (req, res, next) {
   
   // cek dulu id_siswa kalau ada 3 data di tabel peminjaman buku dengan id_siswa yang sama maka tidak bisa melakukan pemesanan
 /*   const peminjamanBukuData = await Peminjaman.findAll({ where: { id_siswa: id_siswa } }); */
-  const sisaBukuDapatDipesan =( 3 - peminjamanBelumSelesai.length) -id_buku.length;
+const pemesananUser = await PemesananBuku.findAll({where:{id_siswa:id_siswa}});
+  const sisaBukuDapatDipesan =( 3 - peminjamanBelumSelesai.length -pemesananUser.length) -id_buku.length;
+  console.log(id_buku.length)
+  console.log(peminjamanBelumSelesai.length)
+  console.log(pemesananUser.length)
+ 
 
-  if (sisaBukuDapatDipesan <= 0) {
+  if (sisaBukuDapatDipesan < 0) {
     console.log("Buku sudah MAXXXX")
     // tambilkan banyak sisa buku yang dapat dipesan
     return res.status(500).json({ message: "Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar" });
