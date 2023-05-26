@@ -140,8 +140,8 @@ export const DaftarBukuPinjamPage = () => {
           <Link to={`/admin/borrowed-books/${row.id_peminjaman}`} style={{ cursor: "pointer", textDecoration: "none" }} className={classes["detailbut"]}>
               Rincian &nbsp; <i class="fa fa-info-circle"></i></Link>{'                    '}{'       '}
           <input type="hidden" id='row' />
-          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }} className={classes["delbut"]}> 
-            Hapus  &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i> </span>
+          <span onClick={() => showModalHandler(row.id_peminjaman)} style={{ cursor: "pointer" }} className={classes["savbut"]}> 
+            Dikembalikan  &nbsp; <i class="fa fa-solid fa-arrow-left"></i> </span>
 
         </div>
       ),

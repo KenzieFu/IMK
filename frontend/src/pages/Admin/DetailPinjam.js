@@ -4,6 +4,9 @@ import { Box } from '../../UI/Box'
 import { Await, useRouteLoaderData, useNavigate } from 'react-router-dom'
 import { json,defer } from 'react-router-dom'
 import { Suspense } from 'react'
+import classes from './adminbatch.module.css';
+
+
 export const DetailPinjam = () => {
   const { pinjamDetail }= useRouteLoaderData("admin-detail-pinjam");
   const navigate= useNavigate();
@@ -23,59 +26,56 @@ export const DetailPinjam = () => {
                     return(
                 <Box>
 
-                <div className='acc-info'>
-                    <h1 hidden>Detail Pinjam ({loadedData.id_pinjam})</h1>
-                    <table>
-                    <tr>
-                            <td>Nama Siswa</td>
-                            <td>:</td>
-                            <td>{loadedData.siswa.nama_lengkap}</td>
-                        </tr>
-                        <tr>
-                            <td>Judul Buku</td>
-                            <td>:</td>
-                            <td>{loadedData.buku.judul_buku}</td>
-                        </tr>
-                        <tr>
-                            <td>ISBN</td>
-                            <td>:</td>
-                            <td>{loadedData.buku.isbn}</td>
-                        </tr>
-                        <tr>
-                            <td>Tanggal Pinjam</td>
-                            <td>:</td>
-                            <td>{loadedData.tanggal_pinjam}</td>
-                        </tr>
-                        <tr>
-                            <td>Tanggal Pengembalian</td>
-                            <td>:</td>
-                            <td>{loadedData.tanggal_kembali}</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td> <img src="../assets/book.png" /></td>
-                        </tr>
+        <div className={classes.content}>
+                <div className={classes.cardtopmain}>
+                    <div className={classes.cardtop}>
+                        <div className={classes.card}>
+                            <h1 hidden>{loadedData.id_pinjam}</h1>
+                            <div className={classes.cover}>
+                                <img src={`http://localhost:8080${loadedData.buku.gambar_buku}`}></img>
+                            </div>
 
+                            <div className={classes.book_info}>
+                                <h2>{loadedData.buku.judul_buku}</h2>
+                                <div className={classes.infotable}>
+                                    <table>
+                                        <tr>
+                                            <td style={{width: "20vw"}}>Nama Siswa</td>
+                                            <td style={{ width: "5vw" }}>:</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{loadedData.siswa.nama_lengkap}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{width: "20vw"}}>ISBN</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{loadedData.buku.isbn}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{width: "20vw"}}>Tanggal Peminjaman</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{loadedData.tanggal_pinjam}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{width: "20vw"}}>Tanggal Pengembalian</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{loadedData.tanggal_kembali}</td>
+                                        </tr>
+                                    </table>
+                                    <div className={classes['batchbut1']}>
+                                        <button onClick={backHandler} className={classes['delbut']}>Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    </table>
-
-                    <div>
-                        <button onClick={backHandler}>Back</button>
-                        <button onClick={editHandler} >Edit</button>
                     </div>
                 </div>
+            </div>
             </Box> );
                 }
             }
 
         </Await>
     </Suspense>
-
-
-         <div>DetailPinjam</div>
-        <Link to="..">Back</Link>
-         <Link to="edit">Edit</Link>
     </>
 
   )
