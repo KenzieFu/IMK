@@ -6,6 +6,7 @@ import { Form, useSubmit } from 'react-router-dom'
 import { EventForm } from '../../components/Event/EventForm'
 import { date } from 'yup'
 import { format } from 'date-fns';
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
 export const AdminEventSection = ({selectedDate,currentDate,onPageHandler,currentIndex,updateListHandler}) => {
   const submit=useSubmit();
   
@@ -30,6 +31,10 @@ const deleteHandler=(e,id)=>{
 
 }
 
+const [dropdownOpen, setDropdownOpen] = useState(false);
+const toggleDropdown = () => {
+  setDropdownOpen(!dropdownOpen);
+};
 
 const deleteUpdateList=()=>{
   const updatedList=selectedDate.filter((item,index)=>index !=currentIndex);
@@ -51,26 +56,45 @@ let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
 
 
 <>
-  <div style={{ display:"flex", justifyContent:"space-between" }}>
-    <div></div>
-    {user.isAuth && user.user?.hak_akses ==="Admin" &&<div>
-     
-          <button onClick={showEditHandler}>Edit</button>
-     
-      <Form method='Delete'>
-        <input
-         type="text" name='id_event' value={selectedDate[currentIndex].id_event} />
-        <button type='submit' onClick={(e)=>deleteHandler(e)}>Delete</button>
-      </Form>
-    </div>}
-  </div>
-
-  <div>
-    <div className= {classes.title_item}>{item.tipe} -- {item.title_event}</div>
+<div className={classes['container']}>
+<div className={classes['left']}>
+    <div className={classes['bungkus']}>
+    <div className={classes['garis']}></div>
+    <div className= {classes.title_item}>{item.tipe} -- {item.title_event}</div> </div>
     <div className= {classes.details}>Details</div>
-    <div>{item.content_event}</div>
-    <div><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {item.tanggal_event}</div>
-    <div>{item.status}</div>
+    <div className= {classes.content_event}>{item.content_event}</div>
+    <div className= {classes.calendar}><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {item.tanggal_event}</div>
+    <div className= {classes.status}>{item.status}</div>
+  </div> 
+  <div className={classes['right']}>
+  <div className={classes['downdown']}>
+  <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret className={classes['dropdown2']}>
+            <i class="fa fa-pencil" aria-hidden="true"></i> Aksi
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={showEditHandler} className="box-menu">
+                Edit
+              </DropdownItem>
+              {user.isAuth && user.user?.hak_akses ==="Admin" &&
+              <Form method='Delete'>
+              <input
+              type="text" name='id_event' value={selectedDate[currentIndex].id_event} hidden />
+              {/* <button type='submit' onClick={(e)=>deleteHandler(e)}></button> */}
+              <DropdownItem onClick={(e)=>deleteHandler(e)} className="box-menu">
+                Delete
+              </DropdownItem>
+              </Form>}
+              <DropdownItem onClick={showHandler} className="box-menu">
+                Create
+              </DropdownItem>
+              {/* <DropdownItem onClick={() => setSearchBased("kasir")} className="box-menu">
+                Kasir
+              </DropdownItem> */}
+            </DropdownMenu>
+          </Dropdown>
+          </div>
+          </div>
   </div>
 </>
 
@@ -92,13 +116,13 @@ return (
   <>
 
     {display}
-    <div style={{ display:"flex",justifyContent:"space-between" }}>
+    <div className={classes["paginate"]}>
       <div>
         <Paginate items={selectedDate} itemsPerPage={1} onPageChange={onPageHandler} />
       </div>
       <div>
         {user.isAuth && currentDate &&
-        <button onClick={showHandler}>Create Event</button>}
+        <button onClick={showHandler}></button>}
       </div>
 
     </div>

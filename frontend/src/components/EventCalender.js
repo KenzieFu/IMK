@@ -23,7 +23,7 @@ export const EventCalender = ({pickDateHandler,pickCurrentDate,events,reset}) =>
       year:y
     }
   
-    pickDateHandler(events);
+    pickDateHandler(events); 
     pickCurrentDate(dates);
   }
 
