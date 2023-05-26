@@ -49,7 +49,7 @@ const navigation = [
     icon:"bi bi-calendar-event text-primary"
   },
   {
-    title: "Histori",
+    title: "History",
     icon: "bi bi-journals",
     dropdown: [
       {

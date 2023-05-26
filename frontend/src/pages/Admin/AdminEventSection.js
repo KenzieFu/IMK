@@ -62,7 +62,7 @@ let display=selectedDate.map((item,index)=>{if(index === currentIndex)return(
     <div className={classes['garis']}></div>
     <div className= {classes.title_item}>{item.tipe} -- {item.title_event}</div> </div>
     <div className= {classes.details}>Details</div>
-    <div className= {classes.content_event}>{item.content_event}</div>
+    <div className= {classes.content_event}><i class="fa fa-bars" aria-hidden="true"></i>{item.content_event}</div>
     <div className= {classes.calendar}><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {item.tanggal_event}</div>
     <div className= {classes.status}>{item.status}</div>
   </div> 
@@ -116,16 +116,13 @@ return (
   <>
 
     {display}
-    <div className={classes["paginate"]}>
-      <div>
-        <Paginate items={selectedDate} itemsPerPage={1} onPageChange={onPageHandler} />
+      <div >
+        <Paginate style={{backgroundColor:"transparent"}} items={selectedDate} itemsPerPage={1} onPageChange={onPageHandler} />
       </div>
-      <div>
+      {/* <div>
         {user.isAuth && currentDate &&
         <button onClick={showHandler}></button>}
-      </div>
-
-    </div>
+      </div> */}
   </>
   }
   {
@@ -133,10 +130,10 @@ return (
 
   <>
     <div>
-      <span>{currentDate.day}</span>
+      {/* <span>{currentDate.day}</span>
       <span>{currentDate.month}</span>
-      <span>{currentDate.year}</span>
-      {user.isAuth && currentDate.length != 0 && <button onClick={showHandler}>CreateEvent</button>}
+      <span>{currentDate.year}</span> */}
+      {user.isAuth && currentDate.length != 0 && <button className={classes['crtbut']} onClick={showHandler}>CreateEvent</button>}
     </div>
   </>
   }
