@@ -19,6 +19,11 @@ export const Book = ({book}) => {
                   <div>
                   <h1 className={classes["book-info_h1"]}>{book.buku.judul_buku}</h1>
                   <p style={{ marginTop:"0",paddingTop:"0"  }}>{book.buku.pengarang}</p>
+                  <div style={{ marginTop:"20px"}}>
+                    <p>Tanggal Dipinjam : {book.tanggal_pinjam}</p>
+                    <p>Deadline         : {book.tanggal_kembali}</p>
+                  
+                  </div>
                   </div>
                     <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
                 </div>
