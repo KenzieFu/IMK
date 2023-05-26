@@ -5,7 +5,7 @@ import { memo } from "react";
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from "react-router-dom";
 import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, } from "reactstrap";
 import classes from './adminbatch.module.css'
 
 export const UserPage = () => {
@@ -19,6 +19,7 @@ export const UserPage = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchBased, setSearchBased] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -37,13 +38,54 @@ export const UserPage = () => {
   };
 
   const [selectedStatus, setSelectedStatus] = useState([])
-  const [selectedSiswa, setSelectedSiswa] = useState()
+  console.log(akuns)
 
-  console.log(selectedStatus)
-  const handleUpdateStatusAktif = async (id) => {
+  const handlerSelectedStatus=(id)=>{
     setSelectedStatus((prevStatus) =>
     prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
   );
+  }
+
+
+  const handleDeleteBanyak = async (id) => {
+
+    try {
+
+      const response = await fetch('  http://localhost:8080/admin-perpustakaan-methodist-cw/akun', {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_akun: id,
+
+
+        })
+      });
+
+      const deletedData = await response.json();
+      console.log('Data deleted:', deletedData);
+
+      selectedStatus([])
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
+
+  const handleCheckAll = () => {
+    if (selectedStatus.length === akuns.length) {
+      // If all items are already selected, uncheck all
+      setSelectedStatus([]);
+    } else {
+      // Otherwise, select all items
+      const allIds = akuns.map((akun) => akun.id_akun);
+      setSelectedStatus(allIds);
+    }
+  };
+
+  const handleUpdateStatusAktif = async (id) => {
+
     try {
 
       const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
@@ -62,7 +104,6 @@ export const UserPage = () => {
       const createdData = await response.json();
       console.log('Data created:', createdData);
 
-      // Reset the form after successful creation
       selectedStatus([])
     } catch (error) {
       console.error('Error creating data:', error);
@@ -70,9 +111,7 @@ export const UserPage = () => {
   };
 
   const handleUpdateStatusTdkAktif = async (id) => {
-    setSelectedStatus((prevStatus) =>
-    prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
-  );
+
     try {
 
       const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
@@ -93,21 +132,31 @@ export const UserPage = () => {
 
       // Reset the form after successful creation
       selectedStatus([])
+
     } catch (error) {
       console.error('Error creating data:', error);
     }
   };
   const columns = [
     {
-      id: "id",
-  name: <span className={classes['data-row']}>Tes</span>,
-  selector: (row) =>
-    <input
-      type="checkbox"
+      id: "check",
+  name: <div>
+  <Input
+    type="checkbox"
+    checked={selectedStatus.length === akuns.length}
+    onChange={() => handleCheckAll()}
+    className={classes["check-all"]}
+  />
+  <span className={classes["data-row"]}>Check</span>
+</div>,
+  cell: (row) => (
+    <Input
+    type="checkbox"
       checked={selectedStatus.includes(row.id_akun)}
-      onChange={() => {handleUpdateStatusAktif(row.id_akun); handleUpdateStatusTdkAktif(row.id_akun)}}
+      onChange={() => { handlerSelectedStatus(row.id_akun) }}
       className={classes['data-rowid']}
-    />,
+    />
+  ),
       sortable: true,
       headerStyle: {
         fontWeight: "bold",
@@ -196,7 +245,7 @@ export const UserPage = () => {
         <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
-          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+          Filter <i class="fa fa-filter" arifa-hidden="true"></i>
         </Button>
       </div>
       {/* <div className="dropdown-content"> */}
@@ -236,22 +285,20 @@ export const UserPage = () => {
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
-<<<<<<< HEAD
-              title={<h1 className={classes['judul1']}>Akun</h1>}
-              data={loadedData.filter((item) => {
-                if (searchBased === "") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
-                  return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-                }
-              })}
-=======
+              // title={<h1 className={classes['judul1']}>Akun</h1>}
+              // data={loadedData.filter((item) => {
+              //   if (searchBased === "") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   }
+              // })}
               title={
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Akun</h1>
@@ -266,12 +313,11 @@ export const UserPage = () => {
                   item.hak_akses.toLowerCase().includes(keyword) ||
                   item.status.toLowerCase().includes(keyword)
                 )}
-               
+
               )}
->>>>>>> e3b4aa8571d54b0e4092df14fe2927df940ade00
               columns={columns}
               pagination
-              
+
               className="data-table" // Atribut selector CSS untuk DataTable
             />
           )}
@@ -281,7 +327,8 @@ export const UserPage = () => {
       {location.state && <div>{location.state.message}</div>}
       <Button onClick={()=>handleUpdateStatusAktif(selectedStatus)}>Aktif Akun</Button>
       <Button onClick={()=>handleUpdateStatusTdkAktif(selectedStatus)}>Non-aktifkan Akun</Button>
-      {/* <Button onClick={()=>handleUpdateStatusAktif(selectedStatus)}>Aktif</Button> */}
+      <Button onClick={()=>handleDeleteBanyak(selectedStatus)}>Hapus Akun</Button>
+
 
 
     </>
@@ -301,13 +348,16 @@ const loadAkuns = async () => {
     );
   } else {
     const resData = await response.json();
+
     return resData;
   }
 };
 
-export const loader = () => {
+export const loader = async() => {
+  const data = await loadAkuns()
+  const akun = data
   return defer({
-    akuns: loadAkuns(),
+    akuns: akun
   });
 };
 

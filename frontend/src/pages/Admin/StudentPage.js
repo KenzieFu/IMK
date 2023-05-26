@@ -23,6 +23,48 @@ export const StudentPage = () => {
     setDeleteModal(false);
     setCurrentId((prev) => prev);
   };
+  const [selectedSiswa, setSelectedSiswa] = useState([])
+
+  const handlerSelectedSiswa=(id)=>{
+    setSelectedSiswa((prevStatus) =>
+    prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
+  );
+  }
+  const handleCheckAll = () => {
+    if (selectedSiswa.length === students.length) {
+      // If all items are already selected, uncheck all
+      setSelectedSiswa([]);
+    } else {
+      // Otherwise, select all items
+      const allIds = students.map((student) => student.id_siswa);
+      setSelectedSiswa(allIds);
+    }
+  };
+  const handleDeleteBanyak = async (id) => {
+
+    try {
+
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/siswa-multiple', {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_siswa: id,
+
+
+        })
+      });
+
+      const deletedData = await response.json();
+      console.log('Data deleted:', deletedData);
+
+      selectedSiswa([])
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
 
   // const columns = [
   //   {
@@ -109,17 +151,33 @@ export const StudentPage = () => {
 
       const columns = [
         {
-            id:'id',
-            name:<span className={classes['data-row']}>ID Siswa</span>,
-            selector:(row) =>  <span className={classes['data-rowid']}>{row.id_siswa}</span>,
-            sortable:true,
-            headerStyle: {
-              fontWeight: "bold",
-              textAlign: "center",
-              justifyContent: "center",
-            },
-            width: "10%",
+          id: "check",
+      name: <div>
+      <Input
+        type="checkbox"
+        checked={selectedSiswa.length === students.length}
+        onChange={() => handleCheckAll()}
+        className={classes["check-all"]}
+      />
+      <span className={classes["data-row"]}>Check</span>
+    </div>,
+      cell: (row) => (
+        <Input
+        type="checkbox"
+          checked={selectedSiswa.includes(row.id_siswa)}
+          onChange={() => { handlerSelectedSiswa(row.id_siswa) }}
+          className={classes['data-rowid']}
+        />
+      ),
+          sortable: true,
+          headerStyle: {
+            fontWeight: "bold",
+            textAlign: "center",
+            justifyContent: "center",
+          },
+          width: "10%",
         },
+
         {
             id:"nisn",
             name: <span className={classes['data-row']}>NISN</span>,
@@ -169,9 +227,9 @@ export const StudentPage = () => {
             <Link to={`/admin/students/${row.id_siswa}`}  className={classes["detailbut"]}>
               Rincian &nbsp; <i class="fa fa-info-circle"></i></Link>{'                    '}{'       '}
             <input type="hidden" id='row' />
-            <span  onClick={()=>showModalHandler(row.id_siswa)} className={classes["delbut"]}> 
+            <span  onClick={()=>showModalHandler(row.id_siswa)} className={classes["delbut"]}>
             Hapus  &nbsp; <i class="fa fa-minus-circle" aria-hidden="true"></i> </span>
-                  
+
             </div>
           ),
           headerStyle: {
@@ -253,6 +311,8 @@ export const StudentPage = () => {
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
+      <Button onClick={()=>handleDeleteBanyak(selectedSiswa)}>Hapus Siswa</Button>
+
     </>
   );
 };
@@ -273,9 +333,11 @@ const loadStudents = async () => {
   }
 };
 
-export const loader = () => {
+export const loader = async() => {
+  const data = await loadStudents()
+  const student = data
   return defer({
-    students: loadStudents(),
+    students: student
   });
 };
 

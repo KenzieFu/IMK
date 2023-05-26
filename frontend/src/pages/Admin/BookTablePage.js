@@ -27,6 +27,9 @@ export const BookTablePage = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchBased, setSearchBased] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [selectedBook, setSelectedBook] = useState([])
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -40,7 +43,74 @@ export const BookTablePage = () => {
     setCurrentId((prev) => prev);
   };
 
+  const handlerSelectedBook=(id)=>{
+    setSelectedBook((prevStatus) =>
+    prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
+  );
+  }
+  const handleCheckAll = () => {
+    if (selectedBook.length === books.length) {
+      // If all items are already selected, uncheck all
+      setSelectedBook([]);
+    } else {
+      // Otherwise, select all items
+      const allIds = books.map((buku) => buku.id_buku);
+      setSelectedBook(allIds);
+    }
+  };
+  const handleDeleteBanyak = async (id) => {
+
+    try {
+
+      const response = await fetch(' http://localhost:8080/admin-perpustakaan-methodist-cw/buku-multiple', {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_buku: id,
+
+
+        })
+      });
+
+      const deletedData = await response.json();
+      console.log('Data deleted:', deletedData);
+
+      selectedBook([])
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
   const columns = [
+    {
+      id: "check",
+  name: <div>
+  <Input
+    type="checkbox"
+    checked={selectedBook.length === books.length}
+    onChange={() => handleCheckAll()}
+    className={classes["check-all"]}
+  />
+  <span className={classes["data-row"]}>Check</span>
+</div>,
+  cell: (row) => (
+    <Input
+    type="checkbox"
+      checked={selectedBook.includes(row.id_buku)}
+      onChange={() => { handlerSelectedBook(row.id_buku) }}
+      className={classes['data-rowid']}
+    />
+  ),
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
+    },
     {
       id: "id",
       name: <div className={classes["data-row"]}>ID Buku</div>,
@@ -126,7 +196,7 @@ export const BookTablePage = () => {
   return (
     <>
       <div className={classes["search-button"]}>
-        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} /> 
+        <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
           Filter <i class="fa fa-filter" aria-hidden="true"></i>
@@ -196,6 +266,8 @@ export const BookTablePage = () => {
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
+      <Button onClick={()=>handleDeleteBanyak(selectedBook)}>Hapus Akun</Button>
+
     </>
   );
 };
@@ -216,10 +288,13 @@ const loadBooks = async () => {
   }
 };
 
-export const loader = () => {
+export const loader = async() => {
+  const data = await loadBooks()
+  const book = data
   return defer({
-    books: loadBooks(),
+    books: book,
   });
+
 };
 
 export async function action({ params, request }) {
