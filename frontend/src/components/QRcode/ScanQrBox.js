@@ -55,21 +55,19 @@ export const ScanQrBox = (props) => {
   };
   return (
     <>
-    <div style={{ display:"flex",alignContent:"center", textAlign:"center", flexDirection:"column"}} >
- 
-    <div style={{ textAlign:"center" ,margin:"auto" }} >
+    <div className={classes['qrscan']}>
+    <div className={classes['qrcont']}>
     {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
-     <QrReader
-         
+     <QrReader  
         scanDelay={500}
         onResult={scanHandler}
-       containerStyle={{ width:"500px" ,height:'600px' }}
+       containerStyle={{ width:"100px" ,height:'300px' }}
        videoContainerStyle={{ width:'500px', height:"550px" }}
         ViewFinder={()=>QrOverlay(scan)}
       /></Form>}
       </div>
-      
-      <div style={{ display:"block" }}>
+
+      <div>
       <button onClick={showHandler}>{!showCamera?"Open Camera":"Close Camera"}</button>
       <p>{data.nama_lengkap } {props.label}</p>
       </div>
