@@ -45,7 +45,7 @@ export const StudentPage = () => {
   const { pinjam, kembali, booking } = useLoaderData("pinjam-kembali-booking-buku")
   console.log(booking)
   /* const CekKembali = kembali.filter(item => item.id_siswa === akun.user.id_siswa); */
-  const CekBooking = booking.filter(item => item.id_siswa === akun.user.id_siswa);
+  const CekBooking = booking.filter(item => item?.id_siswa === akun.user?.id_siswa);
   console.log(CekBooking)
 
   if (!isAuth) {
@@ -114,7 +114,7 @@ const loadReturned = async (id) => {
 
     const resData = await response.json();
     console.log(resData)
-    return resData.peminjaman;
+    return resData;
   
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
