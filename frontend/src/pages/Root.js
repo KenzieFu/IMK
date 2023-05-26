@@ -20,6 +20,7 @@ const authen=useSelector(state=>state.auth.isAuth);
 const dispatch=useDispatch();
 const navigate=useNavigate();
 const user = useSelector(state=>state.auth.user)
+const [rerender,setRender]=useState(false);
 
 console.log(token);
 
@@ -91,12 +92,13 @@ useEffect(()=>{
 const closeCartModal=()=>{
     setShowCart(false);
 }
+
   return (
     <>
    <CartProvider>
         <div style={{background:"#f4f1f1", minHeight:"100vh" }} className="App">
           {showLogin &&<LoginModal onClose={closeLoginModal}/>}
-          {showCart && <Cart onClose={closeCartModal}/>}
+          {showCart && <Cart  onClose={closeCartModal}/>}
     <Navbar style={{position:"relative"}} onClick={showLoginModal} onClickCart={showCartModal} />
     <main>
       <Outlet/>

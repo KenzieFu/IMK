@@ -68,7 +68,7 @@ export const LibraryPage = () => {
         </>
       }
 
-      {!check &&
+      {/* {!check &&
         <>
         <Suspense fallback={<p style={{ textAlign:"center" }}>Loading.....</p>}>
           <Await resolve={popular}>
@@ -77,7 +77,7 @@ export const LibraryPage = () => {
         </Suspense>
 
         </>
-        }
+        } */}
 
       </div>
       {!check &&

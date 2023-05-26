@@ -43,6 +43,7 @@ const navigation = [
     href:"/admin/booked-books",
     icon:"bi bi-book"
   },
+<<<<<<< HEAD
   {
     title:"HomePage",
     href:"/",
@@ -62,6 +63,27 @@ const navigation = [
       },
     ],
   },
+=======
+  // {
+  //   title:"HomePage",
+  //   href:"/",
+  //   icon:"bi bi-calendar-event text-primary"
+  // },
+  // {
+  //   title: "Histori",
+  //   icon: "bi bi-journals",
+  //   dropdown: [
+  //     {
+  //       title: "Books History",
+  //       href: "/admin/history/page1",
+  //     },
+  //     {
+  //       title: "Page 2",
+  //       href: "/admin/history/page2",
+  //     },
+  //   ],
+  // },
+>>>>>>> c506e4b96eb2babcae57909b2d448adc1bd3ed15
   /* {
     title: "Alert",
     href: "/admin/alerts",

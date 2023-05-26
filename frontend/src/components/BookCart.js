@@ -5,11 +5,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./BookCart.module.css";
 
 export default function Cart(props) {
-
+    const location=useLocation();
     const authen = useSelector(state => state.auth.isAuth);
     const akun = useSelector((state) => state.auth.user)
     const navigate = useNavigate();
@@ -65,6 +65,27 @@ export default function Cart(props) {
         progress: undefined,
         theme: "colored",
     });
+    const bookingAda = () => toast.error('Kamu sudah pesan buku ini! Ayo segera ambil di perpustakaan!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const cartPeminjamanMax = () => toast.warning("Pemesanan buku sudah mencapai batas maksimal, Anda hanya dapat meminjam buku maksimal 3 eksemplar"
+    , {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
 
     const [hidden, setHidden] = React.useState(false)
 
@@ -90,6 +111,8 @@ export default function Cart(props) {
                     id_siswa: akun.user.id_siswa,
                     id_buku: bukuId
                 }
+
+                const length=bukuId.length +
                 console.log(bukuId)
                 console.log(akun.user.id_siswa)
                 const response = await fetch(url, {
@@ -101,13 +124,35 @@ export default function Cart(props) {
                     body: JSON.stringify(tes)
                 });
 
+                
+
+                if(response.status === 500)
+                {
+                    cartPeminjamanMax()
+                   
+                    return
+                }
+                if(response.status === 501)
+                {
+                    bookingAda()
+                    //remove item
+                    const resData=await response.data
+                    items.filter(item=>item.id)
+                    emptyCart();
+                    return
+                }
+
                 console.log(tes)
                 const createdData = await response.json();
 
                 console.log('Data created:', createdData);
                 emptyCart()
                 sukses()
+                navigate(location.pathname);
+              
             }
+            
+  
 
         } catch (error) {
             console.error('Error creating data:', error);
@@ -134,7 +179,7 @@ export default function Cart(props) {
                                 <>
                                     <div className={classes['maincontent']} key={item.id} style={{  }}>
                                         <div className={classes['gambarnya']}>
-                                        <img src="../assets/BookCover.png" className={classes['imgall']} />
+                                        <img src={`http://localhost:8080${item.gambar}`} className={classes['imgall']} />
                                         </div>
                                         <div className={classes['tablecon']}>
                                             <table>

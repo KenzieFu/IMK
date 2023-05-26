@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from "./StudentPage.module.css";
 import { Sidebar } from '../UI/Sidebar';
 import { StudentChart } from '../components/StudentChart';
@@ -10,7 +10,6 @@ import { Navigate, defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
 import { QRCodeBox } from '../components/QRcode/QRCodeBox';
-import { useCart } from "react-use-cart";
 import { BookingBuku } from './BookingBuku';
 import { PengembalianBuku } from './PengembalianBuku';
 
@@ -19,7 +18,19 @@ export const StudentPage = () => {
   const [showPinjam, setShowPinjam] = useState(true);
   const [showKembali, setShowKembali] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
+  const[render,setRender]=useState(false);
   const isAuth = useSelector(state => state.auth.isAuth);
+  const akun=useSelector(state=>state.auth.user)
+
+
+
+  console.log(render)
+
+
+const renderHandler=()=>{
+
+  setRender(prev=>!prev);
+}
 
 
   const pinjamHandler = () => {
@@ -41,10 +52,10 @@ export const StudentPage = () => {
 
 
 
-  const { pinjam, kembali, booking } = useLoaderData("pinjam-kembali-booking-buku")
+  const { pinjam, kembali, booking,count } = useLoaderData("pinjam-kembali-booking-buku")
   console.log(booking)
-  const CekKembali = kembali.filter(item => item.id_siswa === 1);
-  const CekBooking = booking.filter(item => item.id_siswa === 1);
+  /* const CekKembali = kembali.filter(item => item.id_siswa === akun.user.id_siswa); */
+  const CekBooking = booking.filter(item => item?.id_siswa === akun.user?.id_siswa);
   console.log(CekBooking)
 
   if (!isAuth) {
@@ -56,7 +67,12 @@ export const StudentPage = () => {
 
       <Sidebar />
       <div>
-        <StudentChart showPinjam={showPinjam} showKembali={showKembali} showBooking={showBooking} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler} showBookingHandler={bookingHandler} />
+        <Suspense>
+          <Await resolve={count}>
+          {loadedData =><StudentChart count={loadedData} showPinjam={showPinjam} showKembali={showKembali} showBooking={showBooking} showPinjamHandler={pinjamHandler} showKembaliHandler={kembaliHandler} showBookingHandler={bookingHandler} />}
+          </Await>
+        </Suspense>
+       
         <div className={classes["list-books"]}>
           {showPinjam && <Suspense fallback={<p>Loading...</p>}>
             <Await resolve={pinjam}>
@@ -65,14 +81,16 @@ export const StudentPage = () => {
           </Suspense>}
 
           {showKembali && <Suspense fallback={<p>Loading...</p>}>
-
-            <PengembalianBuku books={CekKembali} />
+              <Await resolve={kembali}>
+              {loadedData=><PengembalianBuku books={loadedData} />}
+              </Await>
+            
 
           </Suspense>}
 
           {showBooking && <Suspense fallback={<p>Loading...</p>}>
 
-            <BookingBuku books={CekBooking} />
+            <BookingBuku rerender={renderHandler} books={CekBooking} />
 
           </Suspense>}
 
@@ -89,10 +107,7 @@ export const StudentPage = () => {
             {loadedData => <LatestBook latest={loadedData.filter((book, i, { length }) => i === length - 1)} />}
           </Await>
         </Suspense>
-
       </div>
-
-
     </div>
 
 
@@ -101,7 +116,7 @@ export const StudentPage = () => {
 
 const loadReturned = async (id) => {
 
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/siswa/buku/histori-pengembalian/" + id)
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian/" + id)
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -111,15 +126,15 @@ const loadReturned = async (id) => {
       }
     );
   }
-  else {
+
     const resData = await response.json();
-    console.log(resData.pengembalian)
-    return resData.pengembalian;
-  }
+    console.log(resData)
+    return resData;
+  
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
-const loadBorrowed = async () => {
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian")
+const loadBorrowed = async (id) => {
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -131,10 +146,12 @@ const loadBorrowed = async () => {
   }
   else {
     const resData = await response.json();
-    console.log(resData.peminjaman)
-    return resData.peminjaman;
+   /*  console.log(resData.peminjaman) */
+    return resData;
   }
 }
+
+
 
 const loadBooking = async (id) => {
   const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/")
@@ -155,17 +172,46 @@ const loadBooking = async (id) => {
 }
 
 export async function loader(id) {
-  const data = await loadBorrowed();
-  const dataB = await loadBooking();
-  const peminjamanData = data;
+  const data = await loadBorrowed(id);
+  const dataB = await loadBooking(id);
+  const dataR= await loadReturned(id)
+    const count ={
+      countPeminjaman:data.length,
+      countPemesanan :dataB.filter((data)=>data.siswa.id_siswa === id).length,
+    }
   const bookingData = dataB
 
   return defer({
     pinjam: loadBorrowed(id),
-    kembali: peminjamanData,
-    booking: bookingData,
+    kembali: dataR,
+    booking: dataB,
+    count:count
 
   })
+}
+
+export const action=async({params,request})=>{
+  let url="http://localhost:8080/perpustakaan-methodist-cw/pemesanan-batal/";
+  const data=await request.formData()
+
+  const response = await fetch(url+ data.get("id_pemesanan"), {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer",
+    },
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: "Could not delete Item." },
+      {
+        status: 500,
+      }
+    );
+  }
+  return response
+
+
 }
 
 
