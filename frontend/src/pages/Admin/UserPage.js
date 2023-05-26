@@ -40,7 +40,36 @@ export const UserPage = () => {
   const [selectedSiswa, setSelectedSiswa] = useState()
 
   console.log(selectedStatus)
-  const handleUpdateStatus = async (id) => {
+  const handleUpdateStatusAktif = async (id) => {
+    setSelectedStatus((prevStatus) =>
+    prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
+  );
+    try {
+
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_akun: id,
+          status: "Aktif"
+
+        })
+      });
+
+      const createdData = await response.json();
+      console.log('Data created:', createdData);
+
+      // Reset the form after successful creation
+      selectedStatus([])
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
+
+  const handleUpdateStatusTdkAktif = async (id) => {
     setSelectedStatus((prevStatus) =>
     prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
   );
@@ -76,7 +105,7 @@ export const UserPage = () => {
     <input
       type="checkbox"
       checked={selectedStatus.includes(row.id_akun)}
-      onChange={() => handleUpdateStatus(row.id_akun)}
+      onChange={() => {handleUpdateStatusAktif(row.id_akun); handleUpdateStatusTdkAktif(row.id_akun)}}
       className={classes['data-rowid']}
     />,
       sortable: true,
@@ -158,62 +187,6 @@ export const UserPage = () => {
   ];
 
 
-  // const columns = [
-  //   {
-  //     id: "id",
-  //     name: "ID",
-  //     selector: (row) => row.id_akun,
-
-  //     sortable: true,
-  //   },
-  //   {
-  //     id: "username",
-  //     name: "Username",
-  //     selector: (row) => row.username,
-  //     accessor: "username",
-  //     sortable: true,
-  //   },
-  //   {
-  //     id: "tipe",
-  //     accessor: "accessor",
-  //     name: "Hak Akses",
-  //     selector: (row) => row.hak_akses,
-  //     sortable: true,
-  //   },
-  //   {
-  //     id: "button",
-  //     name: "Action",
-  //     width: "30%",
-  //     cell: (row) => (
-  //       <div style={{ margin: "0 0" }}>
-  //         <Link to={`/admin/user/${row.id_akun}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>
-  //           Detail
-  //         </Link>
-  //         {"                    "}
-  //         {"       "}
-  //         <input type="hidden" id="row" />
-  //         <span onClick={() => showModalHandler(row.id_akun)} style={{ cursor: "pointer" }}>
-  //           Delete
-  //         </span>
-  //       </div>
-  //     ),
-
-  //     ignoreRowClick: true,
-  //     allowOverflow: true,
-  //     selector: (row) => row.button,
-  //     button: true,
-  //   },
-  // ];
-  /* const [data,setData]=useState(DUMMY_USER);
-
-
-    const deleteHandler=(id,e)=>{
-        e.preventDefault();
-
-        const updatedData=data.filter(item=>item.id !== id);
-        console.log("deleted" );
-        setData(updatedData);
-    } */
   return (
     <>
       <div className={classes["search-button"]}>
@@ -260,11 +233,7 @@ export const UserPage = () => {
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
-              title={
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
-                  <h1 className={classes["judul1"]}>Tabel Akun</h1>
-                </div>
-              }
+              title={<h1 className={classes['judul1']}>Akun</h1>}
               data={loadedData.filter((item) => {
                 if (searchBased === "") {
                   return item.username.toLowerCase().includes(searchTerm.toLowerCase());
@@ -287,61 +256,14 @@ export const UserPage = () => {
       </Suspense>
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
-      <Button onClick={()=>handleUpdateStatus(selectedStatus)}></Button>
+      <Button onClick={()=>handleUpdateStatusAktif(selectedStatus)}>Aktif Akun</Button>
+      <Button onClick={()=>handleUpdateStatusTdkAktif(selectedStatus)}>Non-aktifkan Akun</Button>
+      {/* <Button onClick={()=>handleUpdateStatusAktif(selectedStatus)}>Aktif</Button> */}
+
 
     </>
   );
 
-  // return (
-  //   <>
-  //     <Input type="text" placeholder="Cari Username..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-  //     <Button onClick={() => setAdvanceSearch(!advanceSearch)}>Pencarian Lebih Lanjut</Button>
-  //     {advanceSearch && (
-  //       <>
-  //         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-  //           <DropdownToggle caret>Tampilkan data berdasarkan:</DropdownToggle>
-  //           <DropdownMenu>
-  //             <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
-  //             <DropdownItem divider />
-  //             <DropdownItem header>Hak Akses</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("siswa")}>Siswa</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("admin")}>Admin</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("petugas")}>Petugas</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("kasir")}>Kasir</DropdownItem>
-  //           </DropdownMenu>
-  //         </Dropdown>
-  //         <div></div>
-  //       </>
-  //     )}
-
-  //     <Suspense fallback="">
-  //       <Await resolve={akuns}>
-  //         {(loadedData) => (
-  //           <DataTable
-  //             title="Tabel User"
-  //             data={loadedData.filter((item) => {
-  //               if (searchBased === "") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               }
-  //             })}
-  //             columns={columns}
-  //             pagination
-  //           />
-  //         )}
-  //       </Await>
-  //     </Suspense>
-  //     {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
-  //     {location.state && <div>{location.state.message}</div>}
-  //   </>
-  // );
 };
 
 const loadAkuns = async () => {
