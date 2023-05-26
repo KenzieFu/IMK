@@ -11,10 +11,10 @@ export const Sidebar = () => {
     <div className={classes.sidebar}>
         <nav className={classes["side-nav"]}>
           <ul >
-            <Link to="/"><img src='../assets/home.svg'></img></Link>
-            <Link to="/calender"><img src='../assets/icon1.svg'></img></Link>
-            <Link to="/assignment"><img src='../assets/icon2.svg'></img></Link>
-            <Link to="/history"><img src='../assets/icon3.svg'></img></Link>
+            <NavLink to="/"><img src='../assets/home.svg'></img></NavLink>
+            <NavLink to="/calender"><img src='../assets/icon1.svg'></img></NavLink>
+            <NavLink to="/assignment"><img src='../assets/icon2.svg'></img></NavLink>
+            <NavLink to="/history"><img src='../assets/icon3.svg'></img></NavLink>
           </ul>
             <div className={classes["sidedown"]}>
           <ul>
