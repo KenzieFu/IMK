@@ -1,3 +1,50 @@
+:root{
+        --white:#ffffff;
+        --blue:#2e55ba; 
+        --accentblack:rgb(58, 58, 58);
+        --red:#FF5959;
+        --addgray:#DBD0C0;
+        --gray:#FAEEE0; 
+        --beige:#F9CF93;
+        --lbeige:#FAEEE0;
+        --green:#4ef441;
+    
+        --white-light:#ffffff;
+        --blue-light:#2e55ba;
+        --blue2-light:#3f87de;
+        --accentblack-light:rgb(58, 58, 58);
+        --red-light:#FF5959;
+        --gray-light:#f4f1f1;
+        --addgray-light:#e3e3e3;
+        --beige-light:#F9CF93;
+        --lbeige-light:#FAEEE0;
+        --green-light: #7ffe73;
+        --grey-new: #F7f7f7;
+    
+    
+        --white-dark:#ffffff;
+        --blue-dark:#2e55ba;
+        --accentblack-dark:rgb(58, 58, 58);
+        --red-dark:#FF5959;
+        --gray-dark:#f4f1f1;
+        --addgray-dark:#e3e3e3;
+        --beige-light:#F9CF93;
+        --lbeige-light:#FAEEE0;
+        --green-dark:#42cf35;
+    
+    }
+    
+    @media(prefers-color-scheme: dark){
+        :root{
+            --white: var(--white-dark);
+            --blue: var(--blue-dark);
+            --accentblack: var(--accentblack-dark);
+            --red: var(--red-dark);
+            --gray: var(--gray-dark);
+        }
+    }
+    
+
 .wajibstar{
         color: #FF5959;
 }
@@ -164,8 +211,8 @@ textarea {
         background-color: darkblue;
 }
 
-.button button:hover {
-        border-radius: 10px;
+/* .button button:hover {
+        border-radius: 10px; 
         border: 0;
         padding: 8px;
         padding-left: 15px;
@@ -174,7 +221,7 @@ textarea {
         margin-right: 100px;
         color: aliceblue;
         background-color: darkblue;
-}
+} */
 
 .button button:disabled {
         border-radius: 10px;
@@ -193,18 +240,18 @@ textarea {
         color: black;
 }
 
-.reset {
+/* .reset {
         background-color: #D9D9D9;
         color: black;
-}
+} */
 .edit {
         background-color: #edebeb;
         color: black;
 }
-.cancel {
+/* .cancel {
         background-color: red;
         color: black;
-}
+} */
 
 .stepper {
         display: flex;
@@ -222,3 +269,38 @@ textarea {
         justify-content: space-between;
 }
 
+
+ .cancel1, .cancel, .reset, .submit{
+        font-size: 14px;
+        background-color: var(--white-light);
+        padding: 0.5vw 1.2vw;
+        border-radius: 0.6vw;
+        cursor: pointer;
+        transition: all .3s ease;
+        border-color: var(--white-light);
+    }
+
+    .cancel1, .reset{
+        color: var(--red-light);
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+    
+    .cancel1:hover, .reset:hover{
+        background-color: var(--red-light);
+        color: var(--white-light);
+        transform: translateY(-0.3vw);
+        text-decoration: none;
+        border-color: var(--red-light);
+    }
+
+    .submit, .cancel {
+        color: var(--green-dark);
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+    .submit:hover, .cancel:hover {
+        background-color: var(--green-light);
+        color: var(--white-light);
+        transform: translateY(-0.3vw);
+        text-decoration: none;
+        border-color: var(--green-light);
+    }
