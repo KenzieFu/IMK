@@ -61,14 +61,14 @@ export const ScanQrBox = (props) => {
      <QrReader  
         scanDelay={500}
         onResult={scanHandler}
-       containerStyle={{ width:"100px" ,height:'300px' }}
+       containerStyle={{ width:"500px" ,height:'500px' }}
        videoContainerStyle={{ width:'500px', height:"550px" }}
         ViewFinder={()=>QrOverlay(scan)}
       /></Form>}
       </div>
 
       <div>
-      <button onClick={showHandler}>{!showCamera?"Open Camera":"Close Camera"}</button>
+      <button className={classes['buttz']} onClick={showHandler}>{!showCamera?"Buka Camera":"Tutup Camera"}</button>
       <p>{data.nama_lengkap } {props.label}</p>
       </div>
       

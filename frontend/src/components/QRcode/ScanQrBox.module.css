@@ -15,3 +15,11 @@
     align-items: center;
     flex-direction: column;
 }
+
+.buttz{
+    font-size: 1.2vw;
+    background-color: var(--red-light);
+    border-radius: 0.4vw;
+    color: var(--white-light);
+    padding: 0.5vw;
+}
