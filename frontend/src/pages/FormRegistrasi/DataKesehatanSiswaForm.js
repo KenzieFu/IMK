@@ -40,9 +40,9 @@ export const DataKesehatan = (props) => {
     const navigate = useNavigate();
 
     const schema = yup.object().shape({
-        // goldar: yup.string().required("Wajib diisi"),
-        // berat_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
-        // tinggi_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
+         goldar: yup.string().required("Wajib diisi"),
+         berat_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
+         tinggi_badan: yup.number().typeError('Wajib diisi').positive("Mohon input angka yang valid").required("Wajib diisi"),
     })
 
     const { register, control, handleSubmit, reset, formState, } = useForm({
@@ -121,7 +121,7 @@ export const DataKesehatan = (props) => {
                             <div className={classes.row}>
                                 <label htmlFor='goldar'>Golongan Darah</label>
                                 <span style={{ color: "red" }}>*</span>
-                                <Select id="goldar" name="goldar" defaultValue={goldarOpsi[0]} options={goldarOpsi} value={goldarValue ? goldarOpsi.find(x => x.value === goldarValue) : goldarValue} onChange={option => selectGoldarChangeHandler(option ? option.value : option)} {...restGoldarField} />
+                                <Select  id="goldar" name="goldar" /* defaultValue={goldarOpsi[0]} */ options={goldarOpsi} value={goldarValue ? goldarOpsi.find(x => x.value === goldarValue) : goldarValue} onChange={option => selectGoldarChangeHandler(option ? option.value : option)} {...restGoldarField} />
                                 {errors.goldar && <p className={classes.error}>{errors.goldar.message}</p>}
                             </div>
                             <div className={classes.row}>
