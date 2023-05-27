@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams } from 'react-router-dom';
+import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams, useSubmit } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 
 
@@ -37,6 +37,12 @@ function BookForm({method,book}) {
     const mergedOptions = [...data1, ...data2];
     return mergedOptions;
   };
+  const submit =useSubmit();
+
+  const submitHandler=(e)=>{
+    console.log("jasnofa");
+    submit(e.currentTarget,{method:method})
+  }   
 
 
   return (
@@ -44,8 +50,9 @@ function BookForm({method,book}) {
       <Form method={method}>
               <h2>Id Buku : {book.id_buku}</h2>
               <input hidden name='id_buku' value={book.id_buku} />
-              <FormGroup>
-                <Label for="exampleBook">Judul Buku</Label>
+              <div /* className={classes['form-grup']} */>
+              <FormGroup >  
+                <Label /* className={classes['label']} */ for="exampleBook">Judul Buku</Label>
                 <Input
                   defaultValue={book.judul_buku??null}
                   id="exampleBook"
@@ -58,7 +65,6 @@ function BookForm({method,book}) {
                 <Label for="examplePengarang">Pengarang</Label>
                 <Input
                   defaultValue={book.pengarang??null}
-                  value={book.pengarang??null}
                   id="examplePengarang"
                   name="pengarang"
                   placeholder={book.pengarang??null}
@@ -69,7 +75,7 @@ function BookForm({method,book}) {
                 <Label for="examplePenerbit">Penerbit</Label>
                 <Input
                   defaultValue={book.penerbit??null}
-                  value={book.penerbit??null}
+                 
                   id="examplePenerbit"
                   name="penerbit"
                   placeholder={book.penerbit??null}
@@ -80,7 +86,7 @@ function BookForm({method,book}) {
                 <Label for="tahunTerbit">Tahun Terbit</Label>
                 <Input
                   defaultValue={book.tahun_terbit??null}
-                  value={book.tahun_terbit??null}
+                 
                   id="tahunTerbit"
                   name="tahun_terbit"
                   placeholder={book.tahun_terbit??null}
@@ -88,21 +94,21 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="tahunTerbit">Kategori</Label>
-                <select value={kategori.nama_kategori}>
-                  <option value={kategori.nama_kategori} >Pilih Kategori</option>
-                      {kategori.map((kategori) => (
-                      <option key={kategori.id_kategori} value={kategori.nama_kategori}>
-                    {kategori.nama_kategori}
-                  </option>
-              ))}
+                <Label /* className={classes['label']} */ for="tahunTerbit">Kategori</Label>
+                <select style={{marginLeft: 13, width: 150, height: 30, borderRadius: 3}} value={book.id_kategori}>
+                <option value="">Pilih Kategori</option>
+                  {kategori.map((kategori) => (
+                    <option key={kategori.nama_kategori} value={kategori.id_kategori}>
+                      {kategori.nama_kategori}
+                    </option>
+                  ))}
             </select>
               </FormGroup>
               <FormGroup>
                 <Label for="sinopsis">Sinopsis</Label>
                 <Input
                   defaultValue={book.sinopsis??null}
-                  value={book.sinopsis??null}
+                
                   id="sinopsis"
                   name="sinopsis"
                   placeholder={book.sinopsis??null}
@@ -115,16 +121,19 @@ function BookForm({method,book}) {
                 <Label for="exampleIsbn">ISBN</Label>
                 <Input
                   defaultValue={book.isbn??null}
-                  value={book.isbn??null}
+                  
                   id="exampleIsbn"
                   name="isbn"
                   placeholder={book.isbn??null}
                   type="text"
                 />
               </FormGroup>
-
-              <Button onClick={backHandler}>Cancel</Button>
-              <Button type='submit' style={{ background:"green" }}>Save</Button>
+              </div>
+              
+              <div/*  className={classes['batchbut1']} */>
+              <Button onClick={backHandler} /* className={classes['delbut']} */>Batalkan</Button>
+              <Button onClick={(e)=>submitHandler(e)}  /* className={classes['savbut']} */ >Simpan</Button>
+              </div>
 
             </Form>
     </>
@@ -138,6 +147,7 @@ export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
 
+  console.log("sadjsapps")
   const bukuData = {
     id_buku: data.get('id_buku'),
     judul_buku: data.get('judul_buku'),
@@ -147,6 +157,8 @@ export async function action({ request, params }) {
     sinopsis: data.get('sinopsis'),
     isbn: data.get('isbn'),
   };
+  console.log(params.bookId);
+  console.log(bukuData);
 
 
     const id = params.bookId;

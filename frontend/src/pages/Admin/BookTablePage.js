@@ -310,6 +310,7 @@ export const BookTablePage = () => {
   );
 };
 
+
 const loadBooks = async () => {
   const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/buku");
   console.log(response);
@@ -325,6 +326,7 @@ const loadBooks = async () => {
     return resData;
   }
 };
+
 
 export const loader = async() => {
   const data = await loadBooks()

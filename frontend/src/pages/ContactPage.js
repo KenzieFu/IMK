@@ -5,12 +5,43 @@ import { Fragment } from "react";
 import { Sidebar } from "../UI/Sidebar";
 import { useSelector } from "react-redux";
 
+import { Form, useSubmit } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const { useState } = React;
 
 
 const Contact = (props) => {
 const isAuth = useSelector((state)=>state.auth.isAuth);
+const submit =useSubmit()
+const submitHandler=(e)=>{
+    submit(e.currentTarget,{method:"POST"})
+
+    document.getElementById("formpesan").reset()
+    notify()
+}
+const notify = () => toast.success('Pesan berhasil ditambahkan', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+});
+
+
+const gagal = () => toast.warning('Pesan Gagal Ditambahkan', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+});
     return (
         <Fragment>
 
@@ -22,29 +53,29 @@ const isAuth = useSelector((state)=>state.auth.isAuth);
                             <h1>Hubungi Kami</h1>
                             <p>Our friendly team would love to hear from you!</p>
                             </div>
-                            <form>
+                            <Form id="formpesan" method="POST">
                                 <div className={classes['content-input']}>
                                     <label htmlFor='nama'>Nama Lengkap</label>
-                                    <input name="nama" type="text" placeholder="Nama Lengkap"></input>
+                                    <input required name="nama" type="text" placeholder="Nama Lengkap"></input>
                                 </div>             
                                 <div className={classes['content-input']}>
                                     <label htmlFor='email'>Email</label>
-                                    <input name="email" type="email" placeholder="nama@mail.com"></input>
+                                    <input pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required name="email" type="email" placeholder="nama@mail.com"></input>
                                 </div>
                                 <div className={classes['content-input']}>
                                     <label htmlFor='no_HP'>Nomor HP/ WhatsApp</label>
-                                    <input name="no_HP" type="number" placeholder="(08)-123456789"></input>
+                                    <input required name="no_HP" type="number" placeholder="(08)-123456789"></input>
                                 </div>
                                 <div className={classes['content-input']}>
                                     <label htmlFor='subject'>Subjek</label>
-                                    <input name="subject" type="text" placeholder="Perihal"></input>
+                                    <input required name="subjek" type="text" placeholder="Perihal"></input>
                                 </div>
                                 <div className={classes['content-input']}>
                                     <label htmlFor='pesan'>Pesan</label>
                                     <textarea name="pesan" rows="6"></textarea>
                                 </div>
-                                <button className={classes['kirimbutton']}>Kirim Pesan</button>
-                            </form>
+                                <button type="submit" onClick={(e)=>submitHandler(e)} className={classes['kirimbutton']}>Kirim Pesan</button>
+                            </Form >
                         </div>
                         <div className={classes['maps']}>
                             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15928.549808925341!2d98.6774323!3d3.5557885!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303130140e390193%3A0xca430cedd941f45f!2sMethodist%20Charles%20Wesley!5e0!3m2!1sen!2sid!4v1681642945352!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -128,3 +159,29 @@ const isAuth = useSelector((state)=>state.auth.isAuth);
 }
 
 export default Contact
+
+
+
+export const action = async({request})=>{
+ 
+    const formData=await request.formData();
+    console.log(formData.get("nama"));
+    const value={
+        nama:formData.get("nama"),
+        email:formData.get('email'),
+        no_HP:formData.get("no_HP"),
+        subjek:formData.get('subjek'),
+        pesan:formData.get('pesan')
+    }
+    console.log(value)
+    const response=await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/pesan-masuk",
+    {
+        method:"POST",
+        headers:{
+            'Content-Type':"application/json",
+            'Authorization':"Bearer"
+        },
+        body:JSON.stringify(value)
+    });
+    return response
+}

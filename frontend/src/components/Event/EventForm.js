@@ -12,7 +12,7 @@ export const EventForm = ({onClose,currentDate,method,children,event,changeList,
   const convertDate=`${currentDate.year}-${('0'+month).slice(-2)}-${('0'+currentDate.day).slice(-2)}`
  const formData=useRef();
   const submitHandler=(e)=>{
- 
+    
     submit(e.currentTarget,{method:method});
     if(method ==="PUT")
     {

@@ -12,6 +12,7 @@ export const BookPesan = ({book,rerender}) => {
   const handleDelete=async(id)=>{
 
     const formData=new FormData(formRef.current);
+    console.log(id)
     formData.append("id_pemesanan",id)
     submit(formData,{method:"DELETE"});
     handleModal();
