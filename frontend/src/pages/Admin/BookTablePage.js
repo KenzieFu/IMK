@@ -275,7 +275,11 @@ export const BookTablePage = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Buku</h1>
                   <Link to="create" className={classes["buttoncreate"]}>
-                    <i class="bi bi-book"> Tambah Buku</i>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 8V19C3 21.201 4.794 22 6 22H21V20H6.012C5.55 19.988 5 19.806 5 19C5 18.899 5.009 18.809 5.024 18.727C5.136 18.151 5.608 18.01 6.012 18H21V4C21 2.897 20.103 2 19 2H6C4.794 2 3 2.799 3 5V8ZM6 4H19V16H5V5C5 4.194 5.55 4.012 6 4Z" fill="white"/>
+<path d="M11 14H13V11H16V9H13V6H11V9H8V11H11V14Z" fill="white"/>
+</svg>
+
                   </Link>
                 </div>
               }
@@ -303,6 +307,7 @@ export const BookTablePage = () => {
   );
 };
 
+
 const loadBooks = async () => {
   const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/buku");
   console.log(response);
@@ -318,6 +323,7 @@ const loadBooks = async () => {
     return resData;
   }
 };
+
 
 export const loader = async() => {
   const data = await loadBooks()

@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
 const BookDetail = () => {
 
     const notify = () => toast.success('Buku berhasil ditambahkan ke booking list!', {
@@ -29,6 +30,16 @@ const BookDetail = () => {
 
 
     const gagal = () => toast.warning('Buku sudah ada di booking list!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const stokHabis = () => toast.warning('Buku sedang Kosong', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -101,13 +112,15 @@ const BookDetail = () => {
     const isAuth = useSelector((state) => state.auth.isAuth);
     const akun = useSelector((state) => state.auth.user);
     const [isAdded, setIsAdded] = useState(false);
-    const { addItem, items, inCart, totalUniqueItems } = useCart();
+/*     const { addItem, items, inCart, totalUniqueItems } = useCart(); */
 
+   const{items,inCart,addItem,totalUniqueItems}= useCart();
+   console.log(inCart);
     // console.log(akun)
 
     const navigate = useNavigate();
 
-    const { book } = useLoaderData('book-detail');
+    const { book,stokBuku } = useLoaderData('book-detail');
     const { pemesanan } = useLoaderData('book-detail');
     const { peminjaman } = useLoaderData('book-detail');
 
@@ -135,7 +148,11 @@ const BookDetail = () => {
 
         const existingItem = inCart(book.id_buku)
         console.log(existingItem)
-        if (existingPemesanan) {
+        if(stokBuku.stok <= 0)
+        {
+            stokHabis()
+        }
+        else if (existingPemesanan) {
             bookingAda()
         }
         else if (existingPeminjaman) {
@@ -230,6 +247,11 @@ const BookDetail = () => {
                                             <td style={{ width: "5vw" }}>: &nbsp;</td>
                                             <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{book.kategori.nama_kategori}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Stok Buku</td>
+                                            <td style={{ width: "5vw" }}>: &nbsp;</td>
+                                            <td style={{ color: "#3a3a3a", fontWeight: "500", width: "20vw" }}>{stokBuku.stok>0?stokBuku.stok:"Kosong"}</td>
+                                        </tr>
                                     </table>
                                     <button className={classes["button-back"]} onClick={backHandler}>Kembali</button>
                                     {/* button ini belum jalan seperti semestinya */}
@@ -276,6 +298,22 @@ const loadBook = async (id) => {
     }
 }
 
+const loadStock=async(id)=>{
+    const response=await fetch("http://localhost:8080/perpustakaan-methodist-cw/buku-perpus/"+id);
+    console.log(response);
+    if(!response.ok)
+    {
+        throw json(
+            { message: 'Could not fetch books.' },
+            {
+              status: 500,
+            }
+          );
+    }
+    const resData=await response.json();
+    return resData.data;
+}
+
 
 const loadBorrowed = async (id) => {
     const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
@@ -319,11 +357,13 @@ export async function loader({ request, params }) {
 
     const dataPinjam=await loadBorrowed(id)
     const peminjamanData = dataPinjam;
+    const stok =await loadStock(id)
 
 
     return defer({
         book: await loadBook(id),
        /*  daftarBookingDanPemesanan: data, */
+       stokBuku:stok,
         peminjaman: peminjamanData,
         pemesanan: await loadPesan()
     });

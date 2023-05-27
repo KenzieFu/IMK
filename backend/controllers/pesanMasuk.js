@@ -11,11 +11,12 @@ exports.createPesanMasuk = async (req, res, next) => {
   //     "pesan": "Halo, saya ingin bertanya"
   // }
   try {
-    const { nama_lengkap, email, no_hp, subjek, pesan } = req.body;
+    const { nama, email, no_HP, subjek, pesan } = req.body;
+    console.log(email)
     const pesanMasuk = await PesanMasuk.create({
-      nama_lengkap: nama_lengkap,
+      nama_lengkap: nama,
       email: email,
-      no_hp: no_hp,
+      no_hp: no_HP,
       subjek: subjek,
       pesan: pesan,
     });
