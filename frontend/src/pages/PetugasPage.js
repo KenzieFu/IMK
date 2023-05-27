@@ -1,11 +1,44 @@
 import React from 'react'
 import classes from "./PetugasPage.module.css"
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-
+import { json } from 'react-router-dom'
+import { authActions } from '../features/auth/authSlice'
+import { useDispatch } from 'react-redux'
 
 
 export const PetugasPage = () => {
-  
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const  logoutHandler=async(e)=>{
+
+      const response = await fetch("http://localhost:8080/auth/logout", {
+        method: "POST",
+        headers:{
+          "Authorization":"Bearer"
+        },
+      });
+    
+    
+    if(!response.ok)
+    {
+        throw json(
+            { message: 'Gagal Logout.' },
+            {
+              status: 500,
+            }
+          );
+    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('user');
+    
+    
+      dispatch(authActions.logOut("test"));
+   
+      navigate("/");
+    
+    }
+
   return (
     <>
         <div className={classes['main']}>
@@ -27,6 +60,10 @@ export const PetugasPage = () => {
             <div className={classes['topcont']}>
             <h1>Dashboard <i class="fa fa-pie-chart" aria-hidden="true"></i> </h1>
             <p> Welcome back, kenjod</p>
+
+            <div>
+              <button className={classes['logbut']} onClick={logoutHandler}>Logout</button>
+            </div>
 
             <div className={classes['titl2']}>
             <span>Website untuk petugas <br></br>Methodist Charles Wesley</span> 

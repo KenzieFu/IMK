@@ -237,3 +237,18 @@
     border-radius: 50%;
     margin-top: 2vw;
 } */
+
+.logbut {
+    width: 6vw;
+    height: 4vh;
+    border-radius: 2px;
+    margin-top: 20px;
+    background-color: var(--addgray);
+}
+
+.logbut:hover {
+    background-color: var(--white-light);
+    color: var(--beige);
+    transform: translateY(-0.3vw);  
+    text-decoration: none;
+}

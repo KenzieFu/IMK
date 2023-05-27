@@ -70,7 +70,7 @@ export const ScanQrBox = (props) => {
       </div>
       
       <div style={{ display:"block" }}>
-      <button onClick={showHandler}>{!showCamera?"Open Camera":"Close Camera"}</button>
+      <button className={classes['scanbut']} onClick={showHandler}>{!showCamera?"Open Camera":"Close Camera"}</button>
       <p>{data.nama_lengkap } {props.label}</p>
       </div>
       

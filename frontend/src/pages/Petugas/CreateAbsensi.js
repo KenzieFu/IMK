@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FormAbsensi } from '../../components/Absensi/FormAbsensi'
-import { defer, json, redirect, useActionData, useLoaderData } from 'react-router-dom'
+import { NavLink ,defer, json, redirect, useActionData, useLoaderData } from 'react-router-dom'
 import { Suspense } from 'react'
 import { Await } from 'react-router-dom'
 import { ErrorModal } from '../../components/modals/ErrorModal'
@@ -22,6 +22,7 @@ export const CreateAbsensi = () => {
     },[data])
   return (
     <>
+      <NavLink to="/petugas">Home</NavLink>
         <Suspense>
             <Await resolve={students}>
             {loadedData=><FormAbsensi method={"POST"} students={loadedData}/>}

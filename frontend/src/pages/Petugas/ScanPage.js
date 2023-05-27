@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {ScanQrBox} from "../../components/QRcode/ScanQrBox";
-import { json, redirect, useActionData } from 'react-router-dom';
+import { NavLink, json, redirect, useActionData } from 'react-router-dom';
 import { InfoAbsensiModal } from '../../components/admin/modals/InfoAbsesiModal';
 import { ErrorModal } from '../../components/modals/ErrorModal';
 import classes from './ScanPage.module.css'
@@ -14,6 +14,7 @@ export const ScanPage = () => {
 
   return (
    <>
+    <NavLink to="/petugas">Home</NavLink>
     <ScanQrBox className={classes['scanqr']} showInfo={showInfo} showHandler={showHandler}/>
 
     {showInfo && <ErrorModal message={data}  onClose={showHandler}/>}

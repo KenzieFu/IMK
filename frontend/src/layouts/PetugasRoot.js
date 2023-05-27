@@ -4,6 +4,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { json } from 'react-router-dom'
 import { authActions } from '../features/auth/authSlice'
 
+
 export const PetugasRoot = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
@@ -41,11 +42,11 @@ export const PetugasRoot = () => {
         <header>
             <nav>
                 <ul>
-                    <NavLink to="/petugas">Home</NavLink>
+                    {/* <NavLink to="/petugas">Home</NavLink>
                     <NavLink to="/petugas/scan">Scan Masuk</NavLink>
                     <NavLink to="/petugas/scan-keluar">Scan Keluar</NavLink>
                     <NavLink to="/petugas/absensi">Absensi</NavLink>
-                    <button onClick={logoutHandler}>Logout</button>
+                    <button onClick={logoutHandler}>Logout</button> */}
                 </ul>
             </nav>
         </header>
