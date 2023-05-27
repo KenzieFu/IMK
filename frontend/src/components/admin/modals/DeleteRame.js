@@ -26,7 +26,6 @@ const startDeleteHandler=async(e)=>{
 
   props.onDelete()
   props.onClose();
-  notifyDelete()
 
 }
 

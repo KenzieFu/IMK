@@ -1,11 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Form, Link, json, redirect, useActionData, useNavigate, useNavigation, useRouteLoaderData, useSearchParams, useSubmit } from 'react-router-dom';
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+
+const notifyStatus = () => toast.success('Data buku berhasil diupdate!', {
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+});
 
 
 function BookForm({method,book}) {
-
   const navigate=useNavigate();
   const backHandler=()=>{
     navigate("..");
@@ -42,7 +54,7 @@ function BookForm({method,book}) {
   const submitHandler=(e)=>{
     console.log("jasnofa");
     submit(e.currentTarget,{method:method})
-  }   
+  }
 
 
   return (
@@ -51,7 +63,7 @@ function BookForm({method,book}) {
               <h2>Id Buku : {book.id_buku}</h2>
               <input hidden name='id_buku' value={book.id_buku} />
               <div /* className={classes['form-grup']} */>
-              <FormGroup >  
+              <FormGroup >
                 <Label /* className={classes['label']} */ for="exampleBook">Judul Buku</Label>
                 <Input
                   defaultValue={book.judul_buku??null}
@@ -65,6 +77,7 @@ function BookForm({method,book}) {
                 <Label for="examplePengarang">Pengarang</Label>
                 <Input
                   defaultValue={book.pengarang??null}
+                  // value={book.pengarang??null}
                   id="examplePengarang"
                   name="pengarang"
                   placeholder={book.pengarang??null}
@@ -75,7 +88,7 @@ function BookForm({method,book}) {
                 <Label for="examplePenerbit">Penerbit</Label>
                 <Input
                   defaultValue={book.penerbit??null}
-                 
+
                   id="examplePenerbit"
                   name="penerbit"
                   placeholder={book.penerbit??null}
@@ -86,7 +99,7 @@ function BookForm({method,book}) {
                 <Label for="tahunTerbit">Tahun Terbit</Label>
                 <Input
                   defaultValue={book.tahun_terbit??null}
-                 
+
                   id="tahunTerbit"
                   name="tahun_terbit"
                   placeholder={book.tahun_terbit??null}
@@ -108,7 +121,7 @@ function BookForm({method,book}) {
                 <Label for="sinopsis">Sinopsis</Label>
                 <Input
                   defaultValue={book.sinopsis??null}
-                
+
                   id="sinopsis"
                   name="sinopsis"
                   placeholder={book.sinopsis??null}
@@ -121,7 +134,7 @@ function BookForm({method,book}) {
                 <Label for="exampleIsbn">ISBN</Label>
                 <Input
                   defaultValue={book.isbn??null}
-                  
+
                   id="exampleIsbn"
                   name="isbn"
                   placeholder={book.isbn??null}
@@ -129,7 +142,7 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               </div>
-              
+
               <div/*  className={classes['batchbut1']} */>
               <Button onClick={backHandler} /* className={classes['delbut']} */>Batalkan</Button>
               <Button onClick={(e)=>submitHandler(e)}  /* className={classes['savbut']} */ >Simpan</Button>
@@ -146,6 +159,7 @@ export default BookForm;
 export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
+  console.log("ajnfoaw")
 
   console.log("sadjsapps")
   const bukuData = {
@@ -160,13 +174,17 @@ export async function action({ request, params }) {
   console.log(params.bookId);
   console.log(bukuData);
 
+  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku'
 
+  if (method === 'PUT') {
     const id = params.bookId;
+    url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id;
+  }
 
 
 
-  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id, {
-    method: 'put',
+  const response = await fetch(url, {
+    method: method,
     headers: {
       'Content-Type': 'application/json',
       "Authorization":"Bearer"
@@ -181,6 +199,6 @@ export async function action({ request, params }) {
   if (!response.ok) {
     throw json({ message: 'Could not save book.' }, { status: 500 });
   }
-
+  notifyStatus()
   return redirect('..');
 }

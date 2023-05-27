@@ -116,7 +116,8 @@ import { action as adminBookAction } from "./components/admin/dashboard/BookForm
 
 //Action Create Pesan
 import { action as contactAction } from "./pages/ContactPage";
-
+//Action editSIswa
+import { action as editSiswa } from "./components/admin/dashboard/StudentForm"
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
 import { DetailStudentPage } from "./pages/Admin/DetailStudentPage";
@@ -198,7 +199,7 @@ const studentId=useSelector(state=>state.auth.user)
         loader:userCalenderLoader,
         children:[
           {index:true,
-           element:<StudentAuth><CartProvider><EventPage/></CartProvider></StudentAuth>,
+           element:<StudentAuth><EventPage/></StudentAuth>,
            action:eventAction}
         ]}
       ]
@@ -256,7 +257,7 @@ const studentId=useSelector(state=>state.auth.user)
               path:":bookId",
               id:"admin-detail-buku",
               loader:adminBookLoader,
-              
+
               children:[
                 {
                   index:true,
@@ -266,7 +267,7 @@ const studentId=useSelector(state=>state.auth.user)
                   path:"edit",
                   element:<EditBuku/>,
                   action:adminBookAction,
-                  
+
                 }
             ]
              }
@@ -302,7 +303,8 @@ const studentId=useSelector(state=>state.auth.user)
                 },
                 {
                   path:"edit",
-                  element:<EditStudentPage/>
+                  element:<EditStudentPage/>,
+                  action:editSiswa,
                 }
               ]
              },

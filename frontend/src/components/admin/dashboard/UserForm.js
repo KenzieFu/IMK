@@ -18,7 +18,6 @@ const notify = () => toast.success('User berhasil diperbaharui!', {
 
 function UserForm({method,user}) {
 
-
   const navigate=useNavigate();
   const backHandler=()=>{
     navigate("..");
@@ -69,7 +68,6 @@ function UserForm({method,user}) {
     </>
   );
 }
-
 export default UserForm;
 
 
@@ -90,7 +88,6 @@ export async function action({ request, params }) {
     const id = params.idAkun;
     url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/akun/' + id;
   }
-
 
   const response = await fetch(url, {
     method: method,
