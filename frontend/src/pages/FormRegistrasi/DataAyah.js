@@ -83,19 +83,19 @@ export const DataAyah = () => {
     const navigate = useNavigate();
 
     const schema = yup.object().shape({
-        // nama_ayah: yup.string().required("Wajib diisi"),
-        // nik_ayah: yup.string().required("Wajib diisi").matches(/^[0-9]+$/gi, "Input angka yang valid").min(16, "NIK tidak boleh kurang dari 16 digit").max(16, "NIK tidak boleh lebih dari 16 digit"),
-        // tpt_lahir_ayah: yup.string().required("Wajib diisi"),
-        // tgl_lahir_ayah: yup.string().required("Wajib diisi"),
-        // agama_ayah: yup.string().required("Wajib diisi"),
-        // warga_negara_ayah: yup.string().required("Wajib diisi"),
-        // alamat_ayah: yup.string().required("Wajib diisi"),
-        // no_HP_ayah: yup.string().required("Wajib diisi").matches(noHPRegex, { message: "Harap input nomor HP yang valid" }),
-        // email_ayah: yup.string().email("Harap input alamat email yang valid"),
-        // status_ayah: yup.string().required("Wajib diisi"),
-        // pekerjaan_ayah: yup.string().required("Wajib diisi"),
-        // pendidikan_ayah: yup.string().required("Wajib diisi"),
-        // penghasilan_ayah: yup.string().required("Wajib diisi"),
+         nama_ayah: yup.string().required("Wajib diisi"),
+         nik_ayah: yup.string().required("Wajib diisi").matches(/^[0-9]+$/gi, "Input angka yang valid").min(16, "NIK tidak boleh kurang dari 16 digit").max(16, "NIK tidak boleh lebih dari 16 digit"),
+         tpt_lahir_ayah: yup.string().required("Wajib diisi"),
+         tgl_lahir_ayah: yup.string().required("Wajib diisi"),
+         agama_ayah: yup.string().required("Wajib diisi"),
+         warga_negara_ayah: yup.string().required("Wajib diisi"),
+         alamat_ayah: yup.string().required("Wajib diisi"),
+         no_HP_ayah: yup.string().required("Wajib diisi").matches(noHPRegex, { message: "Harap input nomor HP yang valid" }),
+         email_ayah: yup.string().email("Harap input alamat email yang valid"),
+         status_ayah: yup.string().required("Wajib diisi"),
+         pekerjaan_ayah: yup.string().required("Wajib diisi"),
+         pendidikan_ayah: yup.string().required("Wajib diisi"),
+         penghasilan_ayah: yup.string().required("Wajib diisi"),
     })
 
     const { register, control, handleSubmit, reset, formState, setValue} = useForm({
