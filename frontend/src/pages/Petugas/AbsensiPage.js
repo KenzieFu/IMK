@@ -2,9 +2,8 @@ import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 
-
-import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect, NavLink } from 'react-router-dom';
-
+import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect } from 'react-router-dom';
+import classes from './AbsensiPage.module.css'
 
 
 export const AbsensiPage = () => {
@@ -25,112 +24,120 @@ export const AbsensiPage = () => {
 
       const columns = [
         {
-            id:'id',
-            name:"ID",
-            selector:row=>row.absensi.id_absensi,
-
-            sortable:true,
-
+          id: "id",
+          name: <span className={classes["data-row"]}>ID</span>,
+          selector: (row) => <span className={classes["data-row"]}>{row.absensi.id_absensi}</span>,
+          sortable: true,
         },
         {
-            id:"nisn",
-            name: 'NISN',
-            selector: row => row.absensi.nisn,
-            accessor:"nisn",
-            sortable: true,
+          id: "nisn",
+          name: <span className={classes["data-row"]}>NISN</span>,
+          selector: (row) => <span className={classes["data-row"]}>{row.absensi.nisn}</span>,
+          accessor: "nisn",
+          sortable: true,
         },
         {
-            id:"tanggal",
-            name: 'Tanggal',
-            selector: row => row.absensi.tanggal,
-            accessor:"tanggal",
-            sortable: true,
+          id: "tanggal",
+          name: <span className={classes["data-row"]}>Tanggal</span>,
+          selector: (row) => <span className={classes["data-row"]}>{row.absensi.tanggal}</span>,
+          accessor: "tanggal",
+          sortable: true,
         },
         {
-            id:"waktu_masuk",
-            name: 'Waktu Masuk',
-            selector: row => row.absensi.waktu_masuk,
-            accessor:"waktu_masuk",
-            sortable: true,
+          id: "waktu_masuk",
+          name: <span className={classes["data-row"]}>Waktu Masuk</span>,
+          selector: (row) => <span className={classes["data-row"]}>{row.absensi.waktu_masuk}</span>,
+          accessor: "waktu_masuk",
+          sortable: true,
         },
         {
-            id:"waktu_keluar",
-            name: 'Waktu Keluar',
-            selector: row => row.absensi.waktu_keluar,
-            accessor:"waktu_keluar",
-            sortable: true,
+          id: "waktu_keluar",
+          name: <span className={classes["data-row"]}>Waktu Keluar</span>,
+          selector: (row) => <span className={classes["data-row"]}>{row.absensi.waktu_keluar}</span>,
+          accessor: "waktu_keluar",
+          sortable: true,
         },
         {
-          id:"button",
-          name:"Action",
-          width:"30%",
-        cell: (row) =>
-              (
-           <>
-               <div>
-                {row.absensi.waktu_keluar !=null?<span>Selesai</span>:
-                <Form method="PUT">
-                  <input type="number" name='id_absensi' value={row.absensi.id_absensi}  />
-                  <button type='submit'>Belum Selesai</button>
-                </Form>
+          id: "button",
+          name: <span className={classes["data-row"]}>Aksi</span>,
+          width: "30%",
+          cell: (row) => (
+            <>
+              <div>
+                {row.absensi.waktu_keluar != null ? (
+                  <span className={classes["data-row"]}>Selesai</span>
+                ) : (
+                  <Form method="PUT">
+                    {/* <input type="number" name="id_absensi" value={row.absensi.id_absensi} /> */}
+                    {/* hidden */}
+                    <input type="hidden" name="id_absensi" value={row.absensi.id_absensi} />
+                    <button type="submit">Belum Selesai</button>
+                  </Form>
+                )}
+              </div>
+            </>
+          ),
 
-                }
-
-               </div>
-           </>
-        ),
-
-        ignoreRowClick: true,
-        allowOverflow: true,
-        selector:row=>row.button,
-        button: true,
-      },
-
-    ];
+          ignoreRowClick: true,
+          allowOverflow: true,
+          selector: (row) => row.button,
+          button: true,
+        },
+      ];
 
 
   return (
     <>
-    <NavLink to="/petugas">Home</NavLink>
-    <Suspense fallback="">
-          <Await resolve={absensi} >
-            {(loadedData)=>
-               <DataTable
-               title={
-                <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2>Absensi (Belum Selesai)</h2>
-                    <Link to="/petugas/absensi/create">Create</Link>
+      <Suspense fallback="">
+        <Await resolve={absensi}>
+          {(loadedData) => (
+            <DataTable
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Absensi Belum Selesai</h1>
+                  <Link to="/petugas/absensi/create" className={classes["buttoncreate"]}>
+                    <i class="bi bi-plus"></i>
+                  </Link>
                 </div>
-               }
-               data={loadedData.filter((item)=>item.absensi.waktu_keluar ===null?true:false)}
-               columns={columns}
-              pagination={loadedData.lenght!=0?true:false}
-                   />
-            }
-          </Await>
-        </Suspense>
+              }
+              // title={
+              //   <div style={{ display: "flex", justifyContent: "space-between" }}>
+              //     <h2></h2>
+              //     <Link to="">Create</Link>
+              //   </div>
+              // }
+              data={loadedData.filter((item) => (item.absensi.waktu_keluar === null ? true : false))}
+              columns={columns}
+              pagination={loadedData.lenght != 0 ? true : false}
+            />
+          )}
+        </Await>
+      </Suspense>
 
-
-        <Suspense fallback="">
-          <Await resolve={absensi} >
-            {(loadedData)=>
-               <DataTable
-               title={
-                <div style={{ display:"flex",justifyContent:"space-between" }}>
-                    <h2>Absensi</h2>
-
+      <Suspense fallback="">
+        <Await resolve={absensi}>
+          {(loadedData) => (
+            <DataTable
+              title={
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                  <h1 className={classes["judul1"]}>Absensi Selesai</h1>
                 </div>
-               }
-               data={loadedData}
-               columns={columns}
-              pagination={loadedData.lenght !=0?true:false}
-                   />
-            }
-          </Await>
-        </Suspense>
-
+              }
+              // title={
+              //   <div style={{ display: "flex", justifyContent: "space-between" }}>
+              //     <h2>Absensi</h2>
+              //   </div>
+              // }
+              // data={loadedData}
+              data={loadedData.filter((item) => (item.absensi.waktu_keluar !== null ? true : false))}
+              columns={columns}
+              pagination={loadedData.lenght != 0 ? true : false}
+            />
+          )}
+        </Await>
+      </Suspense>
     </>
-  )
+  );
 }
 
 const loaderAbsensi=async()=>{

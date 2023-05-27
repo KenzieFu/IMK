@@ -4,6 +4,7 @@ import { NavLink ,defer, json, redirect, useActionData, useLoaderData } from 're
 import { Suspense } from 'react'
 import { Await } from 'react-router-dom'
 import { ErrorModal } from '../../components/modals/ErrorModal'
+import classes from '../Admin/adminbatch.module.css'
 
 export const CreateAbsensi = () => {
     const {students}=useLoaderData('create-absensi');

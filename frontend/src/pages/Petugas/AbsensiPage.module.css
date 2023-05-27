@@ -1,0 +1,31 @@
+.data-row{
+    font-size: 14px;
+}
+
+.judul1{
+    font-weight: 600;
+    font-size: 2vw;
+    color: var(--blue-light);
+}
+
+.buttoncreate{
+    display: flex;
+    color: var(--white-light);
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 35px;
+    font-size: 1.2vw;
+    background-color: var(--blue2-light);
+    border-radius: 1vw;
+    height: 100%;
+    padding: 0.8vw 1vw;
+    transition: all .3s ease;
+}
+
+
+.buttoncreate:hover{
+    color: var(--white-light);
+    text-decoration: none;
+    transform: translateY(-0.3vw);
+}
