@@ -1,21 +1,21 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../util/database");
-const DataCalonSiswa = require("./dataCalonSiswa");
+const Siswa = require("./siswa");
 
-const DataOrtuWaliCalonSiswa = sequelize.define(
-  "data_ortu_wali_calon_siswa",
+const OrtuWaliSiswa = sequelize.define(
+  "ortu_wali_siswa",
   {
     id_data: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    id_calon: {
+    id_siswa: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: DataCalonSiswa,
-        key: "id_calon",
+        model: Siswa,
+        key: "id_siswa",
       },
     },
     tipe: {
@@ -27,7 +27,7 @@ const DataOrtuWaliCalonSiswa = sequelize.define(
       allowNull: false,
     },
     nik: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     tempat_lahir: {
@@ -35,7 +35,7 @@ const DataOrtuWaliCalonSiswa = sequelize.define(
       allowNull: false,
     },
     tanggal_lahir: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     agama: {
@@ -51,7 +51,7 @@ const DataOrtuWaliCalonSiswa = sequelize.define(
       allowNull: false,
     },
     penghasilan_per_bulan: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     alamat: {
@@ -72,11 +72,11 @@ const DataOrtuWaliCalonSiswa = sequelize.define(
     },
   },
   {
-    tableName: "data_ortu_wali_calon_siswa",
+    tableName: "ortu_wali_siswa",
     timestamps: false,
   }
 );
 
-DataOrtuWaliCalonSiswa.belongsTo(DataCalonSiswa, { foreignKey: "id_calon" });
+OrtuWaliSiswa.belongsTo(Siswa, { foreignKey: "id_siswa" });
 
-module.exports = DataOrtuWaliCalonSiswa;
+module.exports = OrtuWaliSiswa;

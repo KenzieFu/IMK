@@ -18,6 +18,10 @@ const router = express.Router();
 
 // ROUTES FOR SISWA
 
+// route untuk create data siswa multiple
+// http://localhost:8080/admin-perpustakaan-methodist-cw/create-siswa-multiple
+router.post("/create-siswa-multiple", siswaController.createSiswaMultiple);
+
 // routes untuk create data calon siswa
 // http://localhost:8080/admin-perpustakaan-methodist-cw/calon-siswa
 router.post("/calon-siswa", siswaController.createDataCalonSiswa);
