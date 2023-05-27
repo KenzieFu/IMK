@@ -15,9 +15,7 @@ const startDeleteHandler=async(e)=>{
 
   submit(e.currentTarget,{method:"post"});
   props.onClose();
-
 }
-
   return (
     <Modal>
            <Form method='post' className={classes['form']}>

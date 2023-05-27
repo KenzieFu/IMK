@@ -269,7 +269,7 @@ export const DataSiswa = () => {
                         </div>
                         <div className={classes.button}>
                             <Link to="../..">
-                                <button className={classes.cancel} type="button">
+                                <button className={classes.cancel1} type="button">
                                     {"<"} Batalkan
                                 </button>
                             </Link>
