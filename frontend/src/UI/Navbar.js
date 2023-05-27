@@ -10,9 +10,9 @@ export const Navbar = (props) => {
 
 const authen=useSelector(state=>state.auth.isAuth);
 const formRef=useRef();
-const {
-  emptyCart
-} = useCart();
+// const {
+//   emptyCart
+// } = useCart();
 const navigate=useNavigate();
    const dispatch= useDispatch();
 const  logoutHandler=async(e)=>{
@@ -34,7 +34,7 @@ if(!response.ok)
         }
       );
 }
-emptyCart()
+// emptyCart()
 localStorage.removeItem('token');
 localStorage.removeItem('expiration');
 localStorage.removeItem('user');
@@ -43,7 +43,7 @@ localStorage.removeItem('user');
   dispatch(authActions.logOut("test"));
 
   navigate("/");
-  emptyCart()
+  // emptyCart()
 
 }
 const { totalUniqueItems } = useCart()

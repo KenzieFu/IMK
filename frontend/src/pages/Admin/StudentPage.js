@@ -166,14 +166,15 @@ export const StudentPage = () => {
       const columns = [
         {
           id: "check",
-      name: <div>
+      name: <div style={{display: "flex"}}>
+        <span className={classes["data-row"]}>Check</span>
       <Input
         type="checkbox"
         checked={selectedSiswa.length === students.length}
         onChange={() => handleCheckAll()}
         className={classes["check-all"]}
+        style={{marginLeft: "7px"}}
       />
-      <span className={classes["data-row"]}>Check</span>
     </div>,
       cell: (row) => (
         <Input
@@ -326,7 +327,9 @@ export const StudentPage = () => {
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
       {showDeleteRameModal && <DeleteRame onDelete={() =>{handleDeleteBanyak(selectedSiswa)}} onClose={closeDelRameModalHandler}/>}
       {location.state && <div>{location.state.message}</div>}
-      <Button onClick={()=>showDelRameModalHandler(selectedSiswa)}>Hapus Siswa</Button>
+      <div className={classes['button-on']}>
+      <Button onClick={()=>showDelRameModalHandler(selectedSiswa)} className={classes['delbut']}>Hapus Siswa</Button>
+      </div>
 
     </>
   );

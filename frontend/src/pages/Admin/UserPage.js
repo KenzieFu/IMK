@@ -197,14 +197,15 @@ export const UserPage = () => {
   const columns = [
     {
       id: "check",
-  name: <div>
+  name: <div style={{display: "flex"}}>
+    <span  className={classes["data-row"]}>Check</span>
   <Input
     type="checkbox"
     checked={selectedStatus.length === akuns.length}
     onChange={() => handleCheckAll()}
     className={classes["check-all"]}
+    style={{marginLeft: "7px"}}
   />
-  <span className={classes["data-row"]}>Check</span>
 </div>,
   cell: (row) => (
     <Input
@@ -385,9 +386,11 @@ export const UserPage = () => {
       {showUpdateModal && <UpdateModal onUpdate={()=>{handleUpdateStatusAktif(selectedStatus)}}  onClose={closeUpModalHandler} />}
       {showUpdateTModal && <UpdateModal onUpdate ={()=>{handleUpdateStatusTdkAktif(selectedStatus)}} onClose={closeUpTdkModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
-      <Button onClick={()=> showUpModalHandler(selectedStatus)}>Aktif Akun</Button>
-      <Button onClick={()=> showUpTdkModalHandler(selectedStatus)}>Non-aktifkan Akun</Button>
-      <Button onClick={()=> showDelRameModalHandler(selectedStatus)}>Hapus Akun</Button>
+      <div className={classes['button-on']}>
+      <Button onClick={()=> showUpModalHandler(selectedStatus)} className={classes['savbut']}>Aktif Akun</Button>
+      <Button onClick={()=> showUpTdkModalHandler(selectedStatus)} className={classes['detailbut']}>Non-aktifkan Akun</Button>
+      <Button onClick={()=> showDelRameModalHandler(selectedStatus)} className={classes['delbut']}>Hapus Akun</Button>
+      </div>
 
 
 

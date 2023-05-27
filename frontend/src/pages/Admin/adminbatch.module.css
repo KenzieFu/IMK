@@ -453,3 +453,8 @@ tr{
     text-decoration: none;
     border-color: var(--white-light);
 }
+
+.button-on {
+    display: flex;
+    gap: 1vw;
+}
