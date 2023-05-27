@@ -141,7 +141,8 @@ const pemesananUser = await PemesananBuku.findAll({where:{id_siswa:id_siswa}});
       if (buku === null) {
         return res.status(400).json({ message: "Buku tidak ditemukan" });
       } else if (buku.stok === 0) {
-        return res.status(400).json({ message: "Stok buku kosong" });
+        console.log("Kosong")
+        return res.status(502).json({ message: "Stok buku kosong" });
       }
       const pemesananBuku = await PemesananBuku.create({
         id_buku: id_buku[i],
@@ -162,6 +163,7 @@ const pemesananUser = await PemesananBuku.findAll({where:{id_siswa:id_siswa}});
 // Function untuk menambahkan pemesanan buku
 exports.createPemesananBuku = async function (req, res, next) {
   // create pemesanan mengambil array 0bject dan looping untuk membuat pemesanan buku
+  console.log("Patennnnnnnnnnnnnnnnnnnnn")
   try {
     // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
     for(const item in req.body)
