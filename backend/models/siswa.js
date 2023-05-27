@@ -7,12 +7,12 @@ const Siswa = sequelize.define(
   {
     id_siswa: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     id_akun: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: Akun,
         key: "id_akun",
@@ -21,6 +21,14 @@ const Siswa = sequelize.define(
     nisn: {
       type: DataTypes.STRING(10),
       allowNull: false,
+    },
+    nik: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    no_akte_lahir: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
     },
     nama_lengkap: {
       type: DataTypes.STRING(100),
@@ -31,7 +39,7 @@ const Siswa = sequelize.define(
       allowNull: false,
     },
     tanggal_lahir: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     tempat_lahir: {
@@ -46,6 +54,18 @@ const Siswa = sequelize.define(
       type: DataTypes.ENUM("Islam", "Kristen Protestan", "Kristen Katolik", "Hindu", "Budha"),
       allowNull: false,
     },
+    warga_negara: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    anak_ke: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    jlh_saudara_kandung: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     alamat: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -59,8 +79,8 @@ const Siswa = sequelize.define(
       allowNull: true,
     },
     tahun_masuk: {
-      type: DataTypes.STRING(4),
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      defaultValue: 2023,
     },
   },
   {
@@ -70,6 +90,5 @@ const Siswa = sequelize.define(
 );
 
 Siswa.belongsTo(Akun, { foreignKey: "id_akun" });
-
 
 module.exports = Siswa;
