@@ -1,5 +1,5 @@
-import React, { useEffect, useInsertionEffect } from 'react'
-import { Outlet, useLoaderData, useSubmit } from 'react-router-dom'
+import React, { useEffect, useInsertionEffect, useRef } from 'react'
+import { Outlet, json, useLoaderData, useNavigate, useSubmit } from 'react-router-dom'
 import { Navbar } from '../UI/Navbar'
 import { Footer } from '../components/Footer'
 import LoginModal from '../components/auth/Login'
@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cart from '../components/BookCart'
 import { getTokenDuration } from '../components/util/auth'
 import { authActions } from '../features/auth/authSlice'
+
 import { getUserCredentials } from '../components/util/auth'
+import { CartProvider } from 'react-use-cart'
 export const RootLayout = () => {
   const token=useLoaderData();
   const submit = useSubmit();
@@ -17,21 +19,52 @@ export const RootLayout = () => {
 const authen=useSelector(state=>state.auth.isAuth);
 const dispatch=useDispatch();
 const user = useSelector(state=>state.auth.user)
-if(!authen  || (authen ) )
-{
+const navigate=useNavigate()
 
+
+const  logoutHandler=useRef(async(e)=>{
+
+  const response = await fetch("http://localhost:8080/auth/logout", {
+    method: "POST",
+    headers:{
+      "Authorization":"Bearer"
+    },
+  });
+
+
+if(!response.ok)
+{
+    throw json(
+        { message: 'Gagal Logout.' },
+        {
+          status: 500,
+        }
+      );
 }
+
+localStorage.removeItem('token');
+localStorage.removeItem('expiration');
+localStorage.removeItem('user');
+
+
+  dispatch(authActions.logOut("test"));
+
+  navigate("/");
+
+
+});
 
 useEffect(()=>{
   if(Object.keys(user)?.length === 0 && token ){
 
     dispatch(authActions.setCredentials({data:getUserCredentials()}));
+    return
   }
 
   if(token === "EXPIRED")
   {
-    submit(null,{action:"/logout",method:"post"});
-    dispatch(authActions.logOut())
+      logoutHandler.current()
+    
     return ;
   }
 
@@ -59,8 +92,8 @@ const closeCartModal=()=>{
 }
   return (
     <>
-
-        <div style={{background:"#f4f1f1", minHeight:"100vh" }} className="App">
+    <CartProvider>
+    <div style={{background:"#f4f1f1", minHeight:"100vh" }} className="App">
           {showLogin &&<LoginModal onClose={closeLoginModal}/>}
           {showCart && <Cart onClose={closeCartModal}/>}
     <Navbar style={{position:"relative"}} onClick={showLoginModal} onClickCart={showCartModal} />
@@ -70,6 +103,8 @@ const closeCartModal=()=>{
 
       <Footer/>
       </div>
+    </CartProvider>
+        
 
     </>
   )

@@ -50,14 +50,9 @@ function BookForm({method,book}) {
       <Form method={method}>
               <h2>Id Buku : {book.id_buku}</h2>
               <input hidden name='id_buku' value={book.id_buku} />
-<<<<<<< HEAD
-              <div className={classes['form-grup']}>
+              <div /* className={classes['form-grup']} */>
               <FormGroup >  
-                <Label className={classes['label']} for="exampleBook">Judul Buku</Label>
-=======
-              <FormGroup>
-                <Label for="exampleBook">Judul Buku</Label>
->>>>>>> 023372b9517327c7a3e37b931f6318b46404f1a0
+                <Label /* className={classes['label']} */ for="exampleBook">Judul Buku</Label>
                 <Input
                   defaultValue={book.judul_buku??null}
                   id="exampleBook"
@@ -99,8 +94,7 @@ function BookForm({method,book}) {
                 />
               </FormGroup>
               <FormGroup>
-<<<<<<< HEAD
-                <Label className={classes['label']} for="tahunTerbit">Kategori</Label>
+                <Label /* className={classes['label']} */ for="tahunTerbit">Kategori</Label>
                 <select style={{marginLeft: 13, width: 150, height: 30, borderRadius: 3}} value={book.id_kategori}>
                 <option value="">Pilih Kategori</option>
                   {kategori.map((kategori) => (
@@ -108,16 +102,6 @@ function BookForm({method,book}) {
                       {kategori.nama_kategori}
                     </option>
                   ))}
-=======
-                <Label for="tahunTerbit">Kategori</Label>
-                <select value={kategori.nama_kategori}>
-                  <option value={kategori.nama_kategori} >Pilih Kategori</option>
-                      {kategori.map((kategori) => (
-                      <option key={kategori.id_kategori} value={kategori.nama_kategori}>
-                    {kategori.nama_kategori}
-                  </option>
-              ))}
->>>>>>> 023372b9517327c7a3e37b931f6318b46404f1a0
             </select>
               </FormGroup>
               <FormGroup>
@@ -144,18 +128,12 @@ function BookForm({method,book}) {
                   type="text"
                 />
               </FormGroup>
-<<<<<<< HEAD
               </div>
               
-              <div className={classes['batchbut1']}>
-              <Button onClick={backHandler} className={classes['delbut']}>Batalkan</Button>
-              <Button onClick={(e)=>submitHandler(e)}  className={classes['savbut']} >Simpan</Button>
+              <div/*  className={classes['batchbut1']} */>
+              <Button onClick={backHandler} /* className={classes['delbut']} */>Batalkan</Button>
+              <Button onClick={(e)=>submitHandler(e)}  /* className={classes['savbut']} */ >Simpan</Button>
               </div>
-=======
-
-              <Button onClick={backHandler}>Cancel</Button>
-              <Button type='submit' style={{ background:"green" }}>Save</Button>
->>>>>>> 023372b9517327c7a3e37b931f6318b46404f1a0
 
             </Form>
     </>
