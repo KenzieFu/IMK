@@ -113,7 +113,7 @@ const BookDetail = () => {
     const akun = useSelector((state) => state.auth.user);
     const [isAdded, setIsAdded] = useState(false);
 /*     const { addItem, items, inCart, totalUniqueItems } = useCart(); */
-    
+
    const{items,inCart,addItem,totalUniqueItems}= useCart();
    console.log(inCart);
     // console.log(akun)
@@ -130,7 +130,7 @@ const BookDetail = () => {
     const backHandler = () => {
         navigate("..");
     }
-    
+
 
     const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user?.id_siswa);
     const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user?.id_siswa);
@@ -145,7 +145,7 @@ const BookDetail = () => {
     const batasBook = countPemesanan + countPeminjaman
 
     const handleAddToCart = () => {
-      
+
         const existingItem = inCart(book.id_buku)
         console.log(existingItem)
         if(stokBuku.stok <= 0)

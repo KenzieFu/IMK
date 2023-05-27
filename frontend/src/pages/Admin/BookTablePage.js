@@ -107,7 +107,7 @@ export const BookTablePage = () => {
       const deletedData = await response.json();
       console.log('Data deleted:', deletedData);
 
-      selectedBook([])
+
       navigate("/admin/books")
     } catch (error) {
       console.error('Error creating data:', error);
