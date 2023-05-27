@@ -114,7 +114,8 @@ import { action as batalPesananAction } from "./pages/StudentPage";
 //Action EditBuku admin
 import { action as adminBookAction } from "./components/admin/dashboard/BookForm";
 
-
+//Action Create Pesan
+import { action as contactAction } from "./pages/ContactPage";
 
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
@@ -190,7 +191,7 @@ const studentId=useSelector(state=>state.auth.user)
           loader: bookLoader }
 
         ]},
-       {path:"contactUs", element:<GuestMode><Contact/></GuestMode>},
+       {path:"contactUs", element:<GuestMode><Contact/></GuestMode>,action:contactAction},
        {path:"logout", action:logoutAction},
        {path:"calender",
         id:"event-calender",
