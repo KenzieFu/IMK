@@ -5,12 +5,32 @@ import { memo } from "react";
 import { json, defer, Await, useLoaderData, redirect, useLocation, Link } from "react-router-dom";
 import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from "reactstrap";
+import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, } from "reactstrap";
 import classes from './adminbatch.module.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { UpdateModal } from "../../components/admin/modals/UpdateModals";
+import { DeleteRame } from "../../components/admin/modals/DeleteRame";
+
+const notifyStatus = () => toast.success('Status para user berhasil diaktifkan!', {
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+});
+
 
 export const UserPage = () => {
+  const navigate=useNavigate();
   const [currentId, setCurrentId] = useState(null);
   const [showDeleteModal, setDeleteModal] = useState(false);
+  const [showDeleteRameModal, setDeleteRameModal] = useState(false);
+  const [showUpdateModal, setUpdateModal] = useState(false);
+  const [showUpdateTModal, setUpdateTModal] = useState(false);
   const { akuns } = useLoaderData("admin-akun");
   const location = useLocation();
   console.log(currentId);
@@ -19,6 +39,11 @@ export const UserPage = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchBased, setSearchBased] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [reloadTable, setReloadTable] = useState(false); // State to trigger table reload
+
+  const [akun, setUser] = useState([])
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -36,7 +61,167 @@ export const UserPage = () => {
     setCurrentId((prev) => prev);
   };
 
+  const showUpModalHandler = () => {
+    setUpdateModal(true);
+
+  };
+  const closeUpModalHandler = () => {
+    setUpdateModal(false);
+
+  };
+  const showUpTdkModalHandler = () => {
+    setUpdateTModal(true);
+
+  };
+  const closeUpTdkModalHandler = () => {
+    setUpdateTModal(false);
+
+  };
+  const showDelRameModalHandler = () => {
+    setDeleteRameModal(true);
+
+  };
+  const closeDelRameModalHandler = () => {
+    setDeleteRameModal(false);
+
+  };
+
+
+  const [selectedStatus, setSelectedStatus] = useState([])
+  console.log(akuns)
+
+  const handlerSelectedStatus=(id)=>{
+    setSelectedStatus((prevStatus) =>
+    prevStatus.includes(id) ? prevStatus.filter((status) => status !== id) : [...prevStatus, id]
+  );
+  }
+
+
+  const handleDeleteBanyak = async (id) => {
+
+    try {
+
+      const response = await fetch('  http://localhost:8080/admin-perpustakaan-methodist-cw/akun', {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_akun: id,
+
+
+        })
+      });
+
+      const deletedData = await response.json();
+      console.log('Data deleted:', deletedData);
+
+      navigate("/admin/user")
+
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
+
+  const handleCheckAll = () => {
+    if (selectedStatus.length === akuns.length) {
+
+      setSelectedStatus([]);
+    } else {
+
+      const allIds = akuns.map((akun) => akun.id_akun);
+      setSelectedStatus(allIds);
+    }
+  };
+  const handleUpdateStatusAktif = async (id) => {
+    try {
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": "Bearer"
+        },
+        body: JSON.stringify({
+          id_akun: id,
+          status: "Aktif"
+        })
+      });
+
+      const updatedData = await response.json();
+      console.log('Data updated:', updatedData);
+
+
+      setSelectedStatus([]);
+
+      notifyStatus();
+
+      navigate("/admin/user")
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
+
+
+  const handleUpdateStatusTdkAktif = async (id) => {
+
+    try {
+
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/akun-aktivasi', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":"Bearer"
+        },
+        body: JSON.stringify({
+          id_akun: id,
+          status: "Tidak Aktif"
+
+        })
+      });
+
+      const createdData = await response.json();
+      console.log('Data created:', createdData);
+
+      // Reset the form after successful creation
+      setSelectedStatus([]);
+
+      notifyStatus();
+
+      navigate("/admin/user")
+
+    } catch (error) {
+      console.error('Error creating data:', error);
+    }
+  };
   const columns = [
+    {
+      id: "check",
+  name: <div>
+  <Input
+    type="checkbox"
+    checked={selectedStatus.length === akuns.length}
+    onChange={() => handleCheckAll()}
+    className={classes["check-all"]}
+  />
+  <span className={classes["data-row"]}>Check</span>
+</div>,
+  cell: (row) => (
+    <Input
+    type="checkbox"
+      checked={selectedStatus.includes(row.id_akun)}
+      onChange={() => { handlerSelectedStatus(row.id_akun) }}
+      className={classes['data-rowid']}
+    />
+  ),
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        justifyContent: "center",
+      },
+      width: "10%",
+    },
     {
       id: "id",
       name: <span className={classes['data-row']}>ID Akun</span>,
@@ -76,6 +261,16 @@ export const UserPage = () => {
       },
     },
     {
+      id: "tipe",
+      name: <span className={classes['data-row']}>Status</span>,
+      selector: (row) => <span className={classes['data-row']}> {row.status}</span>,
+      sortable: true,
+      headerStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+      },
+    },
+    {
       id: "button",
       name: <span className={classes['data-row']}>Aksi</span>,
       width: "30%",
@@ -100,69 +295,14 @@ export const UserPage = () => {
     },
   ];
 
-  // const columns = [
-  //   {
-  //     id: "id",
-  //     name: "ID",
-  //     selector: (row) => row.id_akun,
 
-  //     sortable: true,
-  //   },
-  //   {
-  //     id: "username",
-  //     name: "Username",
-  //     selector: (row) => row.username,
-  //     accessor: "username",
-  //     sortable: true,
-  //   },
-  //   {
-  //     id: "tipe",
-  //     accessor: "accessor",
-  //     name: "Hak Akses",
-  //     selector: (row) => row.hak_akses,
-  //     sortable: true,
-  //   },
-  //   {
-  //     id: "button",
-  //     name: "Action",
-  //     width: "30%",
-  //     cell: (row) => (
-  //       <div style={{ margin: "0 0" }}>
-  //         <Link to={`/admin/user/${row.id_akun}`} style={{ cursor: "pointer", textDecoration: "none", color: "gray" }}>
-  //           Detail
-  //         </Link>
-  //         {"                    "}
-  //         {"       "}
-  //         <input type="hidden" id="row" />
-  //         <span onClick={() => showModalHandler(row.id_akun)} style={{ cursor: "pointer" }}>
-  //           Delete
-  //         </span>
-  //       </div>
-  //     ),
-
-  //     ignoreRowClick: true,
-  //     allowOverflow: true,
-  //     selector: (row) => row.button,
-  //     button: true,
-  //   },
-  // ];
-  /* const [data,setData]=useState(DUMMY_USER);
-
-
-    const deleteHandler=(id,e)=>{
-        e.preventDefault();
-
-        const updatedData=data.filter(item=>item.id !== id);
-        console.log("deleted" );
-        setData(updatedData);
-    } */
   return (
     <>
       <div className={classes["search-button"]}>
         <Input type="text" placeholder="Cari..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={classes["searchbox"]} />
         <Button onClick={() => setAdvanceSearch(!advanceSearch)} className={classes["action-filter"]}>
           {" "}
-          Filter <i class="fa fa-filter" aria-hidden="true"></i>
+          Filter <i class="fa fa-filter" arifa-hidden="true"></i>
         </Button>
       </div>
       {/* <div className="dropdown-content"> */}
@@ -202,6 +342,20 @@ export const UserPage = () => {
         <Await resolve={akuns}>
           {(loadedData) => (
             <DataTable
+              // title={<h1 className={classes['judul1']}>Akun</h1>}
+              // data={loadedData.filter((item) => {
+              //   if (searchBased === "") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
+              //     return item.username.toLowerCase().includes(searchTerm.toLowerCase());
+              //   }
+              // })}
               title={
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Tabel Akun</h1>
@@ -216,72 +370,30 @@ export const UserPage = () => {
                   item.hak_akses.toLowerCase().includes(keyword) ||
                   item.status.toLowerCase().includes(keyword)
                 )}
-               
+
               )}
               columns={columns}
               pagination
-              
+
               className="data-table" // Atribut selector CSS untuk DataTable
             />
           )}
         </Await>
       </Suspense>
-
       {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
+      {showDeleteRameModal && <DeleteRame onDelete={() =>{handleDeleteBanyak(selectedStatus)}} onClose={closeDelRameModalHandler}/>}
+      {showUpdateModal && <UpdateModal onUpdate={()=>{handleUpdateStatusAktif(selectedStatus)}}  onClose={closeUpModalHandler} />}
+      {showUpdateTModal && <UpdateModal onUpdate ={()=>{handleUpdateStatusTdkAktif(selectedStatus)}} onClose={closeUpTdkModalHandler} />}
       {location.state && <div>{location.state.message}</div>}
+      <Button onClick={()=> showUpModalHandler(selectedStatus)}>Aktif Akun</Button>
+      <Button onClick={()=> showUpTdkModalHandler(selectedStatus)}>Non-aktifkan Akun</Button>
+      <Button onClick={()=> showDelRameModalHandler(selectedStatus)}>Hapus Akun</Button>
+
+
+
     </>
   );
 
-  // return (
-  //   <>
-  //     <Input type="text" placeholder="Cari Username..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-  //     <Button onClick={() => setAdvanceSearch(!advanceSearch)}>Pencarian Lebih Lanjut</Button>
-  //     {advanceSearch && (
-  //       <>
-  //         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-  //           <DropdownToggle caret>Tampilkan data berdasarkan:</DropdownToggle>
-  //           <DropdownMenu>
-  //             <DropdownItem onClick={() => setSearchBased("")}>Tampilkan semua data</DropdownItem>
-  //             <DropdownItem divider />
-  //             <DropdownItem header>Hak Akses</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("siswa")}>Siswa</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("admin")}>Admin</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("petugas")}>Petugas</DropdownItem>
-  //             <DropdownItem onClick={() => setSearchBased("kasir")}>Kasir</DropdownItem>
-  //           </DropdownMenu>
-  //         </Dropdown>
-  //         <div></div>
-  //       </>
-  //     )}
-
-  //     <Suspense fallback="">
-  //       <Await resolve={akuns}>
-  //         {(loadedData) => (
-  //           <DataTable
-  //             title="Tabel User"
-  //             data={loadedData.filter((item) => {
-  //               if (searchBased === "") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "siswa" && item.hak_akses.toLowerCase() === "siswa") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "admin" && item.hak_akses.toLowerCase() === "admin") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "petugas" && item.hak_akses.toLowerCase() === "petugas") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               } else if (searchBased === "kasir" && item.hak_akses.toLowerCase() === "kasir") {
-  //                 return item.username.toLowerCase().includes(searchTerm.toLowerCase());
-  //               }
-  //             })}
-  //             columns={columns}
-  //             pagination
-  //           />
-  //         )}
-  //       </Await>
-  //     </Suspense>
-  //     {showDeleteModal && <DeleteModal id={currentId} onClose={closeModalHandler} />}
-  //     {location.state && <div>{location.state.message}</div>}
-  //   </>
-  // );
 };
 
 const loadAkuns = async () => {
@@ -296,13 +408,16 @@ const loadAkuns = async () => {
     );
   } else {
     const resData = await response.json();
+
     return resData;
   }
 };
 
-export const loader = () => {
+export const loader = async() => {
+  const data = await loadAkuns()
+  const akun = data
   return defer({
-    akuns: loadAkuns(),
+    akuns: akun
   });
 };
 

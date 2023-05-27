@@ -4,7 +4,7 @@
     --accentblack:rgb(58, 58, 58);
     --red:#FF5959;
     --addgray:#DBD0C0;
-    --gray:#FAEEE0;
+    --gray:#FAEEE0; 
     --beige:#F9CF93;
     --lbeige:#FAEEE0;
     --green:#4ef441;
@@ -80,6 +80,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    margin-right: 35px;
     font-size: 1.2vw;
     background-color: var(--blue2-light);
     border-radius: 1vw;
@@ -87,6 +88,7 @@
     padding: 0.8vw 1vw;
     transition: all .3s ease;
 }
+
 
 .buttoncreate:hover{
     color: var(--white-light);
@@ -352,7 +354,7 @@
 
 .cover img {
     height: 200px;
-    width: auto;
+    width: 200px;
 }
 
 
@@ -395,4 +397,59 @@ tr{
     margin-top: 2vw;
     font-size: 1vw;
     opacity: 55%;
+}
+
+
+.form-alert{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+    background: var(--grey-new);
+    border-radius: 7px;
+
+}
+
+.alert-grup {
+    font-family: 'Inter';
+    font-size: 16px;
+    flex-direction: column;
+}
+
+.modbut-cel, .modbut-del {
+    font-size: 14px;
+    padding: 0.5vw 1.2vw;
+    border-radius: 0.6vw;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.modbut-cel {
+    background-color: var(--blue2-light);
+    color: var(--white-light);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.modbut-cel:hover {
+    background-color: var(--white-light);
+    color: var(--blue2-light);
+    transform: translateY(-0.3vw);
+    text-decoration: none;
+}
+
+.modbut-del {
+    background-color: var(--red-light);
+    color: var(--white-light);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.modbut-del:hover {
+    background-color: var(--white-light);
+    color: var(--red-light);
+    transform: translateY(-0.3vw);
+    text-decoration: none;
+    border-color: var(--white-light);
 }

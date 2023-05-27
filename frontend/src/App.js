@@ -59,7 +59,7 @@ import { loader as adminBookLoader } from "./pages/Admin/DetailBuku";
 
 //Students
 import { loader as adminStudentLoader } from "./pages/Admin/StudentPage";
-
+import { loader as studentDetailLoader } from "./pages/Admin/DetailStudentPage"
 //Buku Pinjam
 import { loader as adminPinjamLoader } from "./pages/Admin/DaftarBukuPinjamPage";
 import { loader as adminPinjamDetailLoader } from "./pages/Admin/DetailPinjam";
@@ -108,6 +108,14 @@ import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
 //Keluar Manual
 import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
 
+//Action Batalin Pemesanan (siswa)
+import { action as batalPesananAction } from "./pages/StudentPage";
+
+//Action EditBuku admin
+import { action as adminBookAction } from "./components/admin/dashboard/BookForm";
+
+//Action Create Pesan
+import { action as contactAction } from "./pages/ContactPage";
 
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
@@ -167,7 +175,8 @@ const studentId=useSelector(state=>state.auth.user)
        {path:"student",
        id:"pinjam-kembali-booking-buku",
         element:<StudentAuth><CartProvider><StudentPage/></CartProvider></StudentAuth>,
-         loader:(s)=>studentLoader(studId)
+         loader:(s)=>studentLoader(studId),
+         action:batalPesananAction
       },
        {path:"library",
         children:[
@@ -182,7 +191,7 @@ const studentId=useSelector(state=>state.auth.user)
           loader: bookLoader }
 
         ]},
-       {path:"contactUs", element:<GuestMode><Contact/></GuestMode>},
+       {path:"contactUs", element:<GuestMode><Contact/></GuestMode>,action:contactAction},
        {path:"logout", action:logoutAction},
        {path:"calender",
         id:"event-calender",
@@ -247,6 +256,7 @@ const studentId=useSelector(state=>state.auth.user)
               path:":bookId",
               id:"admin-detail-buku",
               loader:adminBookLoader,
+              
               children:[
                 {
                   index:true,
@@ -254,7 +264,9 @@ const studentId=useSelector(state=>state.auth.user)
                 },
                 {
                   path:"edit",
-                  element:<EditBuku/>
+                  element:<EditBuku/>,
+                  action:adminBookAction,
+                  
                 }
             ]
              }
@@ -282,10 +294,11 @@ const studentId=useSelector(state=>state.auth.user)
              {
               path:":idSiswa",
               id:"detail-siswa",
+              loader:studentDetailLoader,
               children:[
                 {
                   index:true,
-                  element:<DetailStudentPage/>
+                  element:<DetailStudentPage/>,
                 },
                 {
                   path:"edit",
