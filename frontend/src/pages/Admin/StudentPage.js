@@ -73,7 +73,7 @@ export const StudentPage = () => {
       const deletedData = await response.json();
       console.log('Data deleted:', deletedData);
 
-      selectedSiswa([])
+
       navigate("/admin/students")
     } catch (error) {
       console.error('Error creating data:', error);

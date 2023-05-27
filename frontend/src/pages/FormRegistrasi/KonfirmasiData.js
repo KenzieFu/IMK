@@ -150,11 +150,13 @@ export const KonfirmasiData = () => {
 
             const createdData = await response.json();
             console.log('Data created:', createdData);
+            navigate("/admin/students")
+            notify()
 
           } catch (error) {
             console.error('Error creating data:', error);
           }
-        setIsSubmitted(true)
+
             console.log(state.nisn)
 
     }

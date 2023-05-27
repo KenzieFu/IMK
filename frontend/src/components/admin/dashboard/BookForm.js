@@ -58,7 +58,7 @@ function BookForm({method,book}) {
                 <Label for="examplePengarang">Pengarang</Label>
                 <Input
                   defaultValue={book.pengarang??null}
-                  value={book.pengarang??null}
+                  // value={book.pengarang??null}
                   id="examplePengarang"
                   name="pengarang"
                   placeholder={book.pengarang??null}
@@ -69,7 +69,7 @@ function BookForm({method,book}) {
                 <Label for="examplePenerbit">Penerbit</Label>
                 <Input
                   defaultValue={book.penerbit??null}
-                  value={book.penerbit??null}
+                  // value={book.penerbit??null}
                   id="examplePenerbit"
                   name="penerbit"
                   placeholder={book.penerbit??null}
@@ -80,7 +80,7 @@ function BookForm({method,book}) {
                 <Label for="tahunTerbit">Tahun Terbit</Label>
                 <Input
                   defaultValue={book.tahun_terbit??null}
-                  value={book.tahun_terbit??null}
+                  // value={book.tahun_terbit??null}
                   id="tahunTerbit"
                   name="tahun_terbit"
                   placeholder={book.tahun_terbit??null}
@@ -102,7 +102,7 @@ function BookForm({method,book}) {
                 <Label for="sinopsis">Sinopsis</Label>
                 <Input
                   defaultValue={book.sinopsis??null}
-                  value={book.sinopsis??null}
+                  // value={book.sinopsis??null}
                   id="sinopsis"
                   name="sinopsis"
                   placeholder={book.sinopsis??null}
@@ -115,7 +115,7 @@ function BookForm({method,book}) {
                 <Label for="exampleIsbn">ISBN</Label>
                 <Input
                   defaultValue={book.isbn??null}
-                  value={book.isbn??null}
+                  // value={book.isbn??null}
                   id="exampleIsbn"
                   name="isbn"
                   placeholder={book.isbn??null}
@@ -137,6 +137,7 @@ export default BookForm;
 export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
+  console.log("ajnfoaw")
 
   const bukuData = {
     id_buku: data.get('id_buku'),
@@ -148,13 +149,17 @@ export async function action({ request, params }) {
     isbn: data.get('isbn'),
   };
 
+  let url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku'
 
-    const id = params.bookId;
+  if (method === 'PUT') {
+    const id = params.idSiswa;
+    url = 'http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id;
+  }
 
 
 
-  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/buku/' + id, {
-    method: 'put',
+  const response = await fetch(url, {
+    method: method,
     headers: {
       'Content-Type': 'application/json',
       "Authorization":"Bearer"

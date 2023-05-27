@@ -13,6 +13,7 @@ import Modal from "../UI/Modal";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const BookDetail = () => {
 
     const notify = () => toast.success('Buku berhasil ditambahkan ke booking list!', {
@@ -327,5 +328,3 @@ export async function loader({ request, params }) {
         pemesanan: await loadPesan()
     });
 }
-
-

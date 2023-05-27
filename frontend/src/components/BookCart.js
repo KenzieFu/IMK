@@ -124,12 +124,12 @@ export default function Cart(props) {
                     body: JSON.stringify(tes)
                 });
 
-                
+
 
                 if(response.status === 500)
                 {
                     cartPeminjamanMax()
-                   
+
                     return
                 }
                 if(response.status === 501)
@@ -149,10 +149,10 @@ export default function Cart(props) {
                 emptyCart()
                 sukses()
                 navigate(location.pathname);
-              
+
             }
-            
-  
+
+
 
         } catch (error) {
             console.error('Error creating data:', error);
@@ -183,7 +183,7 @@ export default function Cart(props) {
                                         </div>
                                         <div className={classes['tablecon']}>
                                             <table>
-                                                
+
                                                     <div className={classes['titletop']}>
                                                         <div className={classes['garismerah']}></div>
                                                         <h1>
