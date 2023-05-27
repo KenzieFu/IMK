@@ -4,6 +4,7 @@ import { defer, json, redirect, useActionData, useLoaderData } from 'react-route
 import { Suspense } from 'react'
 import { Await } from 'react-router-dom'
 import { ErrorModal } from '../../components/modals/ErrorModal'
+import classes from '../Admin/adminbatch.module.css'
 
 export const CreateAbsensi = () => {
     const {students}=useLoaderData('create-absensi');
