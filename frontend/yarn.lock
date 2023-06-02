@@ -2297,6 +2297,15 @@
     "@types/scheduler" "*"
     "csstype" "^3.0.2"
 
+"@types/react@^16.9.35":
+  "integrity" "sha512-r6lbqQBJsQ5JJ0fp5I1+F3weosNhk7jOEcKeusIlCDYUK6kCpvIkYCamBNqGyS6WEztYlT8wmAVgblV0HxOFoA=="
+  "resolved" "https://registry.npmjs.org/@types/react/-/react-16.14.42.tgz"
+  "version" "16.14.42"
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    "csstype" "^3.0.2"
+
 "@types/resolve@1.17.1":
   "integrity" "sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw=="
   "resolved" "https://registry.npmjs.org/@types/resolve/-/resolve-1.17.1.tgz"
@@ -2617,6 +2626,15 @@
   "version" "0.0.7"
   optionalDependencies:
     "@zxing/text-encoding" "^0.9.0"
+
+"@zxing/library@^0.17.0":
+  "integrity" "sha512-RuiBZuteGaFXCle/b0X+g3peN8UpDc3pGe/J7hZBzKWaMZLbjensR7ja3vy47xWhXU4e8MICGqegPMxc2V2sow=="
+  "resolved" "https://registry.npmjs.org/@zxing/library/-/library-0.17.1.tgz"
+  "version" "0.17.1"
+  dependencies:
+    "ts-custom-error" "^3.0.0"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
 
 "@zxing/library@^0.18.3":
   "integrity" "sha512-bulZ9JHoLFd9W36pi+7e7DnEYNJhljYjZ1UTsKPOoLMU3qtC+REHITeCRNx40zTRJZx18W5TBRXt5pq2Uopjsw=="
@@ -8761,6 +8779,15 @@
     "react-fast-compare" "^3.0.1"
     "warning" "^4.0.2"
 
+"react-qr-barcode-scanner@^1.0.6":
+  "integrity" "sha512-DdalO4oqHyxWPa4cIjiHeMS19HbIvKq+oo/PAglAsxmfhAUGC8sM1mJnzo0zPQM1yw9ZNpjrtqHz+rs86Mu7Ww=="
+  "resolved" "https://registry.npmjs.org/react-qr-barcode-scanner/-/react-qr-barcode-scanner-1.0.6.tgz"
+  "version" "1.0.6"
+  dependencies:
+    "@types/react" "^16.9.35"
+    "@zxing/library" "^0.17.0"
+    "react-webcam" "^5.0.1"
+
 "react-qr-code@^2.0.11":
   "integrity" "sha512-P7mvVM5vk9NjGdHMt4Z0KWeeJYwRAtonHTghZT2r+AASinLUUKQ9wfsGH2lPKsT++gps7hXmaiMGRvwTDEL9OA=="
   "resolved" "https://registry.npmjs.org/react-qr-code/-/react-qr-code-2.0.11.tgz"
@@ -8920,6 +8947,11 @@
   "integrity" "sha512-6BBbOcWc/tOKuwd9gDtdunvOr/g40S0SkCBYvrSJvpI0upzNlHmLoeDvylnoP8PrjQXItClAFxseVGGhEkk7kw=="
   "resolved" "https://registry.npmjs.org/react-use-set/-/react-use-set-1.0.0.tgz"
   "version" "1.0.0"
+
+"react-webcam@^5.0.1":
+  "integrity" "sha512-Qqj14t68Ke1eoEYjFde+N48HtuIJg0ePIQRpFww9eZt5oBcDpe/l60h+m3VRFJAR5/E3dOhSU5R8EJEcdCq/Eg=="
+  "resolved" "https://registry.npmjs.org/react-webcam/-/react-webcam-5.2.4.tgz"
+  "version" "5.2.4"
 
 "react-window@^1.8.8":
   "integrity" "sha512-+Eqx/fj1Aa5WnhRfj9dJg4VYATGwIUP2ItwItiJ6zboKWA6EX3lYDAXfGF2hyNqplEprhbtjbipiADEcwQ823Q=="

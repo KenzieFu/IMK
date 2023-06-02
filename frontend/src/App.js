@@ -96,6 +96,8 @@ import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinja
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 //Delete booking
 import { action as adminDeleteBookingAction } from "./pages/Admin/DaftarBookingBuku"
+//Edit stok
+import { action as editStokAction } from "./pages/Admin/DetailBuku";
 
 //Petugas Action
 //Scan Masuk
@@ -144,6 +146,7 @@ import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
 import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
 import { tokenLoader } from "./components/util/auth";
 import { GuestMode } from "./components/auth/GuestMode";
+import { BarcodeReaderPage } from "./pages/Petugas/BarcodeReaderPage";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -261,7 +264,8 @@ const studentId=useSelector(state=>state.auth.user)
               children:[
                 {
                   index:true,
-                  element:<DetailBuku/>
+                  element:<DetailBuku/>,
+                  action:editStokAction
                 },
                 {
                   path:"edit",
@@ -449,7 +453,8 @@ const studentId=useSelector(state=>state.auth.user)
             action:enterPetugasAction,
 
           }
-        ]}
+        ]},
+        {path:"barcode", element:<BarcodeReaderPage/>}
       ]
     }
 

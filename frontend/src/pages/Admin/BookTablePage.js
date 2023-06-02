@@ -34,7 +34,7 @@ export const BookTablePage = () => {
   };
   const [currentId, setCurrentId] = useState(null);
   const [showDeleteModal, setDeleteModal] = useState(false);
-  const { books } = useLoaderData("admin-buku");
+  const { books,stok } = useLoaderData("admin-buku");
   const location = useLocation();
   const navigate=useNavigate();
 
@@ -191,6 +191,21 @@ export const BookTablePage = () => {
       },
     },
     {
+      id:"stok",
+      name:<div className={classes["data-row"]}>Stok</div>,
+      selector:(row)=>{
+        const findItem=stok.find(item=>item.id_buku === row.id_buku);
+        if(findItem)
+        {
+          return <div className={classes["data-row"]}>{findItem.stok>0?findItem.stok:"Kosong"}</div>
+        }
+        else
+        {
+          return <div className={classes["data-row"]}>Tidak Ada</div>
+        }
+      }
+    },
+    {
       id: "button",
       name: <div className={classes["data-row"]}>Aksi</div>,
       width: "30%",
@@ -284,12 +299,12 @@ export const BookTablePage = () => {
                 </div>
               }
               data={loadedData.filter((item) => {
-                  const keyword=searchTerm.toLowerCase()
+                  let keyword=searchTerm?.toLowerCase()
                   return(
-                    String(item.id_buku).includes(keyword) ||
-                    item.judul_buku.toLowerCase().includes(keyword) ||
-                    item.pengarang.toLowerCase().includes(keyword) ||
-                    item.nama_kategori.toLowerCase().includes(keyword)
+                    String(item?.id_buku)?.includes(keyword) ||
+                    item?.judul_buku?.toLowerCase().includes(keyword) ||
+                    item?.pengarang?.toLowerCase().includes(keyword) ||
+                    item?.nama_kategori?.toLowerCase().includes(keyword)
                   )
               })}
               columns={columns}
@@ -324,12 +339,29 @@ const loadBooks = async () => {
   }
 };
 
+const loadStocks=async()=>{
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/buku-perpus");
+  if (!response.ok) {
+    throw json(
+      { message: "Could not fetch books." },
+      {
+        status: 500,
+      }
+    );
+  } else {
+    const resData = await response.json();
+    return resData;
+  }
+}
+
 
 export const loader = async() => {
   const data = await loadBooks()
+  const stok= await loadStocks()
   const book = data
   return defer({
     books: book,
+    stok:stok
   });
 
 };

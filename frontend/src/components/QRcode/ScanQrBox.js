@@ -23,7 +23,6 @@ export const ScanQrBox = (props) => {
   const [showCamera,setShowCamera]=useState(false);
   const [scan,setScan]=useState(false);
   const showHandler=()=>{
-    console.log("hioiafi")
     setShowCamera(prev=>!prev);
   }
   
@@ -33,8 +32,8 @@ export const ScanQrBox = (props) => {
       if (!!result && !props.showInfo) {
         props.showHandler();
       
-        console.log("halo")
         setScan(true);
+        console.log(result?.text);
         setData(result?.text);
         const form=new FormData(formRef.current);
         const parsedResult=JSON.parse(result?.text)
