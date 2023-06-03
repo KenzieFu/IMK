@@ -9,6 +9,7 @@ import { Navigate, defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
 
+
 import { PengembalianBuku } from '../PengembalianBuku';
 import { BookingBuku } from '../BookingBuku';
 
@@ -47,7 +48,7 @@ const renderHandler=()=>{
 
 
 
-  const { pinjam, kembali, booking } = useLoaderData("petugas-pinjam-kembali-booking-buku")
+  const { pinjam, kembali, booking,count,siswa } = useLoaderData("petugas-pinjam-kembali-booking-buku")
   console.log(booking)
   
   const CekBooking = booking
@@ -56,9 +57,27 @@ const renderHandler=()=>{
   return (
     <div className={classes.content}>
 
+      
+   
      
       <div>
-      
+      <Suspense>
+            <Await resolve={siswa}>
+                {loadedData =>
+                      <div>
+                      <h2>Detail Siswa</h2>
+                      <p>{loadedData.nama_lengkap}</p>
+                      <div style={{ display:"flex" }}>
+                        <button onClick={pinjamHandler}>Dipinjam</button>
+                        <button onClick={kembaliHandler}>Dikembalikan</button>
+                        <button onClick={bookingHandler}>Dibooking</button>
+                    </div>
+                      </div>
+                
+                }
+          
+            </Await>
+        </Suspense>
 
         <div className={classes["list-books"]}>
           {showPinjam && <Suspense fallback={<p>Loading...</p>}>
@@ -126,10 +145,27 @@ const loadBorrowed = async (id) => {
   }
 }
 
+const loaderSiswa=async(id)=>{
+    const response= await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/siswa/"+id);
+    console.log(response);
+    if (!response.ok) {
+      throw json(
+        { message: 'Could not fetch siswa.' },
+        {
+          status: 500,
+        }
+      );
+    }
+    else {
+      const resData = await response.json();
+  
+      return resData
+    }
+}
 
 
 const loadBooking = async (id) => {
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/"+id)
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku")
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -141,27 +177,33 @@ const loadBooking = async (id) => {
   }
   else {
     const resData = await response.json();
-
+    console.log(resData)
     return resData
   }
 }
 
 export async function loader({params}) {
     const id = params.idSiswa
+    
   const data = await loadBorrowed(id);
   const dataB = await loadBooking(id);
   const dataR= await loadReturned(id)
+  const objectData=dataB.map(data=>data);
+  console.log(objectData)
+  const bookingData = objectData?.filter((data)=>data?.id_siswa == id);
+    console.log(id)
     const count ={
       countPeminjaman:data.length,
-      countPemesanan :dataB?.filter((data)=>data.siswa.id_siswa === id).length,
+      countPemesanan :dataB?.filter((data)=>data?.siswa.id_siswa === id).length,
     }
-  const bookingData = dataB
+    console.log(bookingData)
 
   return defer({
     pinjam: loadBorrowed(id),
     kembali: dataR,
-    booking: dataB,
-    count:count
+    booking: bookingData,
+    count:count,
+    siswa:loaderSiswa(id)
 
   })
 }
