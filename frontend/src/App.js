@@ -78,7 +78,8 @@ import {loader as adminCreatePinjam} from "./components/admin/dashboard/CreatePi
 //Absensi
 import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
 import { loader as petugasCreateAbsensiLoader } from "./pages/Petugas/CreateAbsensi";
-
+//Pinjam Booking BUku
+import { loader as petugasDetailSiswaLoader } from "./pages/Petugas/DetailPerpusSiswa";
 
 //All LogoutAction
 import { action as logoutAction } from "./pages/Logout";
@@ -106,6 +107,9 @@ import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPag
 import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKeluarPage";
 //Input Masuk
 import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
+
+//Scan Siswa
+import { action as enterSiswaAction } from "./pages/Petugas/ScanSiswa";
 
 //Keluar Manual
 import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
@@ -147,6 +151,9 @@ import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
 import { tokenLoader } from "./components/util/auth";
 import { GuestMode } from "./components/auth/GuestMode";
 import { BarcodeReaderPage } from "./pages/Petugas/BarcodeReaderPage";
+import { ScanQrSiswa } from "./components/QRcode/ScanQrSiswa";
+import { ScanSiswa } from "./pages/Petugas/ScanSiswa";
+import { DetailPerpusSiswa } from "./pages/Petugas/DetailPerpusSiswa";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -454,7 +461,11 @@ const studentId=useSelector(state=>state.auth.user)
 
           }
         ]},
-        {path:"barcode", element:<BarcodeReaderPage/>}
+        {path:"siswa",
+          children:[
+            {index:"true",element:<ScanSiswa/>,action:enterSiswaAction},
+            {path:":idSiswa",element:<DetailPerpusSiswa/>,id:"petugas-pinjam-kembali-booking-buku",loader:petugasDetailSiswaLoader}
+          ]}
       ]
     }
 
