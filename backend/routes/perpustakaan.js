@@ -200,4 +200,10 @@ router.delete("/pemesanan-batal/:pemesananBukuId", pemesananarController.batalPe
 router.get("/pemesanan-buku-siswa", pemesananarController.getPemesananBukuByUser);
 
 
+
+/* 
+// http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa
+router.get("/peminjaman-siswa/:id_akun", isAuth, peminjamanController.getPeminjamanByUser); */
+
+
 module.exports = router;

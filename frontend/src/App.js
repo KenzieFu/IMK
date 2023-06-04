@@ -175,6 +175,7 @@ const Breadcrumbs = lazy(() => import("./UI/admin/Breadcrumbs"));
 function App() {
 const studentId=useSelector(state=>state.auth.user)
   const studId=studentId?studentId?.user?.id_siswa:null;
+  console.log(studId)
 
 
   const router=createBrowserRouter([

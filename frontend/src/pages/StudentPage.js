@@ -12,6 +12,7 @@ import { Await } from 'react-router-dom';
 import { QRCodeBox } from '../components/QRcode/QRCodeBox';
 import { BookingBuku } from './BookingBuku';
 import { PengembalianBuku } from './PengembalianBuku';
+import { getUserCredentials } from '../components/util/auth';
 
 export const StudentPage = () => {
   const [showPinjam, setShowPinjam] = useState(true);
@@ -22,7 +23,8 @@ export const StudentPage = () => {
   const akun=useSelector(state=>state.auth.user)
 
 
-
+console.log(isAuth)
+console.log(akun)
   console.log(render)
 
 
@@ -113,8 +115,13 @@ const renderHandler=()=>{
 }
 
 const loadReturned = async (id) => {
-
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian/" + id)
+  const data =getUserCredentials()
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pengembalian",{
+    method:"GET",
+    headers:{
+      "Authorization":"Bearer "+data.accessToken
+    }
+  })
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -132,7 +139,14 @@ const loadReturned = async (id) => {
 }
 // http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/(id_pemesanan}
 const loadBorrowed = async (id) => {
-  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
+  const data = getUserCredentials();
+  console.log(data.accessToken)
+  const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa-by-user",{
+    method:"GET",
+    headers:{
+      "Authorization":"Bearer "+data.accessToken
+    }
+  })
   console.log(response);
   if (!response.ok) {
     throw json(
@@ -170,6 +184,7 @@ const loadBooking = async (id) => {
 }
 
 export async function loader(id) {
+  console.log(id)
   const data = await loadBorrowed(id);
   const dataB = await loadBooking(id);
   const dataR= await loadReturned(id)
