@@ -2,11 +2,22 @@ import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import React, { useRef } from 'react'
 import { Form, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { json } from "react-router-dom";
 export const ScanBarcode = ({onClose,item,tipe}) => {
   
   const location =useLocation();
   const navigate=useNavigate();
   const notifySuccessBook = () => toast.success('Buku Diterima Siswa Untuk Dipinjam', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  const notifyCompleteBook = () => toast.success('Buku Telah Dikembalikan', {
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -26,47 +37,17 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
     progress: undefined,
     theme: "colored",
   });
+  const notifyErrorCompleteBook = () => toast.error('Buku Yang Ingin Dikembalikan Tidak Sesuai', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
   const notifyBookNotFound = (text) => toast.error(text, {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-  });
-  const notifyBookPNotFound = (text) => toast.error(text, {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-  });
-  const notifyBookKosong = (text) => toast.error(text, {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-  });
-  const notifyMax = (text) => toast.error(text, {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-  });
-  const notifySameBook = (text) => toast.error(text, {
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -85,6 +66,8 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
       
       return item.buku.barcode === barcode;
     }
+
+  
 
 
     const createPinjamHandler=async(code)=>{
@@ -118,6 +101,30 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
 
     
     
+    }
+
+
+    const completeHandler=async(text)=>{
+      const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' +item.id_peminjaman, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer",
+    
+        }
+      });
+    
+      if (!response.ok) {
+        throw json(
+          { message: 'Could not delete this row.' },
+          {
+            status: 500,
+          }
+        );
+    
+      }
+      notifyCompleteBook()
+      onClose();
+      navigate(location.pathname);
     }
 
     
@@ -167,6 +174,18 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
                   {
                     console.log("Idhifw")
                     createPinjamHandler(result?.text);
+                  }
+                  else if(tipe==="selesaikan")
+                  {
+                        if(check(result?.text))
+                        {
+                          completeHandler(result?.text)
+                        }
+                        else{
+                        console.log("error")
+                        notifyErrorCompleteBook()
+                        onClose();
+                          }
                   }
               
              

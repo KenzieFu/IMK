@@ -305,6 +305,7 @@ export async function action({ params, request }) {
 
     }
   });
+  console.log(response);
 
   if (!response.ok) {
     throw json(
