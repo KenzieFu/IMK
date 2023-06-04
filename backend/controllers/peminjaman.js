@@ -221,3 +221,64 @@ exports.getHistoriPeminjaman = async function (req, res, next) {
     next(error);
   }
 };
+
+
+
+
+
+
+
+
+exports.getPeminjamanByUserId = async function (req, res, next) {
+  console.log(`Test :${req.params.idAkun}`);
+  const siswa = await Siswa.findOne({ where: { id_siswa: req.params.idAkun } });
+  try {
+    const peminjaman = await Peminjaman.findAll({
+      where: {
+        id_siswa: siswa.id_siswa,
+      },
+      include: [
+        {
+          model: Buku,
+          as: "buku",
+          include: [{ model: Kategori }],
+        },
+        {
+          model: Siswa,
+          as: "siswa",
+        },
+      ],
+    });
+    // filter peminjaman yang belum selesai dengan mencek jika id_peminjaman belum ada ditabel pengembalian
+    const idPeminjaman = peminjaman.map((p) => p.id_peminjaman);
+    const pengembalian = await Pengembalian.findAll({
+      where: {
+        id_peminjaman: {
+          [Op.in]: idPeminjaman,
+        },
+      },
+    });
+    const idPeminjamanSelesai = pengembalian.map((p) => p.id_peminjaman);
+    const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
+    res.json(peminjamanBelumSelesai);
+    // eror perbaiki lagi
+    // const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
+    //   where: {
+    //     id_siswa: 2,
+    //   },
+    //   include: [
+    //     {
+    //       model: Buku,
+    //       as: "buku",
+    //     },
+    //     {
+    //       model: Siswa,
+    //       as: "siswa",
+    //     },
+    //   ],
+    // });
+    // res.json(peminjaman);
+  } catch (error) {
+    next(error);
+  }
+};

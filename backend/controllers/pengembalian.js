@@ -136,3 +136,39 @@ exports.getAllPengembalianAdmin = async function (req, res, next) {
     next(error);
   }
 };
+
+
+
+
+// Function untuk menampilkan data pengembalian berdasarkan user
+// id_akun diambil dari jwt user : "id_akun"
+exports.getPengembalianById = async function (req, res, next) {
+  
+  const siswa = await Siswa.findOne({ id_siswa: req.params.idAkun });
+  try {
+    // const siswa = await Siswa.findOne({
+    //   where: {
+    //     id_siswa: id_siswa,
+    //   },
+    // });
+
+    const peminjaman = await Peminjaman.findAll({
+      where: {
+        id_siswa: siswa.id_siswa,
+      },
+      include: [
+        {
+          model: Pengembalian,
+          attributes: ["id_pengembalian", "tanggal_pengembalian", "status"],
+        },
+        {
+          model: Buku,
+        },
+      ],
+    });
+
+    res.json({ siswa, peminjaman });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -317,7 +317,13 @@ const loadStock=async(id)=>{
 
 
 const loadBorrowed = async (id) => {
-    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
+    const data=getUserCredentials()
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa-by-user",{
+        method:"GET",
+        headers:{
+            "Authorization":"Bearer "+data.accessToken
+        }
+    })
     console.log(response);
     if (!response.ok) {
       throw json(

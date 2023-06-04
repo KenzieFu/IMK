@@ -201,9 +201,16 @@ router.get("/pemesanan-buku-siswa", pemesananarController.getPemesananBukuByUser
 
 
 
-/* 
+
+
+
 // http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa
-router.get("/peminjaman-siswa/:id_akun", isAuth, peminjamanController.getPeminjamanByUser); */
+router.get("/peminjaman-siswa/:idAkun", peminjamanController.getPeminjamanByUserId);
+
+
+
+// http://localhost:8080/perpustakaan-methodist-cw/pengembalian
+router.get("/pengembalian/:idAkun", pengembalianController.getPengembalianById);
 
 
 module.exports = router;
