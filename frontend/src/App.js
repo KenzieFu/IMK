@@ -1,6 +1,5 @@
 
 import "./App.css"
-
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { RootLayout } from './pages/Root';
@@ -125,6 +124,9 @@ import { action as contactAction } from "./pages/ContactPage";
 //Action editSIswa
 import { action as editSiswa } from "./components/admin/dashboard/StudentForm"
 
+//import Petugas batalPesanan
+import { action as batalPesanPetugasAction } from "./pages/Petugas/DetailPerpusSiswa";
+
 import { DetailBuku } from "./pages/Admin/DetailBuku";
 import { DetailStudentPage } from "./pages/Admin/DetailStudentPage";
 import { EditStudentPage } from "./pages/Admin/EditStudentPage";
@@ -199,7 +201,7 @@ const studentId=useSelector(state=>state.auth.user)
         {path:":bookId",
           id:"book-detail",
           element:<GuestMode><BookDetail/></GuestMode>,
-          loader: bookLoader }
+          loader:bookLoader }
 
         ]},
        {path:"contactUs", element:<GuestMode><Contact/></GuestMode>,action:contactAction},
@@ -464,7 +466,7 @@ const studentId=useSelector(state=>state.auth.user)
         {path:"siswa",
           children:[
             {index:"true",element:<ScanSiswa/>,action:enterSiswaAction},
-            {path:":idSiswa",element:<DetailPerpusSiswa/>,id:"petugas-pinjam-kembali-booking-buku",loader:petugasDetailSiswaLoader}
+            {path:":idSiswa",element:<DetailPerpusSiswa/>,id:"petugas-pinjam-kembali-booking-buku",loader:petugasDetailSiswaLoader,action:batalPesanPetugasAction}
           ]}
       ]
     }

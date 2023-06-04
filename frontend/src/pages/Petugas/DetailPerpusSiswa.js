@@ -17,6 +17,7 @@ import { BookingBuku } from '../BookingBuku';
 export const DetailPerpusSiswa = () => {
   const [showPinjam, setShowPinjam] = useState(true);
   const [showKembali, setShowKembali] = useState(false);
+  const [showCam,setCam]=useState();
   const [showBooking, setShowBooking] = useState(false);
   const[render,setRender]=useState(false);
 
@@ -234,3 +235,57 @@ export const action=async({params,request})=>{
 
 
 
+/* //Konfirmasi Booking
+ export async function action({ params, request }) {
+
+  const method = request.method;
+  const data = await request.formData();
+  console.log(data);
+  const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/' + data.get('id'), {
+    method: method,
+    headers: {
+      "Authorization": "Bearer"
+    }
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not delete this row.' },
+      {
+        status: 500,
+      }
+    );
+
+  }
+  return redirect("/admin/booked-books");
+} */
+
+
+
+
+/* //Kembalikan Buku Perpus
+\
+export async function action({ params, request }) {
+
+  const method = request.method;
+  const data = await request.formData();
+  console.log(data);
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
+    method: method,
+    headers: {
+      "Authorization": "Bearer",
+
+    }
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not delete this row.' },
+      {
+        status: 500,
+      }
+    );
+
+  }
+  return redirect("/admin/borrowed-books");
+} */

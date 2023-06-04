@@ -1,25 +1,153 @@
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
-import React from 'react'
-
-export const ScanBarcode = ({onClose}) => {
+import React, { useRef } from 'react'
+import { Form, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+export const ScanBarcode = ({onClose,item,tipe}) => {
+  const location =useLocation();
+  const navigate=useNavigate();
+  const notifySuccessBook = () => toast.success('Buku Diterima Siswa Untuk Dipinjam', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  const notifyErrorBook = () => toast.success('Buku tidak Sesuai dengan Yang Dibooking Siswa', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
     const [data, setData] = React.useState("Not Found");
+    const formRef=useRef();
+    const check=(barcode)=>{
+      
+      return item.buku.barcode === barcode;
+    }
+
+    
     console.log(data)
+
+    const bookingHandler=async()=>{
+       
+      const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/' +item.id_pemesanan , {
+    method: "Delete",
+    headers: {
+      "Authorization": "Bearer"
+    }
+  });
+
+  if (!response.ok) {
+    notifyErrorBook()
+  }
+    notifySuccessBook();
+    onClose();
+    navigate(location.pathname);
+    }
+
+
   return (
     <>
+    <Form>
     <div>
     <BarcodeScannerComponent
         width={700}
         height={500}
         onUpdate={(err, result) => {
-          if (result) setData(result.text);
+          if (result){
+            console.log("Yey")
+              if(check(result?.text))
+              {
+                  if(tipe ==="booking")
+                  {
+                    bookingHandler()
+                  }
+              }
+              else{
+                  console.log("error")
+                  notifyErrorBook()
+                  onClose();
+              }
+          } 
+          else
+          {
+            console.log("burss")
+          }
        
         }}
       />
       <p>{data}</p>
       <button onClick={onClose}>Cancel</button>
     </div>
+    </Form>
+   
 
         
     </>
   )
 }
+
+
+
+/* //Konfirmasi Booking
+ export async function action({ params, request }) {
+
+  const method = request.method;
+  const data = await request.formData();
+  console.log(data);
+  const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/' + data.get('id'), {
+    method: method,
+    headers: {
+      "Authorization": "Bearer"
+    }
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not delete this row.' },
+      {
+        status: 500,
+      }
+    );
+
+  }
+  return redirect("/admin/booked-books");
+} */
+
+
+
+
+/* //Kembalikan Buku Perpus
+\
+export async function action({ params, request }) {
+
+  const method = request.method;
+  const data = await request.formData();
+  console.log(data);
+  const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/' + data.get('id'), {
+    method: method,
+    headers: {
+      "Authorization": "Bearer",
+
+    }
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: 'Could not delete this row.' },
+      {
+        status: 500,
+      }
+    );
+
+  }
+  return redirect("/admin/borrowed-books");
+} */
+
