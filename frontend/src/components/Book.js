@@ -2,8 +2,10 @@ import React from 'react'
 import { Box } from '../UI/Box'
 import classes from "./Book.module.css"
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export const Book = ({book}) => {
+  const status=useSelector(state=>state.auth.user)
   const currentDate=new Date();
   
   const remainings=new Date(book.tanggal_kembali)-currentDate;
@@ -29,7 +31,12 @@ export const Book = ({book}) => {
                   
                   </div>
                   </div>
+
                     <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
+                    {status.hak_akses === "Petugas" &&
+                      <button>Selesaikan</button>
+                    }
+
                 </div>
 
                {/*  <div className={classes.rating}>

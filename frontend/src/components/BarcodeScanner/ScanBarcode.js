@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import { Form, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 export const ScanBarcode = ({onClose,item,tipe}) => {
+  
   const location =useLocation();
   const navigate=useNavigate();
   const notifySuccessBook = () => toast.success('Buku Diterima Siswa Untuk Dipinjam', {
@@ -15,7 +16,7 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
     progress: undefined,
     theme: "colored",
   });
-  const notifyErrorBook = () => toast.success('Buku tidak Sesuai dengan Yang Dibooking Siswa', {
+  const notifyErrorBook = () => toast.error('Buku tidak Sesuai dengan Yang Dibooking Siswa', {
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -25,6 +26,59 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
     progress: undefined,
     theme: "colored",
   });
+  const notifyBookNotFound = (text) => toast.error(text, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  const notifyBookPNotFound = (text) => toast.error(text, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  const notifyBookKosong = (text) => toast.error(text, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  const notifyMax = (text) => toast.error(text, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  const notifySameBook = (text) => toast.error(text, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+
+
+  
     const [data, setData] = React.useState("Not Found");
     const formRef=useRef();
     const check=(barcode)=>{
@@ -32,8 +86,42 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
       return item.buku.barcode === barcode;
     }
 
+
+    const createPinjamHandler=async(code)=>{
+      console.log(code);
+      console.log(item.id_siswa);
+            const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/peminjamanBarcode', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization":"Bearer"
+      },
+      body: JSON.stringify({
+        id_siswa: item.id_siswa,
+        barcode: code
+
+      })
+    })
+    const message=await response.json()
+    if(response.status ===501)
+    {
+      notifyBookNotFound(message.message)
+      onClose();
+      navigate(location.pathname)
+
+    }
+    else{
+      notifySuccessBook()
+      onClose();
+      navigate(location.pathname)
+    }
+
     
-    console.log(data)
+    
+    }
+
+    
+ 
 
     const bookingHandler=async()=>{
        
@@ -62,19 +150,26 @@ export const ScanBarcode = ({onClose,item,tipe}) => {
         height={500}
         onUpdate={(err, result) => {
           if (result){
-            console.log("Yey")
-              if(check(result?.text))
-              {
                   if(tipe ==="booking")
                   {
-                    bookingHandler()
+                    if(check(result?.text))
+                     {
+                        bookingHandler(result?.text)
+                     }
+                     else{
+                      console.log("error")
+                      notifyErrorBook()
+                      onClose();
+                       }
+                    
                   }
-              }
-              else{
-                  console.log("error")
-                  notifyErrorBook()
-                  onClose();
-              }
+                  else if(tipe ==="create-pinjam")
+                  {
+                    console.log("Idhifw")
+                    createPinjamHandler(result?.text);
+                  }
+              
+             
           } 
           else
           {

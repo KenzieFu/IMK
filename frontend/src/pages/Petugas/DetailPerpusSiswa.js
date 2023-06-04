@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux';
 import { Navigate, defer, json, useLoaderData } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Await } from 'react-router-dom';
-
-
+import { ScanBarcode } from '../../components/BarcodeScanner/ScanBarcode';
+import Modal from '../../UI/Modal';
 import { PengembalianBuku } from '../PengembalianBuku';
 import { BookingBuku } from '../BookingBuku';
 
@@ -17,12 +17,14 @@ import { BookingBuku } from '../BookingBuku';
 export const DetailPerpusSiswa = () => {
   const [showPinjam, setShowPinjam] = useState(true);
   const [showKembali, setShowKembali] = useState(false);
-  const [showCam,setCam]=useState();
+  const [showCam,setCam]=useState(false);
   const [showBooking, setShowBooking] = useState(false);
   const[render,setRender]=useState(false);
 
 
-
+  const camHandler=()=>{
+    setCam(prev=>!prev);
+  }
 
 const renderHandler=()=>{
 
@@ -57,7 +59,12 @@ const renderHandler=()=>{
 
   return (
     <div className={classes.content}>
-
+       {
+      showCam  &&
+      <Modal onClose={camHandler}>
+        <ScanBarcode item={siswa} tipe="create-pinjam"  onClose={camHandler}/>
+      </Modal>
+     }
       
    
      
@@ -72,6 +79,9 @@ const renderHandler=()=>{
                         <button onClick={pinjamHandler}>Dipinjam</button>
                         <button onClick={kembaliHandler}>Dikembalikan</button>
                         <button onClick={bookingHandler}>Dibooking</button>
+                    </div>
+                    <div>
+                      <button onClick={camHandler}>Tambah Peminjaman</button>
                     </div>
                       </div>
                 
@@ -204,7 +214,7 @@ export async function loader({params}) {
     kembali: dataR,
     booking: bookingData,
     count:count,
-    siswa:loaderSiswa(id)
+    siswa:await loaderSiswa(id)
 
   })
 }
@@ -235,29 +245,35 @@ export const action=async({params,request})=>{
 
 
 
-/* //Konfirmasi Booking
- export async function action({ params, request }) {
+/* const handleCreate = async () => {
+  try {
 
-  const method = request.method;
-  const data = await request.formData();
-  console.log(data);
-  const response = await fetch('http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/' + data.get('id'), {
-    method: method,
-    headers: {
-      "Authorization": "Bearer"
-    }
-  });
+    const response = await fetch('http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization":"Bearer"
+      },
+      body: JSON.stringify({
+        id_siswa: selectedSiswa,
+        id_buku: selectedBuku
 
-  if (!response.ok) {
-    throw json(
-      { message: 'Could not delete this row.' },
-      {
-        status: 500,
-      }
-    );
+      })
+    });
 
+    const createdData = await response.json();
+    console.log('Data created:', createdData);
+
+    // Reset the form after successful creation
+
+  } catch (error) {
+    console.error('Error creating data:', error);
   }
-  return redirect("/admin/booked-books");
+};
+
+const navigate=useNavigate();
+const backHandler=()=>{
+  navigate("..");
 } */
 
 

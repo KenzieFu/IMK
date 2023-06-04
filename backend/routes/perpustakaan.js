@@ -104,6 +104,8 @@ router.get("/siswa/buku/histori-pengembalian/:siswaId", siswaController.getHisto
 // route untuk menambahkan peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman
 router.post("/peminjaman", peminjamanController.createPeminjaman);
+// http://localhost:8080/admin-perpustakaan-methodist-cw/peminjamanBarcode
+router.post("/peminjamanBarcode", peminjamanController.createPeminjamanBarcode);
 
 // route untuk mengupdate peminjaman
 // http://localhost:8080/admin-perpustakaan-methodist-cw/peminjaman/1
