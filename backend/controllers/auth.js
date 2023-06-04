@@ -84,7 +84,6 @@ exports.login = async function (req, res, next) {
         username: akun.username,
         hak_akses: akun.hak_akses,
         accessToken:token,
-        user: user,
       },
       token:token,
     });

@@ -10,11 +10,30 @@ const pengembalianController = require("../controllers/pengembalian");
 const eventController = require("../controllers/event");
 const pesanMasukController = require("../controllers/pesanMasuk");
 const absensiController = require("../controllers/absensi");
+const logController = require("../controllers/log");
 
 // isAuth middleware untuk memastikan user sudah login sebelum mengakses halaman ini
 const isAuth = require("../middleware/isAuth"); //implementasinya nanti di route yang membutuhkan !!!!!
 
 const router = express.Router();
+
+// ROUTES FOR LOG
+
+// route untuk menampilkan semua log buku
+// http://localhost:8080/admin-perpustakaan-methodist-cw/log-buku
+router.get("/log-buku", logController.getLogBuku);
+
+// route untuk menampilkan semua log buku perpus
+// http://localhost:8080/admin-perpustakaan-methodist-cw/log-buku-perpus
+router.get("/log-buku-perpus", logController.getLogBukuPerpus);
+
+// route untuk menampilkan semua log buku tahun ajaran baru
+// http://localhost:8080/admin-perpustakaan-methodist-cw/log-buku-thn-ajaran-baru
+router.get("/log-buku-thn-ajaran-baru", logController.getLogBukuThnAjaranBaru);
+
+// route untuk menampilkan semua log pemesanan buku
+// http://localhost:8080/admin-perpustakaan-methodist-cw/log-pemesanan-buku
+router.get("/log-pemesanan-buku", logController.getLogPemesananBuku);
 
 // ROUTES FOR SISWA
 
