@@ -123,7 +123,7 @@ router.get("/peminjaman", peminjamanController.getAllPeminjaman);
 
 // route untuk menampilkan daftar peminjaman berdasarkan user
 // http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa
-router.get("/peminjaman-siswa/:idSiswa", peminjamanController.getPeminjamanByUser);
+router.get("/peminjaman-siswa-by-user", isAuth, peminjamanController.getPeminjamanByUser);
 
 // route untuk menampilkan histori peminjaman berdasarkan user
 // http://localhost:8080/perpustakaan-methodist-cw/histori-peminjaman-siswa
@@ -145,7 +145,7 @@ router.delete("/pengembalian/:pengembalianId", pengembalianController.deletePeng
 
 // route untuk menampilkan pengembalian berdasarkan user
 // http://localhost:8080/perpustakaan-methodist-cw/pengembalian
-router.get("/pengembalian/:idSiswa", pengembalianController.getPengembalian);
+router.get("/pengembalian", isAuth, pengembalianController.getPengembalian);
 
 // ROUTES FOR EVENTS
 

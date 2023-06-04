@@ -134,10 +134,12 @@ exports.getPeminjaman = async function (req, res, next) {
 
 // Function untuk mendapatkan data peminjaman berdasarkan user dan belum selesai di pinjam
 exports.getPeminjamanByUser = async function (req, res, next) {
+  console.log(req.id_akun);
+  const siswa = await Siswa.findOne({ where: { id_akun: req.id_akun } });
   try {
     const peminjaman = await Peminjaman.findAll({
       where: {
-        id_siswa: req.params.idSiswa,
+        id_siswa: siswa.id_siswa,
       },
       include: [
         {

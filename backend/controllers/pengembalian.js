@@ -61,18 +61,18 @@ exports.deletePengembalian = async function (req, res, next) {
 // Function untuk menampilkan data pengembalian berdasarkan user yang login
 // id_akun diambil dari jwt user : "id_akun"
 exports.getPengembalian = async function (req, res, next) {
+  console.log(req.id_akun);
+  const siswa = await Siswa.findOne({ id_akun: req.id_akun });
   try {
-    const id_siswa = req.params.idSiswa;
-
-    const siswa = await Siswa.findOne({
-      where: {
-        id_siswa: id_siswa,
-      },
-    });
+    // const siswa = await Siswa.findOne({
+    //   where: {
+    //     id_siswa: id_siswa,
+    //   },
+    // });
 
     const peminjaman = await Peminjaman.findAll({
       where: {
-        id_siswa: id_siswa,
+        id_siswa: siswa.id_siswa,
       },
       include: [
         {
