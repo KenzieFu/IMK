@@ -2,9 +2,12 @@ import React from 'react'
 import { Box } from '../UI/Box'
 import classes from "./BookKembali.module.css"
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import authSlice from '../features/auth/authSlice'
 
 export const BookKembali = ({book}) => {
-
+const akun=useSelector(state=>state.auth.user.hak_akses);
+console.log(akun)
 
 
   return (
@@ -20,8 +23,10 @@ export const BookKembali = ({book}) => {
                   <p>Tanggal Dipinjam : {book.tanggal_pinjam}</p>
                     <p>Tanggal Pengembalian : {book.pengembalian.tanggal_pengembalian}</p>
                   </div>
-
-                    <Link type='button' to={`/library/${book.id_buku}`} className={classes["book-info_button"]}>Details</Link>
+                  {akun === "Siswa" &&
+                  <Link type='button' to={`/library/${book.id_buku}`} className={classes["book-info_button"]}>Details</Link>}
+                
+                    
                 </div>
 
               {/*   <div className={classes.rating}>
