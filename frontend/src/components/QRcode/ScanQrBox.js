@@ -52,25 +52,34 @@ export const ScanQrBox = (props) => {
     
     
   };
+
   return (
     <>
+    <div className={classes.allpage} >
     <div className={classes['qrscan']}>
+
+    <div className={classes['headliner']}>
+    <h1>Scan Perpustakaan <i class="fa fa-sign-in" aria-hidden="true"></i></h1>
+    <p>Scan untuk masuk/keluar dari perpustakaan</p>
+    </div>
+
     <div className={classes['qrcont']}>
     {showCamera && !props.showInfo &&   <Form  ref={formRef} method='PUT'>
      <QrReader  
         scanDelay={500}
         onResult={scanHandler}
-       containerStyle={{ width:"500px" ,height:'500px' }}
-       videoContainerStyle={{ width:'500px', height:"550px" }}
+       containerStyle={{ width:"500px" ,height:'460px' }}
+       videoContainerStyle={{ width:'500px', height:'500px' }}
         ViewFinder={()=>QrOverlay(scan)}
       /></Form>}
       </div>
 
-      <div>
+      <div className={classes.tiall}>
       <button className={classes['buttz']} onClick={showHandler}>{!showCamera?"Buka Camera":"Tutup Camera"}</button>
       <p>{data.nama_lengkap } {props.label}</p>
       </div>
       
+    </div>
     </div>
       
     </>

@@ -61,8 +61,9 @@ export const PetugasPage = () => {
             <h1>Dashboard <i class="fa fa-pie-chart" aria-hidden="true"></i> </h1>
             <p> Welcome back, kenjod</p>
 
-            <div>
+            <div className={classes['lgroup']}>
               <button className={classes['logbut']} onClick={logoutHandler}>Logout</button>
+              <NavLink  to="/petugas/siswa"> <p class={classes["logbut2"]}>  Cek Peminjaman </p> </NavLink>
             </div>
 
             <div className={classes['titl2']}>

@@ -97,7 +97,7 @@ export const AbsensiPage = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
                   <h1 className={classes["judul1"]}>Absensi Belum Selesai</h1>
                   <Link to="/petugas/absensi/create" className={classes["buttoncreate"]}>
-                    <i class="bi bi-plus"></i>
+                    <p>Tambah <i class="bi bi-plus"></i> </p>
                   </Link>
                 </div>
               }

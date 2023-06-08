@@ -79,15 +79,15 @@ const LoginModal = (props) => {
         });
 
         if(response.status === 404)
-          setCredError("Akun tidak ditemukan");
+          setCredError("Akun tidak ditemukan!");
 
         else if(response.status === 401)
         {
-          setCredError("Username dan Password Tidak Cocok")
+          setCredError("Username dan Password Tidak Cocok!")
         }
         else if(response.status ===500)
         {
-          setCredError("Akun Belum Aktif")
+          setCredError("Akun Belum Aktif!")
         }
 
         if(!response.ok)
@@ -126,13 +126,20 @@ const LoginModal = (props) => {
       <div className={classes["close-logo"]} onClick={props.onClose}>+</div>
       <header className={classes["login-header"]}>
         <div className={classes["classheader"]}>
+
         <img className={classes["loginlogo"]} src='./assets/loginlogo.png'/>
         
           <h1 className={classes["logo-h1"]}>Selamat Datang di <br></br>Methodist Charles Wesley</h1>
+
         </div>
+        
         <p className={classes["logo-p"]}>Mohon login untuk memiliki akses ke berbagai fasilitas sekolah</p>
       </header>
-          {credError && <h4>{credError}</h4>}
+
+      <div className={classes["errord"]}>
+          {credError && <p>{credError}</p>}
+      </div>
+
         <form className={classes.form} action="">
           <div>
           <input placeholder="Username" onBlur={usernameBlurHandler} onChange={event=>usernameChangeHandler(event)} value={enteredUsername} type="text" id='username' />
@@ -147,7 +154,6 @@ const LoginModal = (props) => {
           </div>
           </div>
           <button onClick={(e)=>login(e)} disabled={!formValid }  className={classes["login-button"]}>Masuk</button>
-          
         </form>
         </div>
         </div>

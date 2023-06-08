@@ -1,5 +1,10 @@
 @import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
 
+
+*{
+    font-family: 'Inter';
+}
+
 .flexlogin{
     display: flex;
     height: 30rem;
@@ -11,15 +16,15 @@
     align-items: center;
     margin-left: 0.74vw;
     margin-top: 0.74vw;
-    margin-bottom: 0.37vw;
+    margin-bottom: 0.5vw;
 }
 
 .loginlogo{
-    width: 3.7vw;
-    height: 3.7vw;
+    width: 4vw;
+    height: 4.4vw;
+    margin-right: 1vw;
     margin-top: 0.74vw;
     align-items: center;
-    
 }
 
 .loginimg{
@@ -48,16 +53,18 @@
 
 .logo-h1{
     margin:2px;
-    font-size: 1.48vw;
+    font-size: 1.5vw;
     text-align: left;
+    line-height: 2vw;
+    font-weight: 600;
     margin-left: 0.59vw;
     margin-top: 0.74vw;
 }
 .logo-p{
-    margin:0.3vw;
-    font-size: 1.11vw;
+    font-size: 1vw;
     color: #7b7b7bc9;
     text-align: left;
+    margin-top: 0.6vw;
     margin-left: 1.11vw;
 }
 
@@ -133,4 +140,13 @@
     margin-top: -0.22vw;
     font-weight: 500;
     margin-left: 0.3vw;
+}
+
+.errord{
+    color: #FF5959;
+    font-size: 1vw;
+    margin-top: -2vw;
+    padding-bottom: 1vw;
+    font-weight: 500;
+    margin-left: 2vw;
 }
