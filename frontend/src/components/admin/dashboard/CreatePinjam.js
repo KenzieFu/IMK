@@ -3,8 +3,33 @@ import { Await, Form, Link, defer, json, redirect, useActionData, useLoaderData,
 import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
 import Select from 'react-select';
 import classes from '../../../pages/Admin/adminbatch.module.css';
+import { toast } from 'react-toastify';
 
 export const CreatePinjam = () => {
+
+  const notify = () => toast.success('Buku Berhasil Dipinjam', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+});
+
+  const notifyError = () => toast.error('Buku Gagal Dipinjam', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+});
+
+
   const {daftarBuku, daftarSiswa} = useLoaderData('create-pinjam')
   const [selectedBuku, setSelectedBuku] = useState('')
   const [selectedSiswa, setSelectedSiswa] = useState('')
@@ -51,11 +76,13 @@ export const CreatePinjam = () => {
       });
 
       const createdData = await response.json();
+      notify()
       console.log('Data created:', createdData);
 
       // Reset the form after successful creation
 
     } catch (error) {
+      notifyError()
       console.error('Error creating data:', error);
     }
   };

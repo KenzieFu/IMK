@@ -34,6 +34,7 @@ export const UserPage = () => {
   const { akuns } = useLoaderData("admin-akun");
   const location = useLocation();
   console.log(currentId);
+  const filtered=akuns.filter(item=>item.hak_akses !="Admin")
 
   const [advanceSearch, setAdvanceSearch] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -340,7 +341,7 @@ export const UserPage = () => {
 
       {/* </div> */}
       <Suspense fallback="">
-        <Await resolve={akuns}>
+        <Await resolve={filtered}>
           {(loadedData) => (
             <DataTable
               // title={<h1 className={classes['judul1']}>Akun</h1>}
@@ -369,7 +370,8 @@ export const UserPage = () => {
                   String(item.id).includes(keyword) ||
                   item.username.toLowerCase().includes(keyword) ||
                   item.hak_akses.toLowerCase().includes(keyword) ||
-                  item.status.toLowerCase().includes(keyword)
+                  item.status.toLowerCase().includes(keyword) 
+                  
                 )}
 
               )}

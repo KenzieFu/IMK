@@ -85,6 +85,10 @@ const LoginModal = (props) => {
         {
           setCredError("Username dan Password Tidak Cocok")
         }
+        else if(response.status ===500)
+        {
+          setCredError("Akun Belum Aktif")
+        }
 
         if(!response.ok)
        {

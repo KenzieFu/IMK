@@ -42,7 +42,7 @@ function UserForm({method,user}) {
                 <Label className={classes['label']} for="examplePassword">Password</Label>
                 <Input
                   defaultValue={user.password??null}
-                  value={user.password??null}
+                 
                   id="examplePassword"
                   name="password"
                   placeholder={user.password??null}

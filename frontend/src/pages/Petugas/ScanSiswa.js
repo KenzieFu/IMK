@@ -15,6 +15,7 @@ export const ScanSiswa = () => {
 
   return (
    <>
+   <h1>Scan Qr Siswa</h1>
     <ScanQrSiswa  showInfo={showInfo} showHandler={showHandler}/>
 
     {showInfo && <ErrorModal message={data}  onClose={showHandler}/>}

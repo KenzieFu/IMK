@@ -72,6 +72,9 @@ exports.deletePeminjaman = async function (req, res, next) {
       tanggal_pengembalian: new Date(),
       status: status,
     });
+    const buku =await BukuPerpus.findByPk(peminjaman.id_buku);
+    buku.stok=buku.stok+1;
+    await buku.save();
     res.json({ message: "Peminjaman berhasil dihapus", pengembalian: pengembalian });
     // tambahkan ke tabel pengembalian
     // pengembalianController.createPengembalian(req, res, next);

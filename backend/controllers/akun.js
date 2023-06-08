@@ -72,7 +72,10 @@ exports.createAkun = async function (req, res, next) {
 
 // Function untuk mengubah data akun
 exports.updateAkun = async function (req, res, next) {
+
   try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 12);
+    req.body.password=hashedPassword
     const akun = await Akun.update(req.body, {
       where: {
         id_akun: req.params.akunId,

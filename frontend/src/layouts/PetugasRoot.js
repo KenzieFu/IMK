@@ -47,7 +47,7 @@ export const PetugasRoot = () => {
                     <NavLink to="/petugas/scan-keluar">Scan Keluar</NavLink>
                     <NavLink to="/petugas/absensi">Absensi</NavLink>
                     <button onClick={logoutHandler}>Logout</button> */}
-                    <NavLink to="/petugas/siswa">Scan Barcode</NavLink>
+                    <NavLink to="/petugas/siswa">Cek Peminjaman</NavLink>
                     <button onClick={logoutHandler}>Logout</button>
                 </ul>
             </nav>

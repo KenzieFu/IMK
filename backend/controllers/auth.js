@@ -34,9 +34,16 @@ exports.login = async function (req, res, next) {
         username: username,
       },
     });
+    
     if (!akun) {
       const error = new Error("Akun tidak ditemukan");
       error.statusCode = 404;
+      throw error;
+    }
+    if(akun.status !== "Aktif")
+    {
+      const error = new Error("Akun Belum Aktif");
+      error.statusCode = 500;
       throw error;
     }
     const isEqual = await bcrypt.compare(password, akun.password);

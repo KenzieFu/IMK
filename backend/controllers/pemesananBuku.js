@@ -150,9 +150,12 @@ const pemesananUser = await PemesananBuku.findAll({where:{id_siswa:id_siswa}});
         waktu: dayjs().format("HH:mm:ss"),
         tanggal: dayjs().format("YYYY-MM-DD"),
       });
+      buku.stok=buku.stok -1;
+      
       res.json({
         message: "Pemesanan buku berhasil",
         pemesananBuku: pemesananBuku});
+        await buku.save()
     }
 
   } catch (error) {
@@ -234,13 +237,15 @@ exports.deletePemesananBuku = async function (req, res, next) {
       tanggal_pinjam: new Date(),
       tanggal_kembali: new Date().setDate(new Date().getDate() + 14),
     });
+    bukuPerpus.stok=bukuPerpus.stok -1;
 
     const pemesananBuku = await PemesananBuku.destroy({
       where: {
         id_pemesanan: req.params.pemesananBukuId,
       },
     });
-
+    
+    await bukuPerpus.save()
     res.json({ pemesananBuku: pemesananBuku, peminjaman: peminjaman });
   } catch (error) {
     next(error);
@@ -298,6 +303,8 @@ exports.batalPemesananBuku = async function (req, res, next) {
         id_pemesanan: req.params.pemesananBukuId,
       },
     });
+    buku.stok= buku.stok+1;
+    await buku.save();
     res.json({ message: "Pemesanan buku berhasil dibatalkan", pemesananBuku: pemesananBuku, buku: buku });
   } catch (error) {
     next(error);
