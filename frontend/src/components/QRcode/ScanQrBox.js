@@ -56,7 +56,7 @@ export const ScanQrBox = (props) => {
     <>
     <div className={classes['qrscan']}>
     <div className={classes['qrcont']}>
-    {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
+    {showCamera && !props.showInfo &&   <Form  ref={formRef} method='PUT'>
      <QrReader  
         scanDelay={500}
         onResult={scanHandler}
