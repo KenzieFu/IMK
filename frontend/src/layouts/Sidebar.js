@@ -48,20 +48,29 @@ const navigation = [
   //   href:"/",
   //   icon:"bi bi-calendar-event text-primary"
   // },
-  // {
-  //   title: "Histori",
-  //   icon: "bi bi-journals",
-  //   dropdown: [
-  //     {
-  //       title: "Books History",
-  //       href: "/admin/history/page1",
-  //     },
-  //     {
-  //       title: "Page 2",
-  //       href: "/admin/history/page2",
-  //     },
-  //   ],
-  // },
+  {
+    title: "Histori",
+    icon: "bi bi-journals",
+    dropdown: [
+      {
+        title: "Log Buku",
+        href: "/admin/log-buku",
+      },
+      {
+        title: "Log Buku Perpustakaan",
+        href: "/admin/log-buku-perpus",
+      },
+      {
+        title: "Log Buku Tahun Ajaran Baru",
+        href: "/admin/log-buku-thn-ajaran-baru",
+      },
+      {
+        title: "Log Pemesanan Buku",
+        href: "/admin/log-pemesanan-buku",
+      },
+
+    ],
+  },
   /* {
     title: "Alert",
     href: "/admin/alerts",

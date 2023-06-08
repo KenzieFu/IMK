@@ -8,10 +8,10 @@ import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import classes from '../adminbatch.module.css'
 
-export const LogBuku = () => {
+export const LogBukuAjaranBaru = () => {
 
 
-    const { books }=useLoaderData('admin-log-buku');
+    const { books }=useLoaderData('admin-log-buku-thn-ajaran-baru');
     const location = useLocation();
 
 
@@ -26,7 +26,8 @@ export const LogBuku = () => {
           textAlign: "center",
           justifyContent: "center",
         },
-        width:"2%"
+        width: "5%"
+
 
       },
       {
@@ -40,7 +41,7 @@ export const LogBuku = () => {
           textAlign: "center",
           justifyContent: "center",
         },
-      width: "5%",
+
       },
       {
         id: "timestamp",
@@ -85,7 +86,7 @@ export const LogBuku = () => {
 
 const loadLogBooks=async ()=>{
 
-    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/log-buku")
+    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/log-buku-thn-ajaran-baru")
     console.log(response);
     if(!response.ok)
     {

@@ -8,31 +8,32 @@ import { set } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import classes from '../adminbatch.module.css'
 
-export const LogBuku = () => {
+export const LogPemesanan = () => {
 
 
-    const { books }=useLoaderData('admin-log-buku');
+    const { books }=useLoaderData('admin-log-pemesanan-buku');
     const location = useLocation();
 
 
     const columns = [
       {
         id: 'id',
-        name: <div className={classes['data-row']}>ID Buku</div>,
-        selector: row => <div className={classes['data-rowid']}>{row.id_buku}</div>,
+        name: <div className={classes['data-row']}>ID  Pemesanan</div>,
+        selector: row => <div className={classes['data-rowid']}>{row.id}</div>,
         sortable: true,
         headerStyle: {
           fontWeight: "bold",
           textAlign: "center",
           justifyContent: "center",
         },
-        width:"2%"
+        width: "7%"
+
 
       },
       {
         id: "riwayat",
         name: <div className={classes['data-row']}>Riwayat</div>,
-        selector: row => <div className={classes['data-row']}>{row.riwayat}</div>,
+        selector: row => <div className={classes['data-row']}>{row.riwayat_pemesanan_buku}</div>,
         accessor: "riwayat",
         sortable: true,
         headerStyle: {
@@ -40,21 +41,9 @@ export const LogBuku = () => {
           textAlign: "center",
           justifyContent: "center",
         },
-      width: "5%",
+
       },
-      {
-        id: "timestamp",
-        name: <div className={classes['data-row']}>Timestamp</div>,
-        selector: row => <div className={classes['data-row']}>{row.timestamp}</div>,
-        accessor: "timestamp",
-        sortable: true,
-        headerStyle: {
-          fontWeight: "bold",
-          textAlign: "center",
-          justifyContent: "center",
-        },
-      width: "15%",
-      },
+
     ];
 
 
@@ -85,7 +74,7 @@ export const LogBuku = () => {
 
 const loadLogBooks=async ()=>{
 
-    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/log-buku")
+    const response = await fetch("http://localhost:8080/admin-perpustakaan-methodist-cw/log-pemesanan-buku")
     console.log(response);
     if(!response.ok)
     {

@@ -69,6 +69,11 @@ import { loader as adminPengembalianLoader } from "./pages/Admin/DaftarPengembal
 import { loader as adminEventLoader } from "./pages/Admin/AdminEventPage";
 //booking
 import { loader as adminBookingLoader } from './pages/Admin/DaftarBookingBuku'
+//log
+import  {loader as logbukuloader } from './pages/Admin/Log/LogBuku'
+import { loader as logbukuperpusloader } from './pages/Admin/Log/LogBukuPerpus'
+import { loader as loaderbukuajaranbaru } from './pages/Admin/Log/LogBukuAjaranBaru'
+import { loader as logpemesananloader } from './pages/Admin/Log/LogPemesanan'
 
 //create pinjam
 
@@ -156,6 +161,11 @@ import { BarcodeReaderPage } from "./pages/Petugas/BarcodeReaderPage";
 import { ScanQrSiswa } from "./components/QRcode/ScanQrSiswa";
 import { ScanSiswa } from "./pages/Petugas/ScanSiswa";
 import { DetailPerpusSiswa } from "./pages/Petugas/DetailPerpusSiswa";
+import { LogBuku } from "./pages/Admin/Log/LogBuku";
+import { LogBukuPerpus } from "./pages/Admin/Log/LogBukuPerpus";
+import { LogBukuAjaranBaru } from "./pages/Admin/Log/LogBukuAjaranBaru";
+import { LogPemesanan } from "./pages/Admin/Log/LogPemesanan";
+
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -365,8 +375,6 @@ const studentId=useSelector(state=>state.auth.user)
              id:"admin-pengembalian",
              element:<DaftarPengembalianBukuPage/>,
              loader:adminPengembalianLoader,
-
-
             },
             {
               path:":idPengembalian",
@@ -382,7 +390,6 @@ const studentId=useSelector(state=>state.auth.user)
                 }
               ]
              }
-
           ]
          },
          {
@@ -418,7 +425,35 @@ const studentId=useSelector(state=>state.auth.user)
           {index:true,
            element:<AdminEventPage/>,
            action:adminEventAction}
-        ]}
+        ]},
+        {
+          path:"log-buku",
+          id:"admin-log-buku",
+          loader:logbukuloader,
+          index:true,
+          element:<LogBuku/>,
+         },
+         {
+          path:"log-buku-perpus",
+          id:"admin-log-buku-perpus",
+          loader:logbukuperpusloader,
+          index:true,
+          element:<LogBukuPerpus/>,
+         },
+         {
+          path:"log-buku-thn-ajaran-baru",
+          id:"admin-log-buku-thn-ajaran-baru",
+          loader:loaderbukuajaranbaru,
+          index:true,
+          element:<LogBukuAjaranBaru/>,
+         },
+         {
+          path:"log-pemesanan-buku",
+          id:"admin-log-pemesanan",
+          loader:logpemesananloader,
+          index:true,
+          element:<LogPemesanan/>,
+         },
 
 
 
