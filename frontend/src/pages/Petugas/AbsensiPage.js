@@ -89,12 +89,13 @@ export const AbsensiPage = () => {
   return (
     <>
     <NavLink to="/petugas">Home</NavLink>
+    <div className={classes.allcon}>
       <Suspense fallback="">
         <Await resolve={absensi}>
           {(loadedData) => (
             <DataTable
               title={
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1vw" }}>
+                <div className={classes['uptop']}>
                   <h1 className={classes["judul1"]}>Absensi Belum Selesai</h1>
                   <Link to="/petugas/absensi/create" className={classes["buttoncreate"]}>
                     <p>Tambah <i class="bi bi-plus"></i> </p>
@@ -137,6 +138,7 @@ export const AbsensiPage = () => {
           )}
         </Await>
       </Suspense>
+      </div>
     </>
   );
 }
