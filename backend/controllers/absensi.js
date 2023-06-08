@@ -9,6 +9,7 @@ const ViewPengunjungHarian = require("../models/viewPengunjungHarian");
 exports.setWaktuKeluar = async function (req, res, next) {
   try {
     // const siswa = await Siswa.findOne({ where: { nisn: req.body.nisn } });
+    console.log("ieoasfdhoihefewsdfewsfwsedfwsedf")
     const absensi = await Absensi.update(
       { waktu_keluar: dayjs().format("HH:mm:ss") },
       {

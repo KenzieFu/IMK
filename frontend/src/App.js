@@ -1,6 +1,5 @@
 
 import "./App.css"
-
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { RootLayout } from './pages/Root';
@@ -78,7 +77,8 @@ import {loader as adminCreatePinjam} from "./components/admin/dashboard/CreatePi
 //Absensi
 import { loader as petugasAbsensiLoader } from "./pages/Petugas/AbsensiPage";
 import { loader as petugasCreateAbsensiLoader } from "./pages/Petugas/CreateAbsensi";
-
+//Pinjam Booking BUku
+import { loader as petugasDetailSiswaLoader } from "./pages/Petugas/DetailPerpusSiswa";
 
 //All LogoutAction
 import { action as logoutAction } from "./pages/Logout";
@@ -96,6 +96,8 @@ import { action as adminDeletePinjamAction } from "./pages/Admin/DaftarBukuPinja
 import { action as adminEventAction } from "./pages/Admin/AdminEventPage";
 //Delete booking
 import { action as adminDeleteBookingAction } from "./pages/Admin/DaftarBookingBuku"
+//Edit stok
+import { action as editStokAction } from "./pages/Admin/DetailBuku";
 
 //Petugas Action
 //Scan Masuk
@@ -104,6 +106,9 @@ import { action as petugascreateAttendanceAction } from "./pages/Petugas/ScanPag
 import { action as petugasKeluarAttendanceAction } from "./pages/Petugas/ScanKeluarPage";
 //Input Masuk
 import { action as enterPetugasAction } from "./pages/Petugas/CreateAbsensi";
+
+//Scan Siswa
+import { action as enterSiswaAction } from "./pages/Petugas/ScanSiswa";
 
 //Keluar Manual
 import { action as enterManualPetugasAction } from "./pages/Petugas/AbsensiPage";
@@ -118,6 +123,9 @@ import { action as adminBookAction } from "./components/admin/dashboard/BookForm
 import { action as contactAction } from "./pages/ContactPage";
 //Action editSIswa
 import { action as editSiswa } from "./components/admin/dashboard/StudentForm"
+
+//import Petugas batalPesanan
+import { action as batalPesanPetugasAction } from "./pages/Petugas/DetailPerpusSiswa";
 
 import { DetailBuku } from "./pages/Admin/DetailBuku";
 import { DetailStudentPage } from "./pages/Admin/DetailStudentPage";
@@ -144,6 +152,10 @@ import { CreateAbsensi } from "./pages/Petugas/CreateAbsensi";
 import { DaftarBookingBuku } from "./pages/Admin/DaftarBookingBuku";
 import { tokenLoader } from "./components/util/auth";
 import { GuestMode } from "./components/auth/GuestMode";
+import { BarcodeReaderPage } from "./pages/Petugas/BarcodeReaderPage";
+import { ScanQrSiswa } from "./components/QRcode/ScanQrSiswa";
+import { ScanSiswa } from "./pages/Petugas/ScanSiswa";
+import { DetailPerpusSiswa } from "./pages/Petugas/DetailPerpusSiswa";
 
 /****Layouts Admin*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout.js"));
@@ -163,6 +175,7 @@ const Breadcrumbs = lazy(() => import("./UI/admin/Breadcrumbs"));
 function App() {
 const studentId=useSelector(state=>state.auth.user)
   const studId=studentId?studentId?.user?.id_siswa:null;
+  console.log(studId)
 
 
   const router=createBrowserRouter([
@@ -189,7 +202,7 @@ const studentId=useSelector(state=>state.auth.user)
         {path:":bookId",
           id:"book-detail",
           element:<GuestMode><BookDetail/></GuestMode>,
-          loader: bookLoader }
+          loader:bookLoader }
 
         ]},
        {path:"contactUs", element:<GuestMode><Contact/></GuestMode>,action:contactAction},
@@ -261,7 +274,8 @@ const studentId=useSelector(state=>state.auth.user)
               children:[
                 {
                   index:true,
-                  element:<DetailBuku/>
+                  element:<DetailBuku/>,
+                  action:editStokAction
                 },
                 {
                   path:"edit",
@@ -449,7 +463,12 @@ const studentId=useSelector(state=>state.auth.user)
             action:enterPetugasAction,
 
           }
-        ]}
+        ]},
+        {path:"siswa",
+          children:[
+            {index:"true",element:<ScanSiswa/>,action:enterSiswaAction},
+            {path:":idSiswa",element:<DetailPerpusSiswa/>,id:"petugas-pinjam-kembali-booking-buku",loader:petugasDetailSiswaLoader,action:batalPesanPetugasAction}
+          ]}
       ]
     }
 

@@ -163,7 +163,7 @@ const pemesananUser = await PemesananBuku.findAll({where:{id_siswa:id_siswa}});
 // Function untuk menambahkan pemesanan buku
 exports.createPemesananBuku = async function (req, res, next) {
   // create pemesanan mengambil array 0bject dan looping untuk membuat pemesanan buku
-  console.log("Patennnnnnnnnnnnnnnnnnnnn")
+  
   try {
     // cek stok buku di buku_perpus dengan id_buku jika stok 0 maka tidak bisa melakukan pemesanan jika ada kurangi stok buku
     for(const item in req.body)

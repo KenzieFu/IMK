@@ -1,12 +1,12 @@
 import React from 'react'
 import { BookPesan } from '../components/BookPesan'
 
-export const BookingBuku = ({books,rerender}) => {
+export const BookingBuku = (props) => {
 
   return (
     <>
-       {books.map((book)=>
-        <BookPesan rerender={rerender} book={book}/>
+       {props.books.map((book)=>
+        <BookPesan rerender={props.rerender} book={book}/>
        )}
     </>
   )

@@ -224,11 +224,17 @@ exports.getSiswa = async function (req, res, next) {
 exports.getSiswaById = async function (req, res, next) {
   try {
     const siswa = await Siswa.findByPk(req.params.siswaId);
+    if(!siswa)
+    {
+      return res.status(501).json({message:"Siswa Tidak Ditemukan"})
+    }
     res.json(siswa);
   } catch (error) {
     next(error);
   }
 };
+
+
 
 // Function untuk menambahkan siswa
 exports.createSiswa = async function (req, res, next) {

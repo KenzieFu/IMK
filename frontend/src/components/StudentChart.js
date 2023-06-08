@@ -5,6 +5,7 @@ import { BookBar } from '../UI/BookBar'
 import { useSelector } from 'react-redux'
 export const StudentChart = (props) => {
     const student=useSelector((state)=>state.auth.user);
+    
     console.log(student)
     let currentBarPinjamClassName= `${classes.currentBar}  ${!props.showPinjam?classes.not:""}`;
     let currentBarKembaliClassnName= `${classes.currentBar}  ${!props.showKembali?classes.not:""}`;

@@ -5,6 +5,7 @@ const Pengembalian = require("../models/pengembalian");
 const BukuPerpus = require("../models/bukuPerpus");
 const { Op } = require("sequelize");
 const Kategori = require("../models/kategori");
+const { response } = require("express");
 // Function untuk menambahkan peminjaman
 exports.createPeminjaman = async function (req, res, next) {
   // contoh data yang dikirimkan dalam json
@@ -134,10 +135,12 @@ exports.getPeminjaman = async function (req, res, next) {
 
 // Function untuk mendapatkan data peminjaman berdasarkan user dan belum selesai di pinjam
 exports.getPeminjamanByUser = async function (req, res, next) {
+  console.log(req.id_akun);
+  const siswa = await Siswa.findOne({ where: { id_akun: req.id_akun } });
   try {
     const peminjaman = await Peminjaman.findAll({
       where: {
-        id_siswa: req.params.idSiswa,
+        id_siswa: siswa.id_siswa,
       },
       include: [
         {
@@ -215,6 +218,157 @@ exports.getHistoriPeminjaman = async function (req, res, next) {
     });
 
     res.json(pengembalian);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+
+
+
+
+
+exports.getPeminjamanByUserId = async function (req, res, next) {
+  console.log(`Test :${req.params.idAkun}`);
+  const siswa = await Siswa.findOne({ where: { id_siswa: req.params.idAkun } });
+  try {
+    const peminjaman = await Peminjaman.findAll({
+      where: {
+        id_siswa: siswa.id_siswa,
+      },
+      include: [
+        {
+          model: Buku,
+          as: "buku",
+          include: [{ model: Kategori }],
+        },
+        {
+          model: Siswa,
+          as: "siswa",
+        },
+      ],
+    });
+    // filter peminjaman yang belum selesai dengan mencek jika id_peminjaman belum ada ditabel pengembalian
+    const idPeminjaman = peminjaman.map((p) => p.id_peminjaman);
+    const pengembalian = await Pengembalian.findAll({
+      where: {
+        id_peminjaman: {
+          [Op.in]: idPeminjaman,
+        },
+      },
+    });
+    const idPeminjamanSelesai = pengembalian.map((p) => p.id_peminjaman);
+    const peminjamanBelumSelesai = peminjaman.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
+    res.json(peminjamanBelumSelesai);
+    // eror perbaiki lagi
+    // const peminjaman = await ViewPeminjamanBelumSelesai.findAll({
+    //   where: {
+    //     id_siswa: 2,
+    //   },
+    //   include: [
+    //     {
+    //       model: Buku,
+    //       as: "buku",
+    //     },
+    //     {
+    //       model: Siswa,
+    //       as: "siswa",
+    //     },
+    //   ],
+    // });
+    // res.json(peminjaman);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+
+
+
+//Nambahi Peminjaman berdasarkan barcode buku
+
+exports.createPeminjamanBarcode = async function (req, res, next) {
+  // contoh data yang dikirimkan dalam json
+  const { barcode, id_siswa } = req.body;
+  console.log(barcode)
+  console.log(id_siswa)
+  //   "id_peminjaman": "1234567890",
+  //   "id_buku": "1234567890",
+  //   "id_siswa": "1234567890",
+  //   "tanggal_pinjam": "2020-12-10",
+  //   "tanggal_kembali": "2020-12-12"
+  // }
+  // tanggal kembali dibuat otomatist 14 hari setelah tanggal pinjam
+  try {
+    // cek stok buku di tabel buku_perpus dengan id_buku
+    const buku = await Buku.findOne({where:{barcode:barcode}});
+    const bukuPerpus= await BukuPerpus.findByPk(buku.id_buku)
+    console.log(buku);
+    if (buku === null) {
+      return res.status(501).json({ message: "Buku tidak ditemukan" });
+    } else if(bukuPerpus === null)
+    {
+      return res.status(501).json({message:"Buku Tidak Tersedia dalam perpus"})
+    } else if (bukuPerpus.stok === 0) {
+      return res.status(501).json({ message: "Stok buku kosong" });
+    }
+
+
+
+    const peminjamans = await Peminjaman.findAll({
+      where: {
+        id_siswa: id_siswa,
+      },
+      include: [
+        {
+          model: Buku,
+          as: "buku",
+          include: [{ model: Kategori }],
+        },
+        {
+          model: Siswa,
+          as: "siswa",
+        },
+      ],
+    });
+    // filter peminjaman yang belum selesai dengan mencek jika id_peminjaman belum ada ditabel pengembalian
+    const idPeminjaman = peminjamans.map((p) => p.id_peminjaman);
+    const pengembalian = await Pengembalian.findAll({
+      where: {
+        id_peminjaman: {
+          [Op.in]: idPeminjaman,
+        },
+      },
+    });
+    const idPeminjamanSelesai = pengembalian.map((p) => p.id_peminjaman);
+    const peminjamanBelumSelesai = peminjamans.filter((p) => !idPeminjamanSelesai.includes(p.id_peminjaman));
+    console.log(`List Belum Selesai${peminjamanBelumSelesai.map(p=>p)}`)
+    const bukuSama=await  peminjamanBelumSelesai.find((item)=>item.buku.barcode ===barcode)
+    console.log(`Same :${bukuSama}`);
+    const pinjamLength=peminjamanBelumSelesai.length +1;
+    console.log(pinjamLength)
+    if(bukuSama)
+      return res.status(501).json({message:"Buku Saat Ini sedang Dalam masa Peminjaman"})
+    if(pinjamLength >3)
+      return res.status(501).json({message:"Maksimal Buku Yang bisa Dipinjam (3 Buah)"})
+    
+
+   
+    const peminjaman = await Peminjaman.create({
+      id_buku: buku.id_buku,
+      id_siswa: id_siswa,
+      tanggal_pinjam: new Date(),
+      tanggal_kembali: new Date().setDate(new Date().getDate() + 14),
+    });
+    // kurangi stok buku di tabel buku_perpus dengan id_buku
+    buku.stok = buku.stok - 1;
+    await buku.save();
+
+    res.json(peminjaman);
   } catch (error) {
     next(error);
   }

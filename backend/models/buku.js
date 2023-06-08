@@ -2,7 +2,6 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../util/database");
 const Kategori = require("./kategori");
 
-
 const Buku = sequelize.define(
   "buku",
   {
@@ -47,6 +46,10 @@ const Buku = sequelize.define(
       type: DataTypes.STRING(20),
       allowNull: false,
     },
+    barcode: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
   },
   {
     tableName: "buku",
@@ -55,6 +58,5 @@ const Buku = sequelize.define(
 );
 
 Buku.belongsTo(Kategori, { foreignKey: "id_kategori" });
-
 
 module.exports = Buku;

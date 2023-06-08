@@ -3,11 +3,21 @@ import { Box } from '../UI/Box'
 import classes from "./BookKembali.module.css"
 import { Link, json, useSubmit } from 'react-router-dom'
 import { ConfirmationModal } from './modals/ConfirmationModal'
+import { useSelector } from 'react-redux'
+import Modal from '../UI/Modal'
+import { ScanBarcode } from './BarcodeScanner/ScanBarcode'
 
 export const BookPesan = ({book,rerender}) => {
+  const status=useSelector(state=>state.auth.user);
+ const [showCam,setCam]=useState(false);
   const formRef=useRef();
   const [showConfirm,setConfirm]=useState(false);
   const submit=useSubmit()
+  const camHandler=()=>{
+    setCam(prev=>!prev);
+    console.log(showCam)
+  }
+
 
   const handleDelete=async(id)=>{
 
@@ -42,6 +52,11 @@ export const BookPesan = ({book,rerender}) => {
     rerender()
   }
 
+  const check =(bookBarcode)=>{
+    return bookBarcode === book.barcode;
+  }
+
+  
 
   return (
     <>
@@ -59,7 +74,14 @@ export const BookPesan = ({book,rerender}) => {
                     <p>Waktu Booking   :{book.waktu}</p>
                   </div>
                   </div>
-                    <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
+                  {status.hak_akses ==="Siswa" &&
+                       <Link type='button' to={`/library/${book.buku.id_buku}`} className={classes["book-info_button"]}>Details</Link>
+                  }
+                  {
+                    status.hak_akses ==="Petugas" &&
+                    <button onClick={camHandler} >Konfirmasi Pesanan</button>
+                  }
+                   
 
                     <button  onClick={()=>handleModal()} className={classes['book-info_cancel']}>Batalkan Pemesanan</button>
                 </div>
@@ -68,6 +90,14 @@ export const BookPesan = ({book,rerender}) => {
     </Box>
 
      {showConfirm && <ConfirmationModal method="DELETE" ref={formRef} deleteItem={handleDelete.bind(this,book.id_pemesanan)} onClose={handleModal} book={book.buku.judul_buku}/>}
+     
+     
+     {
+      showCam  &&
+      <Modal onClose={camHandler}>
+        <ScanBarcode item={book} tipe="booking"  onClose={camHandler}/>
+      </Modal>
+     }
     </>
     
   )

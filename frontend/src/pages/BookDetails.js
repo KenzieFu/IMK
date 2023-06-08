@@ -4,7 +4,7 @@ import classes from "./BookDetails.module.css"
 import { SearchBox } from '../UI/SearchBox'
 import { SearchResult } from '../components/SearchResult'
 import { useState } from "react";
-import { defer, json, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { defer, json, redirect, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoginModal from "../components/auth/Login";
 import { BookingModals } from "../components/BookingModal";
@@ -12,7 +12,7 @@ import { CartProvider, useCart } from "react-use-cart";
 import Modal from "../UI/Modal";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { getUserCredentials } from "../components/util/auth";
 
 const BookDetail = () => {
 
@@ -131,14 +131,15 @@ const BookDetail = () => {
     }
 
 
-    const existingPemesanan = pemesanan.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user?.id_siswa);
-    const existingPeminjaman = peminjaman.find(item => item.id_buku === book.id_buku && item.id_siswa === akun.user?.id_siswa);
+    const existingPemesanan = pemesanan.find(item => item?.id_buku === book?.id_buku && item?.id_siswa === akun?.user?.id_siswa);
+    const existingPeminjaman = peminjaman.find(item => item?.id_buku === book?.id_buku && item?.id_siswa === akun?.user?.id_siswa);
     console.log(existingPemesanan)
     const countPemesanan = pemesanan.filter(item => item.id_siswa === akun.user?.id_siswa).length
 
     const countPeminjaman = peminjaman.filter(item => item.id_siswa === akun.user?.id_siswa).length
 
     console.log(pemesanan)
+    console.log(`Existing : ${existingPeminjaman}`)
     console.log(peminjaman)
 
     const batasBook = countPemesanan + countPeminjaman
@@ -315,7 +316,13 @@ const loadStock=async(id)=>{
 
 
 const loadBorrowed = async (id) => {
-    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa/"+id)
+    const data=getUserCredentials()
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa-by-user",{
+        method:"GET",
+        headers:{
+            "Authorization":"Bearer "+data.accessToken
+        }
+    })
     console.log(response);
     if (!response.ok) {
       throw json(
@@ -351,16 +358,18 @@ const loadPesan = async () => {
     }
 }
 
-export async function loader({ request, params }) {
-    const id = params.bookId;
-
+export  const loader=async({ request, params })=>{
+    const idBuku = params.bookId;
+    let id = getUserCredentials();
+    id=id.user.id_siswa;
+    console.log(id)
     const dataPinjam=await loadBorrowed(id)
     const peminjamanData = dataPinjam;
-    const stok =await loadStock(id)
-
+    const stok =await loadStock(idBuku)
+    console.log(peminjamanData)
 
     return defer({
-        book: await loadBook(id),
+        book: await loadBook(idBuku),
        /*  daftarBookingDanPemesanan: data, */
        stokBuku:stok,
         peminjaman: peminjamanData,

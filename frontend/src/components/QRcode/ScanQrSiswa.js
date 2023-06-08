@@ -16,7 +16,7 @@ const QrOverlay = (scan) => {
 
 
 
-export const ScanQrBox = (props) => {
+export const ScanQrSiswa = (props) => {
   const formRef =useRef();
   const submit=useSubmit();
   const [data, setData] = useState('No result');
@@ -28,7 +28,7 @@ export const ScanQrBox = (props) => {
   
 
   const scanHandler=(result,error)=>{
-      let method=props.label ==="keluar perpustakaan"?"PUT":"POST"
+     
       if (!!result && !props.showInfo) {
         props.showHandler();
       
@@ -36,11 +36,10 @@ export const ScanQrBox = (props) => {
         console.log(result?.text);
         setData(result?.text);
         const form=new FormData(formRef.current);
-        const parsedResult=JSON.parse(result?.text)
         form.append("data",result?.text);
-        setData(parsedResult);
         
-        submit(form,{method:method});
+        
+        submit(form,{method:"POST"});
        
         
       }
@@ -56,7 +55,7 @@ export const ScanQrBox = (props) => {
     <>
     <div className={classes['qrscan']}>
     <div className={classes['qrcont']}>
-    {showCamera && !props.showInfo &&   <Form  ref={formRef} method='PUT'>
+    {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
      <QrReader  
         scanDelay={500}
         onResult={scanHandler}
@@ -68,7 +67,7 @@ export const ScanQrBox = (props) => {
 
       <div>
       <button className={classes['buttz']} onClick={showHandler}>{!showCamera?"Buka Camera":"Tutup Camera"}</button>
-      <p>{data.nama_lengkap } {props.label}</p>
+      {/* <p>{data.nama_lengkap } {props.label}</p> */}
       </div>
       
     </div>
@@ -76,4 +75,3 @@ export const ScanQrBox = (props) => {
     </>
   );
 };
-

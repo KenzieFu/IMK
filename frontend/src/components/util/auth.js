@@ -1,5 +1,7 @@
 import { redirect } from "react-router-dom";
 
+
+
 export const getAuthToken=()=>{
     const token = localStorage.getItem('token');
    
@@ -21,7 +23,7 @@ export const getAuthToken=()=>{
 export const getUserCredentials=()=>{
     const user= localStorage.getItem('user');
     const parsed=JSON.parse(user);
-
+    console.log(parsed)
     return parsed
 }
 
