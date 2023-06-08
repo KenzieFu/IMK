@@ -12,6 +12,7 @@ export const ScanKeluarPage = () => {
 
   return (
    <>
+    <NavLink to="/petugas">Home</NavLink>
     <ScanQrBox showInfo={showInfo} showHandler={showHandler}/>
     {showInfo && <ErrorModal message={data} onClose={showHandler}/>}
    </>

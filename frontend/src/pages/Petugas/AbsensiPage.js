@@ -2,7 +2,7 @@ import React, { Suspense, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 
-import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect } from 'react-router-dom';
+import { json,defer, Await, useLoaderData, useLocation, Link, Form, redirect, NavLink } from 'react-router-dom';
 import classes from './AbsensiPage.module.css'
 
 
@@ -88,6 +88,7 @@ export const AbsensiPage = () => {
 
   return (
     <>
+    <NavLink to="/petugas">Home</NavLink>
       <Suspense fallback="">
         <Await resolve={absensi}>
           {(loadedData) => (
