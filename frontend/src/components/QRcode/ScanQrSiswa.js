@@ -53,7 +53,14 @@ export const ScanQrSiswa = (props) => {
   };
   return (
     <>
+        <div className={classes.allpage} >
     <div className={classes['qrscan']}>
+
+    <div className={classes['headliner']}>
+    <h1>Scan QR Siswa <i class="fa fa-sign-in" aria-hidden="true"></i></h1>
+    <p>Scan untuk mengecek detail siswa</p>
+    </div>
+
     <div className={classes['qrcont']}>
     {showCamera && !props.showInfo &&   <Form  ref={formRef} method='POST'>
      <QrReader  
@@ -70,6 +77,7 @@ export const ScanQrSiswa = (props) => {
       {/* <p>{data.nama_lengkap } {props.label}</p> */}
       </div>
       
+    </div>
     </div>
       
     </>

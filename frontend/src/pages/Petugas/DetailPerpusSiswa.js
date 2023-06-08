@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import classes from "../StudentPage.module.css";
+import classes from "./DetailPerpusSiswa.module.css";
 
 import { StudentChart } from '../../components/StudentChart';
 import { PeminjamanBuku } from '../PeminjamanBuku';
@@ -12,6 +12,8 @@ import { ScanBarcode } from '../../components/BarcodeScanner/ScanBarcode';
 import Modal from '../../UI/Modal';
 import { PengembalianBuku } from '../PengembalianBuku';
 import { BookingBuku } from '../BookingBuku';
+
+
 
 
 export const DetailPerpusSiswa = () => {
@@ -68,21 +70,25 @@ const renderHandler=()=>{
       
    
      
-      <div>
+      <div className={classes.insides}>
       <Suspense>
             <Await resolve={siswa}>
                 {loadedData =>
-                      <div>
-                      <h2>Detail Siswa</h2>
-                      <p>{loadedData.nama_lengkap}</p>
-                      <div style={{ display:"flex" }}>
-                        <button onClick={pinjamHandler}>Dipinjam</button>
-                        <button onClick={kembaliHandler}>Dikembalikan</button>
-                        <button onClick={bookingHandler}>Dibooking</button>
+                      <div className={classes.headtitle}> 
+                      <div className={classes['txtz']}>
+                      <h1>Detail Siswa <i class="fa fa-graduation-cap" aria-hidden="true"></i></h1>
+                      <p>Detail siswa untuk <b>{loadedData.nama_lengkap}</b></p>
+                      </div>
+                      <div className={classes['butbatch']}>
+                      <div className={classes['buttonsb']}>
+                        <button className={classes['buttz']} onClick={pinjamHandler}>Dipinjam</button>
+                        <button className={classes['buttz']} onClick={kembaliHandler}>Dikembalikan</button>
+                        <button className={classes['buttz']} onClick={bookingHandler}>Dibooking</button>
                     </div>
-                    <div>
-                      <button onClick={camHandler}>Tambah Peminjaman</button>
+                    <div className={classes['tmbhp']}>
+                      <button className={classes['buttz']}  onClick={camHandler}>Tambah Peminjaman <i class="fa fa-plus" aria-hidden="true"></i></button>
                     </div>
+                      </div>
                       </div>
                 
                 }
