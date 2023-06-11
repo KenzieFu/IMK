@@ -4,7 +4,7 @@ import classes from "./BookDetails.module.css"
 import { SearchBox } from '../UI/SearchBox'
 import { SearchResult } from '../components/SearchResult'
 import { useState } from "react";
-import { defer, json, redirect, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Navigate, defer, json, redirect, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoginModal from "../components/auth/Login";
 import { BookingModals } from "../components/BookingModal";
@@ -15,7 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getUserCredentials } from "../components/util/auth";
 
 const BookDetail = () => {
-
+    
+    console.log("hifoehfoiwfhoew");
     const notify = () => toast.success('Buku berhasil ditambahkan ke booking list!', {
         position: "top-center",
         autoClose: 5000,
@@ -110,6 +111,7 @@ const BookDetail = () => {
     });
     const isAuth = useSelector((state) => state.auth.isAuth);
     const akun = useSelector((state) => state.auth.user);
+    
     const [isAdded, setIsAdded] = useState(false);
 /*     const { addItem, items, inCart, totalUniqueItems } = useCart(); */
 
@@ -320,7 +322,7 @@ const loadBorrowed = async (id) => {
     const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/peminjaman-siswa-by-user",{
         method:"GET",
         headers:{
-            "Authorization":"Bearer "+data.accessToken
+            "Authorization":"Bearer "+data?.accessToken
         }
     })
     console.log(response);
@@ -342,7 +344,7 @@ const loadBorrowed = async (id) => {
 
 
 const loadPesan = async () => {
-    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku/")
+    const response = await fetch("http://localhost:8080/perpustakaan-methodist-cw/pemesanan-buku")
     console.log(response);
     if (!response.ok) {
         throw json(
@@ -360,19 +362,14 @@ const loadPesan = async () => {
 
 export  const loader=async({ request, params })=>{
     const idBuku = params.bookId;
-    let id = getUserCredentials();
-    id=id.user.id_siswa;
-    console.log(id)
-    const dataPinjam=await loadBorrowed(id)
-    const peminjamanData = dataPinjam;
     const stok =await loadStock(idBuku)
-    console.log(peminjamanData)
+   
 
     return defer({
         book: await loadBook(idBuku),
        /*  daftarBookingDanPemesanan: data, */
        stokBuku:stok,
-        peminjaman: peminjamanData,
+        peminjaman: loadBorrowed(1),
         pemesanan: await loadPesan()
     });
 }

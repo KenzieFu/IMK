@@ -8,7 +8,7 @@ function ErrorPage() {
   let title = 'An error occurred!';
   let message = 'Something went wrong!';
   console.log(error.data.message);
-  console.log("iakefweiof")
+ 
 
   if (error.status === 500) {
     message = "LOL";

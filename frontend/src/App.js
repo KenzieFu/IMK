@@ -185,7 +185,7 @@ const Breadcrumbs = lazy(() => import("./UI/admin/Breadcrumbs"));
 function App() {
 const studentId=useSelector(state=>state.auth.user)
   const studId=studentId?studentId?.user?.id_siswa:null;
-  console.log(studId)
+ 
 
 
   const router=createBrowserRouter([
@@ -211,7 +211,7 @@ const studentId=useSelector(state=>state.auth.user)
         },
         {path:":bookId",
           id:"book-detail",
-          element:<GuestMode><BookDetail/></GuestMode>,
+          element:<StudentAuth><BookDetail/></StudentAuth>,
           loader:bookLoader }
 
         ]},

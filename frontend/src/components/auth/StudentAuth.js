@@ -8,11 +8,15 @@ export const StudentAuth = ({children}) => {
     const auth=useSelector(state=>state.auth.isAuth)
     const navigate=useNavigate();
     const token = getAuthToken()
-    const outlet=useOutlet();
+   console.log("hi");
      
 
-        if(!auth && token === null)return<Navigate to="/"/>;
-        else if(auth && middleware.user?.hak_akses !="Siswa" )
+        if(!auth && token === null)
+        {
+            console.log("hi")
+            return<Navigate to="/"/>;
+        }
+        else if(auth && middleware?.user?.hak_akses !="Siswa" )
         {
             if(middleware.user?.hak_akses ==="Admin")
             {
