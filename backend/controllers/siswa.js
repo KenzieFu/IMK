@@ -178,6 +178,9 @@ exports.createDataCalonSiswa = async function (req, res, next) {
       ...keteranganPendidikan,
       id_calon: idCalon,
     });
+    const createAkun = await Akun.create({
+      
+    })
 
     // Response with created data
     res.json({

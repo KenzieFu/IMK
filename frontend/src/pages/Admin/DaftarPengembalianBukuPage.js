@@ -127,7 +127,7 @@ export const DaftarPengembalianBukuPage = () => {
       color: ((row) => row.status === "Tepat Waktu") ? "Green" : "Red",
       width: "15%",
     },
-    {
+   /*  {
       id: "button",
       name: <div className={classes['data-row']}>Aksi</div>,
       width: "20%",
@@ -150,7 +150,7 @@ export const DaftarPengembalianBukuPage = () => {
       allowOverflow: true,
       selector: (row) => row.button,
       button: true,
-    },
+    }, */
   ];
 
   return (
@@ -308,7 +308,7 @@ export const loader = () => {
 }
 
 export async function action({ params, request }) {
-
+  
   const method = request.method;
   const data = await request.formData();
   console.log(data);
